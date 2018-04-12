@@ -20,7 +20,10 @@
 #
 
 #
-# Copyright (c) 2016, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2018 Jim Mason <jmason at ibinx dot com>.  All rights reserved.
+#
+# Adapted from original code Copyright (c) 2016, Oracle and/or its
+# affiliates. All rights reserved.
 #
 
 <transform file path=usr.*/man/.+ -> \

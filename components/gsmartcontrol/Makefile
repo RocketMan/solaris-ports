@@ -20,7 +20,7 @@
 #
 
 #
-# Copyright (c) 2015, 2018, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2018 Jim Mason <jmason at ibinx dot com>.  All rights reserved.
 #
 
 BUILD_BITS =            32

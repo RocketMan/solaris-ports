@@ -31,6 +31,6 @@ available power. In any case, the percentage is the same of what you
 see when you run top.
 
 # Author
-cpulimit was originally developed by Angelo Marletta <angelo dot marletta
-at gmail dot com>, maintained by Denis Denisov (https://github.com/denji),
-and ported to Solaris by Jim Mason <jmason at ibinx dot com>.
+cpulimit was originally developed by Angelo Marletta \<angelo dot marletta
+at gmail dot com\>, maintained by Denis Denisov (https://github.com/denji),
+and ported to Solaris by Jim Mason \<jmason at ibinx dot com\>.
