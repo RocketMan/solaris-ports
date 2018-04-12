@@ -1,4 +1,4 @@
-# Solaris RinTin Utils (solaris-rtutils)
+# Miscellaneous utilities for Solaris (solaris-rtutils)
 
 ## Introduction
 This source code repository facilitiates building of packages not normally
