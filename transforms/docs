@@ -1,0 +1,84 @@
+#
+# CDDL HEADER START
+#
+# The contents of this file are subject to the terms of the
+# Common Development and Distribution License (the "License").
+# You may not use this file except in compliance with the License.
+#
+# You can obtain a copy of the license at usr/src/OPENSOLARIS.LICENSE
+# or http://www.opensolaris.org/os/licensing.
+# See the License for the specific language governing permissions
+# and limitations under the License.
+#
+# When distributing Covered Code, include this CDDL HEADER in each
+# file and include the License file at usr/src/OPENSOLARIS.LICENSE.
+# If applicable, add the following below this CDDL HEADER, with the
+# fields enclosed by brackets "[]" replaced with your own identifying
+# information: Portions Copyright [yyyy] [name of copyright owner]
+#
+# CDDL HEADER END
+#
+
+#
+# Copyright (c) 2010, 2016, Oracle and/or its affiliates. All rights reserved.
+#
+
+# man pages
+<transform dir path=usr.*/man(/.+)?$ -> default facet.doc.man all>
+<transform file link hardlink path=usr.*/man/.+$ -> default facet.doc.man all>
+
+# texinfo docs
+
+# tag texinfo directory links
+<transform link path=.*/info/dir$ -> default facet.doc.info all>
+# tag files directly under .../share/info/
+<transform file link hardlink path=.*/share/info/[^/]+$ -> \
+    default facet.doc.info all>
+# tag files in .../info/ that look like *.info[-#][.gz]
+<transform file link hardlink path=.*/info/[^/]+\.info(-\d+){0,1}(\.gz){0,1}$ -> \
+    default facet.doc.info all>
+# if there are tagged files, we want to restart the texinfo-update service so
+# that the directories get updated.
+<transform file facet.doc.info=all -> \
+    add restart_fmri svc:/application/texinfo-update:default>
+# there shouldn't be any texinfo directory files in /usr.
+<transform file path=usr/.*/info/dir$ -> \
+    exit 1 "Error: packaged texinfo directory file (%<action.path>)" >
+
+# html docs
+<transform dir file link hardlink path=usr/.*/doc/.*(html?|css).* -> \
+    default facet.doc.html all>
+<transform dir file link hardlink path=usr/lib/help/.*\.html$ -> \
+    default facet.doc.html all>
+<transform dir file link hardlink path=usr/share/devhelp/books/.* -> \
+    default facet.doc.html all>
+<transform dir file link hardlink path=usr/share/gtk-doc/html/.* -> \
+    default facet.doc.html all>
+
+# Ruby API html docs
+<transform file path=usr/ruby/.*/lib/ruby/vendor_ruby/.*/doc/.*/rdoc/* -> \
+    default facet.doc.html all>
+
+# pdf docs
+<transform dir file link hardlink path=usr/.*/doc/.*\.pdf$ -> \
+    default facet.doc.pdf all>
+
+# ps docs
+<transform dir file link hardlink path=usr/.*/doc/.*\.ps$ -> \
+    default facet.doc.ps all>
+
+# Ruby API ri Docs
+<transform file path=usr/ruby/.*/lib/ruby/vendor_ruby/.*/doc/.*/ri/* -> \
+    default facet.doc.ri all>
+<transform file path=usr/ruby/.*/share/ri/.*/* -> default facet.doc.ri all>
+
+# general documentation
+<transform dir file link hardlink path=usr/.*/doc(/.+){0,1}$ -> \
+    default facet.doc all>
+
+# drop facet.doc if we have a type specific facet.
+<transform dir file link hardlink facet.doc.html=all -> delete facet.doc all>
+<transform dir file link hardlink facet.doc.info=all -> delete facet.doc all>
+<transform dir file link hardlink facet.doc.pdf=all -> delete facet.doc all>
+<transform dir file link hardlink facet.doc.man=all -> delete facet.doc all>
+<transform dir file link hardlink facet.doc.ri=all -> delete facet.doc all>

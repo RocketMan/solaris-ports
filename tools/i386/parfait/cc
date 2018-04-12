@@ -1,0 +1,8 @@
+#!/bin/ksh
+IFS=
+export PARFAIT_NATIVESUNCC=/opt/solarisstudio12.4/bin/cc
+export PARFAIT_NATIVESUNCXX=/opt/solarisstudio12.4/bin/CC
+export PARFAIT_NATIVEGCC=/usr/gcc/7/bin/gcc
+export PARFAIT_NATIVEGXX=/usr/gcc/7/bin/g++
+export PARFAIT_NATIVELD=/usr/bin/ld
+exec /opt/parfait/parfait-tools-2.1.0/x86_64/parfait-cc $*

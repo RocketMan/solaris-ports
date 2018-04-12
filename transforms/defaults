@@ -1,0 +1,92 @@
+#
+# CDDL HEADER START
+#
+# The contents of this file are subject to the terms of the
+# Common Development and Distribution License (the "License").
+# You may not use this file except in compliance with the License.
+#
+# You can obtain a copy of the license at usr/src/OPENSOLARIS.LICENSE
+# or http://www.opensolaris.org/os/licensing.
+# See the License for the specific language governing permissions
+# and limitations under the License.
+#
+# When distributing Covered Code, include this CDDL HEADER in each
+# file and include the License file at usr/src/OPENSOLARIS.LICENSE.
+# If applicable, add the following below this CDDL HEADER, with the
+# fields enclosed by brackets "[]" replaced with your own identifying
+# information: Portions Copyright [yyyy] [name of copyright owner]
+#
+# CDDL HEADER END
+#
+
+#
+# Copyright (c) 2010, 2017, Oracle and/or its affiliates. All rights reserved.
+#
+
+#
+# LP print service
+#
+
+
+#
+# Changes to zoneinfo files on live systems need to trigger a refresh of
+# the timezone reloader.  See tzreload(1m).
+#
+<transform file link hardlink path=usr/share/lib/zoneinfo/.+ -> add refresh_fmri "svc:/system/timezone:default">
+
+#
+# SMF files
+#
+<transform file path=lib/svc/method/.* -> default mode 0555>
+
+#
+# Many files under /usr/share are group other
+#
+<transform file path=usr/share/locale(/.+){3}$ -> default group other>
+<transform file path=usr/share/applications/.* -> default group other>
+<transform file path=usr/share/pixmaps/.* -> default group other>
+
+#
+# programs & shared objects should generally have mode 0555
+#
+<transform file path=.*lib/.*\.so.* -> default mode 0555>
+<transform file path=.*bin/.* -> default mode 0555>
+<transform file path=.*lib/inet/.* -> default mode 0555>
+
+#
+# For what's left, go with root:bin 0444 for files, 0755 for directories
+#
+<transform dir file -> default owner root>
+<transform dir file -> default group bin>
+<transform file -> default mode 0444>
+<transform dir -> default mode 0755>
+
+set name=variant.arch value=$(MACH)
+
+# Consolidation source repository and changeset information
+set name=com.oracle.info.consolidation.repository-changeset \
+    value="$(CONSOLIDATION_CHANGESET)"
+set name=com.oracle.info.consolidation.repository-url \
+    value="$(CONSOLIDATION_REPOSITORY_URL)"
+
+#
+# Set the default Python for mediated links
+#
+<transform link mediator=python mediator-version=2.7 -> default mediator-priority vendor>
+
+#
+# Set the default Ruby for mediated links
+#
+<transform link mediator=ruby mediator-version=2.1 -> default mediator-priority vendor>
+
+#
+# Add a facet.version-lock.{package} to each 'optional' consolidation
+# incorporation dependency so that we can install without having to
+# mangle the system in some way.
+#
+<transform depend type=optional fmri=(pkg:/)?consolidation/.+-incorporation@ -> \
+    default tmp.fmri %{pkg.fmri} >
+<transform depend tmp.fmri=pkg:/(.+)@.*$ -> \
+    default facet.version-lock.%<1> true >
+<transform depend tmp.fmri=.*-> delete tmp.fmri .* >
+

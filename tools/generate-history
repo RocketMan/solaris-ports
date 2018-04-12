@@ -1,0 +1,77 @@
+#
+# CDDL HEADER START
+#
+# The contents of this file are subject to the terms of the
+# Common Development and Distribution License (the "License").
+# You may not use this file except in compliance with the License.
+#
+# You can obtain a copy of the license at usr/src/OPENSOLARIS.LICENSE
+# or http://www.opensolaris.org/os/licensing.
+# See the License for the specific language governing permissions
+# and limitations under the License.
+#
+# When distributing Covered Code, include this CDDL HEADER in each
+# file and include the License file at usr/src/OPENSOLARIS.LICENSE.
+# If applicable, add the following below this CDDL HEADER, with the
+# fields enclosed by brackets "[]" replaced with your own identifying
+# information: Portions Copyright [yyyy] [name of copyright owner]
+#
+# CDDL HEADER END
+#
+
+#
+# Copyright (c) 2018, Oracle and/or its affiliates. All rights reserved.
+#
+
+
+# generate-history - Tool to convert 'history' file into proper obsolete or
+# rename IPS manifest
+#
+# Print names of all IPS manifests which can be generated:
+#
+# nawk -f tools/generate-history \
+#     -v FUNCTION=name \
+#     components/meta-packages/history/history
+#
+#
+# Generate on stdout the IPS manifest for given package:
+#
+# nawk -f tools/generate-history \
+#     -v FUNCTION=manifest \
+#     -v TARGET=<IPS manifest name> \
+#     components/meta-packages/history/history
+#
+
+/^[ \t]*#/ { next }; # Skip comments.
+/^[ \t]*$/ { next }; # Skip empty lines
+{
+  fmri=$1
+  split(fmri, a, "@")
+  gsub("/", "---", a[1])
+  target = sprintf("%s.p5m", a[1])
+  if (FUNCTION == "name") {
+    printf "%s\n", target
+    next
+  }
+  if (target != TARGET) {
+    next
+  }
+  printf "set name=pkg.fmri value=pkg:/%s\n", fmri
+  if ($NF ~ /^incorporate=/) {
+    incorporate=$NF;
+    NF--;
+  }
+  if (NF == 2) {
+    print "set name=pkg.renamed value=true"
+    printf "depend type=require fmri=%s\n", $2
+  } else {
+    print "set name=pkg.obsolete value=true"
+  }
+  if (incorporate) {
+    printf "set name=org.opensolaris.consolidation %s value=$(CONSOLIDATION)\n",
+      incorporate
+  } else {
+    print "set name=org.opensolaris.consolidation value=$(CONSOLIDATION)"
+  }
+  exit 0 # We're done; no point continuing.
+}

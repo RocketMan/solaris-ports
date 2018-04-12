@@ -1,0 +1,40 @@
+#
+# CDDL HEADER START
+#
+# The contents of this file are subject to the terms of the
+# Common Development and Distribution License (the "License").
+# You may not use this file except in compliance with the License.
+#
+# You can obtain a copy of the license at usr/src/OPENSOLARIS.LICENSE
+# or http://www.opensolaris.org/os/licensing.
+# See the License for the specific language governing permissions
+# and limitations under the License.
+#
+# When distributing Covered Code, include this CDDL HEADER in each
+# file and include the License file at usr/src/OPENSOLARIS.LICENSE.
+# If applicable, add the following below this CDDL HEADER, with the
+# fields enclosed by brackets "[]" replaced with your own identifying
+# information: Portions Copyright [yyyy] [name of copyright owner]
+#
+# CDDL HEADER END
+#
+
+#
+# Copyright (c) 2010, 2016, Oracle and/or its affiliates. All rights reserved.
+#
+[pkglint]
+
+pkglint.ext.lic_pkglint = pkglint.lic_pkglint
+pkglint.ext.userland = pkglint.userland
+
+# JM 2018-04-10 added rtutils
+# Used by the publisher_in_fmri method in .../tools/python/pkglint/userland.py
+userland.manifest002.allowed_pubs = rtutils nightly solaris userland-localizable
+
+# turn off reporting of 'pkg.linted*' attributes in manifests.  We already
+# get a pkglint001.5 INFO message with the WARNING or ERROR that we have
+# deemed acceptable by adding the pkg.linted...=true attribute.
+#
+# JM 2018-04-10 allow references to obsoleted packages
+pkglint.exclude = pkg.lint.pkglint_action.PkgActionChecker.dep_obsolete pkg.lint.pkglint_manifest.PkgManifestChecker.linted pkg.lint.pkglint_action.PkgActionChecker.linted
+

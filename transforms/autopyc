@@ -1,0 +1,44 @@
+#
+# CDDL HEADER START
+#
+# The contents of this file are subject to the terms of the
+# Common Development and Distribution License (the "License").
+# You may not use this file except in compliance with the License.
+#
+# You can obtain a copy of the license at usr/src/OPENSOLARIS.LICENSE
+# or http://www.opensolaris.org/os/licensing.
+# See the License for the specific language governing permissions
+# and limitations under the License.
+#
+# When distributing Covered Code, include this CDDL HEADER in each
+# file and include the License file at usr/src/OPENSOLARIS.LICENSE.
+# If applicable, add the following below this CDDL HEADER, with the
+# fields enclosed by brackets "[]" replaced with your own identifying
+# information: Portions Copyright [yyyy] [name of copyright owner]
+#
+# CDDL HEADER END
+#
+
+#
+# Copyright (c) 2011, 2015, Oracle and/or its affiliates. All rights reserved.
+#
+
+# Don't bother specifying each .pyc file.  Allow individual actions to
+# override this by setting pkg.tmp.autopyc to false.
+# Note that prior to Python 3, the following covered all .py files.  But since
+# then only files under usr/lib/python[23].* are covered, and any components
+# shipping .py files elsewhere need to specify pkg.tmp.pyversion directly to
+# generate .pyc files.  But that variable really should be private to this
+# file. 20632788 has been filed to fix this.
+<transform file path=.*\.py$ -> default pkg.tmp.autopyc true>
+<transform file hardlink pkg.tmp.autopyc=true path=usr/lib/python2\.(.*)\.py$ -> default pkg.tmp.pyversion 2.X>
+<transform file hardlink pkg.tmp.autopyc=true path=usr/lib/python3\.(.*)/.*\.py$ -> default pkg.tmp.pyversion 3.%<1>>
+
+<transform file pkg.tmp.pyversion=2\.X -> emit file path=%(path)c>
+<transform hardlink pkg.tmp.pyversion=2\.X -> emit hardlink path=%(path)c target=%(target)c>
+
+<transform file pkg.tmp.pyversion=3\.([0-9])(.*) path=.*/(.*)\.py$ -> emit file path=/usr/lib/python3.%<1>%<2>/__pycache__/%<3>.cpython-3%<1>.pyc>
+<transform hardlink pkg.tmp.pyversion=3\.(.*) -> emit hardlink path=%(path)c target=%(target)c>
+
+<transform file pkg.tmp.autopyc=.* -> delete pkg.tmp.autopyc .*>
+<transform pkg.tmp.pyversion=.* -> delete pkg.tmp.pyversion .*>

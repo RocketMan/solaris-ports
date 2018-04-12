@@ -1,0 +1,62 @@
+#
+# CDDL HEADER START
+#
+# The contents of this file are subject to the terms of the
+# Common Development and Distribution License (the "License").
+# You may not use this file except in compliance with the License.
+#
+# You can obtain a copy of the license at usr/src/OPENSOLARIS.LICENSE
+# or http://www.opensolaris.org/os/licensing.
+# See the License for the specific language governing permissions
+# and limitations under the License.
+#
+# When distributing Covered Code, include this CDDL HEADER in each
+# file and include the License file at usr/src/OPENSOLARIS.LICENSE.
+# If applicable, add the following below this CDDL HEADER, with the
+# fields enclosed by brackets "[]" replaced with your own identifying
+# information: Portions Copyright [yyyy] [name of copyright owner]
+#
+# CDDL HEADER END
+#
+
+#
+# Copyright (c) 2010, 2016, Oracle and/or its affiliates. All rights reserved.
+#
+
+# general locale
+<transform dir link hardlink path=.*/locale$ -> default facet.locale true>
+
+# add locale specific facets to using the the locale name encoded in
+# the pathname.  We don't need the portion after the '@' or '.', only
+# .../locale/{locale-name}[@.]*.
+<transform dir file link hardlink \
+    path=.*/locale/([^/@\.]+)(.+){0,1}(/.+){0,1}$ -> \
+    default facet.locale.%<\1> true>
+
+# thunderbird uses the locale format ab-CD instead of ab_CD, which is the 
+# Solaris standard. Convert the locale facet to Solaris standard format. 
+# pkgmogrify doesn't seem to support using a regular expression as the 
+# "attribute" in a "attribute=value" matcher so we need to enumerate all 
+# locales where this is a problem. 
+<transform file facet.locale.en-US=true -> default facet.locale.en_US true>
+<transform file facet.locale.en-US=true -> delete facet.locale.en-US .*>
+<transform file facet.locale.es-AR=true -> default facet.locale.es_AR true>
+<transform file facet.locale.es-AR=true -> delete facet.locale.es-AR .*>
+<transform file facet.locale.es-ES=true -> default facet.locale.es_ES true>
+<transform file facet.locale.es-ES=true -> delete facet.locale.es-ES .*>
+<transform file facet.locale.nb-NO=true -> default facet.locale.nb_NO true>
+<transform file facet.locale.nb-NO=true -> delete facet.locale.nb-NO .*>
+<transform file facet.locale.nn-NO=true -> default facet.locale.nn_NO true>
+<transform file facet.locale.nn-NO=true -> delete facet.locale.nn-NO .*>
+<transform file facet.locale.pt-BR=true -> default facet.locale.pt_BR true>
+<transform file facet.locale.pt-BR=true -> delete facet.locale.pt-BR .*>
+<transform file facet.locale.pt-PT=true -> default facet.locale.pt_PT true>
+<transform file facet.locale.pt-PT=true -> delete facet.locale.pt-PT .*>
+<transform file facet.locale.sv-SE=true -> default facet.locale.sv_SE true>
+<transform file facet.locale.sv-SE=true -> delete facet.locale.sv-SE .*>
+<transform file facet.locale.zh-CN=true -> default facet.locale.zh_CN true>
+<transform file facet.locale.zh-TW=true -> delete facet.locale.zh-TW .*>
+
+# unfacet the C locale
+<transform dir file link hardlink \
+    facet.locale.C=.+ -> delete facet.locale.C .+ >
