@@ -1,18 +1,14 @@
 # GSmartControl - Hard disk drive and SSD health inspection tool
 
 ## Overview
-GSmartControl is a graphical user interface (GUI) for smartctl (from
-[smartmontools](https://www.smartmontools.org/) package), which is a
-tool for querying and controlling S.M.A.R.T. (Self-Monitoring,
+GSmartControl is a graphical user interface for `smartctl` from the
+`system/storage/smartmontools` package, which is available in the
+[Solaris Userland
+Consolidation](https://github.com/oracle/solaris-userland).  This tool
+supports the querying and controlling of S.M.A.R.T. (Self-Monitoring,
 Analysis, and Reporting Technology) data on modern hard disk and
 solid-state drives. It allows you to inspect the drive's
-S.M.A.R.T. data to determine its health, as well as run various tests
-on it.
-
-GSmartControl supports ATA drives (both PATA and SATA), various USB to
-ATA bridges and drives behind some RAID controllers. See [Smartmontools
-USB Device Support](http://www.smartmontools.org/wiki/Supported_USB-Devices)
-page for a list of supported USB to ATA bridges.
+S.M.A.R.T. data to determine its health, as well as run various tests.
 
 ## Features
     * automatically reports and highlights any anomalies;
@@ -21,6 +17,7 @@ page for a list of supported USB to ATA bridges.
     * supports configuration of global and per-drive options for smartctl;
     * performs S.M.A.R.T. self-tests;
     * displays drive identity information, capabilities, attributes, device statistics, etc.;
-    * can read in smartctl output from a saved file, interpreting it as a read-only virtual device;
-    * works on most smartctl-supported operating systems;
-    * has extensive help information. 
+    * can read in smartctl output from a saved file, interpreting it as a read-only virtual device.
+
+## Screenshot
+![GSmartControl](https://github.com/RinTinCan/solaris-rtutils/components/gsmartcontrol/screenshot.png)
