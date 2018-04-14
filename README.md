@@ -1,4 +1,4 @@
-# Miscellaneous utilities for Solaris (solaris-rtutils)
+# Solaris Ports Collection (solaris-ports)
 
 ## Introduction
 This source code repository facilitiates building of packages not normally
@@ -14,7 +14,7 @@ downloaded from their sites as part of the build process.
 ## Getting Started
 In order to build or develop in the repository, you will need to clone it:
 
-    $ git clone https://github.com/RinTinCan/solaris-rtutils /scratch/clone
+    $ git clone https://github.com/RinTinCan/solaris-ports /scratch/clone
 
 ## Building the individual components
 You can build individual components or the contents of the entire repo.
