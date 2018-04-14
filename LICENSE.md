@@ -41,15 +41,15 @@ COMMON DEVELOPMENT AND DISTRIBUTION LICENSE Version 1.0
     1.9. "Modifications" means the Source Code and Executable form of
          any of the following:
 
-        <ol type="A">
-        <li>Any file that results from an addition to, deletion from or
+        A. Any file that results from an addition to, deletion from or
            modification of the contents of a file containing Original
-           Software or previous Modifications;</li>
-        <li>Any new file that contains any part of the Original
-           Software or previous Modifications; or</li>
-        <li>Any new file that is contributed or otherwise made
-           available under the terms of this License.</li>
-        </ol>
+           Software or previous Modifications;
+
+        B. Any new file that contains any part of the Original
+           Software or previous Modifications; or
+
+        C. Any new file that is contributed or otherwise made
+           available under the terms of this License.
 
     1.10. "Original Software" means the Source Code and Executable
           form of computer software code that is originally released
@@ -84,28 +84,29 @@ COMMON DEVELOPMENT AND DISTRIBUTION LICENSE Version 1.0
     Developer hereby grants You a world-wide, royalty-free,
     non-exclusive license:
 
-        <ol type="a"> 
-        <li>under intellectual property rights (other than patent or
+        (a) under intellectual property rights (other than patent or
             trademark) Licensable by Initial Developer, to use,
             reproduce, modify, display, perform, sublicense and
             distribute the Original Software (or portions thereof),
             with or without Modifications, and/or as part of a Larger
-            Work; and</li>
-        <li>under Patent Claims infringed by the making, using or
+            Work; and
+
+        (b) under Patent Claims infringed by the making, using or
             selling of Original Software, to make, have made, use,
             practice, sell, and offer for sale, and/or otherwise
-            dispose of the Original Software (or portions thereof).</li>
-        <li>The licenses granted in Sections 2.1(a) and (b) are
+            dispose of the Original Software (or portions thereof).
+
+        (c) The licenses granted in Sections 2.1(a) and (b) are
             effective on the date Initial Developer first distributes
             or otherwise makes the Original Software available to a
-            third party under the terms of this License.</li>
-        <li>Notwithstanding Section 2.1(b) above, no patent license is
+            third party under the terms of this License.
+
+        (d) Notwithstanding Section 2.1(b) above, no patent license is
             granted: (1) for code that You delete from the Original
             Software, or (2) for infringements caused by: (i) the
             modification of the Original Software, or (ii) the
             combination of the Original Software with other software
-            or devices.</li>
-        </ol>
+            or devices.
 
     2.2. Contributor Grant.
 
@@ -114,15 +115,15 @@ COMMON DEVELOPMENT AND DISTRIBUTION LICENSE Version 1.0
     Contributor hereby grants You a world-wide, royalty-free,
     non-exclusive license:
 
-        <ol type="a">
-        <li>under intellectual property rights (other than patent or
+        (a) under intellectual property rights (other than patent or
             trademark) Licensable by Contributor to use, reproduce,
             modify, display, perform, sublicense and distribute the
             Modifications created by such Contributor (or portions
             thereof), either on an unmodified basis, with other
             Modifications, as Covered Software and/or as part of a
-            Larger Work; and</li>
-        <li>under Patent Claims infringed by the making, using, or
+            Larger Work; and
+
+        (b) under Patent Claims infringed by the making, using, or
             selling of Modifications made by that Contributor either
             alone and/or in combination with its Contributor Version
             (or portions of such combination), to make, use, sell,
@@ -130,12 +131,14 @@ COMMON DEVELOPMENT AND DISTRIBUTION LICENSE Version 1.0
             (1) Modifications made by that Contributor (or portions
             thereof); and (2) the combination of Modifications made by
             that Contributor with its Contributor Version (or portions
-            of such combination).</li>
-        <li>The licenses granted in Sections 2.2(a) and 2.2(b) are
+            of such combination).
+
+        (c) The licenses granted in Sections 2.2(a) and 2.2(b) are
             effective on the date Contributor first distributes or
             otherwise makes the Modifications available to a third
-            party.</li>
-        <li>Notwithstanding Section 2.2(b) above, no patent license is
+            party.
+
+        (d) Notwithstanding Section 2.2(b) above, no patent license is
             granted: (1) for any code that Contributor has deleted
             from the Contributor Version; (2) for infringements caused
             by: (i) third party modifications of Contributor Version,
@@ -143,8 +146,7 @@ COMMON DEVELOPMENT AND DISTRIBUTION LICENSE Version 1.0
             Contributor with other software (except as part of the
             Contributor Version) or other devices; or (3) under Patent
             Claims infringed by Covered Software in the absence of
-            Modifications made by that Contributor.</li>
-        </ol>
+            Modifications made by that Contributor.
 
 3. Distribution Obligations.
 
