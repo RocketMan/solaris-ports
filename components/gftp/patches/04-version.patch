@@ -1,0 +1,20 @@
+--- a/configure	2008-11-30 21:37:09.000000000 +0000
++++ b/configure	2018-04-16 16:46:32.702199594 +0100
+@@ -2163,7 +2163,7 @@
+ 
+ # Define the identity of the package.
+  PACKAGE=gftp
+- VERSION=2.0.19
++ VERSION=2.0.19.1
+ 
+ 
+ cat >>confdefs.h <<_ACEOF
+--- a/gftp.spec	2008-11-30 21:49:09.000000000 +0000
++++ b/gftp.spec	2018-04-16 23:24:43.943564824 +0100
+@@ -1,5 +1,5 @@
+ %define 	name	gftp
+-%define 	version	2.0.19
++%define 	version	2.0.19.1
+ %define 	release	1
+ %define 	serial	1
+ %define 	prefix	/usr
