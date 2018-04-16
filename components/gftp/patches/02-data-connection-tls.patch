@@ -1,0 +1,304 @@
+--- a/configure	2008-11-30 21:37:09.000000000 +0000
++++ b/configure	2018-04-16 16:46:32.702199594 +0100
+@@ -2163,7 +2163,7 @@
+ 
+ # Define the identity of the package.
+  PACKAGE=gftp
+- VERSION=2.0.19
++ VERSION=2.0.19.1
+ 
+ 
+ cat >>confdefs.h <<_ACEOF
+--- a/lib/ftpcommon.h	2007-01-10 01:24:51.000000000 +0000
++++ b/lib/ftpcommon.h	2018-04-16 15:11:04.591841706 +0100
+@@ -28,11 +28,16 @@
+   int data_connection;
+   unsigned int is_ascii_transfer : 1,
+                is_fxp_transfer : 1;
++#ifdef USE_SSL
++  SSL* data_ssl;
++#endif
+   int (*auth_tls_start) (gftp_request * request);
++  int (*data_conn_tls_start) (gftp_request * request);
+   ssize_t (*data_conn_read) (gftp_request * request, void *ptr, size_t size,
+                              int fd);
+   ssize_t (*data_conn_write) (gftp_request * request, const char *ptr,
+                               size_t size, int fd);
++  int (*data_conn_tls_close) (gftp_request * request);
+ };
+ 
+ typedef struct rfc959_params_tag rfc959_parms;
+--- a/lib/ftps.c	2008-11-30 14:41:37.000000000 +0000
++++ b/lib/ftps.c	2018-04-16 17:48:59.545557125 +0100
+@@ -23,6 +23,10 @@
+ static const char cvsid[] = "$Id: ftps.c 977 2008-11-30 14:41:36Z masneyb $";
+ 
+ #ifdef USE_SSL
++extern SSL_CTX* ctx;
++
++extern int gftp_ssl_get_index(void);
++
+ static int
+ ftps_get_next_file (gftp_request * request, gftp_file * fle, int fd)
+ {
+@@ -51,6 +55,110 @@
+   return (ret);
+ }
+ 
++static int 
++ftps_data_conn_tls_start (gftp_request * request)
++{
++  rfc959_parms * params = request->protocol_data;
++  intptr_t verify_ssl_peer;
++  BIO * bio;
++  int ret;
++
++  // ensure the data socket is open and tls is not yet started
++  g_return_val_if_fail (params->data_connection > 0, GFTP_EFATAL);
++  g_return_val_if_fail (params->data_ssl == 0, GFTP_EFATAL);
++
++  // set the data socket to blocking for tls negotiation
++  int non_blocking = gftp_fd_get_sockblocking (request,
++					       params->data_connection);
++  if (non_blocking < 0 ||
++      gftp_fd_set_sockblocking (request, params->data_connection, 0) < 0)
++    {
++      gftp_disconnect (request);
++      return (GFTP_ERETRYABLE);
++    }
++
++  if ((bio = BIO_new (BIO_s_socket ())) == NULL)
++    {
++      request->logging_function (gftp_logging_error, request,
++                                 _("Error setting up SSL connection (BIO object)\n"));
++      gftp_disconnect (request);
++      return (GFTP_EFATAL);
++    }
++
++  BIO_set_fd (bio, params->data_connection, BIO_NOCLOSE);
++
++  if ((params->data_ssl = SSL_new (ctx)) == NULL)
++    {
++      request->logging_function (gftp_logging_error, request,
++                                 _("Error setting up SSL connection (SSL object)\n"));
++      gftp_disconnect (request);
++      return (GFTP_EFATAL);
++    }
++
++  SSL_set_bio (params->data_ssl, bio, bio);
++  SSL_set_ex_data (params->data_ssl, gftp_ssl_get_index(), request);
++
++  // reuse the session from the control connection
++  SSL_set_session (params->data_ssl, SSL_get1_session (request->ssl));
++
++  int err;
++  if ((err=SSL_connect (params->data_ssl)) <= 0)
++    {
++      gftp_disconnect (request);
++      return (GFTP_EFATAL);
++    }
++
++  request->logging_function (gftp_logging_misc, request,
++                             "SSL data connection established using %s (%s)\n", 
++                             SSL_get_cipher_version (params->data_ssl), 
++                             SSL_get_cipher_name (params->data_ssl));
++
++  // restore the data socket's previous blocking state
++  if (!(ret = gftp_fd_set_sockblocking (request, params->data_connection,
++					non_blocking)))
++    return ret;
++
++  return (0);
++}
++
++static int 
++ftps_data_conn_tls_close (gftp_request * request)
++{
++  rfc959_parms * params = request->protocol_data;
++  if (params->data_ssl) {
++    SSL_shutdown (params->data_ssl);
++    SSL_free (params->data_ssl);
++    params->data_ssl = NULL;
++  }
++
++  return (0);
++}
++
++static ssize_t
++ftps_data_conn_tls_read (gftp_request * request, void *ptr,
++			 size_t size, int fd)
++{
++  // tls read on the data connection socket
++  rfc959_parms * params = request->protocol_data;
++  gftp_request proxy;
++  proxy.ssl = params->data_ssl;
++  proxy.logging_function = request->logging_function;
++  proxy.cancel = request->cancel;
++  return gftp_ssl_read(&proxy, ptr, size, fd);
++}
++
++static ssize_t 
++ftps_data_conn_tls_write (gftp_request * request, const char *ptr,
++			  size_t size, int fd)
++{
++  // tls write on the data connection socket
++  rfc959_parms * params = request->protocol_data;
++  gftp_request proxy;
++  proxy.ssl = params->data_ssl;
++  proxy.logging_function = request->logging_function;
++  proxy.cancel = request->cancel;
++  return gftp_ssl_write(&proxy, ptr, size, fd);
++}
+ 
+ static int 
+ ftps_auth_tls_start (gftp_request * request)
+@@ -81,8 +189,10 @@
+     return (ret);
+   else if (ret == '2')
+     {
+-      params->data_conn_read = gftp_ssl_read;
+-      params->data_conn_write = gftp_ssl_write;
++      params->data_conn_tls_start = ftps_data_conn_tls_start;
++      params->data_conn_read = ftps_data_conn_tls_read;
++      params->data_conn_write = ftps_data_conn_tls_write;
++      params->data_conn_tls_close = ftps_data_conn_tls_close;
+     }
+   else
+     {
+--- a/lib/gftp.h	2008-03-28 11:44:39.000000000 +0000
++++ b/lib/gftp.h	2018-04-16 16:00:44.327175013 +0100
+@@ -1130,6 +1130,9 @@
+ 					  const char *fmt, 
+ 					  ... );
+ 
++int gftp_fd_get_sockblocking 		( gftp_request * request, 
++					  int fd );
++
+ int gftp_fd_set_sockblocking 		( gftp_request * request, 
+ 					  int fd, 
+ 					  int non_blocking );
+--- a/lib/rfc959.c	2008-03-04 12:02:48.000000000 +0000
++++ b/lib/rfc959.c	2018-04-16 16:18:42.747818874 +0100
+@@ -659,6 +659,10 @@
+   g_return_if_fail (request != NULL);
+ 
+   parms = request->protocol_data;
++
++  if(parms->data_conn_tls_close != NULL)
++    parms->data_conn_tls_close(request);
++
+   if (parms->data_connection != -1)
+     {
+       close (parms->data_connection);
+@@ -1082,6 +1086,10 @@
+   close (parms->data_connection);
+   parms->data_connection = infd;
+ 
++  if(parms->data_conn_tls_start != NULL &&
++     !(ret = parms->data_conn_tls_start(request)))
++    return ret;
++
+   if ((ret = gftp_fd_set_sockblocking (request, parms->data_connection, 1)) < 0)
+     return (ret);
+ 
+@@ -1211,6 +1219,11 @@
+       (ret = rfc959_accept_active_connection (request)) < 0)
+     return (ret);
+ 
++  if (passive_transfer &&
++      parms->data_conn_tls_start != NULL &&
++      !(ret = parms->data_conn_tls_start (request)))
++    return ret;
++
+   return (0);
+ }
+ 
+@@ -1383,6 +1396,7 @@
+ static int
+ rfc959_list_files (gftp_request * request)
+ {
++  rfc959_parms * params = request->protocol_data;
+   intptr_t show_hidden_files, resolve_symlinks, passive_transfer;
+   char *tempstr, parms[3];
+   int ret;
+@@ -1419,6 +1433,8 @@
+   ret = 0;
+   if (!passive_transfer)
+     ret = rfc959_accept_active_connection (request);
++  else if (params->data_conn_tls_start != NULL)
++    ret = params->data_conn_tls_start(request);
+ 
+   return (ret);
+ }
+@@ -1846,8 +1862,10 @@
+   dparms->is_ascii_transfer = sparms->is_ascii_transfer;
+   dparms->is_fxp_transfer = sparms->is_fxp_transfer;
+   dparms->auth_tls_start = sparms->auth_tls_start;
++  dparms->data_conn_tls_start = sparms->data_conn_tls_start;
+   dparms->data_conn_read = sparms->data_conn_read;
+   dparms->data_conn_write = sparms->data_conn_write;
++  dparms->data_conn_tls_close = sparms->data_conn_tls_close;
+ 
+   dest_request->read_function = src_request->read_function;
+   dest_request->write_function = src_request->write_function;
+@@ -1925,8 +1943,13 @@
+   parms = request->protocol_data;
+   parms->data_connection = -1; 
+   parms->auth_tls_start = NULL;
++  parms->data_conn_tls_start = NULL;
+   parms->data_conn_read = gftp_fd_read;
+   parms->data_conn_write = gftp_fd_write;
++  parms->data_conn_tls_close = NULL;
++#ifdef USE_SSL
++  parms->data_ssl = NULL;
++#endif
+ 
+   return (gftp_set_config_options (request));
+ }
+--- a/lib/sockutils.c	2008-03-27 23:09:30.000000000 +0000
++++ b/lib/sockutils.c	2018-04-16 16:02:07.186516012 +0100
+@@ -324,6 +324,24 @@
+   return (ret);
+ }
+ 
++int
++gftp_fd_get_sockblocking (gftp_request * request, int fd)
++{
++  int flags;
++
++  g_return_val_if_fail (fd >= 0, GFTP_EFATAL);
++
++  if ((flags = fcntl (fd, F_GETFL, 0)) < 0)
++    {
++      request->logging_function (gftp_logging_error, request,
++                                 _("Cannot get socket flags: %s\n"),
++                                 g_strerror (errno));
++      gftp_disconnect (request);
++      return (GFTP_ERETRYABLE);
++    }
++
++  return (flags & O_NONBLOCK) != 0;
++}
+ 
+ int
+ gftp_fd_set_sockblocking (gftp_request * request, int fd, int non_blocking)
+--- a/lib/sslcommon.c	2008-11-30 19:25:37.000000000 +0000
++++ b/lib/sslcommon.c	2018-04-16 16:37:33.360684938 +0100
+@@ -47,7 +47,7 @@
+ 
+ static GMutex ** gftp_ssl_mutexes = NULL;
+ static volatile int gftp_ssl_initialized = 0;
+-static SSL_CTX * ctx = NULL;
++SSL_CTX * ctx = NULL;
+ 
+ struct CRYPTO_dynlock_value
+ { 
+@@ -68,7 +68,7 @@
+ }
+ 
+ 
+-static int
++int
+ gftp_ssl_get_index (void)
+ {
+   static volatile int index = -1;

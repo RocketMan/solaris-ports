@@ -1,0 +1,22 @@
+--- a/docs/sample.gftp/gftprc	2008-01-24 13:56:55.000000000 +0000
++++ b/docs/sample.gftp/gftprc	2018-04-16 19:08:29.005585730 +0100
+@@ -188,7 +188,7 @@
+ error_color=ffff:0:0
+ 
+ # The color of the rest of the log messages
+-misc_color=a000:8d00:4600
++misc_color=5800:5600:d600
+ 
+ # This is the password that will be used whenever you log into a remote FTP
+ # server as anonymous
+--- a/src/gtk/gftp-gtk.c	2008-01-24 23:26:47.000000000 +0000
++++ b/src/gtk/gftp-gtk.c	2018-04-16 18:53:21.781275988 +0100
+@@ -1056,7 +1056,7 @@
+ 
+   tag = gtk_text_buffer_create_tag (textbuf, "misc", NULL);
+   gftp_lookup_global_option ("misc_color", &fore);
+-  g_object_set (G_OBJECT (tag), "foreground_gdk", &fore, NULL);
++  g_object_set (G_OBJECT (tag), "foreground_gdk", fore, NULL);
+ 
+   tempwid = gtk_scrolled_window_new (NULL, NULL);
+   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (tempwid),
