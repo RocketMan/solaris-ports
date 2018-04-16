@@ -283,7 +283,7 @@
  int
  gftp_fd_set_sockblocking (gftp_request * request, int fd, int non_blocking)
 --- a/lib/sslcommon.c	2008-11-30 19:25:37.000000000 +0000
-+++ b/lib/sslcommon.c	2018-04-16 16:37:33.360684938 +0100
++++ b/lib/sslcommon.c	2018-04-16 23:08:45.817515042 +0100
 @@ -47,7 +47,7 @@
  
  static GMutex ** gftp_ssl_mutexes = NULL;
@@ -302,3 +302,23 @@
  gftp_ssl_get_index (void)
  {
    static volatile int index = -1;
+@@ -461,7 +461,7 @@
+ ssize_t 
+ gftp_ssl_write (gftp_request * request, const char *ptr, size_t size, int fd)
+ {
+-  size_t ret, w_ret;
++  int ret, w_ret;
+  
+   g_return_val_if_fail (request->ssl != NULL, GFTP_EFATAL);
+ 
+@@ -478,7 +478,9 @@
+       w_ret = SSL_write (request->ssl, ptr, size);
+       if (w_ret <= 0)
+         {
+-          if (errno == EINTR || errno == EAGAIN)
++	  int ssl_err = SSL_get_error (request->ssl, w_ret);
++          if (ssl_err == SSL_ERROR_WANT_WRITE ||
++	      errno == EINTR || errno == EAGAIN)
+             {
+               if (request != NULL && request->cancel)
+                 {
