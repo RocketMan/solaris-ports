@@ -14,8 +14,8 @@
  
  typedef struct rfc959_params_tag rfc959_parms;
 --- a/lib/ftps.c	2008-11-30 14:41:37.000000000 +0000
-+++ b/lib/ftps.c	2018-04-17 13:00:19.085166732 +0100
-@@ -23,11 +23,12 @@
++++ b/lib/ftps.c	2018-04-17 17:57:13.039104274 +0100
+@@ -23,22 +23,28 @@
  static const char cvsid[] = "$Id: ftps.c 977 2008-11-30 14:41:36Z masneyb $";
  
  #ifdef USE_SSL
@@ -25,11 +25,14 @@
  {
    rfc959_parms * params;
 -  int resetptr;
-+  int resetptr, resetdata;
++  int resetptr = 0, resetdata = 0;
    size_t ret;
  
    params = request->protocol_data;
-@@ -36,9 +37,15 @@
+-  if (request->cached)
++  if (request->cached &&
++      request->read_function == gftp_ssl_read)
+     {
        request->read_function = gftp_fd_read;
        request->write_function = gftp_fd_write;
        resetptr = 1;
@@ -40,13 +43,12 @@
 +	  resetdata = 1;
 +	}
      }
-   else
+-  else
 -    resetptr = 0;
-+    resetptr = resetdata = 0;
  
    ret = rfc959_get_next_file (request, fle, fd);
  
-@@ -46,11 +53,29 @@
+@@ -46,11 +52,29 @@
      {
        request->read_function = gftp_ssl_read;
        request->write_function = gftp_ssl_write;
@@ -76,7 +78,7 @@
  
  static int 
  ftps_auth_tls_start (gftp_request * request)
-@@ -81,8 +106,10 @@
+@@ -81,8 +105,10 @@
      return (ret);
    else if (ret == '2')
      {
