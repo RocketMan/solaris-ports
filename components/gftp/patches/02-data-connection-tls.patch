@@ -166,7 +166,7 @@
  
    if (dest->swap_socks != NULL)
 --- a/lib/rfc959.c	2008-03-04 12:02:48.000000000 +0000
-+++ b/lib/rfc959.c	2018-04-17 11:51:19.973284227 +0100
++++ b/lib/rfc959.c	2018-04-17 18:31:15.421020585 +0100
 @@ -659,6 +659,10 @@
    g_return_if_fail (request != NULL);
  
@@ -183,7 +183,7 @@
    parms->data_connection = infd;
  
 +  if(parms->data_conn_tls_start != NULL &&
-+     !(ret = parms->data_conn_tls_start(request)))
++     (ret = parms->data_conn_tls_start(request)) < 0)
 +    return ret;
 +
    if ((ret = gftp_fd_set_sockblocking (request, parms->data_connection, 1)) < 0)
@@ -195,7 +195,7 @@
  
 +  if (passive_transfer &&
 +      parms->data_conn_tls_start != NULL &&
-+      !(ret = parms->data_conn_tls_start (request)))
++      (ret = parms->data_conn_tls_start (request)) < 0)
 +    return ret;
 +
    return (0);
