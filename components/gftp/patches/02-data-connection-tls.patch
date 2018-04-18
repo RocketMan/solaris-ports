@@ -268,54 +268,41 @@
  int
  gftp_fd_set_sockblocking (gftp_request * request, int fd, int non_blocking)
 --- a/lib/sslcommon.c	2008-11-30 19:25:37.000000000 +0000
-+++ b/lib/sslcommon.c	2018-04-17 13:15:44.291146973 +0100
-@@ -26,6 +26,9 @@
- 
- #ifdef USE_SSL
- 
-+/* this is the number of file descriptors initially allocated in the map. */
-+#define SSL_MAP_INIT_SIZE 256
-+
- static gftp_config_vars config_vars[] =
- {
-   {"", N_("SSL Engine"), gftp_option_type_notebook, NULL, NULL, 0, NULL,
-@@ -48,6 +51,8 @@
++++ b/lib/sslcommon.c	2018-04-18 15:07:35.627693147 +0100
+@@ -48,6 +48,7 @@
  static GMutex ** gftp_ssl_mutexes = NULL;
  static volatile int gftp_ssl_initialized = 0;
  static SSL_CTX * ctx = NULL;
-+static SSL** ssl_map;
-+static int ssl_map_size = 0;
++static GHashTable *ssl_map = NULL;
  
  struct CRYPTO_dynlock_value
  { 
-@@ -67,6 +72,26 @@
+@@ -67,6 +68,24 @@
      }
  }
  
 +static SSL*
-+getSSLForFd( int fd )
++getSSLForFd (int fd)
 +{
-+  /* TBD protect me with a synchronization primitive */
-+  return fd >= 0 && fd < ssl_map_size?ssl_map[fd]:NULL;
++  return ssl_map?(SSL*)g_hash_table_lookup (ssl_map, &fd):NULL;
 +}
 +
 +static void
-+setSSLForFd( int fd, SSL* ssl )
++setSSLForFd (int fd, SSL* ssl)
 +{
-+  /* TBD protect me with a synchronization primitive */
-+  if(fd >= ssl_map_size)
++  if(ssl)
 +    {
-+      int oldsize = ssl_map_size;
-+      ssl_map = (SSL**)realloc(ssl_map, sizeof(SSL*) * (ssl_map_size <= 1));
-+      memset(ssl_map + sizeof(SSL*) * oldsize, 0,
-+             sizeof(SSL*) * (ssl_map_size - oldsize));
++      int *key = g_new (gint, 1);
++      *key = fd;
++      g_hash_table_insert (ssl_map, key, ssl);
 +    }
-+  ssl_map[fd] = ssl;
++  else
++    g_hash_table_remove (ssl_map, &fd);
 +}
  
  static int
  gftp_ssl_get_index (void)
-@@ -121,9 +146,10 @@
+@@ -121,9 +140,10 @@
    X509_EXTENSION *ext;
    X509_NAME *subj;
    X509 *cert;
@@ -327,7 +314,7 @@
      {
        request->logging_function (gftp_logging_error, request,
                                   _("Cannot get peer certificate\n"));
-@@ -202,7 +228,7 @@
+@@ -202,7 +222,7 @@
   
    X509_free (cert);
  
@@ -336,11 +323,11 @@
  }
  
  
-@@ -330,18 +356,23 @@
+@@ -330,18 +350,23 @@
        return (GFTP_EFATAL);
      }
  
-+  ssl_map = (SSL**)calloc(ssl_map_size = SSL_MAP_INIT_SIZE, sizeof(SSL*));
++  ssl_map = g_hash_table_new_full(g_int_hash, g_int_equal, g_free, NULL);
 +
    return (0);
  }
@@ -362,7 +349,7 @@
  
    if (!gftp_ssl_initialized)
      {
-@@ -352,9 +383,13 @@
+@@ -352,9 +377,13 @@
      }
  
    /* FIXME - take this out. I need to find out how to do timeouts with the SSL
@@ -379,7 +366,7 @@
      {
        gftp_disconnect (request);
        return (GFTP_ERETRYABLE);
-@@ -368,9 +403,9 @@
+@@ -368,9 +397,9 @@
        return (GFTP_EFATAL);
      }
  
@@ -391,7 +378,7 @@
      {
        request->logging_function (gftp_logging_error, request,
                                   _("Error setting up SSL connection (SSL object)\n"));
-@@ -378,44 +413,91 @@
+@@ -378,44 +407,91 @@
        return (GFTP_EFATAL);
      }
  
@@ -500,7 +487,7 @@
  
    if (!gftp_ssl_initialized)
      {
-@@ -428,9 +510,9 @@
+@@ -428,9 +504,9 @@
    ret = 0;
    do
      {
@@ -512,7 +499,7 @@
            if (errno == EINTR || errno == EAGAIN)
              {
                if (request->cancel)
-@@ -461,9 +543,10 @@
+@@ -461,9 +537,10 @@
  ssize_t 
  gftp_ssl_write (gftp_request * request, const char *ptr, size_t size, int fd)
  {
@@ -525,7 +512,7 @@
  
    if (!gftp_ssl_initialized)
      {
-@@ -475,10 +558,12 @@
+@@ -475,10 +552,12 @@
    ret = 0;
    do
      {
