@@ -268,12 +268,12 @@
  int
  gftp_fd_set_sockblocking (gftp_request * request, int fd, int non_blocking)
 --- a/lib/sslcommon.c	2008-11-30 19:25:37.000000000 +0000
-+++ b/lib/sslcommon.c	2018-04-18 15:07:35.627693147 +0100
++++ b/lib/sslcommon.c	2018-04-20 13:44:59.213489803 +0100
 @@ -48,6 +48,7 @@
  static GMutex ** gftp_ssl_mutexes = NULL;
  static volatile int gftp_ssl_initialized = 0;
  static SSL_CTX * ctx = NULL;
-+static GHashTable *ssl_map = NULL;
++static GHashTable *gftp_ssl_map = NULL;
  
  struct CRYPTO_dynlock_value
  { 
@@ -282,22 +282,22 @@
  }
  
 +static SSL*
-+getSSLForFd (int fd)
++gftp_get_ssl_for_fd (int fd)
 +{
-+  return ssl_map?(SSL*)g_hash_table_lookup (ssl_map, &fd):NULL;
++  return gftp_ssl_map?(SSL*)g_hash_table_lookup (gftp_ssl_map, &fd):NULL;
 +}
 +
 +static void
-+setSSLForFd (int fd, SSL* ssl)
++gftp_set_ssl_for_fd (int fd, SSL* ssl)
 +{
-+  if(ssl)
++  if (ssl)
 +    {
 +      int *key = g_new (gint, 1);
 +      *key = fd;
-+      g_hash_table_insert (ssl_map, key, ssl);
++      g_hash_table_insert (gftp_ssl_map, key, ssl);
 +    }
 +  else
-+    g_hash_table_remove (ssl_map, &fd);
++    g_hash_table_remove (gftp_ssl_map, &fd);
 +}
  
  static int
@@ -306,28 +306,69 @@
    X509_EXTENSION *ext;
    X509_NAME *subj;
    X509 *cert;
-+  SSL* ssl = getSSLForFd (request->datafd);
++  SSL* ssl = gftp_get_ssl_for_fd (request->datafd);
   
    ok = 0;
 -  if (!(cert = SSL_get_peer_certificate (request->ssl)))
-+  if (!(cert = SSL_get_peer_certificate ( ssl )))
++  if (!(cert = SSL_get_peer_certificate (ssl)))
      {
        request->logging_function (gftp_logging_error, request,
                                   _("Cannot get peer certificate\n"));
-@@ -202,7 +222,7 @@
+@@ -141,24 +161,34 @@
+             {
+               STACK_OF(CONF_VALUE) *val;
+               CONF_VALUE   *nval;
+-              X509V3_EXT_METHOD *meth;
++              const X509V3_EXT_METHOD *meth;
+               void *ext_str = NULL;
+  
+               if (!(meth = X509V3_EXT_get (ext)))
+                 break;
+ 
++	      /*
++	       * The *_d2i functions side-effect the input pointer;
++	       * thus, we must make a mutable copy of the pointer
++	       * rather than passing in the one from the struct.
++	       * If we do not do this, it won't fault right away,
++	       * but it will fault later when we free the struct,
++	       * as the heap would be corrupt.
++	       */
++	      const unsigned char* mutable_ptr = ext->value->data;
++
+ #if (OPENSSL_VERSION_NUMBER > 0x00907000L)
+               if (meth->it)
+-                ext_str = ASN1_item_d2i (NULL, (const unsigned char **) &ext->value->data, ext->value->length,
++                ext_str = ASN1_item_d2i (NULL, &mutable_ptr, ext->value->length,
+                                         ASN1_ITEM_ptr (meth->it));
+               else
+-                ext_str = meth->d2i (NULL, (const unsigned char **) &ext->value->data, ext->value->length);
++                ext_str = meth->d2i (NULL, &mutable_ptr, ext->value->length);
+ #else
+-              ext_str = meth->d2i(NULL, &ext->value->data, ext->value->length);
++              ext_str = meth->d2i (NULL, &mutable_ptr, ext->value->length);
+ #endif
+-              val = meth->i2v(meth, ext_str, NULL);
++              val = meth->i2v (meth, ext_str, NULL);
+ 
+-              for (j = 0; j < sk_CONF_VALUE_num(val); j++)
++              for (j = 0; j < sk_CONF_VALUE_num (val); j++)
+                 {
+                   nval = sk_CONF_VALUE_value (val, j);
+                   if (strcmp (nval->name, "DNS") == 0 && 
+@@ -202,7 +232,7 @@
   
    X509_free (cert);
  
 -  return (SSL_get_verify_result(request->ssl));
-+  return (SSL_get_verify_result(ssl));
++  return (SSL_get_verify_result (ssl));
  }
  
  
-@@ -330,18 +350,23 @@
+@@ -330,18 +360,23 @@
        return (GFTP_EFATAL);
      }
  
-+  ssl_map = g_hash_table_new_full(g_int_hash, g_int_equal, g_free, NULL);
++  gftp_ssl_map = g_hash_table_new_full (g_int_hash, g_int_equal, g_free, NULL);
 +
    return (0);
  }
@@ -340,16 +381,16 @@
    intptr_t verify_ssl_peer;
    BIO * bio;
    long ret;
-+  SSL* ssl = getSSLForFd(fd);
++  SSL* ssl = gftp_get_ssl_for_fd (fd);
  
 -  g_return_val_if_fail (request->datafd > 0, GFTP_EFATAL);
 +  /* ensure the data socket is open and tls is not yet started on it */
 +  g_return_val_if_fail (fd > 0, GFTP_EFATAL);
-+  g_return_val_if_fail (ssl == 0, GFTP_EFATAL);
++  g_return_val_if_fail (ssl == NULL, GFTP_EFATAL);
  
    if (!gftp_ssl_initialized)
      {
-@@ -352,9 +377,13 @@
+@@ -352,9 +387,13 @@
      }
  
    /* FIXME - take this out. I need to find out how to do timeouts with the SSL
@@ -366,7 +407,7 @@
      {
        gftp_disconnect (request);
        return (GFTP_ERETRYABLE);
-@@ -368,9 +397,9 @@
+@@ -368,9 +407,9 @@
        return (GFTP_EFATAL);
      }
  
@@ -378,7 +419,7 @@
      {
        request->logging_function (gftp_logging_error, request,
                                   _("Error setting up SSL connection (SSL object)\n"));
-@@ -378,44 +407,91 @@
+@@ -378,44 +417,91 @@
        return (GFTP_EFATAL);
      }
  
@@ -386,16 +427,16 @@
 -  SSL_set_ex_data (request->ssl, gftp_ssl_get_index (), request);
 +  SSL_set_bio (ssl, bio, bio);
 +  SSL_set_ex_data (ssl, gftp_ssl_get_index (), request);
-+
+ 
+-  if (SSL_connect (request->ssl) <= 0)
 +  /*
 +   * for secondary connections, reuse the session ID from the
 +   * primary connection.  this is required for FTPS data connections,
 +   * which must reuse the control connection's session.
 +   */
 +  if (fd != request->datafd)
-+    SSL_set_session (ssl, SSL_get1_session (getSSLForFd (request->datafd)));
- 
--  if (SSL_connect (request->ssl) <= 0)
++    SSL_set_session (ssl, SSL_get1_session (gftp_get_ssl_for_fd (request->datafd)));
++
 +  if (SSL_connect (ssl) <= 0)
      {
        gftp_disconnect (request);
@@ -403,7 +444,7 @@
      }
  
 -  gftp_lookup_request_option (request, "verify_ssl_peer", &verify_ssl_peer);
-+  setSSLForFd(fd, ssl);
++  gftp_set_ssl_for_fd (fd, ssl);
  
 -  if (verify_ssl_peer && 
 -      (ret = gftp_ssl_post_connection_check (request)) != X509_V_OK)
@@ -459,12 +500,12 @@
 +void
 +gftp_ssl_session_close_ex (gftp_request * request, int fd)
 +{
-+  SSL* ssl = getSSLForFd(fd);
-+  if(ssl)
++  SSL* ssl = gftp_get_ssl_for_fd (fd);
++  if (ssl)
 +    {
 +      SSL_shutdown (ssl);
 +      SSL_free (ssl);
-+      setSSLForFd(fd, NULL);
++      gftp_set_ssl_for_fd (fd, NULL);
 +    }
 +}
 +
@@ -480,14 +521,14 @@
 -  ssize_t ret;
 +  int ret;
    int err;
-+  SSL* ssl = getSSLForFd(fd);
++  SSL* ssl = gftp_get_ssl_for_fd (fd);
  
 -  g_return_val_if_fail (request->ssl != NULL, GFTP_EFATAL);
 +  g_return_val_if_fail (ssl != NULL, GFTP_EFATAL);
  
    if (!gftp_ssl_initialized)
      {
-@@ -428,9 +504,9 @@
+@@ -428,9 +514,9 @@
    ret = 0;
    do
      {
@@ -499,20 +540,20 @@
            if (errno == EINTR || errno == EAGAIN)
              {
                if (request->cancel)
-@@ -461,9 +537,10 @@
+@@ -461,9 +547,10 @@
  ssize_t 
  gftp_ssl_write (gftp_request * request, const char *ptr, size_t size, int fd)
  {
 -  size_t ret, w_ret;
 +  int ret, w_ret;
-+  SSL* ssl = getSSLForFd(fd);
++  SSL* ssl = gftp_get_ssl_for_fd (fd);
   
 -  g_return_val_if_fail (request->ssl != NULL, GFTP_EFATAL);
 +  g_return_val_if_fail (ssl != NULL, GFTP_EFATAL);
  
    if (!gftp_ssl_initialized)
      {
-@@ -475,10 +552,12 @@
+@@ -475,10 +562,12 @@
    ret = 0;
    do
      {
