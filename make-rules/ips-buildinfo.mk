@@ -69,4 +69,4 @@ BUILD_VERSION ?=  $(PKG_SOLARIS_VERSION)-$(BRANCHID)
 
 # Set a default reference repository against which pkglint is run, in case it
 # hasn't been set in the environment.
-CANONICAL_REPO ?=		http://pkg.oracle.com/solaris/release/
+#CANONICAL_REPO ?=		http://pkg.oracle.com/solaris/release/
