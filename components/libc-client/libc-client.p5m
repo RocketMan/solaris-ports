@@ -22,9 +22,10 @@
 #
 
 set name=pkg.fmri \
-    value=pkg:/system/library/libc-client@$(IPS_COMPONENT_VERSION),$(BUILD_VERSION)
-set name=pkg.summary value="c-client library for mail protocols"
-set name=com.oracle.info.description value="c-client library for mail protocols"
+    value=pkg:/library/libc-client@$(IPS_COMPONENT_VERSION),$(BUILD_VERSION)
+set name=pkg.summary value="UW IMAP c-client library for mail protocols"
+set name=com.oracle.info.description \
+    value="UW IMAP c-client library for mail protocols"
 set name=info.classification \
     value=org.opensolaris.category.2008:System/Libraries
 set name=info.source-url value=$(COMPONENT_ARCHIVE_URL)
