@@ -151,7 +151,7 @@
  	@$(SH) ARCHIVE
  
 +$(SHLIBNAME): $(SOFILES)
-+	$(CC) `$(CAT) CFLAGS` -G -o $(SHLIBNAME) $(SOFILES) `$(CAT) LDFLAGS`
++	$(CC) `$(CAT) CFLAGS` -shared -o $(SHLIBNAME) $(SOFILES) `$(CAT) LDFLAGS`
 +	$(LN) $(SHLIBNAME) lib$(SHLIBBASE).so
 +
 +.c.lo: osdep.h
