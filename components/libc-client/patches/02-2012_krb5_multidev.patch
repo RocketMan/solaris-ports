@@ -1,0 +1,46 @@
+Description: Depend on krb5-multidev rather than libkrb5-dev.
+Bug-Debian: https://bugs.debian.org/745333
+Author: Jelmer Vernooij <jelmer@debian.org>
+Author: Magnus Holmgren <holmgren@debian.org>
+
+--- a/src/osdep/unix/Makefile
++++ b/src/osdep/unix/Makefile
+@@ -497,7 +497,7 @@ lnp:	# Linux Pluggable Authentication mo
+ 	 SPOOLDIR=/var/spool MAILSPOOL=/var/mail \
+ 	 ACTIVEFILE=/var/lib/news/active \
+ 	 RSHPATH=/usr/bin/rsh \
+-	 BASECFLAGS="$(GCCCFLAGS)" \
++	 BASECFLAGS="$(GCCCFLAGS) $(shell krb5-config.mit --cflags gssapi)" \
+ 	 BASELDFLAGS="../c-client/c-client.a $(PAMLDFLAGS)"
+ 
+ lnps:	# Linux Pluggable Authentication modules (c-client as shared lib)
+@@ -506,11 +506,11 @@ lnps:	# Linux Pluggable Authentication m
+ 	 SPOOLDIR=/var/spool MAILSPOOL=/var/mail \
+ 	 ACTIVEFILE=/var/lib/news/active \
+ 	 RSHPATH=/usr/bin/rsh \
+-	 BASECFLAGS="-fPIC $(GCCCFLAGS)" \
++	 BASECFLAGS="-fPIC $(GCCCFLAGS) $(shell krb5-config.mit --cflags gssapi)" \
+ 	 ARCHIVE="libc-client.so" \
+ 	 BASELDFLAGS="-L../c-client -lc-client $(PAMLDFLAGS) -lc" \
+ 	 ARRC="gcc --shared -Wl,-soname,libc-client.so.$(VERSION) -o" \
+-	 LIBRARIES="$(PAMLDFLAGS) $(EXTRALDFLAGS) $(SSLLDFLAGS) -lgssapi_krb5 -lkrb5 -lk5crypto -lcom_err" \
++	 LIBRARIES="$(PAMLDFLAGS) $(EXTRALDFLAGS) $(SSLLDFLAGS) $(shell krb5-config.mit --libs gssapi)" \
+ 	 RANLIB=true
+ 
+ lnx:	# Linux non-shadow passwords
+--- a/src/osdep/unix/Makefile.gss
++++ b/src/osdep/unix/Makefile.gss
+@@ -29,11 +29,11 @@
+ GSSDIR=/usr/local
+ GSSINCLUDE=$(GSSDIR)/include
+ GSSLIB=$(GSSDIR)/lib
+-GSSCFLAGS= -I$(GSSINCLUDE) -DGSS_C_NT_HOSTBASED_SERVICE=gss_nt_service_name -DKRB5_DEPRECATED=1
++GSSCFLAGS=$(shell krb5-config.mit --cflags gssapi) -DGSS_C_NT_HOSTBASED_SERVICE=gss_nt_service_name -DKRB5_DEPRECATED=1
+ GSSOLDLDFLAGS= -L$(GSSLIB) -lgssapi_krb5 -lkrb5 -lcrypto -lcom_err
+ GSSNEWLDFLAGS= -L$(GSSLIB) -lgssapi_krb5 -lkrb5 -lk5crypto -lcom_err
+ 
+ gss:	# GSSAPI Kerberos V flags
+ 	echo $(GSSCFLAGS) >> OSCFLAGS
+-	sh -c '(test -f $(GSSLIB)/libk5crypto.a) && echo $(GSSNEWLDFLAGS) || echo $(GSSOLDLDFLAGS)' >> LDFLAGS
++	krb5-config.mit --libs gssapi >> LDFLAGS
+ 	echo "#include \"kerb_mit.c\"" >> auths.c

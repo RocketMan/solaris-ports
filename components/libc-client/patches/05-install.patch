@@ -1,0 +1,20 @@
+--- imap-2007f/Makefile	2018-05-30 11:18:00.581069686 +0000
++++ imap-2007f-sol/Makefile	2018-05-30 11:54:31.178452704 +0000
+@@ -722,6 +722,17 @@
+ 	$(CD) tmail;$(MAKE) || true
+ 
+ 
++: $(USRLIB:="/usr/lib")
++INCDIR = /usr/include/c-client
++INC_TARGET = c-client/*.h
++LIB_TARGET = c-client/libc-client.2007f.1.so c-client/libc-client.so
++TARGETS = $(LIB_TARGET) $(INC_TARGET)
++
++install: $(TARGETS)
++	install -d $(DESTDIR)$(USRLIB) $(DESTDIR)$(INCDIR)
++	cp -a -p $(LIB_TARGET) $(DESTDIR)$(USRLIB)
++	install $(INC_TARGET) $(DESTDIR)$(INCDIR)
++
+ sysexitwarn:
+ 	@echo +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 	@echo + Hmm...it does not look like /usr/include/sysexits.h exists.

@@ -1,0 +1,113 @@
+#
+# CDDL HEADER START
+#
+# The contents of this file are subject to the terms of the
+# Common Development and Distribution License (the "License").
+# You may not use this file except in compliance with the License.
+#
+# You can obtain a copy of the license at usr/src/OPENSOLARIS.LICENSE
+# or http://www.opensolaris.org/os/licensing.
+# See the License for the specific language governing permissions
+# and limitations under the License.
+#
+# When distributing Covered Code, include this CDDL HEADER in each
+# file and include the License file at usr/src/OPENSOLARIS.LICENSE.
+# If applicable, add the following below this CDDL HEADER, with the
+# fields enclosed by brackets "[]" replaced with your own identifying
+# information: Portions Copyright [yyyy] [name of copyright owner]
+#
+# CDDL HEADER END
+#
+# Copyright (c) 2018 Jim Mason <jmason at ibinx dot com>.  All rights reserved.
+#
+
+set name=pkg.fmri \
+    value=pkg:/system/library/libc-client@$(IPS_COMPONENT_VERSION),$(BUILD_VERSION)
+set name=pkg.summary value="c-client library for mail protocols"
+set name=com.oracle.info.description value="c-client library for mail protocols"
+set name=info.classification \
+    value=org.opensolaris.category.2008:System/Libraries
+set name=info.source-url value=$(COMPONENT_ARCHIVE_URL)
+set name=org.opensolaris.consolidation value=$(CONSOLIDATION)
+dir  path=usr/include/c-client
+file usr/include/c-client/c-client.h path=usr/include/c-client/c-client.h
+file usr/include/c-client/dummy.h path=usr/include/c-client/dummy.h
+file usr/include/c-client/env.h path=usr/include/c-client/env.h
+file usr/include/c-client/env_unix.h path=usr/include/c-client/env_unix.h
+file usr/include/c-client/fdstring.h path=usr/include/c-client/fdstring.h
+file usr/include/c-client/flockcyg.h path=usr/include/c-client/flockcyg.h
+file usr/include/c-client/flocksim.h path=usr/include/c-client/flocksim.h
+file usr/include/c-client/flstring.h path=usr/include/c-client/flstring.h
+file usr/include/c-client/fs.h path=usr/include/c-client/fs.h
+file usr/include/c-client/ftl.h path=usr/include/c-client/ftl.h
+file usr/include/c-client/imap4r1.h path=usr/include/c-client/imap4r1.h
+file usr/include/c-client/linkage.h path=usr/include/c-client/linkage.h
+file usr/include/c-client/mail.h path=usr/include/c-client/mail.h
+file usr/include/c-client/misc.h path=usr/include/c-client/misc.h
+file usr/include/c-client/netmsg.h path=usr/include/c-client/netmsg.h
+file usr/include/c-client/newsrc.h path=usr/include/c-client/newsrc.h
+file usr/include/c-client/nl.h path=usr/include/c-client/nl.h
+file usr/include/c-client/nntp.h path=usr/include/c-client/nntp.h
+file usr/include/c-client/os_a32.h path=usr/include/c-client/os_a32.h
+file usr/include/c-client/os_a41.h path=usr/include/c-client/os_a41.h
+file usr/include/c-client/os_a52.h path=usr/include/c-client/os_a52.h
+file usr/include/c-client/os_aix.h path=usr/include/c-client/os_aix.h
+file usr/include/c-client/os_aos.h path=usr/include/c-client/os_aos.h
+file usr/include/c-client/os_art.h path=usr/include/c-client/os_art.h
+file usr/include/c-client/os_asv.h path=usr/include/c-client/os_asv.h
+file usr/include/c-client/os_aux.h path=usr/include/c-client/os_aux.h
+file usr/include/c-client/os_bsd.h path=usr/include/c-client/os_bsd.h
+file usr/include/c-client/os_bsf.h path=usr/include/c-client/os_bsf.h
+file usr/include/c-client/os_bsi.h path=usr/include/c-client/os_bsi.h
+file usr/include/c-client/os_cvx.h path=usr/include/c-client/os_cvx.h
+file usr/include/c-client/os_cyg.h path=usr/include/c-client/os_cyg.h
+file usr/include/c-client/os_d-g.h path=usr/include/c-client/os_d-g.h
+file usr/include/c-client/os_do4.h path=usr/include/c-client/os_do4.h
+file usr/include/c-client/os_drs.h path=usr/include/c-client/os_drs.h
+file usr/include/c-client/os_dyn.h path=usr/include/c-client/os_dyn.h
+file usr/include/c-client/os_hpp.h path=usr/include/c-client/os_hpp.h
+file usr/include/c-client/os_isc.h path=usr/include/c-client/os_isc.h
+file usr/include/c-client/os_lnx.h path=usr/include/c-client/os_lnx.h
+file usr/include/c-client/os_lyn.h path=usr/include/c-client/os_lyn.h
+file usr/include/c-client/os_mct.h path=usr/include/c-client/os_mct.h
+file usr/include/c-client/os_mnt.h path=usr/include/c-client/os_mnt.h
+file usr/include/c-client/os_nto.h path=usr/include/c-client/os_nto.h
+file usr/include/c-client/os_nxt.h path=usr/include/c-client/os_nxt.h
+file usr/include/c-client/os_os4.h path=usr/include/c-client/os_os4.h
+file usr/include/c-client/os_osf.h path=usr/include/c-client/os_osf.h
+file usr/include/c-client/os_osx.h path=usr/include/c-client/os_osx.h
+file usr/include/c-client/os_ptx.h path=usr/include/c-client/os_ptx.h
+file usr/include/c-client/os_pyr.h path=usr/include/c-client/os_pyr.h
+file usr/include/c-client/os_qnx.h path=usr/include/c-client/os_qnx.h
+file usr/include/c-client/os_s40.h path=usr/include/c-client/os_s40.h
+file usr/include/c-client/os_sc5.h path=usr/include/c-client/os_sc5.h
+file usr/include/c-client/os_sco.h path=usr/include/c-client/os_sco.h
+file usr/include/c-client/os_sgi.h path=usr/include/c-client/os_sgi.h
+file usr/include/c-client/os_shp.h path=usr/include/c-client/os_shp.h
+file usr/include/c-client/os_slx.h path=usr/include/c-client/os_slx.h
+file usr/include/c-client/os_sol.h path=usr/include/c-client/os_sol.h
+file usr/include/c-client/os_soln.h path=usr/include/c-client/os_soln.h
+file usr/include/c-client/os_solo.h path=usr/include/c-client/os_solo.h
+file usr/include/c-client/os_sos.h path=usr/include/c-client/os_sos.h
+file usr/include/c-client/os_sua.h path=usr/include/c-client/os_sua.h
+file usr/include/c-client/os_sun.h path=usr/include/c-client/os_sun.h
+file usr/include/c-client/os_sv2.h path=usr/include/c-client/os_sv2.h
+file usr/include/c-client/os_sv4.h path=usr/include/c-client/os_sv4.h
+file usr/include/c-client/os_ult.h path=usr/include/c-client/os_ult.h
+file usr/include/c-client/os_vu2.h path=usr/include/c-client/os_vu2.h
+file usr/include/c-client/osdep.h path=usr/include/c-client/osdep.h
+file usr/include/c-client/pseudo.h path=usr/include/c-client/pseudo.h
+file usr/include/c-client/rfc822.h path=usr/include/c-client/rfc822.h
+file usr/include/c-client/smtp.h path=usr/include/c-client/smtp.h
+file usr/include/c-client/sslio.h path=usr/include/c-client/sslio.h
+file usr/include/c-client/tcp.h path=usr/include/c-client/tcp.h
+file usr/include/c-client/tcp_unix.h path=usr/include/c-client/tcp_unix.h
+file usr/include/c-client/unix.h path=usr/include/c-client/unix.h
+file usr/include/c-client/utf8.h path=usr/include/c-client/utf8.h
+file usr/include/c-client/utf8aux.h path=usr/include/c-client/utf8aux.h
+file usr/lib/amd64/libc-client.2007f.1.so \
+    path=usr/lib/amd64/libc-client.2007f.1.so
+link path=usr/lib/amd64/libc-client.so target=libc-client.2007f.1.so
+file usr/lib/libc-client.2007f.1.so path=usr/lib/libc-client.2007f.1.so
+link path=usr/lib/libc-client.so target=libc-client.2007f.1.so
+license LICENSE.txt license=Apache

@@ -1,0 +1,209 @@
+--- imap-2007f/Makefile	2018-05-30 10:29:48.247387269 +0000
++++ imap-2007f-sol/Makefile	2018-05-29 21:16:55.594415906 +0000
+@@ -296,7 +296,7 @@
+ 
+ # Make the IMAP Toolkit
+ 
+-all:	c-client SPECIALS rebuild bundled
++all:	c-client SPECIALS rebuild
+ 
+ c-client:
+ 	@echo Not processed yet.  In a first-time build, you must specify
+@@ -684,7 +684,7 @@
+ 	$(TOOLS)/$@ "$(LN)" src/tmail tmail
+ 	$(LN) $(TOOLS)/$@ .
+ 
+-build:	OSTYPE rebuild rebuildclean bundled
++build:	OSTYPE rebuild rebuildclean
+ 
+ OSTYPE:
+ 	@$(MAKE) ip$(IP)
+--- imap-2007f/src/c-client/auth_md5.c	2011-07-23 01:20:18.000000000 +0000
++++ imap-2007f-sol/src/c-client/auth_md5.c	2018-05-29 21:16:55.603088186 +0000
+@@ -42,17 +42,17 @@
+ 
+ /* Prototypes */
+ 
+-long auth_md5_valid (void);
+-long auth_md5_client (authchallenge_t challenger,authrespond_t responder,
++static long auth_md5_valid (void);
++static long auth_md5_client (authchallenge_t challenger,authrespond_t responder,
+ 		      char *service,NETMBX *mb,void *stream,
+ 		      unsigned long *trial,char *user);
+-char *auth_md5_server (authresponse_t responder,int argc,char *argv[]);
+-char *auth_md5_pwd (char *user);
++static char *auth_md5_server (authresponse_t responder,int argc,char *argv[]);
++static char *auth_md5_pwd (char *user);
+ char *apop_login (char *chal,char *user,char *md5,int argc,char *argv[]);
+-char *hmac_md5 (char *text,unsigned long tl,char *key,unsigned long kl);
+-void md5_init (MD5CONTEXT *ctx);
+-void md5_update (MD5CONTEXT *ctx,unsigned char *data,unsigned long len);
+-void md5_final (unsigned char *digest,MD5CONTEXT *ctx);
++static char *hmac_md5 (char *text,unsigned long tl,char *key,unsigned long kl);
++static void md5_init (MD5CONTEXT *ctx);
++static void md5_update (MD5CONTEXT *ctx,unsigned char *data,unsigned long len);
++static void md5_final (unsigned char *digest,MD5CONTEXT *ctx);
+ static void md5_transform (unsigned long *state,unsigned char *block);
+ static void md5_encode (unsigned char *dst,unsigned long *src,int len);
+ static void md5_decode (unsigned long *dst,unsigned char *src,int len);
+--- imap-2007f/src/osdep/unix/Makefile	2018-05-30 10:29:48.319757197 +0000
++++ imap-2007f-sol/src/osdep/unix/Makefile	2018-05-29 21:16:55.608250146 +0000
+@@ -32,6 +32,11 @@
+ SSLTYPE=nopwd
+ IP=4
+ 
++SHLIBBASE = c-client
++SHLIBNAME = lib$(SHLIBBASE).${DISTVERSION}.so
++
++.SUFFIXES: .o .lo
++SOFILES=${BINARIES:.o=.lo}
+ 
+ # The optimization level here for GCC ports is set here for a reason.  It's
+ # to get you to read this text.
+@@ -54,11 +59,12 @@
+ 
+ # Extended flags needed for SSL.  You may need to modify.
+ 
+-SSLDIR=/usr/local/ssl
+-SSLCERTS=$(SSLDIR)/certs
++PREFIX=/usr
++SSLDIR=$(PREFIX)/ssl
++SSLCERTS=/etc/openssl/certs
+ SSLKEYS=$(SSLCERTS)
+-SSLINCLUDE=$(SSLDIR)/include
+-SSLLIB=$(SSLDIR)/lib
++SSLINCLUDE=$(PREFIX)/include
++SSLLIB=$(PREFIX)/lib
+ 
+ SSLCRYPTO=-lcrypto
+ 
+@@ -130,7 +136,7 @@
+ # Commands possibly overriden by the individual port
+ 
+ ARRC=ar rc
+-CC=cc
++CC=gcc
+ LN=ln -s
+ RANLIB=ranlib
+ 
+@@ -154,7 +160,6 @@
+  dummy.o pseudo.o netmsg.o flstring.o fdstring.o \
+  rfc822.o nntp.o smtp.o imap4r1.o pop3.o \
+  unix.o mbx.o mmdf.o tenex.o mtx.o news.o phile.o mh.o mx.o mix.o
+-CFLAGS=-g
+ 
+ CAT=cat
+ MAKE=make
+@@ -494,23 +499,23 @@
+ lnp:	# Linux Pluggable Authentication modules
+ 	$(BUILD) `$(CAT) SPECIALS` OS=slx \
+ 	 SIGTYPE=psx CHECKPW=pam CRXTYPE=nfs \
+-	 SPOOLDIR=/var/spool MAILSPOOL=/var/mail \
++	 SPOOLDIR=/var/spool \
+ 	 ACTIVEFILE=/var/lib/news/active \
+ 	 RSHPATH=/usr/bin/rsh \
+-	 BASECFLAGS="$(GCCCFLAGS) $(shell krb5-config.mit --cflags gssapi)" \
++	 BASECFLAGS="$(GCCCFLAGS)" \
+ 	 BASELDFLAGS="../c-client/c-client.a $(PAMLDFLAGS)"
+ 
+ lnps:	# Linux Pluggable Authentication modules (c-client as shared lib)
+ 	$(BUILD) `$(CAT) SPECIALS` OS=lnx \
+ 	 SIGTYPE=psx CHECKPW=pam CRXTYPE=nfs \
+-	 SPOOLDIR=/var/spool MAILSPOOL=/var/mail \
++	 SPOOLDIR=/var/spool \
+ 	 ACTIVEFILE=/var/lib/news/active \
+ 	 RSHPATH=/usr/bin/rsh \
+-	 BASECFLAGS="-fPIC $(GCCCFLAGS) $(shell krb5-config.mit --cflags gssapi)" \
++	 BASECFLAGS="-fPIC $(GCCCFLAGS)" \
+ 	 ARCHIVE="libc-client.so" \
+ 	 BASELDFLAGS="-L../c-client -lc-client $(PAMLDFLAGS) -lc" \
+ 	 ARRC="gcc --shared -Wl,-soname,libc-client.so.$(VERSION) -o" \
+-	 LIBRARIES="$(PAMLDFLAGS) $(EXTRALDFLAGS) $(SSLLDFLAGS) $(shell krb5-config.mit --libs gssapi)" \
++	 LIBRARIES="$(PAMLDFLAGS) $(EXTRALDFLAGS) $(SSLLDFLAGS) -lgssapi_krb5 -lkrb5 -lk5crypto -lcom_err" \
+ 	 RANLIB=true
+ 
+ lnx:	# Linux non-shadow passwords
+@@ -737,9 +742,9 @@
+ 	 SPOOLDIR=/var/spool MAILSPOOL=/var/mail \
+ 	 ACTIVEFILE=/usr/share/news/active \
+ 	 RSHPATH=/usr/bin/rsh \
+-	 BASECFLAGS="-g -O -w" \
++	 BASECFLAGS="$(CFLAGS)" \
+ 	 BASELDFLAGS="-lsocket -lnsl -lgen" \
+-	 RANLIB=true CC=/opt/SUNWspro/bin/cc
++	 RANLIB=true
+ 
+ 
+ # Note: It is a long and disgusting story about why cc is set to ucbcc.  You
+@@ -866,15 +871,22 @@
+ 
+ # Build it!
+ 
+-build:	clean once $(ARCHIVE)
++build:	clean once $(ARCHIVE) $(SHLIBNAME)
+ 
+-all:	$(ARCHIVE)
++all:	$(ARCHIVE) $(SHLIBNAME)
+ 
+ $(ARCHIVE): $(BINARIES)
+ 	sh -c '$(RM) $(ARCHIVE) || true'
+ 	@$(CAT) ARCHIVE
+ 	@$(SH) ARCHIVE
+ 
++$(SHLIBNAME): $(SOFILES)
++	$(CC) `$(CAT) CFLAGS` -G -o $(SHLIBNAME) $(SOFILES) `$(CAT) LDFLAGS`
++	$(LN) $(SHLIBNAME) lib$(SHLIBBASE).so
++
++.c.lo: osdep.h
++	$(CC) -fPIC -DPIC -D_REENTRANT -c `$(CAT) CFLAGS` ${@:.lo=.c} -o $@
++
+ .c.o:
+ 	`$(CAT) CCTYPE` -c `$(CAT) CFLAGS` $*.c
+ 
+@@ -917,7 +929,8 @@
+ 
+ # OS-dependent
+ 
+-osdep.o:mail.h misc.h env.h fs.h ftl.h nl.h tcp.h \
++
++OSDEPS = mail.h misc.h env.h fs.h ftl.h nl.h tcp.h \
+ 	osdep.h env_unix.h tcp_unix.h \
+ 	osdep.c env_unix.c fs_unix.c ftl_unix.c nl_unix.c tcp_unix.c ip_unix.c\
+ 	auths.c crexcl.c flockcyg.c flocklnx.c flocksim.c fsync.c \
+@@ -931,12 +944,20 @@
+ 	write.c sslstdio.c \
+ 	strerror.c strpbrk.c strstr.c strtok.c strtoul.c \
+ 	OSCFLAGS
++
++osdep.o: $(OSDEPS)
++	$(CC) `$(CAT) CFLAGS` `$(CAT) OSCFLAGS` -c osdep.c
++	@echo ==============================================================
+ 	@echo Building OS-dependent module
+ 	@echo If you get No such file error messages for files x509.h, ssl.h,
+ 	@echo pem.h, buffer.h, bio.h, and crypto.h, that means that OpenSSL
+ 	@echo is not installed on your system.  Either install OpenSSL first
+ 	@echo or build with command: make `$(CAT) OSTYPE` SSLTYPE=none
+ 	`$(CAT) CCTYPE` -c `$(CAT) CFLAGS` `$(CAT) OSCFLAGS` -c osdep.c
++	@echo ==============================================================
++
++osdep.lo: $(OSDEPS)
++	$(CC) -fPIC -DPIC -D_REENTRANT -c `$(CAT) CFLAGS` `$(CAT) OSCFLAGS` osdep.c -o $@
+ 
+ osdep.c: osdepbas.c osdepckp.c osdeplog.c osdepssl.c
+ 	$(CAT) osdepbas.c osdepckp.c osdeplog.c osdepssl.c > osdep.c
+--- imap-2007f/src/osdep/unix/Makefile.gss	2018-05-30 10:29:48.320019893 +0000
++++ imap-2007f-sol/src/osdep/unix/Makefile.gss	2011-07-23 01:20:10.000000000 +0000
+@@ -29,11 +29,11 @@
+ GSSDIR=/usr/local
+ GSSINCLUDE=$(GSSDIR)/include
+ GSSLIB=$(GSSDIR)/lib
+-GSSCFLAGS=$(shell krb5-config.mit --cflags gssapi) -DGSS_C_NT_HOSTBASED_SERVICE=gss_nt_service_name -DKRB5_DEPRECATED=1
++GSSCFLAGS= -I$(GSSINCLUDE) -DGSS_C_NT_HOSTBASED_SERVICE=gss_nt_service_name -DKRB5_DEPRECATED=1
+ GSSOLDLDFLAGS= -L$(GSSLIB) -lgssapi_krb5 -lkrb5 -lcrypto -lcom_err
+ GSSNEWLDFLAGS= -L$(GSSLIB) -lgssapi_krb5 -lkrb5 -lk5crypto -lcom_err
+ 
+ gss:	# GSSAPI Kerberos V flags
+ 	echo $(GSSCFLAGS) >> OSCFLAGS
+-	krb5-config.mit --libs gssapi >> LDFLAGS
++	sh -c '(test -f $(GSSLIB)/libk5crypto.a) && echo $(GSSNEWLDFLAGS) || echo $(GSSOLDLDFLAGS)' >> LDFLAGS
+ 	echo "#include \"kerb_mit.c\"" >> auths.c
