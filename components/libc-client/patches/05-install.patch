@@ -4,7 +4,7 @@
  	$(CD) tmail;$(MAKE) || true
  
  
-+: $(USRLIB:="/usr/lib")
++USRLIB ?= /usr/lib
 +INCDIR = /usr/include/c-client
 +INC_TARGET = c-client/*.h
 +LIB_TARGET = c-client/libc-client.2007f.1.so c-client/libc-client.so
