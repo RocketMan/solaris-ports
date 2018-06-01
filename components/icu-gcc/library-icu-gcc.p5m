@@ -1,0 +1,110 @@
+#
+# CDDL HEADER START
+#
+# The contents of this file are subject to the terms of the
+# Common Development and Distribution License (the "License").
+# You may not use this file except in compliance with the License.
+#
+# You can obtain a copy of the license at usr/src/OPENSOLARIS.LICENSE
+# or http://www.opensolaris.org/os/licensing.
+# See the License for the specific language governing permissions
+# and limitations under the License.
+#
+# When distributing Covered Code, include this CDDL HEADER in each
+# file and include the License file at usr/src/OPENSOLARIS.LICENSE.
+# If applicable, add the following below this CDDL HEADER, with the
+# fields enclosed by brackets "[]" replaced with your own identifying
+# information: Portions Copyright [yyyy] [name of copyright owner]
+#
+# CDDL HEADER END
+#
+# Copyright (c) 2018 Jim Mason <jmason at ibinx dot com>.  All rights reserved.
+#
+set name=pkg.fmri \
+    value=pkg:/library/icu-gcc@$(PKG_SOLARIS_VERSION),$(BUILD_VERSION)
+set name=pkg.summary \
+    value="International Components for Unicode (GNU C++ name mangling)"
+set name=pkg.description \
+    value="ICU is a set of C and C++ libraries that provides robust and full-featured Unicode and locale support. The library provides calendar support, conversions for many character sets, language sensitive collation, date and time formatting, support for many locales, message catalogs and resources, message formatting, normalization, number and currency formatting, time zones support, transliteration, word, line and sentence breaking, etc. This package contains the Unicode character database and derived properties, along with converters and time zones data. This package contains the runtime libraries for ICU with GNU C++ name mangling."
+set name=pkg.human-version value=$(HUMAN_VERSION)
+set name=com.oracle.info.description \
+    value="International Components for Unicode"
+set name=info.classification \
+    value=org.opensolaris.category.2008:System/Internationalization
+set name=info.source-url value=$(COMPONENT_ARCHIVE_URL)
+set name=info.upstream-url value=$(COMPONENT_PROJECT_URL)
+set name=org.opensolaris.consolidation value=$(CONSOLIDATION)
+#
+#
+file path=usr/bin/icu-config_gcc
+dir  path=usr/lib/$(MACH64)/icu_gcc/54.1
+file path=usr/lib/$(MACH64)/icu_gcc/54.1/Makefile.inc
+file path=usr/lib/$(MACH64)/icu_gcc/54.1/pkgdata.inc
+link path=usr/lib/$(MACH64)/icu_gcc/Makefile.inc target=54.1/Makefile.inc
+link path=usr/lib/$(MACH64)/icu_gcc/pkgdata.inc target=54.1/pkgdata.inc
+link path=usr/lib/$(MACH64)/libicudata_gcc.so target=libicudata_gcc.so.54.1
+link path=usr/lib/$(MACH64)/libicudata_gcc.so.54 target=libicudata_gcc.so.54.1
+file path=usr/lib/$(MACH64)/libicudata_gcc.so.54.1
+link path=usr/lib/$(MACH64)/libicui18n_gcc.so target=libicui18n_gcc.so.54.1
+link path=usr/lib/$(MACH64)/libicui18n_gcc.so.54 target=libicui18n_gcc.so.54.1
+file path=usr/lib/$(MACH64)/libicui18n_gcc.so.54.1
+link path=usr/lib/$(MACH64)/libicuio_gcc.so target=libicuio_gcc.so.54.1
+link path=usr/lib/$(MACH64)/libicuio_gcc.so.54 target=libicuio_gcc.so.54.1
+file path=usr/lib/$(MACH64)/libicuio_gcc.so.54.1
+link path=usr/lib/$(MACH64)/libicule_gcc.so target=libicule_gcc.so.54.1
+link path=usr/lib/$(MACH64)/libicule_gcc.so.54 target=libicule_gcc.so.54.1
+file path=usr/lib/$(MACH64)/libicule_gcc.so.54.1
+link path=usr/lib/$(MACH64)/libiculx_gcc.so target=libiculx_gcc.so.54.1
+link path=usr/lib/$(MACH64)/libiculx_gcc.so.54 target=libiculx_gcc.so.54.1
+file path=usr/lib/$(MACH64)/libiculx_gcc.so.54.1
+link path=usr/lib/$(MACH64)/libicutest_gcc.so target=libicutest_gcc.so.54.1
+link path=usr/lib/$(MACH64)/libicutest_gcc.so.54 target=libicutest_gcc.so.54.1
+file path=usr/lib/$(MACH64)/libicutest_gcc.so.54.1
+link path=usr/lib/$(MACH64)/libicutu_gcc.so target=libicutu_gcc.so.54.1
+link path=usr/lib/$(MACH64)/libicutu_gcc.so.54 target=libicutu_gcc.so.54.1
+file path=usr/lib/$(MACH64)/libicutu_gcc.so.54.1
+link path=usr/lib/$(MACH64)/libicuuc_gcc.so target=libicuuc_gcc.so.54.1
+link path=usr/lib/$(MACH64)/libicuuc_gcc.so.54 target=libicuuc_gcc.so.54.1
+file path=usr/lib/$(MACH64)/libicuuc_gcc.so.54.1
+file path=usr/lib/$(MACH64)/pkgconfig/icu-i18n_gcc.pc
+file path=usr/lib/$(MACH64)/pkgconfig/icu-io_gcc.pc
+file path=usr/lib/$(MACH64)/pkgconfig/icu-le_gcc.pc
+file path=usr/lib/$(MACH64)/pkgconfig/icu-lx_gcc.pc
+file path=usr/lib/$(MACH64)/pkgconfig/icu-uc_gcc.pc
+dir  path=usr/lib/icu_gcc
+dir  path=usr/lib/icu_gcc/54.1
+file path=usr/lib/icu_gcc/54.1/Makefile.inc
+file path=usr/lib/icu_gcc/54.1/pkgdata.inc
+link path=usr/lib/icu_gcc/Makefile.inc target=54.1/Makefile.inc
+link path=usr/lib/icu_gcc/pkgdata.inc target=54.1/pkgdata.inc
+link path=usr/lib/libicudata_gcc.so target=libicudata_gcc.so.54.1
+link path=usr/lib/libicudata_gcc.so.54 target=libicudata_gcc.so.54.1
+file path=usr/lib/libicudata_gcc.so.54.1
+link path=usr/lib/libicui18n_gcc.so target=libicui18n_gcc.so.54.1
+link path=usr/lib/libicui18n_gcc.so.54 target=libicui18n_gcc.so.54.1
+file path=usr/lib/libicui18n_gcc.so.54.1
+link path=usr/lib/libicuio_gcc.so target=libicuio_gcc.so.54.1
+link path=usr/lib/libicuio_gcc.so.54 target=libicuio_gcc.so.54.1
+file path=usr/lib/libicuio_gcc.so.54.1
+link path=usr/lib/libicule_gcc.so target=libicule_gcc.so.54.1
+link path=usr/lib/libicule_gcc.so.54 target=libicule_gcc.so.54.1
+file path=usr/lib/libicule_gcc.so.54.1
+link path=usr/lib/libiculx_gcc.so target=libiculx_gcc.so.54.1
+link path=usr/lib/libiculx_gcc.so.54 target=libiculx_gcc.so.54.1
+file path=usr/lib/libiculx_gcc.so.54.1
+link path=usr/lib/libicutest_gcc.so target=libicutest_gcc.so.54.1
+link path=usr/lib/libicutest_gcc.so.54 target=libicutest_gcc.so.54.1
+file path=usr/lib/libicutest_gcc.so.54.1
+link path=usr/lib/libicutu_gcc.so target=libicutu_gcc.so.54.1
+link path=usr/lib/libicutu_gcc.so.54 target=libicutu_gcc.so.54.1
+file path=usr/lib/libicutu_gcc.so.54.1
+link path=usr/lib/libicuuc_gcc.so target=libicuuc_gcc.so.54.1
+link path=usr/lib/libicuuc_gcc.so.54 target=libicuuc_gcc.so.54.1
+file path=usr/lib/libicuuc_gcc.so.54.1
+file path=usr/lib/pkgconfig/icu-i18n_gcc.pc
+file path=usr/lib/pkgconfig/icu-io_gcc.pc
+file path=usr/lib/pkgconfig/icu-le_gcc.pc
+file path=usr/lib/pkgconfig/icu-lx_gcc.pc
+file path=usr/lib/pkgconfig/icu-uc_gcc.pc
+license license.html license=icu
+depend type=require fmri=pkg:/library/icu@0.5.11-0.175.3.0.0.26.2
