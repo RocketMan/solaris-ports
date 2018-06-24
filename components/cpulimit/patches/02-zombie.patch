@@ -1,5 +1,5 @@
---- a/src/process_iterator_solaris.c	2018-06-24 11:38:31.996010362 +0000
-+++ b/src/process_iterator_solaris.c	2018-06-24 11:41:59.282128748 +0000
+--- a/src/process_iterator_solaris.c	2018-04-11 17:03:42.000000000 +0000
++++ b/src/process_iterator_solaris.c	2018-06-24 15:12:24.062270164 +0000
 @@ -50,7 +50,16 @@
  	p->starttime = psinfo.pr_start.tv_sec * 1.0e03 + psinfo.pr_start.tv_nsec / 1.0e06;
  	strcpy(p->command, psinfo.pr_psargs);
@@ -18,3 +18,13 @@
  }
  
  static pid_t getppid_of(pid_t pid) {
+@@ -94,8 +103,7 @@
+ 	while ((dit = readdir(it->dip))) {
+ 		p->pid = atoi(dit->d_name);
+ 		if (it->filter->pid != 0 && it->filter->pid != p->pid && !is_child_of(p->pid, it->filter->pid)) continue;
+-		read_process_info(p->pid, p);
+-		break;
++		if (!read_process_info(p->pid, p)) break;
+ 	}
+ 
+ 	if (!dit) {
