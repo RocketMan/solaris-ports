@@ -1,0 +1,20 @@
+--- a/src/process_iterator_solaris.c	2018-06-24 11:38:31.996010362 +0000
++++ b/src/process_iterator_solaris.c	2018-06-24 11:41:59.282128748 +0000
+@@ -50,7 +50,16 @@
+ 	p->starttime = psinfo.pr_start.tv_sec * 1.0e03 + psinfo.pr_start.tv_nsec / 1.0e06;
+ 	strcpy(p->command, psinfo.pr_psargs);
+ 
+-	return 0;
++	/**
++	 * per proc(4):
++	 *
++	 *   If the process is a zombie, pr_nlwp, pr_nzomb, and
++	 *   pr_lwp.pr_lwpid are zero and the other fields of pr_lwp
++	 *   are undefined
++	 *
++	 * In this case, we'll return -1 to the caller
++	 */
++	return psinfo.pr_nlwp?0:-1;
+ }
+ 
+ static pid_t getppid_of(pid_t pid) {
