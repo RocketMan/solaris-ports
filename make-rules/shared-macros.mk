@@ -109,7 +109,7 @@ ROOT =			/
 
 # The changset and external source repo used in building the packages.
 CONSOLIDATION_CHANGESET=$(shell hg identify -i)
-CONSOLIDATION_REPOSITORY_URL=https://github.com/RinTinCan/solaris-rtutils.git
+CONSOLIDATION_REPOSITORY_URL=https://github.com/RinTinCan/solaris-ports.git
 
 # Native OS version
 OS_RELEASE :=		$(shell uname -r)

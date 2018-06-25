@@ -97,7 +97,7 @@ Further information about this software can be found on the open source communit
 """
 # JM 2018-04-10 updated notes_source
 notes_source = """
-This software was built from source available at https://github.com/RinTinCan/solaris-rtutils.  The original community source was downloaded from  %s
+This software was built from source available at https://github.com/RinTinCan/solaris-ports.  The original community source was downloaded from  %s
 """
 
 def notes_section_text(header_seen, community, source, modified_date):
