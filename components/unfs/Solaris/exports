@@ -1,0 +1,97 @@
+## UNFS exports file
+#
+# Comments start with a # character and cause the rest of the line to be
+# ignored.  Extremely long exports can be split across multiple lines by
+# escaping the intermediate newlines with a backslash character.  Each
+# line starts with a directory that is to be exported.  If the directory
+# name contains whitespace, it must be enclosed in double quotes.  To the
+# right of the directory name, a list of client specifications can be
+# given.  If this list is missing, the directory is exported to everyone,
+# using default options `ro` and `root_squash`.
+# 
+# If the directory name contains symbolic links, they are expanded.  This
+# means that you have to force unfsd to reload the exports file if the
+# symlinks happen to change.
+# 
+# Clients can be specified using either a hostname, an IP address, or an
+# IP network.  Networks can be given by specifying the number of leading
+# 1 bits in the netmask or by giving the full netmask.  If the hostname
+# is empty, the directory is exported to everyone.
+# 
+# Options can follow a client specification and have to be enclosed in
+# parenthesis, with the opening paren directly following the client name
+# or address.  If no options are given, `ro` and `root_squash` are
+# enabled by default.  The following options are supported by unfsd:
+# 
+# * root_squash
+#   Enable root squashing, mapping all NFS request done with a user id of
+#   0 to the user id of the `nobody` user.  This option is enabled by
+#   default.
+# 
+# * no_root_squash
+#   Disable root squashing.  When this option is present, NFS requests done
+#   with a user id of 0 will be done as the `root` user of the server,
+#   effectively disabling all permissions checks.
+# 
+# * all_squash
+#   Squash all users.  When this option is present, all NFS requests will
+#   be done as the `nobody` user of the server.
+# 
+# * no_all_squash
+#   Don't squash all users.  This option is enabled by default.
+# 
+# * rw
+#   Allow read and write access on the exported directory.  When this
+#   option is present, clients are allowed to modify files and directories
+#   on the server.
+# 
+# * ro
+#   Allow only read access on the exported directory.  When this option is
+#   present, clients are not allowed to modify files and directories on
+#   the server.  This option is enabled by default.
+# 
+# * anonuid/anongid
+#   Sets the uid and gid for anonymous mounts for this share - by default
+#   the uid for nobody will be used, but using these options you can
+#   change this on a per-share basis.
+# 
+# * secure
+#   Allow only mount requests coming from a source port below 1024.  Using
+#   these ports requires super-user privileges on many operating systems.
+#   This option is enabled by default.
+# 
+# * insecure
+#   Allow mount requests coming from any source port.
+# 
+# * removable
+#   Consider this directory to be on a removable medium.  When this option
+#   is present, unfsd will not keep files open across multiple read or
+#   write requests.  This allows unmounting of the underlying filesystem on
+#   the server at any time.  Also, unfsd will not require that the
+#   exported path exists at startup or mount time.  If the path does not
+#   exist, an empty directory will be presented to the client.  This is
+#   useful for exporting mount points handled by autofs.
+# 
+# * fixed
+#   Consider this directory to be on a fixed medium.  This options is
+#   enabled by default and allows unfsd to keep files open between
+#   multiple read or write requests.
+# 
+# * password=<password>
+#   To be able to mount this export, the specified password is
+#   required.  The password needs be given in the mount request, as in
+#   "mount yourhost:@password:gazonk/tmp /mnt".  One time passwords are
+#   also supported.  When using passwords, the file handles will include a
+#   hash of the password.  This means that if you change the password, all
+#   clients will need to remount this export.  See the file
+#   "doc/passwords.txt" in the source for more information.
+#
+#
+# Sample unfs exports file:
+#
+#   /home            trusted(rw,no_root_squash) (ro)
+#   "/with spaces"   weirdo
+#   /usr             1.2.3.4(rw) 192.168.2.0/24(ro,all_squash)
+#   /home/foo        bar(rw) 10.0.0.0/255.0.0.0(root_squash)
+#   /home/joe        joes_pc(anonuid=1100,anongid=1100,rw,all_squash)
+# 
