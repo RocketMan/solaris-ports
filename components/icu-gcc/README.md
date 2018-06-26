@@ -34,5 +34,6 @@ link flags for this package.  If you are building php from the Solaris
 userland gate, include
 
         CONFIGURE_ENV += ICU_CONFIG=/usr/bin/icu-config_gcc
+        REQUIRED_PACKAGES += library/icu-gcc
 
 in the Makefile.

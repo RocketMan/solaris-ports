@@ -10,9 +10,12 @@ this package includes support for secure communication via OpenSSL.
 
 To build PHP with imap support, simply install this package and configure
 php with `--with-imap` and `--with-imap-ssl`.  If you are building PHP
-from the Solaris userland gate, include
+from the Solaris userland gate, include in enable-extensions.mk:
 
         CONFIGURE_OPTIONS += --with-imap=shared
         CONFIGURE_OPTIONS += --with-imap-ssl=shared
 
-in enable-extensions.mk.
+and include in Makefile:
+
+        REQUIRED_PACKAGES += library/libc-client
+
