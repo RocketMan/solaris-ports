@@ -1,0 +1,38 @@
+--- a/unfsd.8	2015-07-14 15:35:26.000000000 +0000
++++ b/unfsd.8	2018-06-26 15:51:33.782388906 +0000
+@@ -16,7 +16,7 @@
+ At startup,
+ .B unfsd
+ reads the exports file,
+-.I /etc/exports
++.I /etc/unfs/exports
+ by default, to find out which directories are available to clients
+ and what options are in effect (see
+ .B EXPORTS FILE
+@@ -77,7 +77,7 @@
+ .TP
+ .BI "\-e " "\<file\>"
+ Use the given file as the exports file, instead of using
+-.IR /etc/exports .
++.IR /etc/unfs/exports .
+ Note that the file needs to be specified using an absolute path.
+ .TP
+ .BI "\-i " "\<file\>"
+@@ -218,7 +218,7 @@
+ the number of currently held open READ and WRITE file descriptors.
+ .SH "EXPORTS FILE"
+ The exports file,
+-.I /etc/exports
++.I /etc/unfs/exports
+ by default, determines which directories on the server can be accessed
+ from NFS clients. An example:
+ 
+@@ -386,7 +386,7 @@
+ Linux).
+ .SH FILES
+ .TP 20
+-.I /etc/exports
++.I /etc/unfs/exports
+ Default exports file.
+ .SH AUTHOR
+ Pascal Schmidt
