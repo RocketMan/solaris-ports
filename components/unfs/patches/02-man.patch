@@ -1,5 +1,5 @@
 --- a/unfsd.8	2015-07-14 15:35:26.000000000 +0000
-+++ b/unfsd.8	2018-06-26 15:51:33.782388906 +0000
++++ b/unfsd.8	2018-06-26 18:04:31.504681420 +0000
 @@ -16,7 +16,7 @@
  At startup,
  .B unfsd
@@ -27,7 +27,7 @@
  by default, determines which directories on the server can be accessed
  from NFS clients. An example:
  
-@@ -386,7 +386,7 @@
+@@ -386,9 +386,9 @@
  Linux).
  .SH FILES
  .TP 20
@@ -36,3 +36,6 @@
  Default exports file.
  .SH AUTHOR
  Pascal Schmidt
+ .SH "SEE ALSO"
+-.BR tags (7)
++.BR unfs (8)

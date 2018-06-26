@@ -36,5 +36,6 @@ dir  path=etc/unfs
 file Solaris/exports path=etc/unfs/exports mode=0644 preserve=renamenew
 file Solaris/unfs.xml path=lib/svc/manifest/network/unfs.xml
 file usr/sbin/unfsd path=usr/sbin/unfsd
+file Solaris/unfs.8.sunman path=usr/share/man/man8/unfs.8
 file usr/share/man/man8/unfsd.8 path=usr/share/man/man8/unfsd.8
 license LICENSE license="UNFS3 license"

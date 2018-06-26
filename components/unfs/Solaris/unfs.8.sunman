@@ -1,0 +1,63 @@
+.TH unfs 8 "5 Jan 2008" "Solaris 11.3" "System Administration Commands"
+.SH NAME
+unfs \- User-space NFS server overview
+
+.SH DESCRIPTION
+.sp
+unfs can be enabled by an authorized user within the service
+management facility (SMF), using the following fault management
+resource identifier (FMRI):
+.sp
+.in +2
+.nf
+svc:/network/unfs:default
+.fi
+.in -2
+.sp
+Available SMF properties are listed in the following table:
+.sp
+.TS
+allbox;
+lbw(1.250000i)| lbw(2.750000i)
+lw(1.250000i)| lw(2.750000i).
+SMF Property Name	Value
+application/exports	T{
+path to the exports file
+.br
+(default /etc/unfs/exports)
+T}
+start/exec	T{
+command to start daemon
+.br
+(default "/usr/sbin/unfsd -u -e %{exports}")
+T}
+.TE
+
+
+.SH EXAMPLES
+.LP
+\fBExample 1 \fRTo enable and start the unfsd daemon:
+.sp
+.in +2
+.nf
+# \fBsvcadm enable unfs\fR
+.fi
+.in -2
+.sp
+.LP
+\fBExample 2 \fRTo change the path to the export file:
+.sp
+.in +2
+.nf
+# \fBsvccfg -s unfs setprop application/exports=/etc/unfs/exports\fR
+# \fBsvcadm restart unfs\fR
+.fi
+.in -2
+.sp
+
+
+.SH SEE ALSO
+.sp
+.LP
+\fBunfsd(8)
+.sp
