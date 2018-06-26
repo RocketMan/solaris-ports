@@ -23,7 +23,7 @@
 # Copyright (c) 2018 Jim Mason <jmason at ibinx dot com>.  All rights reserved.
 #
 
-BUILD_BITS=		64
+BUILD_BITS=		32
 COMPILER=		gcc
 include ../../make-rules/shared-macros.mk
 
@@ -51,6 +51,7 @@ COMPONENT_PREP_ACTION = \
 
 include $(WS_MAKE_RULES)/common.mk
 
+LDFLAGS += $(CC_BITS)
 
 REQUIRED_PACKAGES += system/core-os
 REQUIRED_PACKAGES += system/library
