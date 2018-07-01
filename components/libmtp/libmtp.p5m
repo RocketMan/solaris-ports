@@ -1,0 +1,46 @@
+set name=pkg.fmri \
+    value=pkg:/library/media/libmtp@$(IPS_COMPONENT_VERSION),$(BUILD_VERSION)
+set name=pkg.summary \
+    value="libmtp is an Initiator implementation of the Media Transfer Protocol (MTP)"
+set name=com.oracle.info.description \
+    value="libmtp is an Initiator implementation of the Media Transfer Protocol (MTP) in the form of a library suitable primarily for POSIX compliant operating systems.  We implement MTP Basic, the stuff proposed for standardization."
+set name=info.classification \
+    value="org.opensolaris.category.2008:System/Multimedia Libraries"
+set name=info.source-url value=$(COMPONENT_ARCHIVE_URL)
+set name=info.upstream-url value=$(COMPONENT_PROJECT_URL)
+set name=org.opensolaris.consolidation value=$(CONSOLIDATION)
+file usr/bin/mtp-albumart path=usr/bin/mtp-albumart
+file usr/bin/mtp-albums path=usr/bin/mtp-albums
+file usr/bin/mtp-connect path=usr/bin/mtp-connect
+link path=usr/bin/mtp-delfile target=mtp-connect
+file usr/bin/mtp-detect path=usr/bin/mtp-detect
+file usr/bin/mtp-emptyfolders path=usr/bin/mtp-emptyfolders
+file usr/bin/mtp-files path=usr/bin/mtp-files
+file usr/bin/mtp-filetree path=usr/bin/mtp-filetree
+file usr/bin/mtp-folders path=usr/bin/mtp-folders
+file usr/bin/mtp-format path=usr/bin/mtp-format
+link path=usr/bin/mtp-getfile target=mtp-connect
+file usr/bin/mtp-getplaylist path=usr/bin/mtp-getplaylist
+link path=usr/bin/mtp-newfolder target=mtp-connect
+file usr/bin/mtp-newplaylist path=usr/bin/mtp-newplaylist
+file usr/bin/mtp-playlists path=usr/bin/mtp-playlists
+file usr/bin/mtp-reset path=usr/bin/mtp-reset
+link path=usr/bin/mtp-sendfile target=mtp-connect
+link path=usr/bin/mtp-sendtr target=mtp-connect
+file usr/bin/mtp-thumb path=usr/bin/mtp-thumb
+file usr/bin/mtp-tracks path=usr/bin/mtp-tracks
+file usr/bin/mtp-trexist path=usr/bin/mtp-trexist
+file usr/include/libmtp.h path=usr/include/libmtp.h
+file usr/lib/amd64/libmtp.a path=usr/lib/amd64/libmtp.a
+file usr/lib/amd64/libmtp.la path=usr/lib/amd64/libmtp.la
+link path=usr/lib/amd64/libmtp.so target=libmtp.so.9.4.0
+link path=usr/lib/amd64/libmtp.so.9 target=libmtp.so.9.4.0
+file usr/lib/amd64/libmtp.so.9.4.0 path=usr/lib/amd64/libmtp.so.9.4.0
+file usr/lib/amd64/pkgconfig/libmtp.pc path=usr/lib/amd64/pkgconfig/libmtp.pc
+file usr/lib/libmtp.a path=usr/lib/libmtp.a
+file usr/lib/libmtp.la path=usr/lib/libmtp.la
+link path=usr/lib/libmtp.so target=libmtp.so.9.4.0
+link path=usr/lib/libmtp.so.9 target=libmtp.so.9.4.0
+file usr/lib/libmtp.so.9.4.0 path=usr/lib/libmtp.so.9.4.0
+file usr/lib/pkgconfig/libmtp.pc path=usr/lib/pkgconfig/libmtp.pc
+license COPYING license=GPLv2
