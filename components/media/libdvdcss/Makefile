@@ -27,33 +27,18 @@ BUILD_BITS =            64_and_32
 COMPILER =		gcc
 include ../../../make-rules/shared-macros.mk
 
-COMPONENT_NAME=		libid3tag
-COMPONENT_VERSION=	0.15.1b
-IPS_COMPONENT_VERSION=	0.15.1.2
-COMPONENT_ARCHIVE =	$(COMPONENT_SRC).tar.gz
+COMPONENT_NAME=		libdvdcss
+COMPONENT_VERSION=	1.4.2
+COMPONENT_ARCHIVE =	$(COMPONENT_SRC).tar.bz2
 COMPONENT_ARCHIVE_HASH=	\
-	sha256:63da4f6e7997278f8a3fef4c6a372d342f705051d1eeb6a46a86b03610e26151
-SOURCEFORGE_URL =	https://downloads.sourceforge.net/project
-COMPONENT_ARCHIVE_URL = $(SOURCEFORGE_URL)/mad/$(COMPONENT_NAME)/$(COMPONENT_VERSION)/$(COMPONENT_ARCHIVE)
-COMPONENT_PROJECT_URL=	https://sourceforge.net/projects/mad/files/libid3tag/
+	sha256:78c2ed77ec9c0d8fbed7bf7d3abc82068b8864be494cfad165821377ff3f2575
+COMPONENT_ARCHIVE_URL = https://download.videolan.org/pub/$(COMPONENT_NAME)/$(COMPONENT_VERSION)/$(COMPONENT_ARCHIVE)
+COMPONENT_PROJECT_URL=	https://www.videolan.org/developers/libdvdcss.html
 
 
 include $(WS_MAKE_RULES)/common.mk
 
 CONFIGURE_OPTIONS += --enable-static=no
+CONFIGURE_OPTIONS += --disable-doc
 
-COMPONENT_POST_INSTALL_ACTION.32 += \
-        ($(MKDIR) $(PROTOPKGCONFIGDIR); \
-        $(CP) -f $(COMPONENT_DIR)/Solaris/id3tag.pc \
-            $(PROTOPKGCONFIGDIR)/id3tag.pc);
-
-COMPONENT_POST_INSTALL_ACTION.64 += \
-        ($(MKDIR) $(PROTOPKGCONFIGDIR64); \
-        $(GSED) -e 's|/lib|/lib/$(MACH64)|g' \
-            $(COMPONENT_DIR)/Solaris/id3tag.pc > \
-            $(PROTOPKGCONFIGDIR64)/id3tag.pc);
-
-REQUIRED_PACKAGES += library/zlib
-REQUIRED_PACKAGES += system/core-os
 REQUIRED_PACKAGES += system/library
-

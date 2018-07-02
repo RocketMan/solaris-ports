@@ -27,33 +27,18 @@ BUILD_BITS =            64_and_32
 COMPILER =		gcc
 include ../../../make-rules/shared-macros.mk
 
-COMPONENT_NAME=		libid3tag
-COMPONENT_VERSION=	0.15.1b
-IPS_COMPONENT_VERSION=	0.15.1.2
-COMPONENT_ARCHIVE =	$(COMPONENT_SRC).tar.gz
+COMPONENT_NAME=		libdvdnav
+COMPONENT_VERSION=	5.0.1
+COMPONENT_ARCHIVE =	$(COMPONENT_SRC).tar.bz2
 COMPONENT_ARCHIVE_HASH=	\
-	sha256:63da4f6e7997278f8a3fef4c6a372d342f705051d1eeb6a46a86b03610e26151
-SOURCEFORGE_URL =	https://downloads.sourceforge.net/project
-COMPONENT_ARCHIVE_URL = $(SOURCEFORGE_URL)/mad/$(COMPONENT_NAME)/$(COMPONENT_VERSION)/$(COMPONENT_ARCHIVE)
-COMPONENT_PROJECT_URL=	https://sourceforge.net/projects/mad/files/libid3tag/
+	sha256:72b1cb8266f163d4a1481b92c7b6c53e6dc9274d2a6befb08ffc351fe7a4a2a9
+COMPONENT_ARCHIVE_URL = http://www.videolan.org/pub/videolan/$(COMPONENT_NAME)/$(COMPONENT_VERSION)/$(COMPONENT_ARCHIVE)
+COMPONENT_PROJECT_URL=	http://dvdnav.mplayerhq.hu/
 
 
 include $(WS_MAKE_RULES)/common.mk
 
 CONFIGURE_OPTIONS += --enable-static=no
 
-COMPONENT_POST_INSTALL_ACTION.32 += \
-        ($(MKDIR) $(PROTOPKGCONFIGDIR); \
-        $(CP) -f $(COMPONENT_DIR)/Solaris/id3tag.pc \
-            $(PROTOPKGCONFIGDIR)/id3tag.pc);
-
-COMPONENT_POST_INSTALL_ACTION.64 += \
-        ($(MKDIR) $(PROTOPKGCONFIGDIR64); \
-        $(GSED) -e 's|/lib|/lib/$(MACH64)|g' \
-            $(COMPONENT_DIR)/Solaris/id3tag.pc > \
-            $(PROTOPKGCONFIGDIR64)/id3tag.pc);
-
-REQUIRED_PACKAGES += library/zlib
-REQUIRED_PACKAGES += system/core-os
+REQUIRED_PACKAGES += library/media/libdvdread
 REQUIRED_PACKAGES += system/library
-

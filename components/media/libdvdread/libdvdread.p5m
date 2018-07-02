@@ -1,0 +1,32 @@
+set name=pkg.fmri \
+    value=pkg:/library/media/libdvdread@$(IPS_COMPONENT_VERSION),$(BUILD_VERSION)
+set name=pkg.summary \
+    value="libdvdread provides a simple foundation for reading DVD video disks"
+set name=pkg.description \
+    value="libdvdread provides the functionality that is required to access many DVDs. It parses IFO files, reads NAV-blocks, and performs CSS authentication and descrambling (if an external libdvdcss library is installed)."
+set name=info.classification \
+    value="org.opensolaris.category.2008:System/Multimedia Libraries"
+set name=info.source-url value=$(COMPONENT_ARCHIVE_URL)
+set name=info.upstream-url value=$(COMPONENT_PROJECT_URL)
+set name=org.opensolaris.consolidation value=$(CONSOLIDATION)
+file usr/include/dvdread/bitreader.h path=usr/include/dvdread/bitreader.h
+file usr/include/dvdread/dvd_reader.h path=usr/include/dvdread/dvd_reader.h
+file usr/include/dvdread/dvd_udf.h path=usr/include/dvdread/dvd_udf.h
+file usr/include/dvdread/ifo_print.h path=usr/include/dvdread/ifo_print.h
+file usr/include/dvdread/ifo_read.h path=usr/include/dvdread/ifo_read.h
+file usr/include/dvdread/ifo_types.h path=usr/include/dvdread/ifo_types.h
+file usr/include/dvdread/nav_print.h path=usr/include/dvdread/nav_print.h
+file usr/include/dvdread/nav_read.h path=usr/include/dvdread/nav_read.h
+file usr/include/dvdread/nav_types.h path=usr/include/dvdread/nav_types.h
+file usr/lib/amd64/libdvdread.la path=usr/lib/amd64/libdvdread.la
+link path=usr/lib/amd64/libdvdread.so target=libdvdread.so.4.1.2
+link path=usr/lib/amd64/libdvdread.so.4 target=libdvdread.so.4.1.2
+file usr/lib/amd64/libdvdread.so.4.1.2 path=usr/lib/amd64/libdvdread.so.4.1.2
+file usr/lib/amd64/pkgconfig/dvdread.pc path=usr/lib/amd64/pkgconfig/dvdread.pc
+file usr/lib/libdvdread.la path=usr/lib/libdvdread.la
+link path=usr/lib/libdvdread.so target=libdvdread.so.4.1.2
+link path=usr/lib/libdvdread.so.4 target=libdvdread.so.4.1.2
+file usr/lib/libdvdread.so.4.1.2 path=usr/lib/libdvdread.so.4.1.2
+file usr/lib/pkgconfig/dvdread.pc path=usr/lib/pkgconfig/dvdread.pc
+license COPYING license=GPLv2
+depend type=optional fmri=library/media/libdvdcss

@@ -1,0 +1,25 @@
+set name=pkg.fmri \
+    value=pkg:/library/media/libdvdnav@$(IPS_COMPONENT_VERSION),$(BUILD_VERSION)
+set name=pkg.summary \
+    value="libdvdnav is a library for developers of multimedia applications"
+set name=pkg.description \
+    value="libdvdnav allows easy use of sophisticated DVD navigation features such as DVD menus, multiangle playback and even interactive DVD games."
+set name=info.classification \
+    value="org.opensolaris.category.2008:System/Multimedia Libraries"
+set name=info.source-url value=$(COMPONENT_ARCHIVE_URL)
+set name=info.upstream-url value=$(COMPONENT_PROJECT_URL)
+set name=org.opensolaris.consolidation value=$(CONSOLIDATION)
+file usr/include/dvdnav/dvd_types.h path=usr/include/dvdnav/dvd_types.h
+file usr/include/dvdnav/dvdnav.h path=usr/include/dvdnav/dvdnav.h
+file usr/include/dvdnav/dvdnav_events.h path=usr/include/dvdnav/dvdnav_events.h
+file usr/lib/amd64/libdvdnav.la path=usr/lib/amd64/libdvdnav.la
+link path=usr/lib/amd64/libdvdnav.so target=libdvdnav.so.4.1.2
+link path=usr/lib/amd64/libdvdnav.so.4 target=libdvdnav.so.4.1.2
+file usr/lib/amd64/libdvdnav.so.4.1.2 path=usr/lib/amd64/libdvdnav.so.4.1.2
+file usr/lib/amd64/pkgconfig/dvdnav.pc path=usr/lib/amd64/pkgconfig/dvdnav.pc
+file usr/lib/libdvdnav.la path=usr/lib/libdvdnav.la
+link path=usr/lib/libdvdnav.so target=libdvdnav.so.4.1.2
+link path=usr/lib/libdvdnav.so.4 target=libdvdnav.so.4.1.2
+file usr/lib/libdvdnav.so.4.1.2 path=usr/lib/libdvdnav.so.4.1.2
+file usr/lib/pkgconfig/dvdnav.pc path=usr/lib/pkgconfig/dvdnav.pc
+license COPYING license=GPLv2

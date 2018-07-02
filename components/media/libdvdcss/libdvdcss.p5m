@@ -1,0 +1,25 @@
+set name=pkg.fmri \
+    value=pkg:/library/media/libdvdcss@$(IPS_COMPONENT_VERSION),$(BUILD_VERSION)
+set name=pkg.summary \
+    value="libdvdcss is a simple library designed for accessing DVDs like a block device without having to bother about the decryption"
+set name=com.oracle.info.description \
+    value="libdvdcss is a library that computer programs can use to access the contents of a DVD"
+set name=info.classification \
+    value="org.opensolaris.category.2008:System/Multimedia Libraries"
+set name=info.source-url value=$(COMPONENT_ARCHIVE_URL)
+set name=info.upstream-url value=$(COMPONENT_PROJECT_URL)
+set name=org.opensolaris.consolidation value=$(CONSOLIDATION)
+file usr/include/dvdcss/dvdcss.h path=usr/include/dvdcss/dvdcss.h
+file usr/include/dvdcss/version.h path=usr/include/dvdcss/version.h
+file usr/lib/amd64/libdvdcss.la path=usr/lib/amd64/libdvdcss.la
+link path=usr/lib/amd64/libdvdcss.so target=libdvdcss.so.2.2.0
+link path=usr/lib/amd64/libdvdcss.so.2 target=libdvdcss.so.2.2.0
+file usr/lib/amd64/libdvdcss.so.2.2.0 path=usr/lib/amd64/libdvdcss.so.2.2.0
+file usr/lib/amd64/pkgconfig/libdvdcss.pc \
+    path=usr/lib/amd64/pkgconfig/libdvdcss.pc
+file usr/lib/libdvdcss.la path=usr/lib/libdvdcss.la
+link path=usr/lib/libdvdcss.so target=libdvdcss.so.2.2.0
+link path=usr/lib/libdvdcss.so.2 target=libdvdcss.so.2.2.0
+file usr/lib/libdvdcss.so.2.2.0 path=usr/lib/libdvdcss.so.2.2.0
+file usr/lib/pkgconfig/libdvdcss.pc path=usr/lib/pkgconfig/libdvdcss.pc
+license COPYING license=GPLv2
