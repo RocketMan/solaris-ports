@@ -1,0 +1,48 @@
+set name=pkg.fmri \
+    value=pkg:/gnome/media/gmtp@$(IPS_COMPONENT_VERSION),$(BUILD_VERSION)
+set name=pkg.summary \
+    value="A simple MP3 and Media player client for UNIX and UNIX like systems"
+set name=com.oracle.info.description \
+    value="gMTP supports: Upload, download, removal, renaming and moving of files as needed, drag'n'drop support for uploading files to the device, folder creation and deletion, album art management, metadata support for MP3, WMA, OGG and FLAC audio files; ensuring correct track information on your media player when uploading audio files."
+set name=info.classification \
+    value="org.opensolaris.category.2008:Applications/Sound and Video"
+set name=info.source-url value=$(COMPONENT_ARCHIVE_URL)
+set name=info.upstream-url value=$(COMPONENT_PROJECT_URL)
+set name=org.opensolaris.consolidation value=$(CONSOLIDATION)
+file usr/bin/gmtp path=usr/bin/gmtp
+file usr/etc/gconf/schemas/gmtp.schemas path=usr/etc/gconf/schemas/gmtp.schemas
+file usr/share/applications/gmtp.desktop \
+    path=usr/share/applications/gmtp.desktop
+file usr/share/gmtp/audio-x-mp3-playlist.png \
+    path=usr/share/gmtp/audio-x-mp3-playlist.png
+file usr/share/gmtp/audio-x-mpeg.png path=usr/share/gmtp/audio-x-mpeg.png
+file usr/share/gmtp/empty.png path=usr/share/gmtp/empty.png
+file usr/share/gmtp/folder.png path=usr/share/gmtp/folder.png
+file usr/share/gmtp/gmtpicon.png path=usr/share/gmtp/gmtpicon.png
+file usr/share/gmtp/icon-16.png path=usr/share/gmtp/icon-16.png
+file usr/share/gmtp/image-x-generic.png path=usr/share/gmtp/image-x-generic.png
+file usr/share/gmtp/logo.png path=usr/share/gmtp/logo.png
+file usr/share/gmtp/media-cdrom-audio.png \
+    path=usr/share/gmtp/media-cdrom-audio.png
+file usr/share/gmtp/stock-about-16.png path=usr/share/gmtp/stock-about-16.png
+file usr/share/gmtp/text-plain.png path=usr/share/gmtp/text-plain.png
+file usr/share/gmtp/video-x-generic.png path=usr/share/gmtp/video-x-generic.png
+file usr/share/gmtp/view-refresh.png path=usr/share/gmtp/view-refresh.png
+file usr/share/locale/da/LC_MESSAGES/gmtp.mo \
+    path=usr/share/locale/da/LC_MESSAGES/gmtp.mo
+file usr/share/locale/de/LC_MESSAGES/gmtp.mo \
+    path=usr/share/locale/de/LC_MESSAGES/gmtp.mo
+file usr/share/locale/en_AU/LC_MESSAGES/gmtp.mo \
+    path=usr/share/locale/en_AU/LC_MESSAGES/gmtp.mo
+file usr/share/locale/es/LC_MESSAGES/gmtp.mo \
+    path=usr/share/locale/es/LC_MESSAGES/gmtp.mo
+file usr/share/locale/fr/LC_MESSAGES/gmtp.mo \
+    path=usr/share/locale/fr/LC_MESSAGES/gmtp.mo
+file usr/share/locale/it/LC_MESSAGES/gmtp.mo \
+    path=usr/share/locale/it/LC_MESSAGES/gmtp.mo
+file usr/share/locale/pt_BR/LC_MESSAGES/gmtp.mo \
+    path=usr/share/locale/pt_BR/LC_MESSAGES/gmtp.mo
+file usr/share/locale/ru/LC_MESSAGES/gmtp.mo \
+    path=usr/share/locale/ru/LC_MESSAGES/gmtp.mo
+file usr/share/pixmaps/gmtpicon.png path=usr/share/pixmaps/gmtpicon.png
+license COPYING license="BSD, BSD-like (gMTP license)"

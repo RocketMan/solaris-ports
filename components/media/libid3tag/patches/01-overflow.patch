@@ -1,0 +1,11 @@
+--- a/field.c	2018-07-02 11:07:57.087480051 +0000
++++ b/field.c	2004-01-23 09:41:32.000000000 +0000
+@@ -291,7 +291,7 @@
+ 
+       end = *ptr + length;
+ 
+-      while (end - *ptr > 0) {
++      while (end - *ptr > 0 && **ptr != '\0') {
+ 	ucs4 = id3_parse_string(ptr, end - *ptr, *encoding, 0);
+ 	if (ucs4 == 0)
+ 	  goto fail;

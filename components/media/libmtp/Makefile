@@ -25,7 +25,7 @@
 
 BUILD_BITS =            64_and_32
 COMPILER =		gcc
-include ../../make-rules/shared-macros.mk
+include ../../../make-rules/shared-macros.mk
 
 COMPONENT_NAME=		libmtp
 COMPONENT_VERSION=	1.1.15
@@ -38,6 +38,9 @@ COMPONENT_PROJECT_URL=	http://libmtp.sourceforge.net/
 
 
 include $(WS_MAKE_RULES)/common.mk
+
+CONFIGURE_OPTIONS += --enable-static=no
+CONFIGURE_OPTIONS += --enable-doxygen=no
 
 LDFLAGS += -lusb
 
