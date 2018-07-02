@@ -1,7 +1,7 @@
 set name=pkg.fmri \
     value=pkg:/library/media/libid3tag@$(IPS_COMPONENT_VERSION),$(BUILD_VERSION)
 set name=pkg.summary value="ID3 tag reading library from the MAD project"
-set name=com.oracle.info.description \
+set name=pkg.description \
     value="ID3 tag manipulation library with full support for reading ID3v1, ID3v1.1, ID3v2.2, ID3v2.3, and ID3v2.4 tags, as well as support for writing ID3v1, ID3v1.1, and ID3v2.4 tags."
 set name=info.classification \
     value="org.opensolaris.category.2008:System/Multimedia Libraries"
