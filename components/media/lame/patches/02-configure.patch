@@ -1,0 +1,18 @@
+--- a/configure	2017-08-15 16:17:12.000000000 +0000
++++ b/configure	2018-07-03 18:47:37.370398089 +0000
+@@ -10425,7 +10425,6 @@
+ 	  ;;
+ 	esac
+       fi
+-      hardcode_libdir_flag_spec='-R$libdir'
+       hardcode_shlibpath_var=no
+       case $host_os in
+       solaris2.[0-5] | solaris2.[0-5].*) ;;
+@@ -15041,7 +15040,6 @@
+ 
+ CFLAGS=${CFLAGS}
+ CONFIG_DEFS=${CONFIG_DEFS}
+-NASM=
+ INCLUDES="-I\$(top_srcdir)/include -I\$(srcdir)"
+ FRONTEND_LDFLAGS=
+ FRONTEND_CFLAGS=

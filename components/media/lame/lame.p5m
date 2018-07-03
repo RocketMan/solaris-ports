@@ -1,0 +1,22 @@
+<transform file path=usr.*/man/.+ -> default mangler.man.stability uncommitted>
+set name=pkg.fmri \
+    value=pkg:/media/lame@$(IPS_COMPONENT_VERSION),$(BUILD_VERSION)
+set name=pkg.summary \
+    value="LAME is a high quality MPEG Audio Layer III (MP3) encoder"
+set name=info.classification \
+    value="org.opensolaris.category.2008:Applications/Sound and Video"
+set name=info.source-url value=$(COMPONENT_ARCHIVE_URL)
+set name=info.upstream-url value=$(COMPONENT_PROJECT_URL)
+set name=org.opensolaris.consolidation value=$(CONSOLIDATION)
+file usr/bin/lame path=usr/bin/lame
+file usr/include/lame/lame.h path=usr/include/lame/lame.h
+file usr/lib/amd64/libmp3lame.la path=usr/lib/amd64/libmp3lame.la
+link path=usr/lib/amd64/libmp3lame.so target=libmp3lame.so.0.0.0
+link path=usr/lib/amd64/libmp3lame.so.0 target=libmp3lame.so.0.0.0
+file usr/lib/amd64/libmp3lame.so.0.0.0 path=usr/lib/amd64/libmp3lame.so.0.0.0
+file usr/lib/libmp3lame.la path=usr/lib/libmp3lame.la
+link path=usr/lib/libmp3lame.so target=libmp3lame.so.0.0.0
+link path=usr/lib/libmp3lame.so.0 target=libmp3lame.so.0.0.0
+file usr/lib/libmp3lame.so.0.0.0 path=usr/lib/libmp3lame.so.0.0.0
+file usr/share/man/man1/lame.1 path=usr/share/man/man1/lame.1
+license COPYING license=GPLv2
