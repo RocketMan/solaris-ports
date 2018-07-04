@@ -1,0 +1,39 @@
+make[1]: Entering directory `$(@D)'
+/usr/gnu/bin/make  check-recursive
+make[2]: Entering directory `$(@D)'
+make[3]: Entering directory `$(@D)'
+make[4]: Entering directory `$(@D)/doc'
+make[4]: Nothing to be done for `all'.
+make[4]: Leaving directory `$(@D)/doc'
+/usr/gnu/bin/make  check-TESTS
+make[4]: Entering directory `$(@D)'
+make[5]: Entering directory `$(@D)'
+PASS: celt/tests/test_unit_cwrs32
+PASS: celt/tests/test_unit_dft
+PASS: celt/tests/test_unit_entropy
+PASS: celt/tests/test_unit_laplace
+PASS: celt/tests/test_unit_mathops
+PASS: celt/tests/test_unit_mdct
+PASS: celt/tests/test_unit_rotation
+PASS: celt/tests/test_unit_types
+PASS: silk/tests/test_unit_LPC_inv_pred_gain
+PASS: tests/test_opus_api
+PASS: tests/test_opus_decode
+PASS: tests/test_opus_encode
+PASS: tests/test_opus_padding
+============================================================================
+Testsuite summary for opus 1.2.1
+============================================================================
+# TOTAL: 13
+# PASS:  13
+# SKIP:  0
+# XFAIL: 0
+# FAIL:  0
+# XPASS: 0
+# ERROR: 0
+============================================================================
+make[5]: Leaving directory `$(@D)'
+make[4]: Leaving directory `$(@D)'
+make[3]: Leaving directory `$(@D)'
+make[2]: Leaving directory `$(@D)'
+make[1]: Leaving directory `$(@D)'
