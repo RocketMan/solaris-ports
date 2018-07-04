@@ -1,0 +1,22 @@
+--- a/lib/paranoia/Makefile.am	2017-08-23 00:50:11.000000000 +0000
++++ b/lib/paranoia/Makefile.am	2018-07-04 19:06:51.715127741 +0000
+@@ -135,7 +135,7 @@
+ libcdio_paranoia_la_MAJOR = $(shell expr $(libcdio_paranoia_la_CURRENT) - $(libcdio_paranoia_la_AGE))
+ if VERSION_SCRIPT
+ if BUILD_VERSIONED_LIBS
+-libcdio_paranoia_la_LDFLAGS = $(libcdio_paranoia_la_ldflags) -Wl,--version-script=libcdio_paranoia.la.ver
++libcdio_paranoia_la_LDFLAGS = $(libcdio_paranoia_la_ldflags)
+ libcdio_paranoia_la_DEPENDENCIES = libcdio_paranoia.la.ver
+ 
+ libcdio_paranoia.la.ver: $(libcdio_paranoia_la_OBJECTS) $(srcdir)/libcdio_paranoia.sym
+--- a/lib/cdda_interface/Makefile.am	2017-08-23 00:50:11.000000000 +0000
++++ b/lib/cdda_interface/Makefile.am	2018-07-04 19:07:14.799458967 +0000
+@@ -122,7 +122,7 @@
+ libcdio_cdda_la_MAJOR = $(shell expr $(libcdio_cdda_la_CURRENT) - $(libcdio_cdda_la_AGE))
+ if VERSION_SCRIPT
+ if BUILD_VERSIONED_LIBS
+-libcdio_cdda_la_LDFLAGS = $(libcdio_cdda_la_ldflags) -Wl,--version-script=libcdio_cdda.la.ver
++libcdio_cdda_la_LDFLAGS = $(libcdio_cdda_la_ldflags)
+ libcdio_cdda_la_DEPENDENCIES = libcdio_cdda.la.ver
+ 
+ libcdio_cdda.la.ver: $(libcdio_cdda_la_OBJECTS) $(srcdir)/libcdio_cdda.sym
