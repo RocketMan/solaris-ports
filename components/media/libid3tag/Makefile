@@ -33,7 +33,7 @@ IPS_COMPONENT_VERSION=	0.15.1.2
 COMPONENT_ARCHIVE =	$(COMPONENT_SRC).tar.gz
 COMPONENT_ARCHIVE_HASH=	\
 	sha256:63da4f6e7997278f8a3fef4c6a372d342f705051d1eeb6a46a86b03610e26151
-SOURCEFORGE_URL =	https://downloads.sourceforge.net/project
+SOURCEFORGE_URL =	https://datapacket.dl.sourceforge.net/project
 COMPONENT_ARCHIVE_URL = $(SOURCEFORGE_URL)/mad/$(COMPONENT_NAME)/$(COMPONENT_VERSION)/$(COMPONENT_ARCHIVE)
 COMPONENT_PROJECT_URL=	https://sourceforge.net/projects/mad/files/libid3tag/
 
