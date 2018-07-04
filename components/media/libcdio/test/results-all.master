@@ -1,0 +1,22 @@
+PASS: abs_path
+PASS: bincue
+PASS: cdda
+PASS: cdrdao
+SKIP: freebsd
+SKIP: gnu_linux
+FAIL: logger
+FAIL: mmc_read
+FAIL: mmc_write
+PASS: nrg
+SKIP: osx
+PASS: realpath
+PASS: solaris
+PASS: track
+SKIP: win32
+# TOTAL: 15
+# PASS:  8
+# SKIP:  4
+# XFAIL: 0
+# FAIL:  3
+# XPASS: 0
+# ERROR: 0
