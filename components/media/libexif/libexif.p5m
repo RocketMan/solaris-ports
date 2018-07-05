@@ -1,0 +1,94 @@
+<transform file path=usr.*/man/.+ -> default mangler.man.stability uncommitted>
+set name=pkg.fmri \
+    value=pkg:/library/media/libexif@$(IPS_COMPONENT_VERSION),$(BUILD_VERSION)
+set name=pkg.summary value="EXIF parsing library"
+set name=pkg.description \
+    value="The libexif C EXIF library reads and writes EXIF metainformation from and to image files."
+set name=info.classification \
+    value="org.opensolaris.category.2008:System/Multimedia Libraries"
+set name=info.upstream-url value=$(COMPONENT_PROJECT_URL)
+set name=org.opensolaris.consolidation value=$(CONSOLIDATION)
+file usr/include/libexif/_stdint.h path=usr/include/libexif/_stdint.h
+file usr/include/libexif/exif-byte-order.h \
+    path=usr/include/libexif/exif-byte-order.h
+file usr/include/libexif/exif-content.h path=usr/include/libexif/exif-content.h
+file usr/include/libexif/exif-data-type.h \
+    path=usr/include/libexif/exif-data-type.h
+file usr/include/libexif/exif-data.h path=usr/include/libexif/exif-data.h
+file usr/include/libexif/exif-entry.h path=usr/include/libexif/exif-entry.h
+file usr/include/libexif/exif-format.h path=usr/include/libexif/exif-format.h
+file usr/include/libexif/exif-ifd.h path=usr/include/libexif/exif-ifd.h
+file usr/include/libexif/exif-loader.h path=usr/include/libexif/exif-loader.h
+file usr/include/libexif/exif-log.h path=usr/include/libexif/exif-log.h
+file usr/include/libexif/exif-mem.h path=usr/include/libexif/exif-mem.h
+file usr/include/libexif/exif-mnote-data.h \
+    path=usr/include/libexif/exif-mnote-data.h
+file usr/include/libexif/exif-tag.h path=usr/include/libexif/exif-tag.h
+file usr/include/libexif/exif-utils.h path=usr/include/libexif/exif-utils.h
+file usr/lib/amd64/libexif.la path=usr/lib/amd64/libexif.la
+link path=usr/lib/amd64/libexif.so target=libexif.so.12.3.3
+link path=usr/lib/amd64/libexif.so.12 target=libexif.so.12.3.3
+file usr/lib/amd64/libexif.so.12.3.3 path=usr/lib/amd64/libexif.so.12.3.3
+file usr/lib/amd64/pkgconfig/libexif.pc path=usr/lib/amd64/pkgconfig/libexif.pc
+file usr/lib/libexif.la path=usr/lib/libexif.la
+link path=usr/lib/libexif.so target=libexif.so.12.3.3
+link path=usr/lib/libexif.so.12 target=libexif.so.12.3.3
+file usr/lib/libexif.so.12.3.3 path=usr/lib/libexif.so.12.3.3
+file usr/lib/pkgconfig/libexif.pc path=usr/lib/pkgconfig/libexif.pc
+file usr/share/doc/libexif/ABOUT-NLS path=usr/share/doc/libexif/ABOUT-NLS
+file usr/share/doc/libexif/AUTHORS path=usr/share/doc/libexif/AUTHORS
+file usr/share/doc/libexif/COPYING path=usr/share/doc/libexif/COPYING
+file usr/share/doc/libexif/ChangeLog path=usr/share/doc/libexif/ChangeLog
+file usr/share/doc/libexif/NEWS path=usr/share/doc/libexif/NEWS
+file usr/share/doc/libexif/README path=usr/share/doc/libexif/README
+file usr/share/locale/be/LC_MESSAGES/libexif-12.mo \
+    path=usr/share/locale/be/LC_MESSAGES/libexif-12.mo
+file usr/share/locale/bs/LC_MESSAGES/libexif-12.mo \
+    path=usr/share/locale/bs/LC_MESSAGES/libexif-12.mo
+file usr/share/locale/cs/LC_MESSAGES/libexif-12.mo \
+    path=usr/share/locale/cs/LC_MESSAGES/libexif-12.mo
+file usr/share/locale/da/LC_MESSAGES/libexif-12.mo \
+    path=usr/share/locale/da/LC_MESSAGES/libexif-12.mo
+file usr/share/locale/de/LC_MESSAGES/libexif-12.mo \
+    path=usr/share/locale/de/LC_MESSAGES/libexif-12.mo
+file usr/share/locale/en_AU/LC_MESSAGES/libexif-12.mo \
+    path=usr/share/locale/en_AU/LC_MESSAGES/libexif-12.mo
+file usr/share/locale/en_CA/LC_MESSAGES/libexif-12.mo \
+    path=usr/share/locale/en_CA/LC_MESSAGES/libexif-12.mo
+file usr/share/locale/en_GB/LC_MESSAGES/libexif-12.mo \
+    path=usr/share/locale/en_GB/LC_MESSAGES/libexif-12.mo
+file usr/share/locale/es/LC_MESSAGES/libexif-12.mo \
+    path=usr/share/locale/es/LC_MESSAGES/libexif-12.mo
+file usr/share/locale/fr/LC_MESSAGES/libexif-12.mo \
+    path=usr/share/locale/fr/LC_MESSAGES/libexif-12.mo
+file usr/share/locale/it/LC_MESSAGES/libexif-12.mo \
+    path=usr/share/locale/it/LC_MESSAGES/libexif-12.mo
+file usr/share/locale/ja/LC_MESSAGES/libexif-12.mo \
+    path=usr/share/locale/ja/LC_MESSAGES/libexif-12.mo
+file usr/share/locale/nl/LC_MESSAGES/libexif-12.mo \
+    path=usr/share/locale/nl/LC_MESSAGES/libexif-12.mo
+file usr/share/locale/pl/LC_MESSAGES/libexif-12.mo \
+    path=usr/share/locale/pl/LC_MESSAGES/libexif-12.mo
+file usr/share/locale/pt/LC_MESSAGES/libexif-12.mo \
+    path=usr/share/locale/pt/LC_MESSAGES/libexif-12.mo
+file usr/share/locale/pt_BR/LC_MESSAGES/libexif-12.mo \
+    path=usr/share/locale/pt_BR/LC_MESSAGES/libexif-12.mo
+file usr/share/locale/ru/LC_MESSAGES/libexif-12.mo \
+    path=usr/share/locale/ru/LC_MESSAGES/libexif-12.mo
+file usr/share/locale/sk/LC_MESSAGES/libexif-12.mo \
+    path=usr/share/locale/sk/LC_MESSAGES/libexif-12.mo
+file usr/share/locale/sq/LC_MESSAGES/libexif-12.mo \
+    path=usr/share/locale/sq/LC_MESSAGES/libexif-12.mo
+file usr/share/locale/sr/LC_MESSAGES/libexif-12.mo \
+    path=usr/share/locale/sr/LC_MESSAGES/libexif-12.mo
+file usr/share/locale/sv/LC_MESSAGES/libexif-12.mo \
+    path=usr/share/locale/sv/LC_MESSAGES/libexif-12.mo
+file usr/share/locale/tr/LC_MESSAGES/libexif-12.mo \
+    path=usr/share/locale/tr/LC_MESSAGES/libexif-12.mo
+file usr/share/locale/uk/LC_MESSAGES/libexif-12.mo \
+    path=usr/share/locale/uk/LC_MESSAGES/libexif-12.mo
+file usr/share/locale/vi/LC_MESSAGES/libexif-12.mo \
+    path=usr/share/locale/vi/LC_MESSAGES/libexif-12.mo
+file usr/share/locale/zh_CN/LC_MESSAGES/libexif-12.mo \
+    path=usr/share/locale/zh_CN/LC_MESSAGES/libexif-12.mo
+license COPYING license=LGPLv2.1
