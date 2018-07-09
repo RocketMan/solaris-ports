@@ -1,0 +1,23 @@
+--- a/Makefile.in	2013-07-07 15:46:14.000000000 +0000
++++ b/Makefile.in	2018-07-09 13:57:37.478418368 +0000
+@@ -54,13 +54,13 @@
+ 	$(CC) $(KCFLAGS) -c tun.c -o tap.o -DTUNTAP_TAP
+ 
+ install: tun tap
+-	$(INSTALL) -d -m 0755 -o root -g bin $(DESTDIR)/usr/include/net
+-	$(INSTALL) -d -m 0755 -o root -g sys $(DESTDIR)$(DRV_DIR)
+-	$(INSTALL) -m 644 -o root -g root if_tun.h $(DESTDIR)/usr/include/net 
+-	$(INSTALL) -m 644 -o root -g root tun $(DESTDIR)$(DRV_DIR)
+-	$(INSTALL) -m 644 -o root -g root tap $(DESTDIR)$(DRV_DIR)
+-	$(INSTALL) -m 644 -o root -g root tun.conf $(DESTDIR)$(DRV_CONF_DIR)
+-	$(INSTALL) -m 644 -o root -g root tap.conf $(DESTDIR)$(DRV_CONF_DIR)
++	$(INSTALL) -d $(DESTDIR)/usr/include/net
++	$(INSTALL) -d $(DESTDIR)$(DRV_DIR)
++	$(INSTALL) if_tun.h $(DESTDIR)/usr/include/net 
++	$(INSTALL) tun $(DESTDIR)$(DRV_DIR)
++	$(INSTALL) tap $(DESTDIR)$(DRV_DIR)
++	$(INSTALL) tun.conf $(DESTDIR)$(DRV_CONF_DIR)
++	$(INSTALL) tap.conf $(DESTDIR)$(DRV_CONF_DIR)
+ 	-[ -z "$(DESTDIR)" ]&& $(REM_DRV) tun >/dev/null 2>&1
+ 	-[ -z "$(DESTDIR)" ]&& $(REM_DRV) tap >/dev/null 2>&1
+ 	-[ -z "$(DESTDIR)" ]&& $(ADD_DRV) tun	
