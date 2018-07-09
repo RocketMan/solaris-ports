@@ -1,0 +1,50 @@
+#
+# This file and its contents are supplied under the terms of the
+# Common Development and Distribution License ("CDDL"). You may
+# only use this file in accordance with the terms of the CDDL.
+#
+# A full copy of the text of the CDDL should have accompanied this
+# source. A copy of the CDDL is also available via the Internet at
+# http://www.illumos.org/license/CDDL.
+#
+
+#
+# Copyright 2013 Adam Stevko. All rights reserved.
+# Copyright 2018 Jim Mason. All rights reserved.
+#
+
+<transform file path=usr.*/man/.+ -> default mangler.man.stability uncommitted>
+set name=pkg.fmri \
+    value=pkg:/network/openvpn@$(IPS_COMPONENT_VERSION),$(BUILD_VERSION)
+set name=pkg.summary \
+    value="OpenVPN is an open-source software application that implements virtual private network (VPN) techniques to create secure point-to-point or site-to-site connections in routed or bridged configurations and remote access facilities."
+set name=info.classification \
+    value=org.opensolaris.category.2008:Applications/Internet
+set name=info.source-url value=$(COMPONENT_ARCHIVE_URL)
+set name=info.upstream-url value=$(COMPONENT_PROJECT_URL)
+set name=org.opensolaris.consolidation value=$(CONSOLIDATION)
+set name=variant.opensolaris.zone value=global value=nonglobal
+dir  path=etc/openvpn
+file files/auth_openvpn path=etc/security/auth_attr.d/openvpn
+file files/prof_openvpn path=etc/security/prof_attr.d/openvpn
+file files/openvpn.xml path=lib/svc/manifest/network/openvpn.xml \
+    restart_fmri=svc:/system/manifest-import:default
+file path=usr/include/openvpn-msg.h
+file path=usr/include/openvpn-plugin.h
+file path=usr/lib/$(MACH64)/openvpn/plugins/openvpn-plugin-auth-pam.so
+file path=usr/lib/$(MACH64)/openvpn/plugins/openvpn-plugin-down-root.so
+file path=usr/sbin/openvpn
+file path=usr/share/doc/openvpn/COPYING
+file path=usr/share/doc/openvpn/COPYRIGHT.GPL
+file path=usr/share/doc/openvpn/Changes.rst
+file path=usr/share/doc/openvpn/README
+file path=usr/share/doc/openvpn/README.IPv6
+file path=usr/share/doc/openvpn/README.auth-pam
+file path=usr/share/doc/openvpn/README.down-root
+file path=usr/share/doc/openvpn/README.polarssl
+file files/README.solaris path=usr/share/doc/openvpn/README.solaris
+file path=usr/share/doc/openvpn/management-notes.txt
+file usr/share/man/man8/openvpn.8 path=usr/share/man/man1m/openvpn.1m
+dir  path=var/log/openvpn
+license COPYING license=GPLv2
+depend type=require fmri=driver/network/tuntap variant.opensolaris.zone=global
