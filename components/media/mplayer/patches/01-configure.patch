@@ -1,0 +1,295 @@
+--- a/configure	2016-02-13 21:05:42.000000000 +0000
++++ b/configure	2018-07-10 16:33:35.460225176 +0000
+@@ -41,6 +41,8 @@
+ # Store the configure line that was used
+ configuration="$*"
+ 
++ROOT_DIR=$(dirname "$0")
++
+ # utility functions
+ tolower() {
+   tr '[A-Z]' '[a-z]'
+@@ -302,9 +304,9 @@
+   *)    _echo_n='-n '   _echo_c=        ;;      # BSD echo
+ esac
+ 
+-msg_lang_all=$(echo help/help_mp-??.h help/help_mp-??_??.h | sed -e "s:help/help_mp-\(..\).h:\1:g" -e "s:help/help_mp-\(.....\).h:\1:g")
+-man_lang_all=$(echo DOCS/man/??/mplayer.1 DOCS/man/??_??/mplayer.1 | sed -e "s:DOCS/man/\(..\)/mplayer.1:\1:g" -e "s:DOCS/man/\(.._..\)/mplayer.1:\1:g")
+-doc_lang_all=$(echo DOCS/xml/??/ DOCS/xml/??_??/ | sed -e "s:DOCS/xml/\(..\)/:\1:g" -e "s:DOCS/xml/\(.._..\)/:\1:g")
++msg_lang_all=$(echo help/help_mp-??.h help/help_mp-??_??.h | gsed -e "s:help/help_mp-\(..\).h:\1:g" -e "s:help/help_mp-\(.....\).h:\1:g")
++man_lang_all=$(echo DOCS/man/??/mplayer.1 DOCS/man/??_??/mplayer.1 | gsed -e "s:DOCS/man/\(..\)/mplayer.1:\1:g" -e "s:DOCS/man/\(.._..\)/mplayer.1:\1:g")
++doc_lang_all=$(echo DOCS/xml/??/ DOCS/xml/??_??/ | gsed -e "s:DOCS/xml/\(..\)/:\1:g" -e "s:DOCS/xml/\(.._..\)/:\1:g")
+ 
+ show_help(){
+ cat << EOF
+@@ -1532,9 +1534,9 @@
+ fi
+ 
+ list_subparts() {
+-  test ! -e ffmpeg/libav${3} && return 1
++  test ! -e $ROOT_DIR/ffmpeg/libav${3} && return 1
+   pattern="s/^[^#]*${1}.*([^ ,]*, *\([^ ,)]*\).*/\1_${2}/p"
+-  sed -n "$pattern" ffmpeg/libav${3} | toupper
++  gsed -n "$pattern" $ROOT_DIR/ffmpeg/libav${3} | toupper
+   return 0
+ }
+ 
+@@ -1566,7 +1568,7 @@
+   for item in $@; do
+     filter_patterns="$filter_patterns -e s/[^A-Z0-9_]${item}_${type}//g"
+   done
+-  echo " $list" | sed $filter_patterns
++  echo " $list" | gsed $filter_patterns
+ }
+ 
+ libavdecoders=$(echo $libavdecoders_all)
+@@ -1635,7 +1637,7 @@
+   echores "$cc_version"
+ else
+   for _cc in "$_cc" gcc cc ; do
+-    cc_name_tmp=$($_cc -v 2>&1 | tail -n 1 | cut -d ' ' -f 1)
++    cc_name_tmp=$($_cc -v 2>&1 | gtail -n 1 | cut -d ' ' -f 1)
+     if test "$cc_name_tmp" = "gcc"; then
+       cc_name=$cc_name_tmp
+       echocheck "$_cc version"
+@@ -1654,7 +1656,7 @@
+       echores "$cc_version"
+       break
+     fi
+-    if $_cc -v 2>&1 | grep -q "clang"; then
++    if $_cc -v 2>&1 | ggrep -q "clang"; then
+       echocheck "$_cc version"
+       cc_vendor=clang
+       cc_version=$($_cc -dumpversion 2>&1)
+@@ -1922,24 +1924,24 @@
+ elif x86; then
+   # all other OSes try to extract CPU information from a small helper
+   # program cpuinfo instead
+-  $_host_cc -o cpuinfo$_exesuf cpuinfo.c
++  $_host_cc -o cpuinfo$_exesuf $ROOT_DIR/cpuinfo.c
+   _cpuinfo="./cpuinfo$_exesuf"
+ fi
+ 
+ if x86 ; then
+   # gather more CPU information
+-  pname=$($_cpuinfo | grep 'model name' | cut -d ':' -f 2 | head -n 1)
+-  pvendor=$($_cpuinfo | grep 'vendor_id' | cut -d ':' -f 2  | cut -d ' ' -f 2 | head -n 1)
+-  pfamily=$($_cpuinfo | grep 'cpu family' | cut -d ':' -f 2 | cut -d ' ' -f 2 | head -n 1)
+-  pmodel=$($_cpuinfo | grep -v 'model name' | grep 'model' | cut -d ':' -f 2 | cut -d ' ' -f 2 | head -n 1)
+-  pstepping=$($_cpuinfo | grep 'stepping' | cut -d ':' -f 2 | cut -d ' ' -f 2 | head -n 1)
++  pname=$($_cpuinfo | ggrep 'model name' | cut -d ':' -f 2 | head -n 1)
++  pvendor=$($_cpuinfo | ggrep 'vendor_id' | cut -d ':' -f 2  | cut -d ' ' -f 2 | head -n 1)
++  pfamily=$($_cpuinfo | ggrep 'cpu family' | cut -d ':' -f 2 | cut -d ' ' -f 2 | head -n 1)
++  pmodel=$($_cpuinfo | ggrep -v 'model name' | ggrep 'model' | cut -d ':' -f 2 | cut -d ' ' -f 2 | head -n 1)
++  pstepping=$($_cpuinfo | ggrep 'stepping' | cut -d ':' -f 2 | cut -d ' ' -f 2 | head -n 1)
+ 
+   exts=$($_cpuinfo | egrep 'features|flags' | cut -d ':' -f 2 | head -n 1)
+ 
+-  pparam=$(echo $exts | sed -e s/k6_mtrr/mtrr/ -e s/cyrix_arr/mtrr/ -e s/centaur_mcr/mtrr/ \
++  pparam=$(echo $exts | gsed -e s/k6_mtrr/mtrr/ -e s/cyrix_arr/mtrr/ -e s/centaur_mcr/mtrr/ \
+                             -e s/xmm/sse/ -e s/kni/sse/ -e s/pni/sse3/)
+   # SSE implies MMX2, but not all SSE processors report the mmxext CPU flag.
+-  pparam=$(echo $pparam | sed -e 's/sse/sse mmxext/')
++  pparam=$(echo $pparam | gsed -e 's/sse/sse mmxext/')
+ 
+   for ext in $pparam ; do
+     eval test \"\$_$ext\" = auto 2>/dev/null && eval _$ext=kernel_check
+@@ -2469,13 +2471,13 @@
+     echocheck "CPU type"
+     case $system_name in
+       Linux)
+-        proc=$($_cpuinfo | grep 'cpu' | cut -d ':' -f 2 | cut -d ',' -f 1 | cut -b 2- | head -n 1)
+-        if test -n "$($_cpuinfo | grep altivec)"; then
++        proc=$($_cpuinfo | ggrep 'cpu' | cut -d ':' -f 2 | cut -d ',' -f 1 | cut -b 2- | head -n 1)
++        if test -n "$($_cpuinfo | ggrep altivec)"; then
+             test $_altivec = auto && _altivec=yes
+         fi
+         ;;
+       Darwin)
+-        proc=$($_cpuinfo | grep "Processor type" | cut -f 3 -d ' ' | sed 's/ppc//')
++        proc=$($_cpuinfo | ggrep "Processor type" | cut -f 3 -d ' ' | gsed 's/ppc//')
+         if [ $(sysctl -n hw.vectorunit) -eq 1 -o \
+             "$(sysctl -n hw.optional.altivec 2> /dev/null)" = "1" ]; then
+             test $_altivec = auto && _altivec=yes
+@@ -2494,7 +2496,7 @@
+         esac
+         ;;
+       AIX)
+-        proc=$($_cpuinfo | grep 'type' | cut -f 2 -d ' ' | sed 's/PowerPC_//')
++        proc=$($_cpuinfo | ggrep 'type' | cut -f 2 -d ' ' | gsed 's/PowerPC_//')
+         ;;
+     esac
+     if test "$_altivec" = yes; then
+@@ -2646,7 +2648,7 @@
+ 
+     if irix ; then
+         echocheck "CPU type"
+-        proc=$(hinv -c processor | grep CPU | cut -d " " -f3)
++        proc=$(hinv -c processor | ggrep CPU | cut -d " " -f3)
+         case "$(echo $proc)" in
+             R3000) _march='-mips1' _mcpu='-mtune=r2000' ;;
+             R4000) _march='-mips3' _mcpu='-mtune=r4000' ;;
+@@ -2745,7 +2747,7 @@
+   if cc_check ; then
+     # stdin is used to make "strings" not try something clever like
+     # parse executable section headers (and possibly fail in the process)
+-    if strings < $TMPEXE | grep -q -l MPlayerBigEndian ; then
++    if strings < $TMPEXE | ggrep -q -l MPlayerBigEndian ; then
+       _big_endian=yes
+     else
+       _big_endian=no
+@@ -2771,7 +2773,7 @@
+ int ff_extern;
+ EOF
+ cc_check -c || die "Symbol mangling check failed."
+-sym=$($_nm -P -g $TMPEXE | grep ff_extern)
++sym=$($_nm -P -g $TMPEXE | ggrep ff_extern)
+ extern_prefix=${sym%%ff_extern*}
+ def_extern_asm="#define EXTERN_ASM $extern_prefix"
+ def_extern_prefix="#define EXTERN_PREFIX \"$extern_prefix\""
+@@ -2906,7 +2908,7 @@
+ if x86_32 ; then
+   # Checking assembler (_as) compatibility...
+   # Added workaround for older as that reads from stdin by default - atmos
+-  as_version=$(echo '' | $_as -version 2>&1 | sed -n 's/^.*assembler \(version \)*\([0-9.]*\).*$/\2/p')
++  as_version=$(echo '' | $_as -version 2>&1 | gsed -n 's/^.*assembler \(version \)*\([0-9.]*\).*$/\2/p')
+   echocheck "assembler ($_as $as_version)"
+ 
+   _pref_as_version='2.9.1'
+@@ -4065,8 +4067,8 @@
+ 
+ echocheck "rpath"
+ if test "$_rpath" = yes ; then
+-  for I in $(echo $extra_ldflags | sed 's/-L//g') ; do
+-    tmp="$tmp $(echo $I | sed 's/.*/ -L& -Wl,-R&/')"
++  for I in $(echo $extra_ldflags | gsed 's/-L//g') ; do
++    tmp="$tmp $(echo $I | gsed 's/.*/ -L& -Wl,-R&/')"
+   done
+ extra_ldflags=$tmp
+ fi
+@@ -4588,7 +4590,7 @@
+ echocheck "X11 headers presence"
+   _x11_headers="no"
+   res_comment="check if the dev(el) packages are installed"
+-  for I in $(echo $extra_cflags | sed s/-I//g) /usr/include ; do
++  for I in $(echo $extra_cflags | gsed s/-I//g) /usr/include ; do
+     if test -f "$I/X11/Xlib.h" ; then
+       _x11_headers="yes"
+       res_comment=""
+@@ -4615,7 +4617,7 @@
+            -L/usr/X11/lib -L/usr/lib32 -L/usr/openwin/lib -L/usr/local/lib64 -L/usr/X11R6/lib64 \
+            -L/usr/lib ; do
+     if netbsd; then
+-      ld_tmp="$I -lXext -lX11 $ld_pthread -Wl,-R$(echo $I | sed s/^-L//)"
++      ld_tmp="$I -lXext -lX11 $ld_pthread -Wl,-R$(echo $I | gsed s/^-L//)"
+     else
+       ld_tmp="$I -lXext -lX11 $ld_pthread"
+     fi
+@@ -4920,8 +4922,8 @@
+   test "$_vidix_drivers" || _vidix_drivers="cyberblade mach64 mga mga_crtc2 nvidia pm2 pm3 radeon rage128 s3 sh_veu sis unichrome"
+ 
+   # some VIDIX drivers are architecture and os-specific, discard them elsewhere
+-  x86 || _vidix_drivers=$(echo $_vidix_drivers | sed -e s/cyberblade// -e s/sis// -e s/unichrome// -e s/s3//)
+-  (test $host_arch = "sh" && linux) || _vidix_drivers=$(echo $_vidix_drivers | sed s/sh_veu//)
++  x86 || _vidix_drivers=$(echo $_vidix_drivers | gsed -e s/cyberblade// -e s/sis// -e s/unichrome// -e s/s3//)
++  (test $host_arch = "sh" && linux) || _vidix_drivers=$(echo $_vidix_drivers | gsed s/sh_veu//)
+ 
+   for driver in $_vidix_drivers ; do
+     uc_driver=$(echo $driver | toupper)
+@@ -5410,11 +5412,11 @@
+   if test "$_sdl" = no && "$_sdlconfig" --version >>"$TMPLOG" 2>&1 ; then
+     res_comment="using $_sdlconfig"
+     if cygwin ; then
+-      inc_tmp="$($_sdlconfig --cflags | cut -d " " -f 1,5,6 | sed s/no-cygwin/cygwin/)"
+-      ld_tmp="$($_sdlconfig --libs | cut -d " " -f 1,4,6 | sed s/no-cygwin/cygwin/)"
++      inc_tmp="$($_sdlconfig --cflags | cut -d " " -f 1,5,6 | gsed s/no-cygwin/cygwin/)"
++      ld_tmp="$($_sdlconfig --libs | cut -d " " -f 1,4,6 | gsed s/no-cygwin/cygwin/)"
+     elif mingw32 ; then
+-      inc_tmp=$($_sdlconfig --cflags | sed s/-Dmain=SDL_main//)
+-      ld_tmp=$($_sdlconfig --libs | sed -e s/-mwindows// -e s/-lmingw32//)
++      inc_tmp=$($_sdlconfig --cflags | gsed s/-Dmain=SDL_main//)
++      ld_tmp=$($_sdlconfig --libs | gsed -e s/-mwindows// -e s/-lmingw32//)
+     else
+       inc_tmp="$($_sdlconfig --cflags)"
+       ld_tmp="$($_sdlconfig --libs)"
+@@ -6087,7 +6089,7 @@
+ elif sunos ; then
+   default_cdrom_device="/vol/dev/aliases/cdrom0"
+   # Solaris 10 and newer use HAL instead of the vold daemon.
+-  test $(uname -r | sed 's/^5\.//') -gt 10 && default_cdrom_device="/cdrom/cdrom0"
++  test $(uname -r | gsed 's/^5\.//') -gt 10 && default_cdrom_device="/cdrom/cdrom0"
+ elif amigaos ; then
+   default_cdrom_device="a1ide.device:2"
+ else
+@@ -7039,7 +7041,7 @@
+ 
+   _live=no
+   for I in $extra_cflags "-I$_libdir/live" "-I/usr/lib/live" "-I/usr/lib64/live" "-I/usr/local/live" "-I/usr/local/lib/live" ; do
+-    _livelibdir=$(echo $I| sed s/-I//)
++    _livelibdir=$(echo $I| gsed s/-I//)
+     inc_tmp="-I$_livelibdir/liveMedia/include \
+              -I$_livelibdir/UsageEnvironment/include \
+              -I$_livelibdir/BasicUsageEnvironment/include \
+@@ -7448,7 +7450,7 @@
+ if test "$_zr" = auto && test "$ffmpeg_a" = yes ; then
+   #36067's seem to identify themselves as 36057PQC's, so the line
+   #below should work for 36067's and 36057's.
+-  if grep -q -s -e "Multimedia video controller: Zoran Corporation ZR36057" /proc/pci ; then
++  if ggrep -q -s -e "Multimedia video controller: Zoran Corporation ZR36057" /proc/pci ; then
+     _zr=yes
+   else
+     _zr=no
+@@ -8086,7 +8088,7 @@
+ # linker paths should be the same for mencoder and mplayer
+ ld_tmp=""
+ for I in $libs_mplayer ; do
+-  _tmp=$(echo $I | sed -e 's/^-L.*$//')
++  _tmp=$(echo $I | gsed -e 's/^-L.*$//')
+   if test -z "$_tmp" ; then
+     extra_ldflags="$extra_ldflags $I"
+   else
+@@ -8203,7 +8205,7 @@
+   echores "docbook.xsl"
+ fi
+ 
+-cat > DOCS/xml/html-chunk.xsl << EOF
++cat > $ROOT_DIR/DOCS/xml/html-chunk.xsl << EOF
+ <?xml version="1.0" encoding="utf-8"?>
+ <!-- **************************************************
+      This file is generated automatically. DO NOT EDIT.
+@@ -8217,7 +8219,7 @@
+ </xsl:stylesheet>
+ EOF
+ 
+-cat > DOCS/xml/html-single.xsl << EOF
++cat > $ROOT_DIR/DOCS/xml/html-single.xsl << EOF
+ <?xml version="1.0" encoding="utf-8"?>
+ <!-- **************************************************
+      This file is generated automatically. DO NOT EDIT.
+@@ -8256,7 +8258,7 @@
+ fi
+ 
+ for lang in $language_doc; do
+-  cat > DOCS/xml/$lang/main.xml << EOF
++  cat > $ROOT_DIR/DOCS/xml/$lang/main.xml << EOF
+ <?xml version="1.0" encoding="utf-8" standalone="no"?>
+ <!-- **************************************************
+      This file is generated automatically. DO NOT EDIT.
+@@ -8311,7 +8313,7 @@
+ item=$(echo $2 | toupper)
+ nprefix=$3;
+ for part in $list; do
+-  if $(echo $item | grep -q -E "(^| )$part($| )"); then
++  if $(echo $item | ggrep -q -E "(^| )$part($| )"); then
+     echo "${nprefix}_$part = yes"
+   else
+     echo "${nprefix}_$part = no"
+@@ -8733,7 +8735,7 @@
+ _postfix=$5;
+ test -z "$_nprefix" && _nprefix='CONFIG'
+ for part in $list; do
+-  if $(echo $item | grep -q -E "(^| )$part($| )"); then
++  if $(echo $item | ggrep -q -E "(^| )$part($| )"); then
+     echo "${_defineprefix}define ${_nprefix}_${part}${_postfix} 1"
+   else
+     echo "${_defineprefix}define ${_nprefix}_${part}${_postfix} 0"
