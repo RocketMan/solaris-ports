@@ -1,0 +1,37 @@
+diff -Naur minidlna-1.2.1/scanner.h minidlna-1.2.1.new/scanner.h
+--- a/scanner.h	2017-08-24 18:28:25.000000000 +0100
++++ b/scanner.h	2017-09-16 12:23:15.273425331 +0100
+@@ -83,4 +83,7 @@
+ void
+ start_scanner();
+ 
++void
++start_rescan();
++
+ #endif
+diff -Naur minidlna-1.2.1/minidlna.c minidlna-1.2.1.new/minidlna.c
+--- a/minidlna.c	2017-08-24 18:28:25.000000000 +0100
++++ b/minidlna.c	2017-09-18 11:25:32.598469569 +0100
+@@ -95,6 +95,7 @@
+ #include "tivo_beacon.h"
+ #include "tivo_utils.h"
+ #include "avahi.h"
++#include "libav.h"
+ 
+ #if SQLITE_VERSION_NUMBER < 3005001
+ # warning "Your SQLite3 library appears to be too old!  Please use 3.5.1 or newer."
+@@ -170,9 +171,12 @@
+ sighup(int sig)
+ {
+ 	signal(sig, sighup);
+-	DPRINTF(E_WARN, L_GENERAL, "received signal %d, re-read\n", sig);
+ 
+-	reload_ifaces(1);
++	setlocale(LC_COLLATE, "");
++	av_register_all();
++	av_log_set_level(AV_LOG_PANIC);
++
++	start_rescan();
+ }
+ 
+ /* record the startup time */

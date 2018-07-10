@@ -1,0 +1,93 @@
+--- a/image_utils.c	2017-08-24 18:28:25.000000000 +0100
++++ b/image_utils.c	2017-08-26 19:29:35.829931854 +0100
+@@ -36,8 +36,10 @@
+ #ifdef HAVE_MACHINE_ENDIAN_H
+ #include <machine/endian.h>
+ #else
++#ifndef __sun__
+ #include <endian.h>
+ #endif
++#endif
+ 
+ #include "upnpreplyparse.h"
+ #include "image_utils.h"
+--- a/monitor.c	2017-08-24 18:28:25.000000000 +0100
++++ b/monitor.c	2017-08-28 13:51:20.178119248 +0100
+@@ -479,7 +479,9 @@
+ 	char path_buf[PATH_MAX];
+ 	enum file_types type = TYPE_UNKNOWN;
+ 	media_types dir_types;
++#ifndef __sun__
+ 	struct stat st;
++#endif
+ 
+ 	if( access(path, R_OK|X_OK) != 0 )
+ 	{
+@@ -533,6 +535,9 @@
+ 			continue;
+ 		esc_name = escape_tag(e->d_name, 1);
+ 		snprintf(path_buf, sizeof(path_buf), "%s/%s", path, e->d_name);
++#ifdef __sun__
++		type = resolve_unknown_type(path_buf, dir_types);
++#else
+ 		switch( e->d_type )
+ 		{
+ 			case DT_DIR:
+@@ -543,13 +548,16 @@
+ 			default:
+ 				break;
+ 		}
++#endif
+ 		if( type == TYPE_DIR )
+ 		{
+ 			monitor_insert_directory(fd, esc_name, path_buf);
+ 		}
+ 		else if( type == TYPE_FILE )
+ 		{
++#ifndef __sun__
+ 			if( (stat(path_buf, &st) == 0) && (st.st_blocks<<9 >= st.st_size) )
++#endif
+ 			{
+ 				monitor_insert_file(esc_name, path_buf);
+ 			}
+--- a/tagutils/tagutils-asf.c	2017-08-24 18:28:25.000000000 +0100
++++ b/tagutils/tagutils-asf.c	2017-08-26 19:30:22.733576716 +0100
+@@ -22,8 +22,10 @@
+ #ifdef HAVE_MACHINE_ENDIAN_H
+ #include <machine/endian.h>
+ #else
++#ifndef __sun__
+ #include <endian.h>
+ #endif
++#endif
+ 
+ static inline uint16_t
+ le16_to_cpu(uint16_t le16)
+--- a/tagutils/tagutils-asf.h	2017-08-24 18:28:25.000000000 +0100
++++ b/tagutils/tagutils-asf.h	2017-08-26 19:30:05.681533264 +0100
+@@ -26,8 +26,10 @@
+ #ifdef HAVE_MACHINE_ENDIAN_H
+ #include <machine/endian.h>
+ #else
++#ifndef __sun__
+ #include <endian.h>
+ #endif
++#endif
+ 
+ typedef struct _GUID {
+ 	uint32_t l;
+--- a/utils.h	2017-08-24 18:28:25.000000000 +0100
++++ b/utils.h	2017-08-26 19:33:30.455580175 +0100
+@@ -30,6 +30,12 @@
+ 
+ #include "minidlnatypes.h"
+ 
++#ifdef __sun__
++#define MIN(x, y)               ((x) < (y) ? (x) : (y))
++#define	MAX(x, y)		((x) > (y) ? (x) : (y))
++char *strcasestr(const char *s, const char *p);
++#endif
++
+ /* String functions */
+ /* We really want this one inlined, since it has a major performance impact */
+ static inline int

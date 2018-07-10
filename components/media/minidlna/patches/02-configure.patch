@@ -1,0 +1,202 @@
+--- a/Makefile.in	2017-08-24 19:56:42.000000000 +0000
++++ b/Makefile.in	2018-07-10 14:36:10.817849498 +0000
+@@ -50,13 +50,13 @@
+       *\\[\ \	]*) \
+         bs=\\; \
+         sane_makeflags=`printf '%s\n' "$$MAKEFLAGS" \
+-          | sed "s/$$bs$$bs[$$bs $$bs	]*//g"`;; \
++          | gsed "s/$$bs$$bs[$$bs $$bs	]*//g"`;; \
+     esac; \
+   fi; \
+   skip_next=no; \
+   strip_trailopt () \
+   { \
+-    flg=`printf '%s\n' "$$flg" | sed "s/$$1.*$$//"`; \
++    flg=`printf '%s\n' "$$flg" | gsed "s/$$1.*$$//"`; \
+   }; \
+   for flg in $$sane_makeflags; do \
+     test $$skip_next = yes && { skip_next=no; continue; }; \
+@@ -232,27 +232,27 @@
+ am__post_remove_distdir = $(am__remove_distdir)
+ am__relativize = \
+   dir0=`pwd`; \
+-  sed_first='s,^\([^/]*\)/.*$$,\1,'; \
+-  sed_rest='s,^[^/]*/*,,'; \
+-  sed_last='s,^.*/\([^/]*\)$$,\1,'; \
+-  sed_butlast='s,/*[^/]*$$,,'; \
++  gsed_first='s,^\([^/]*\)/.*$$,\1,'; \
++  gsed_rest='s,^[^/]*/*,,'; \
++  gsed_last='s,^.*/\([^/]*\)$$,\1,'; \
++  gsed_butlast='s,/*[^/]*$$,,'; \
+   while test -n "$$dir1"; do \
+-    first=`echo "$$dir1" | sed -e "$$sed_first"`; \
++    first=`echo "$$dir1" | gsed -e "$$gsed_first"`; \
+     if test "$$first" != "."; then \
+       if test "$$first" = ".."; then \
+-        dir2=`echo "$$dir0" | sed -e "$$sed_last"`/"$$dir2"; \
+-        dir0=`echo "$$dir0" | sed -e "$$sed_butlast"`; \
++        dir2=`echo "$$dir0" | gsed -e "$$gsed_last"`/"$$dir2"; \
++        dir0=`echo "$$dir0" | gsed -e "$$gsed_butlast"`; \
+       else \
+-        first2=`echo "$$dir2" | sed -e "$$sed_first"`; \
++        first2=`echo "$$dir2" | gsed -e "$$gsed_first"`; \
+         if test "$$first2" = "$$first"; then \
+-          dir2=`echo "$$dir2" | sed -e "$$sed_rest"`; \
++          dir2=`echo "$$dir2" | gsed -e "$$gsed_rest"`; \
+         else \
+           dir2="../$$dir2"; \
+         fi; \
+         dir0="$$dir0"/"$$first"; \
+       fi; \
+     fi; \
+-    dir1=`echo "$$dir1" | sed -e "$$sed_rest"`; \
++    dir1=`echo "$$dir1" | gsed -e "$$gsed_rest"`; \
+   done; \
+   reldir="$$dir2"
+ DIST_ARCHIVES = $(distdir).tar.gz
+@@ -260,7 +260,7 @@
+ DIST_TARGETS = dist-gzip
+ distuninstallcheck_listfiles = find . -type f -print
+ am__distuninstallcheck_listfiles = $(distuninstallcheck_listfiles) \
+-  | sed 's|^\./|$(prefix)/|' | grep -v '$(infodir)/dir$$'
++  | gsed 's|^\./|$(prefix)/|' | grep -v '$(infodir)/dir$$'
+ distcleancheck_listfiles = find . -type f -print
+ ACLOCAL = @ACLOCAL@
+ AMTAR = @AMTAR@
+@@ -432,8 +432,8 @@
+ 
+ CLEANFILES = $(GENERATED_FILES)
+ ACLOCAL_AMFLAGS = -I m4
+-EXTRA_DIST = m4/ChangeLog $(TEMPLATES)
+-noinst_DATA = $(GENERATED_FILES)
++EXTRA_DIST = 
++noinst_DATA = 
+ all: config.h
+ 	$(MAKE) $(AM_MAKEFLAGS) all-recursive
+ 
+@@ -499,14 +499,14 @@
+ 	  $(MKDIR_P) "$(DESTDIR)$(sbindir)" || exit 1; \
+ 	fi; \
+ 	for p in $$list; do echo "$$p $$p"; done | \
+-	sed 's/$(EXEEXT)$$//' | \
++	gsed 's/$(EXEEXT)$$//' | \
+ 	while read p p1; do if test -f $$p \
+ 	  ; then echo "$$p"; echo "$$p"; else :; fi; \
+ 	done | \
+-	sed -e 'p;s,.*/,,;n;h' \
++	gsed -e 'p;s,.*/,,;n;h' \
+ 	    -e 's|.*|.|' \
+ 	    -e 'p;x;s,.*/,,;s/$(EXEEXT)$$//;$(transform);s/$$/$(EXEEXT)/' | \
+-	sed 'N;N;N;s,\n, ,g' | \
++	gsed 'N;N;N;s,\n, ,g' | \
+ 	$(AWK) 'BEGIN { files["."] = ""; dirs["."] = 1 } \
+ 	  { d=$$3; if (dirs[d] != 1) { print "d", d; dirs[d] = 1 } \
+ 	    if ($$2 == $$4) files[d] = files[d] " " $$1; \
+@@ -524,7 +524,7 @@
+ 	@$(NORMAL_UNINSTALL)
+ 	@list='$(sbin_PROGRAMS)'; test -n "$(sbindir)" || list=; \
+ 	files=`for p in $$list; do echo "$$p"; done | \
+-	  sed -e 'h;s,^.*/,,;s/$(EXEEXT)$$//;$(transform)' \
++	  gsed -e 'h;s,^.*/,,;s/$(EXEEXT)$$//;$(transform)' \
+ 	      -e 's/$$/$(EXEEXT)/' \
+ 	`; \
+ 	test -n "$$list" || exit 0; \
+@@ -589,7 +589,7 @@
+ @AMDEP_TRUE@@am__include@ @am__quote@tagutils/$(DEPDIR)/tagutils.Po@am__quote@
+ 
+ .c.o:
+-@am__fastdepCC_TRUE@	$(AM_V_CC)depbase=`echo $@ | sed 's|[^/]*$$|$(DEPDIR)/&|;s|\.o$$||'`;\
++@am__fastdepCC_TRUE@	$(AM_V_CC)depbase=`echo $@ | gsed 's|[^/]*$$|$(DEPDIR)/&|;s|\.o$$||'`;\
+ @am__fastdepCC_TRUE@	$(COMPILE) -MT $@ -MD -MP -MF $$depbase.Tpo -c -o $@ $< &&\
+ @am__fastdepCC_TRUE@	$(am__mv) $$depbase.Tpo $$depbase.Po
+ @AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='$<' object='$@' libtool=no @AMDEPBACKSLASH@
+@@ -597,7 +597,7 @@
+ @am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(COMPILE) -c -o $@ $<
+ 
+ .c.obj:
+-@am__fastdepCC_TRUE@	$(AM_V_CC)depbase=`echo $@ | sed 's|[^/]*$$|$(DEPDIR)/&|;s|\.obj$$||'`;\
++@am__fastdepCC_TRUE@	$(AM_V_CC)depbase=`echo $@ | gsed 's|[^/]*$$|$(DEPDIR)/&|;s|\.obj$$||'`;\
+ @am__fastdepCC_TRUE@	$(COMPILE) -MT $@ -MD -MP -MF $$depbase.Tpo -c -o $@ `$(CYGPATH_W) '$<'` &&\
+ @am__fastdepCC_TRUE@	$(am__mv) $$depbase.Tpo $$depbase.Po
+ @AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='$<' object='$@' libtool=no @AMDEPBACKSLASH@
+@@ -618,7 +618,7 @@
+ 	  failcom='exit 1'; \
+ 	fi; \
+ 	dot_seen=no; \
+-	target=`echo $@ | sed s/-recursive//`; \
++	target=`echo $@ | gsed s/-recursive//`; \
+ 	case "$@" in \
+ 	  distclean-* | maintainer-clean-*) list='$(DIST_SUBDIRS)' ;; \
+ 	  *) list='$(SUBDIRS)' ;; \
+@@ -713,21 +713,21 @@
+ distdir: $(DISTFILES)
+ 	$(am__remove_distdir)
+ 	test -d "$(distdir)" || mkdir "$(distdir)"
+-	@srcdirstrip=`echo "$(srcdir)" | sed 's/[].[^$$\\*]/\\\\&/g'`; \
+-	topsrcdirstrip=`echo "$(top_srcdir)" | sed 's/[].[^$$\\*]/\\\\&/g'`; \
++	@srcdirstrip=`echo "$(srcdir)" | gsed 's/[].[^$$\\*]/\\\\&/g'`; \
++	topsrcdirstrip=`echo "$(top_srcdir)" | gsed 's/[].[^$$\\*]/\\\\&/g'`; \
+ 	list='$(DISTFILES)'; \
+ 	  dist_files=`for file in $$list; do echo $$file; done | \
+-	  sed -e "s|^$$srcdirstrip/||;t" \
++	  gsed -e "s|^$$srcdirstrip/||;t" \
+ 	      -e "s|^$$topsrcdirstrip/|$(top_builddir)/|;t"`; \
+ 	case $$dist_files in \
+ 	  */*) $(MKDIR_P) `echo "$$dist_files" | \
+-			   sed '/\//!d;s|^|$(distdir)/|;s,/[^/]*$$,,' | \
++			   gsed '/\//!d;s|^|$(distdir)/|;s,/[^/]*$$,,' | \
+ 			   sort -u` ;; \
+ 	esac; \
+ 	for file in $$dist_files; do \
+ 	  if test -f $$file || test -d $$file; then d=.; else d=$(srcdir); fi; \
+ 	  if test -d $$d/$$file; then \
+-	    dir=`echo "/$$file" | sed -e 's,/[^/]*$$,,'`; \
++	    dir=`echo "/$$file" | gsed -e 's,/[^/]*$$,,'`; \
+ 	    if test -d "$(distdir)/$$file"; then \
+ 	      find "$(distdir)/$$file" -type d ! -perm -700 -exec chmod u+rwx {} \;; \
+ 	    fi; \
+@@ -798,7 +798,7 @@
+ 	$(am__post_remove_distdir)
+ 
+ dist-shar: distdir
+-	@echo WARNING: "Support for distribution archives compressed with" \
++	@echo WARNING: "Support for distribution archives compresgsed with" \
+ 		       "legacy program 'compress' is deprecated." >&2
+ 	@echo WARNING: "It will be removed altogether in Automake 2.0" >&2
+ 	shar $(distdir) | GZIP=$(GZIP_ENV) gzip -c >$(distdir).shar.gz
+@@ -838,7 +838,7 @@
+ 	mkdir $(distdir)/_build $(distdir)/_inst
+ 	chmod a-w $(distdir)
+ 	test -d $(distdir)/_build || exit 0; \
+-	dc_install_base=`$(am__cd) $(distdir)/_inst && pwd | sed -e 's,^[^:\\/]:[\\/],/,'` \
++	dc_install_base=`$(am__cd) $(distdir)/_inst && pwd | gsed -e 's,^[^:\\/]:[\\/],/,'` \
+ 	  && dc_destdir="$${TMPDIR-/tmp}/am-dc-$$$$/" \
+ 	  && am__cwd=`pwd` \
+ 	  && $(am__cd) $(distdir)/_build \
+@@ -871,7 +871,7 @@
+ 	$(am__post_remove_distdir)
+ 	@(echo "$(distdir) archives ready for distribution: "; \
+ 	  list='$(DIST_ARCHIVES)'; for i in $$list; do echo $$i; done) | \
+-	  sed -e 1h -e 1s/./=/g -e 1p -e 1x -e '$$p' -e '$$x'
++	  gsed -e 1h -e 1s/./=/g -e 1p -e 1x -e '$$p' -e '$$x'
+ distuninstallcheck:
+ 	@test -n '$(distuninstallcheck_dir)' || { \
+ 	  echo 'ERROR: trying to run $@ with an empty' \
+@@ -970,7 +970,7 @@
+ 
+ install-dvi-am:
+ 
+-install-exec-am: install-sbinPROGRAMS
++install-exec-am: install-sbinPROGRAMS install-man
+ 
+ install-html: install-html-recursive
+ 
+@@ -1035,7 +1035,7 @@
+ 
+ 
+ .tmpl:
+-	sed -e s@:SBINDIR:@${sbindir}@ <$< >$@
++	gsed -e s@:SBINDIR:@${sbindir}@ <$< >$@
+ 
+ # Tell versions [3.59,3.63) of GNU make to not export all variables.
+ # Otherwise a system limit (for SysV at least) may be exceeded.
