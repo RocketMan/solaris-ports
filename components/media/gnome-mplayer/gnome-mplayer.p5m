@@ -7,6 +7,7 @@ set name=info.classification \
 set name=info.source-url value=$(COMPONENT_ARCHIVE_URL)
 set name=info.upstream-url value=$(COMPONENT_PROJECT_URL)
 set name=org.opensolaris.consolidation value=$(CONSOLIDATION)
+file gnome-mplayer.schemas path=etc/gconf/schemas/gnome-mplayer.schemas
 file usr/bin/gnome-mplayer path=usr/bin/gnome-mplayer
 file usr/share/applications/gnome-mplayer.desktop \
     path=usr/share/applications/gnome-mplayer.desktop
@@ -26,12 +27,6 @@ file usr/share/doc/gnome-mplayer/keyboard_shortcuts.txt \
     path=usr/share/doc/gnome-mplayer/keyboard_shortcuts.txt
 file usr/share/doc/gnome-mplayer/plugin-interaction.txt \
     path=usr/share/doc/gnome-mplayer/plugin-interaction.txt
-file usr/share/glib-2.0/schemas/apps.gecko-mediaplayer.preferences.gschema.xml \
-    path=usr/share/glib-2.0/schemas/apps.gecko-mediaplayer.preferences.gschema.xml
-file usr/share/glib-2.0/schemas/apps.gnome-mplayer.preferences.enums.xml \
-    path=usr/share/glib-2.0/schemas/apps.gnome-mplayer.preferences.enums.xml
-file usr/share/glib-2.0/schemas/apps.gnome-mplayer.preferences.gschema.xml \
-    path=usr/share/glib-2.0/schemas/apps.gnome-mplayer.preferences.gschema.xml
 file usr/share/gnome-control-center/default-apps/gnome-mplayer.xml \
     path=usr/share/gnome-control-center/default-apps/gnome-mplayer.xml
 file usr/share/icons/hicolor/16x16/apps/gnome-mplayer.png \

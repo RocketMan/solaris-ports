@@ -1,0 +1,11 @@
+--- a/configure	2014-01-09 21:49:49.000000000 +0000
++++ b/configure	2018-07-11 17:24:00.234235424 +0000
+@@ -10156,7 +10156,7 @@
+ 
+ fi
+ 
+-BACKEND=`pkg-config --variable=preference_backend gmlib`
++BACKEND="gconf"
+ 
+ if test ${BACKEND} = "gsettings"; then
+     { $as_echo "$as_me:${as_lineno-$LINENO}: gmlib is using ${BACKEND} for preference storage" >&5

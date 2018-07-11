@@ -49,7 +49,7 @@ COMPONENT_ARCHIVE_HASH_1=	\
 GMTK_BASE = $(WS_COMPONENTS)/media/gnome-mplayer/build/prototype/$(MACH)
 PKG_CONFIG_PATHS += $(GMTK_BASE)$(PKG_CONFIG_DEFAULT)
 CPPFLAGS += -I$(GMTK_BASE)/usr/include/gmtk
-LDFLAGS += -L$(GMTK_BASE)$(USRLIB)
+LDFLAGS += -L$(GMTK_BASE)$(USRLIB) -lgconf-2
 COMPONENT_BUILD_ENV += LDFLAGS="$(LDFLAGS)"
 
 $(BUILD_DIR_64)/.configured:   CONFIGURE_OPTIONS += $(PLAYER_CONFIGURE_OPTIONS)
@@ -64,15 +64,25 @@ include $(WS_MAKE_RULES)/common.mk
 
 GMTK_CONFIGURE_OPTIONS += --disable-shared
 GMTK_CONFIGURE_OPTIONS += --enable-static
+GMTK_CONFIGURE_OPTIONS += --enable-gconf
 
 PLAYER_CONFIGURE_OPTIONS += --disable-nautilus
 PLAYER_CONFIGURE_OPTIONS += --without-libmusicbrainz3
+PLAYER_CONFIGURE_OPTIONS += --disable-schemas-install
+
+COMPONENT_POST_INSTALL_ACTION += (\
+	if [ -f $(BUILD_DIR)/$(MACH64)/gnome-mplayer.schemas ]; then \
+		$(CP) $(BUILD_DIR)/$(MACH64)/gnome-mplayer.schemas \
+			$(PROTO_DIR) ; \
+	fi ; \
+)
 
 REQUIRED_PACKAGES += library/audio/pulseaudio
 REQUIRED_PACKAGES += library/desktop/cairo
 REQUIRED_PACKAGES += library/desktop/gtk2
 REQUIRED_PACKAGES += library/glib2
 REQUIRED_PACKAGES += library/libnotify
+REQUIRED_PACKAGES += gnome/config/gconf
 REQUIRED_PACKAGES += system/library/libdbus
 REQUIRED_PACKAGES += system/library/libdbus-glib
 REQUIRED_PACKAGES += system/library/math
