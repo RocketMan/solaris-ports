@@ -38,8 +38,7 @@ COMPONENT_ARCHIVE_HASH=	\
 # Move bundled ffmpeg out of the way so the build will use the
 # headers from the external ffmpeg delivered in package media/ffmpeg
 COMPONENT_PRE_CONFIGURE_ACTION += ( \
-	$(MV) $(SOURCE_DIR)/ffmpeg{,-} ; \
-	$(LN) -s $(COMPONENT_DIR)/files/dep.h $(@D) ; )
+	$(MV) $(SOURCE_DIR)/ffmpeg{,-} ; )
 
 # The build does not run in a VPATHed environment
 COMPONENT_PRE_BUILD_ACTION += (\
@@ -54,7 +53,7 @@ CONFIGURE_OPTIONS += --mandir=$(CONFIGURE_MANDIR)
 CONFIGURE_OPTIONS += --bindir=$(CONFIGURE_BINDIR.$(BITS))
 CONFIGURE_OPTIONS += --libdir=$(CONFIGURE_LIBDIR.$(BITS))
 
-CONFIGURE_OPTIONS += --extra-cflags='-DCodecID=AVCodecID -DHAVE_DVDCSS_DVDCSS_H -include dep.h'
+CONFIGURE_OPTIONS += --extra-cflags='-DCodecID=AVCodecID -DHAVE_DVDCSS_DVDCSS_H'
 CONFIGURE_OPTIONS += --extra-libs='-lavcodec -lavdevice -lavfilter -lavformat -lavutil -lpostproc -lswresample -lswscale -ldvdcss'
 CONFIGURE_OPTIONS += --disable-ffmpeg_a
 CONFIGURE_OPTIONS += --disable-lirc

@@ -10,10 +10,7 @@ set name=info.upstream-url value=$(COMPONENT_PROJECT_URL)
 set name=org.opensolaris.consolidation value=$(CONSOLIDATION)
 file usr/bin/ffmpeg path=usr/bin/ffmpeg
 file usr/bin/ffprobe path=usr/bin/ffprobe
-file usr/include/libavcodec/ac3_parser.h \
-    path=usr/include/libavcodec/ac3_parser.h
-file usr/include/libavcodec/adts_parser.h \
-    path=usr/include/libavcodec/adts_parser.h
+file usr/bin/ffserver path=usr/bin/ffserver
 file usr/include/libavcodec/avcodec.h path=usr/include/libavcodec/avcodec.h
 file usr/include/libavcodec/avdct.h path=usr/include/libavcodec/avdct.h
 file usr/include/libavcodec/avfft.h path=usr/include/libavcodec/avfft.h
@@ -27,6 +24,7 @@ file usr/include/libavcodec/mediacodec.h \
     path=usr/include/libavcodec/mediacodec.h
 file usr/include/libavcodec/qsv.h path=usr/include/libavcodec/qsv.h
 file usr/include/libavcodec/vaapi.h path=usr/include/libavcodec/vaapi.h
+file usr/include/libavcodec/vda.h path=usr/include/libavcodec/vda.h
 file usr/include/libavcodec/vdpau.h path=usr/include/libavcodec/vdpau.h
 file usr/include/libavcodec/version.h path=usr/include/libavcodec/version.h
 file usr/include/libavcodec/videotoolbox.h \
@@ -37,6 +35,8 @@ file usr/include/libavcodec/xvmc.h path=usr/include/libavcodec/xvmc.h
 file usr/include/libavdevice/avdevice.h path=usr/include/libavdevice/avdevice.h
 file usr/include/libavdevice/version.h path=usr/include/libavdevice/version.h
 file usr/include/libavfilter/avfilter.h path=usr/include/libavfilter/avfilter.h
+file usr/include/libavfilter/avfiltergraph.h \
+    path=usr/include/libavfilter/avfiltergraph.h
 file usr/include/libavfilter/buffersink.h \
     path=usr/include/libavfilter/buffersink.h
 file usr/include/libavfilter/buffersrc.h \
@@ -71,8 +71,6 @@ file usr/include/libavutil/dict.h path=usr/include/libavutil/dict.h
 file usr/include/libavutil/display.h path=usr/include/libavutil/display.h
 file usr/include/libavutil/downmix_info.h \
     path=usr/include/libavutil/downmix_info.h
-file usr/include/libavutil/encryption_info.h \
-    path=usr/include/libavutil/encryption_info.h
 file usr/include/libavutil/error.h path=usr/include/libavutil/error.h
 file usr/include/libavutil/eval.h path=usr/include/libavutil/eval.h
 file usr/include/libavutil/ffversion.h path=usr/include/libavutil/ffversion.h
@@ -90,8 +88,6 @@ file usr/include/libavutil/hwcontext_drm.h \
     path=usr/include/libavutil/hwcontext_drm.h
 file usr/include/libavutil/hwcontext_dxva2.h \
     path=usr/include/libavutil/hwcontext_dxva2.h
-file usr/include/libavutil/hwcontext_mediacodec.h \
-    path=usr/include/libavutil/hwcontext_mediacodec.h
 file usr/include/libavutil/hwcontext_qsv.h \
     path=usr/include/libavutil/hwcontext_qsv.h
 file usr/include/libavutil/hwcontext_vaapi.h \
@@ -152,38 +148,38 @@ file usr/include/libswresample/version.h \
     path=usr/include/libswresample/version.h
 file usr/include/libswscale/swscale.h path=usr/include/libswscale/swscale.h
 file usr/include/libswscale/version.h path=usr/include/libswscale/version.h
-link path=usr/lib/amd64/libavcodec.so target=libavcodec.so.58.18.100
-link path=usr/lib/amd64/libavcodec.so.58 target=libavcodec.so.58.18.100
-file usr/lib/amd64/libavcodec.so.58.18.100 \
-    path=usr/lib/amd64/libavcodec.so.58.18.100
-link path=usr/lib/amd64/libavdevice.so target=libavdevice.so.58.3.100
-link path=usr/lib/amd64/libavdevice.so.58 target=libavdevice.so.58.3.100
-file usr/lib/amd64/libavdevice.so.58.3.100 \
-    path=usr/lib/amd64/libavdevice.so.58.3.100
-link path=usr/lib/amd64/libavfilter.so target=libavfilter.so.7.16.100
-link path=usr/lib/amd64/libavfilter.so.7 target=libavfilter.so.7.16.100
-file usr/lib/amd64/libavfilter.so.7.16.100 \
-    path=usr/lib/amd64/libavfilter.so.7.16.100
-link path=usr/lib/amd64/libavformat.so target=libavformat.so.58.12.100
-link path=usr/lib/amd64/libavformat.so.58 target=libavformat.so.58.12.100
-file usr/lib/amd64/libavformat.so.58.12.100 \
-    path=usr/lib/amd64/libavformat.so.58.12.100
-link path=usr/lib/amd64/libavutil.so target=libavutil.so.56.14.100
-link path=usr/lib/amd64/libavutil.so.56 target=libavutil.so.56.14.100
-file usr/lib/amd64/libavutil.so.56.14.100 \
-    path=usr/lib/amd64/libavutil.so.56.14.100
-link path=usr/lib/amd64/libpostproc.so target=libpostproc.so.55.1.100
-link path=usr/lib/amd64/libpostproc.so.55 target=libpostproc.so.55.1.100
-file usr/lib/amd64/libpostproc.so.55.1.100 \
-    path=usr/lib/amd64/libpostproc.so.55.1.100
-link path=usr/lib/amd64/libswresample.so target=libswresample.so.3.1.100
-link path=usr/lib/amd64/libswresample.so.3 target=libswresample.so.3.1.100
-file usr/lib/amd64/libswresample.so.3.1.100 \
-    path=usr/lib/amd64/libswresample.so.3.1.100
-link path=usr/lib/amd64/libswscale.so target=libswscale.so.5.1.100
-link path=usr/lib/amd64/libswscale.so.5 target=libswscale.so.5.1.100
-file usr/lib/amd64/libswscale.so.5.1.100 \
-    path=usr/lib/amd64/libswscale.so.5.1.100
+link path=usr/lib/amd64/libavcodec.so target=libavcodec.so.57.107.100
+link path=usr/lib/amd64/libavcodec.so.57 target=libavcodec.so.57.107.100
+file usr/lib/amd64/libavcodec.so.57.107.100 \
+    path=usr/lib/amd64/libavcodec.so.57.107.100
+link path=usr/lib/amd64/libavdevice.so target=libavdevice.so.57.10.100
+link path=usr/lib/amd64/libavdevice.so.57 target=libavdevice.so.57.10.100
+file usr/lib/amd64/libavdevice.so.57.10.100 \
+    path=usr/lib/amd64/libavdevice.so.57.10.100
+link path=usr/lib/amd64/libavfilter.so target=libavfilter.so.6.107.100
+link path=usr/lib/amd64/libavfilter.so.6 target=libavfilter.so.6.107.100
+file usr/lib/amd64/libavfilter.so.6.107.100 \
+    path=usr/lib/amd64/libavfilter.so.6.107.100
+link path=usr/lib/amd64/libavformat.so target=libavformat.so.57.83.100
+link path=usr/lib/amd64/libavformat.so.57 target=libavformat.so.57.83.100
+file usr/lib/amd64/libavformat.so.57.83.100 \
+    path=usr/lib/amd64/libavformat.so.57.83.100
+link path=usr/lib/amd64/libavutil.so target=libavutil.so.55.78.100
+link path=usr/lib/amd64/libavutil.so.55 target=libavutil.so.55.78.100
+file usr/lib/amd64/libavutil.so.55.78.100 \
+    path=usr/lib/amd64/libavutil.so.55.78.100
+link path=usr/lib/amd64/libpostproc.so target=libpostproc.so.54.7.100
+link path=usr/lib/amd64/libpostproc.so.54 target=libpostproc.so.54.7.100
+file usr/lib/amd64/libpostproc.so.54.7.100 \
+    path=usr/lib/amd64/libpostproc.so.54.7.100
+link path=usr/lib/amd64/libswresample.so target=libswresample.so.2.9.100
+link path=usr/lib/amd64/libswresample.so.2 target=libswresample.so.2.9.100
+file usr/lib/amd64/libswresample.so.2.9.100 \
+    path=usr/lib/amd64/libswresample.so.2.9.100
+link path=usr/lib/amd64/libswscale.so target=libswscale.so.4.8.100
+link path=usr/lib/amd64/libswscale.so.4 target=libswscale.so.4.8.100
+file usr/lib/amd64/libswscale.so.4.8.100 \
+    path=usr/lib/amd64/libswscale.so.4.8.100
 file usr/lib/amd64/pkgconfig/libavcodec.pc \
     path=usr/lib/amd64/pkgconfig/libavcodec.pc
 file usr/lib/amd64/pkgconfig/libavdevice.pc \
@@ -200,30 +196,30 @@ file usr/lib/amd64/pkgconfig/libswresample.pc \
     path=usr/lib/amd64/pkgconfig/libswresample.pc
 file usr/lib/amd64/pkgconfig/libswscale.pc \
     path=usr/lib/amd64/pkgconfig/libswscale.pc
-link path=usr/lib/libavcodec.so target=libavcodec.so.58.18.100
-link path=usr/lib/libavcodec.so.58 target=libavcodec.so.58.18.100
-file usr/lib/libavcodec.so.58.18.100 path=usr/lib/libavcodec.so.58.18.100
-link path=usr/lib/libavdevice.so target=libavdevice.so.58.3.100
-link path=usr/lib/libavdevice.so.58 target=libavdevice.so.58.3.100
-file usr/lib/libavdevice.so.58.3.100 path=usr/lib/libavdevice.so.58.3.100
-link path=usr/lib/libavfilter.so target=libavfilter.so.7.16.100
-link path=usr/lib/libavfilter.so.7 target=libavfilter.so.7.16.100
-file usr/lib/libavfilter.so.7.16.100 path=usr/lib/libavfilter.so.7.16.100
-link path=usr/lib/libavformat.so target=libavformat.so.58.12.100
-link path=usr/lib/libavformat.so.58 target=libavformat.so.58.12.100
-file usr/lib/libavformat.so.58.12.100 path=usr/lib/libavformat.so.58.12.100
-link path=usr/lib/libavutil.so target=libavutil.so.56.14.100
-link path=usr/lib/libavutil.so.56 target=libavutil.so.56.14.100
-file usr/lib/libavutil.so.56.14.100 path=usr/lib/libavutil.so.56.14.100
-link path=usr/lib/libpostproc.so target=libpostproc.so.55.1.100
-link path=usr/lib/libpostproc.so.55 target=libpostproc.so.55.1.100
-file usr/lib/libpostproc.so.55.1.100 path=usr/lib/libpostproc.so.55.1.100
-link path=usr/lib/libswresample.so target=libswresample.so.3.1.100
-link path=usr/lib/libswresample.so.3 target=libswresample.so.3.1.100
-file usr/lib/libswresample.so.3.1.100 path=usr/lib/libswresample.so.3.1.100
-link path=usr/lib/libswscale.so target=libswscale.so.5.1.100
-link path=usr/lib/libswscale.so.5 target=libswscale.so.5.1.100
-file usr/lib/libswscale.so.5.1.100 path=usr/lib/libswscale.so.5.1.100
+link path=usr/lib/libavcodec.so target=libavcodec.so.57.107.100
+link path=usr/lib/libavcodec.so.57 target=libavcodec.so.57.107.100
+file usr/lib/libavcodec.so.57.107.100 path=usr/lib/libavcodec.so.57.107.100
+link path=usr/lib/libavdevice.so target=libavdevice.so.57.10.100
+link path=usr/lib/libavdevice.so.57 target=libavdevice.so.57.10.100
+file usr/lib/libavdevice.so.57.10.100 path=usr/lib/libavdevice.so.57.10.100
+link path=usr/lib/libavfilter.so target=libavfilter.so.6.107.100
+link path=usr/lib/libavfilter.so.6 target=libavfilter.so.6.107.100
+file usr/lib/libavfilter.so.6.107.100 path=usr/lib/libavfilter.so.6.107.100
+link path=usr/lib/libavformat.so target=libavformat.so.57.83.100
+link path=usr/lib/libavformat.so.57 target=libavformat.so.57.83.100
+file usr/lib/libavformat.so.57.83.100 path=usr/lib/libavformat.so.57.83.100
+link path=usr/lib/libavutil.so target=libavutil.so.55.78.100
+link path=usr/lib/libavutil.so.55 target=libavutil.so.55.78.100
+file usr/lib/libavutil.so.55.78.100 path=usr/lib/libavutil.so.55.78.100
+link path=usr/lib/libpostproc.so target=libpostproc.so.54.7.100
+link path=usr/lib/libpostproc.so.54 target=libpostproc.so.54.7.100
+file usr/lib/libpostproc.so.54.7.100 path=usr/lib/libpostproc.so.54.7.100
+link path=usr/lib/libswresample.so target=libswresample.so.2.9.100
+link path=usr/lib/libswresample.so.2 target=libswresample.so.2.9.100
+file usr/lib/libswresample.so.2.9.100 path=usr/lib/libswresample.so.2.9.100
+link path=usr/lib/libswscale.so target=libswscale.so.4.8.100
+link path=usr/lib/libswscale.so.4 target=libswscale.so.4.8.100
+file usr/lib/libswscale.so.4.8.100 path=usr/lib/libswscale.so.4.8.100
 file usr/lib/pkgconfig/libavcodec.pc path=usr/lib/pkgconfig/libavcodec.pc
 file usr/lib/pkgconfig/libavdevice.pc path=usr/lib/pkgconfig/libavdevice.pc
 file usr/lib/pkgconfig/libavfilter.pc path=usr/lib/pkgconfig/libavfilter.pc
@@ -274,10 +270,6 @@ file usr/share/ffmpeg/examples/transcode_aac.c \
     path=usr/share/ffmpeg/examples/transcode_aac.c
 file usr/share/ffmpeg/examples/transcoding.c \
     path=usr/share/ffmpeg/examples/transcoding.c
-file usr/share/ffmpeg/examples/vaapi_encode.c \
-    path=usr/share/ffmpeg/examples/vaapi_encode.c
-file usr/share/ffmpeg/examples/vaapi_transcode.c \
-    path=usr/share/ffmpeg/examples/vaapi_transcode.c
 file usr/share/ffmpeg/ffprobe.xsd path=usr/share/ffmpeg/ffprobe.xsd
 file usr/share/ffmpeg/libvpx-1080p.ffpreset \
     path=usr/share/ffmpeg/libvpx-1080p.ffpreset
@@ -308,6 +300,8 @@ file usr/share/man/man1/ffmpeg-utils.1 path=usr/share/man/man1/ffmpeg-utils.1
 file usr/share/man/man1/ffmpeg.1 path=usr/share/man/man1/ffmpeg.1
 file usr/share/man/man1/ffprobe-all.1 path=usr/share/man/man1/ffprobe-all.1
 file usr/share/man/man1/ffprobe.1 path=usr/share/man/man1/ffprobe.1
+file usr/share/man/man1/ffserver-all.1 path=usr/share/man/man1/ffserver-all.1
+file usr/share/man/man1/ffserver.1 path=usr/share/man/man1/ffserver.1
 file usr/share/man/man3/libavcodec.3 path=usr/share/man/man3/libavcodec.3
 file usr/share/man/man3/libavdevice.3 path=usr/share/man/man3/libavdevice.3
 file usr/share/man/man3/libavfilter.3 path=usr/share/man/man3/libavfilter.3
