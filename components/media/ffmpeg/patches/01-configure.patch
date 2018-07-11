@@ -1,5 +1,5 @@
---- a/configure	2018-07-08 11:25:32.000000000 +0000
-+++ b/configure	2018-07-11 15:08:15.005663493 +0000
+--- a/configure	2018-04-14 00:34:39.000000000 +0000
++++ b/configure	2018-07-11 16:05:45.119981197 +0000
 @@ -54,7 +54,7 @@
      exit 1
  fi
@@ -9,15 +9,7 @@
  
  show_help(){
      cat <<EOF
-@@ -4938,6 +4938,7 @@
-         nm_default='nm -P -g'
-         version_script='-M'
-         VERSION_SCRIPT_POSTPROCESS_CMD='perl $(SRC_PATH)/compat/solaris/make_sunver.pl - $(OBJS)'
-+        striptype=""
-         ;;
-     netbsd)
-         disable symver
-@@ -4979,7 +4980,7 @@
+@@ -4829,7 +4829,7 @@
          check_header dispatch/dispatch.h &&
              add_cppflags '-I\$(SRC_PATH)/compat/dispatch_semaphore'
          version_script='-exported_symbols_list'
@@ -26,7 +18,7 @@
          ;;
      msys*)
          die "Native MSYS builds are discouraged, please use the MINGW environment."
-@@ -6340,13 +6341,13 @@
+@@ -6152,7 +6152,7 @@
  
  # add some linker flags
  check_ldflags -Wl,--warn-common
@@ -35,10 +27,3 @@
  enabled rpath && add_ldexeflags -Wl,-rpath,$libdir
  enabled rpath && add_ldlibflags -Wl,-rpath,$libdir
  test_ldflags -Wl,-Bsymbolic && append SHFLAGS -Wl,-Bsymbolic
- 
- # add some strip flags
--check_stripflags -x
-+#check_stripflags -x
- 
- enabled neon_clobber_test &&
-     check_ldflags -Wl,--wrap,avcodec_open2              \
