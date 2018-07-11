@@ -71,8 +71,8 @@ PLAYER_CONFIGURE_OPTIONS += --without-libmusicbrainz3
 PLAYER_CONFIGURE_OPTIONS += --disable-schemas-install
 
 COMPONENT_POST_INSTALL_ACTION += (\
-	if [ -f $(BUILD_DIR)/$(MACH64)/gnome-mplayer.schemas ]; then \
-		$(CP) $(BUILD_DIR)/$(MACH64)/gnome-mplayer.schemas \
+	if [ -f $(BUILD_DIR_64)/gnome-mplayer.schemas ]; then \
+		$(CP) $(BUILD_DIR_64)/gnome-mplayer.schemas \
 			$(PROTO_DIR) ; \
 	fi ; \
 )
