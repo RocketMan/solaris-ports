@@ -5,6 +5,7 @@ set name=pkg.summary \
     value="libass is a portable subtitle renderer for the ASS/SSA (Advanced Substation Alpha/Substation Alpha) subtitle format"
 set name=info.classification \
     value="org.opensolaris.category.2008:System/Multimedia Libraries"
+set name=info.repository-url value=$(GIT_REPO)
 set name=info.upstream-url value=$(COMPONENT_PROJECT_URL)
 set name=org.opensolaris.consolidation value=$(CONSOLIDATION)
 file usr/include/ass/ass.h path=usr/include/ass/ass.h

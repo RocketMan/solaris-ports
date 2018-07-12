@@ -13,6 +13,7 @@ set name=pkg.summary \
     value="TUN and TAP drivers for OpenVPN and other VPN solutions"
 set name=info.classification \
     value=org.opensolaris.category.2008:Drivers/Networking
+set name=info.repository-url value=$(GIT_REPO)
 set name=info.upstream-url value=$(COMPONENT_PROJECT_URL)
 set name=org.opensolaris.consolidation value=$(CONSOLIDATION)
 set name=variant.opensolaris.zone value=global

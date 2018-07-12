@@ -6,6 +6,7 @@ set name=pkg.description \
     value="The GNU Compact Disc Input and Control library (libcdio) contains a library for CD-ROM and CD image access. Applications wishing to be oblivious of the OS- and device-dependent properties of a CD-ROM or of the specific details of various CD-image formats may benefit from using this library."
 set name=info.classification \
     value="org.opensolaris.category.2008:System/Multimedia Libraries"
+set name=info.repository-url value=$(GIT_REPO)
 set name=info.upstream-url value=$(COMPONENT_PROJECT_URL)
 set name=org.opensolaris.consolidation value=$(CONSOLIDATION)
 file usr/bin/cd-drive path=usr/bin/cd-drive

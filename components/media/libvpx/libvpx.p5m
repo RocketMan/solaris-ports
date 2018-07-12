@@ -6,6 +6,7 @@ set name=pkg.description \
     value="libvpx serves as the reference software implementation for the video coding formats VP8 and VP9, and for AV1 a special fork named libaom that was stripped of backwards compatibility."
 set name=info.classification \
     value="org.opensolaris.category.2008:System/Multimedia Libraries"
+set name=info.repository-url value=$(GIT_REPO)
 set name=info.upstream-url value=$(COMPONENT_PROJECT_URL)
 set name=org.opensolaris.consolidation value=$(CONSOLIDATION)
 file usr/bin/vpxdec path=usr/bin/vpxdec

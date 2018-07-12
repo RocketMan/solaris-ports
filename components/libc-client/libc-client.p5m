@@ -29,6 +29,7 @@ set name=com.oracle.info.description \
 set name=info.classification \
     value=org.opensolaris.category.2008:System/Libraries
 set name=info.source-url value=$(COMPONENT_ARCHIVE_URL)
+set name=info.upstream-url value=$(COMPONENT_PROJECT_URL)
 set name=org.opensolaris.consolidation value=$(CONSOLIDATION)
 dir  path=usr/include/c-client
 file usr/include/c-client/c-client.h path=usr/include/c-client/c-client.h

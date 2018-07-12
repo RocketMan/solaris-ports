@@ -6,6 +6,7 @@ set name=pkg.description \
     value="libx264 provides best-in-class performance, compression, and features, and achieves dramatic performance, encoding 4 or more 1080p streams in realtime on a single consumer-level computer."
 set name=info.classification \
     value="org.opensolaris.category.2008:System/Multimedia Libraries"
+set name=info.repository-url value=$(GIT_REPO)
 set name=info.upstream-url value=$(COMPONENT_PROJECT_URL)
 set name=org.opensolaris.consolidation value=$(CONSOLIDATION)
 file usr/include/x264.h path=usr/include/x264.h
