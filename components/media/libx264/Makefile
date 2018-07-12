@@ -49,5 +49,14 @@ CONFIGURE_OPTIONS.32 += --enable-pic
 
 CONFIGURE_OPTIONS += --enable-shared
 
+COMPONENT_POST_INSTALL_ACTION += ( \
+	if [ -f $(PROTOUSRBINDIR)/x264 ]; then \
+		mkdir -p $(PROTOUSRSHAREMAN1DIR) ; \
+		help2man $(PROTOUSRBINDIR)/x264 > \
+			 $(PROTOUSRSHAREMAN1DIR)/x264.1 ; \
+	fi ; \
+)
+
+REQUIRED_PACKAGES += media/ffmpeg
 REQUIRED_PACKAGES += system/library
 REQUIRED_PACKAGES += system/library/math
