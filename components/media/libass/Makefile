@@ -44,7 +44,9 @@ CONFIGURE_OPTIONS += --enable-maintainer-mode
 CONFIGURE_OPTIONS += --enable-static=no
 CONFIGURE_OPTIONS += --disable-docs
 CONFIGURE_OPTIONS += --disable-internal-docs
+CONFIGURE_OPTIONS += --disable-asm
 
+REQUIRED_PACKAGES += library/desktop/harfbuzz
 REQUIRED_PACKAGES += library/fribidi
 REQUIRED_PACKAGES += system/library/fontconfig
 REQUIRED_PACKAGES += system/library/freetype-2
