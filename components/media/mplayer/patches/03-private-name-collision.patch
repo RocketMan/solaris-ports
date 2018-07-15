@@ -1,0 +1,53 @@
+--- a/stream/realrtsp/sdpplin.c	2012-11-10 13:06:15.000000000 +0000
++++ b/stream/realrtsp/sdpplin.c	2018-07-15 13:39:22.230654062 +0000
+@@ -40,7 +40,7 @@
+  * Decodes base64 strings (based upon b64 package)
+  */
+ 
+-static char *b64_decode(const char *in, char *out, int *size)
++static char *b64_decode_rtsp(const char *in, char *out, int *size)
+ {
+   char dtable[256];              /* Encode / decode table */
+   int i,j,k;
+@@ -214,7 +214,7 @@
+     }
+ 
+     if(filter(*data,"a=OpaqueData:buffer;",&buf)) {
+-      decoded = b64_decode(buf, decoded, &(desc->mlti_data_size));
++      decoded = b64_decode_rtsp(buf, decoded, &(desc->mlti_data_size));
+       desc->mlti_data=malloc(desc->mlti_data_size);
+       memcpy(desc->mlti_data, decoded, desc->mlti_data_size);
+       handled=1;
+@@ -302,28 +302,28 @@
+     }
+ 
+     if(filter(data,"a=Title:buffer;",&buf)) {
+-      decoded=b64_decode(buf, decoded, &len);
++      decoded=b64_decode_rtsp(buf, decoded, &len);
+       desc->title=strdup(decoded);
+       handled=1;
+       data=nl(data);
+     }
+ 
+     if(filter(data,"a=Author:buffer;",&buf)) {
+-      decoded=b64_decode(buf, decoded, &len);
++      decoded=b64_decode_rtsp(buf, decoded, &len);
+       desc->author=strdup(decoded);
+       handled=1;
+       data=nl(data);
+     }
+ 
+     if(filter(data,"a=Copyright:buffer;",&buf)) {
+-      decoded=b64_decode(buf, decoded, &len);
++      decoded=b64_decode_rtsp(buf, decoded, &len);
+       desc->copyright=strdup(decoded);
+       handled=1;
+       data=nl(data);
+     }
+ 
+     if(filter(data,"a=Abstract:buffer;",&buf)) {
+-      decoded=b64_decode(buf, decoded, &len);
++      decoded=b64_decode_rtsp(buf, decoded, &len);
+       desc->abstract=strdup(decoded);
+       handled=1;
+       data=nl(data);

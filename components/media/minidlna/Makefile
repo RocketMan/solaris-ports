@@ -41,6 +41,8 @@ LDFLAGS += -m$(BITS) -lsendfile -lnsl -lsocket
 include $(WS_MAKE_RULES)/common.mk
 
 REQUIRED_PACKAGES += codec/flac
+REQUIRED_PACKAGES += codec/libogg
+REQUIRED_PACKAGES += codec/libvorbis
 REQUIRED_PACKAGES += codec/ogg-vorbis
 REQUIRED_PACKAGES += database/sqlite-3
 REQUIRED_PACKAGES += image/library/libexif

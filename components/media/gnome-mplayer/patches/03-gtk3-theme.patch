@@ -1,0 +1,11 @@
+--- a/src/main.c	2013-11-25 19:44:09.000000000 +0000
++++ b/src/main.c	2018-07-15 15:17:01.440951915 +0000
+@@ -1129,7 +1129,7 @@
+     db_connection = open_db_connection();
+ #endif
+     // only use dark theme if not embedded, otherwise use the default theme  
+-#ifdef GTK3_ENABLED
++#if defined(GTK3_ENABLED) && defined(WANT_DARK_THEME)
+     if (embed_window <= 0) {
+         gtk_settings = gtk_settings_get_default();
+         g_object_set(G_OBJECT(gtk_settings), "gtk-application-prefer-dark-theme", TRUE, NULL);

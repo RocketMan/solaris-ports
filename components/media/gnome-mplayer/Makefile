@@ -42,7 +42,7 @@ COMPONENT_NAME_1=	gmtk
 COMPONENT_VERSION_1=	1.0.9b
 COMPONENT_SRC_1=	$(COMPONENT_NAME_1)-$(COMPONENT_VERSION_1)
 COMPONENT_ARCHIVE_1=	$(COMPONENT_SRC_1).tar.gz
-COMPONENT_ARCHIVE_URL=	https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/$(COMPONENT_NAME_1)/$(COMPONENT_ARCHIVE_1)
+COMPONENT_ARCHIVE_URL_1=	https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/$(COMPONENT_NAME_1)/$(COMPONENT_ARCHIVE_1)
 COMPONENT_ARCHIVE_HASH_1=	\
     sha256:ec13e7c97be4c85c3b1e59149c871c01d0aab0fd37c39d549a74434c5283c51f
 
@@ -79,7 +79,10 @@ COMPONENT_POST_INSTALL_ACTION += (\
 
 REQUIRED_PACKAGES += library/audio/pulseaudio
 REQUIRED_PACKAGES += library/desktop/cairo
+REQUIRED_PACKAGES += library/desktop/gdk-pixbuf
 REQUIRED_PACKAGES += library/desktop/gtk2
+REQUIRED_PACKAGES += library/desktop/gtk3
+REQUIRED_PACKAGES += library/desktop/libnotify
 REQUIRED_PACKAGES += library/glib2
 REQUIRED_PACKAGES += library/libnotify
 REQUIRED_PACKAGES += gnome/config/gconf

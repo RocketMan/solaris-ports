@@ -63,11 +63,14 @@ CONFIGURE_OPTIONS += --disable-mpg123
 
 
 REQUIRED_PACKAGES += codec/libtheora
+REQUIRED_PACKAGES += codec/libogg
+REQUIRED_PACKAGES += codec/libvorbis
 REQUIRED_PACKAGES += codec/ogg-vorbis
 REQUIRED_PACKAGES += codec/speex
 REQUIRED_PACKAGES += driver/graphics/nvidia
 REQUIRED_PACKAGES += image/library/libjpeg
 REQUIRED_PACKAGES += image/library/libpng
+REQUIRED_PACKAGES += image/library/libpng14
 REQUIRED_PACKAGES += library/aalib
 REQUIRED_PACKAGES += library/audio/pulseaudio
 REQUIRED_PACKAGES += library/fribidi

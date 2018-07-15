@@ -46,7 +46,7 @@ CONFIGURE_DEFAULT_DIRS=	no
 
 include $(WS_MAKE_RULES)/common.mk
 
-CONFIGURE_ENV += PATH="$(GNUBIN):$(PATH)"
+CONFIGURE_ENV += PATH="$(GNUBIN):$(PATH):/usr/perl5/$(PERL_VERSION)/bin"
 CONFIGURE_ENV += CPPFLAGS="$(CPPFLAGS)"
 
 CONFIGURE_OPTIONS.32 += --disable-asm
@@ -75,7 +75,7 @@ CONFIGURE_OPTIONS += --enable-manpages
 CONFIGURE_OPTIONS += --disable-htmlpages
 CONFIGURE_OPTIONS += --disable-txtpages
 
-COMPONENT_BUILD_ENV += PATH="$(GNUBIN):$(PATH)"
+COMPONENT_BUILD_ENV += PATH="$(GNUBIN):$(PATH):/usr/perl5/$(PERL_VERSION)/bin"
 
 
 # To prevent "libtool_install_magic: unbound variable"
@@ -94,6 +94,7 @@ COMPONENT_TEST_TRANSFORMS += \
 COMPONENT_TEST_MASTER = $(COMPONENT_TEST_RESULTS_DIR)/results-all.master
 
 REQUIRED_PACKAGES += codec/libtheora
+REQUIRED_PACKAGES += codec/libvorbis
 REQUIRED_PACKAGES += codec/ogg-vorbis
 REQUIRED_PACKAGES += driver/graphics/nvidia
 REQUIRED_PACKAGES += library/security/openssl
