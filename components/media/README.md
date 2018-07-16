@@ -47,7 +47,7 @@ All of the components listed below may be obtained from this repo.
 
 4.
     * **ffmpeg** _(needs libass, libcdio-paranoia, libfdk-aac, libopus,
-      libx264, lame)_
+      libx264, lame, lzo)_
 
 
 5.
