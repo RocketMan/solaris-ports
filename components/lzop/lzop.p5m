@@ -1,0 +1,26 @@
+<transform file path=usr.*/man/.+ -> default mangler.man.stability uncommitted>
+set name=pkg.fmri \
+    value=pkg:/compress/lzop@$(IPS_COMPONENT_VERSION),$(BUILD_VERSION)
+set name=pkg.summary \
+    value="lzop is a file compressor which is very similar to gzip"
+set name=pkg.description \
+    value="lzop uses the LZO data compression library for compression services, and its main advantages over gzip are much higher compression and decompression speed (at the cost of some compression ratio)."
+set name=info.classification \
+    value="org.opensolaris.category.2008:Applications/System Utilities"
+set name=info.source-url value=$(COMPONENT_ARCHIVE_URL)
+set name=info.upstream-url value=$(COMPONENT_PROJECT_URL)
+set name=org.opensolaris.consolidation value=$(CONSOLIDATION)
+file usr/bin/lzop path=usr/bin/lzop
+file usr/share/doc/lzop/AUTHORS path=usr/share/doc/lzop/AUTHORS
+file usr/share/doc/lzop/COPYING path=usr/share/doc/lzop/COPYING
+file usr/share/doc/lzop/NEWS path=usr/share/doc/lzop/NEWS
+file usr/share/doc/lzop/README path=usr/share/doc/lzop/README
+file usr/share/doc/lzop/THANKS path=usr/share/doc/lzop/THANKS
+file usr/share/doc/lzop/lzop.html path=usr/share/doc/lzop/lzop.html
+file usr/share/doc/lzop/lzop.man path=usr/share/doc/lzop/lzop.man
+file usr/share/doc/lzop/lzop.pod path=usr/share/doc/lzop/lzop.pod
+file usr/share/doc/lzop/lzop.ps path=usr/share/doc/lzop/lzop.ps
+file usr/share/doc/lzop/lzop.tex path=usr/share/doc/lzop/lzop.tex
+file usr/share/doc/lzop/lzop.txt path=usr/share/doc/lzop/lzop.txt
+file usr/share/man/man1/lzop.1 path=usr/share/man/man1/lzop.1
+license COPYING license=GPLv2
