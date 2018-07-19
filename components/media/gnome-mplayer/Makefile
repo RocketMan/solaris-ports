@@ -37,6 +37,7 @@ COMPONENT_PROJECT_URL=	https://code.google.com/archive/p/gnome-mplayer/
 COMPONENT_ARCHIVE_URL=	https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/$(COMPONENT_NAME)/$(COMPONENT_ARCHIVE)
 COMPONENT_ARCHIVE_HASH=	\
     sha256:cc726766937304e973bdc8ba65175505180c77565e87476a77c2926e2ef56ca8
+COMPONENT_ANITYA_ID=	8386
 
 COMPONENT_NAME_1=	gmtk
 COMPONENT_VERSION_1=	1.0.9b

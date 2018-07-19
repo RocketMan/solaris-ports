@@ -33,6 +33,7 @@ COMPONENT_VERSION=	1.7.0
 GIT_REPO=		https://chromium.googlesource.com/webm/libvpx
 GIT_COMMIT_ID=		v1.7.0
 COMPONENT_PROJECT_URL=	https://www.webmproject.org/
+COMPONENT_ANITYA_ID=	11083
 
 CONFIGURE_DEFAULT_DIRS = no
 

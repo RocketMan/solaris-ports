@@ -32,6 +32,7 @@ COMPONENT_VERSION=	2.0.0
 GIT_REPO=		https://git.savannah.gnu.org/git/libcdio.git
 GIT_COMMIT_ID=		release-2.0.0
 COMPONENT_PROJECT_URL=	https://www.gnu.org/software/libcdio/
+COMPONENT_ANITYA_ID=	1573
 
 COMPONENT_PRE_CONFIGURE_ACTION = ($(CLONEY) $(SOURCE_DIR) $(@D))
 COMPONENT_PREP_ACTION = \

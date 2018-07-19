@@ -33,6 +33,7 @@ COMPONENT_ARCHIVE_URL=	http://www.tortall.net/projects/yasm/releases/$(COMPONENT
 COMPONENT_PROJECT_URL=	https://yasm.tortall.net/
 COMPONENT_ARCHIVE_HASH=	\
     sha256:3dce6601b495f5b3d45b59f7d2492a340ee7e84b5beca17e48f862502bd5603f
+COMPONENT_ANITYA_ID=	5286
 
 include $(WS_MAKE_RULES)/common.mk
 

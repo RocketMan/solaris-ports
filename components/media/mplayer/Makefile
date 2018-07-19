@@ -34,6 +34,7 @@ COMPONENT_PROJECT_URL=	http://www.mplayerhq.hu/
 COMPONENT_ARCHIVE_URL=	http://www.mplayerhq.hu/MPlayer/releases/$(COMPONENT_ARCHIVE)
 COMPONENT_ARCHIVE_HASH=	\
     sha256:3ad0846c92d89ab2e4e6fb83bf991ea677e7aa2ea775845814cbceb608b09843
+COMPONENT_ANITYA_ID=	9765
 
 # Move bundled ffmpeg out of the way so the build will use the
 # headers from the external ffmpeg delivered in package media/ffmpeg

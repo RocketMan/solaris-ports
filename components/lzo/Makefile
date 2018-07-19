@@ -34,6 +34,7 @@ COMPONENT_ARCHIVE_URL=	http://www.oberhumer.com/opensource/$(COMPONENT_NAME)/dow
 COMPONENT_PROJECT_URL=	http://www.oberhumer.com/opensource/$(COMPONENT_NAME)/
 COMPONENT_ARCHIVE_HASH=	\
     sha256:f294a7ced313063c057c504257f437c8335c41bfeed23531ee4e6a2b87bcb34c
+COMPONENT_ANITYA_ID=	1868
 
 include $(WS_MAKE_RULES)/common.mk
 

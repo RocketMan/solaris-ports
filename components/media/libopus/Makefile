@@ -34,6 +34,7 @@ COMPONENT_ARCHIVE_HASH=	\
 	sha256:cfafd339ccd9c5ef8d6ab15d7e1a412c054bf4cb4ecbbbcc78c12ef2def70732
 COMPONENT_ARCHIVE_URL = https://archive.mozilla.org/pub/$(COMPONENT_NAME)/$(COMPONENT_ARCHIVE)
 COMPONENT_PROJECT_URL=	http://opus-codec.org/
+COMPONENT_ANITYA_ID=	11081
 
 
 include $(WS_MAKE_RULES)/common.mk

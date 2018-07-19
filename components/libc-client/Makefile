@@ -28,13 +28,15 @@ COMPILER =              gcc
 include ../../make-rules/shared-macros.mk
 
 COMPONENT_NAME=		libc-client
-COMPONENT_VERSION=	1.0.0
+COMPONENT_VERSION=	2007f
+IPS_COMPONENT_VERSION=	1.0.0
 COMPONENT_SRC =		imap-2007f
 COMPONENT_ARCHIVE ?=	$(COMPONENT_SRC).tar.gz
 COMPONENT_PROJECT_URL=	https://www.washington.edu/imap/
 COMPONENT_ARCHIVE_URL=	https://src.fedoraproject.org/lookaside/pkgs/uw-imap/imap-2007f.tar.gz/2126fd125ea26b73b20f01fcd5940369/$(COMPONENT_ARCHIVE)
 COMPONENT_ARCHIVE_HASH=	\
 	sha256:53e15a2b5c1bc80161d42e9f69792a3fa18332b7b771910131004eb520004a28
+COMPONENT_ANITYA_ID=	14649
 
 BUILD_STYLE=justmake
 

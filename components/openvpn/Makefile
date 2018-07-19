@@ -36,6 +36,7 @@ COMPONENT_ARCHIVE_URL=	http://swupdate.openvpn.org/community/releases/$(COMPONEN
 COMPONENT_PROJECT_URL=	http://openvpn.net/
 COMPONENT_ARCHIVE_HASH=	\
     sha256:15e15fc97f189b52aee7c90ec8355aa77469c773125110b4c2f089abecde36fb
+COMPONENT_ANITYA_ID=	2567
 
 include $(WS_MAKE_RULES)/common.mk
 

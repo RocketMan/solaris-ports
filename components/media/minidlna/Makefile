@@ -34,6 +34,7 @@ COMPONENT_PROJECT_URL=	https://sourceforge.net/projects/minidlna/
 COMPONENT_ARCHIVE_URL=	https://netix.dl.sourceforge.net/project/minidlna/$(COMPONENT_NAME)/$(COMPONENT_VERSION)/$(COMPONENT_ARCHIVE)
 COMPONENT_ARCHIVE_HASH=	\
     sha256:67388ba23ab0c7033557a32084804f796aa2a796db7bb2b770fb76ac2a742eec
+COMPONENT_ANITYA_ID=	12598
 
 CFLAGS += -DICON_DLNA
 LDFLAGS += -m$(BITS) -lsendfile -lnsl -lsocket

@@ -35,6 +35,7 @@ COMPONENT_ARCHIVE_HASH=	\
 SOURCEFORGE_URL =	https://datapacket.dl.sourceforge.net/project
 COMPONENT_ARCHIVE_URL = $(SOURCEFORGE_URL)/dvdbackup/$(COMPONENT_NAME)/$(COMPONENT_SRC)/$(COMPONENT_ARCHIVE)
 COMPONENT_PROJECT_URL=	http://dvdbackup.sourceforge.net/
+COMPONENT_ANITYA_ID=	640
 
 
 include $(WS_MAKE_RULES)/common.mk

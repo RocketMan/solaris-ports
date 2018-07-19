@@ -34,6 +34,7 @@ COMPONENT_ARCHIVE_HASH=	\
 	sha256:78c2ed77ec9c0d8fbed7bf7d3abc82068b8864be494cfad165821377ff3f2575
 COMPONENT_ARCHIVE_URL = https://download.videolan.org/pub/$(COMPONENT_NAME)/$(COMPONENT_VERSION)/$(COMPONENT_ARCHIVE)
 COMPONENT_PROJECT_URL=	https://www.videolan.org/developers/libdvdcss.html
+COMPONENT_ANITYA_ID=	5568
 
 
 include $(WS_MAKE_RULES)/common.mk
