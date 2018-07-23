@@ -129,4 +129,4 @@ file usr/share/locale/zh_TW/LC_MESSAGES/gnome-mplayer.mo \
     path=usr/share/locale/zh_TW/LC_MESSAGES/gnome-mplayer.mo
 file usr/share/man/man1/gnome-mplayer.1 path=usr/share/man/man1/gnome-mplayer.1
 license COPYING license=GPLv2
-
+depend type=require fmri=media/mplayer
