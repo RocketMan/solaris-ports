@@ -53,6 +53,7 @@ include $(WS_MAKE_RULES)/common.mk
 CONFIGURE_OPTIONS += --mandir=$(CONFIGURE_MANDIR)
 CONFIGURE_OPTIONS += --bindir=$(CONFIGURE_BINDIR.$(BITS))
 CONFIGURE_OPTIONS += --libdir=$(CONFIGURE_LIBDIR.$(BITS))
+CONFIGURE_OPTIONS += --confdir=$(ETCDIR)/mplayer
 
 CONFIGURE_OPTIONS += --extra-cflags='-DCodecID=AVCodecID -DHAVE_DVDCSS_DVDCSS_H'
 CONFIGURE_OPTIONS += --extra-libs='-lavcodec -lavdevice -lavfilter -lavformat -lavutil -lpostproc -lswresample -lswscale -ldvdcss'
@@ -60,7 +61,6 @@ CONFIGURE_OPTIONS += --disable-ffmpeg_a
 CONFIGURE_OPTIONS += --disable-lirc
 CONFIGURE_OPTIONS += --disable-lircc
 CONFIGURE_OPTIONS += --disable-ossaudio
-CONFIGURE_OPTIONS += --disable-mpg123
 
 
 REQUIRED_PACKAGES += codec/libtheora
@@ -82,6 +82,7 @@ REQUIRED_PACKAGES += library/media/libcdio
 REQUIRED_PACKAGES += library/media/libcdio-paranoia
 REQUIRED_PACKAGES += library/media/libdvdnav
 REQUIRED_PACKAGES += library/media/libdvdread
+REQUIRED_PACKAGES += library/media/libmpg123
 REQUIRED_PACKAGES += library/media/libx264
 REQUIRED_PACKAGES += library/sdl
 REQUIRED_PACKAGES += media/ffmpeg

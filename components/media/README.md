@@ -23,6 +23,7 @@ All of the components listed below may be obtained from this repo.
     * **libdvdcss**
     * **libfdk-aac**
     * **libid3tag**
+    * **libmpg123**
     * **libopus**
     * **libvpx**
     * **libx264** (**see note)
@@ -57,7 +58,7 @@ All of the components listed below may be obtained from this repo.
 6.
     * **minidlna** _(needs libid3tag, ffmpeg)_
     * **mplayer** _(needs libass, libcdio-paranoia, libcdio, libdvdnav,
-      libdvdread, libx264, ffmpeg, lame)_
+      libdvdread, libmpg123, libx264, ffmpeg, lame)_
 
 
 7.

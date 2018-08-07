@@ -1,0 +1,48 @@
+set name=pkg.fmri \
+    value=pkg:/library/media/libmpg123@$(IPS_COMPONENT_VERSION),$(BUILD_VERSION)
+set name=pkg.summary value="fast mpeg audio decoder and output library"
+set name=pkg.description \
+    value="libmpg123 suports decoding of MPEG 1.0/2.0/2.5 layer I/II/III audio streams to interleaved PCM, also free-format bitrates over 320 kbit/s.  libout123 supports output to a wide range of audio interfaces."
+set name=info.classification \
+    value="org.opensolaris.category.2008:System/Multimedia Libraries"
+set name=info.source-url value=$(COMPONENT_ARCHIVE_URL)
+set name=info.upstream-url value=$(COMPONENT_PROJECT_URL)
+set name=org.opensolaris.consolidation value=$(CONSOLIDATION)
+file usr/include/fmt123.h path=usr/include/fmt123.h
+file usr/include/mpg123.h path=usr/include/mpg123.h
+file usr/include/out123.h path=usr/include/out123.h
+file usr/lib/amd64/libmpg123.la path=usr/lib/amd64/libmpg123.la
+link path=usr/lib/amd64/libmpg123.so target=libmpg123.so.0.44.8
+link path=usr/lib/amd64/libmpg123.so.0 target=libmpg123.so.0.44.8
+file usr/lib/amd64/libmpg123.so.0.44.8 path=usr/lib/amd64/libmpg123.so.0.44.8
+file usr/lib/amd64/libout123.la path=usr/lib/amd64/libout123.la
+link path=usr/lib/amd64/libout123.so target=libout123.so.0.2.2
+link path=usr/lib/amd64/libout123.so.0 target=libout123.so.0.2.2
+file usr/lib/amd64/libout123.so.0.2.2 path=usr/lib/amd64/libout123.so.0.2.2
+file usr/lib/amd64/mpg123/output_dummy.so \
+    path=usr/lib/amd64/mpg123/output_dummy.so
+file usr/lib/amd64/mpg123/output_oss.so path=usr/lib/amd64/mpg123/output_oss.so
+file usr/lib/amd64/mpg123/output_pulse.so \
+    path=usr/lib/amd64/mpg123/output_pulse.so
+file usr/lib/amd64/mpg123/output_sdl.so path=usr/lib/amd64/mpg123/output_sdl.so
+file usr/lib/amd64/mpg123/output_sun.so path=usr/lib/amd64/mpg123/output_sun.so
+file usr/lib/amd64/pkgconfig/libmpg123.pc \
+    path=usr/lib/amd64/pkgconfig/libmpg123.pc
+file usr/lib/amd64/pkgconfig/libout123.pc \
+    path=usr/lib/amd64/pkgconfig/libout123.pc
+file usr/lib/libmpg123.la path=usr/lib/libmpg123.la
+link path=usr/lib/libmpg123.so target=libmpg123.so.0.44.8
+link path=usr/lib/libmpg123.so.0 target=libmpg123.so.0.44.8
+file usr/lib/libmpg123.so.0.44.8 path=usr/lib/libmpg123.so.0.44.8
+file usr/lib/libout123.la path=usr/lib/libout123.la
+link path=usr/lib/libout123.so target=libout123.so.0.2.2
+link path=usr/lib/libout123.so.0 target=libout123.so.0.2.2
+file usr/lib/libout123.so.0.2.2 path=usr/lib/libout123.so.0.2.2
+file usr/lib/mpg123/output_dummy.so path=usr/lib/mpg123/output_dummy.so
+file usr/lib/mpg123/output_oss.so path=usr/lib/mpg123/output_oss.so
+file usr/lib/mpg123/output_pulse.so path=usr/lib/mpg123/output_pulse.so
+file usr/lib/mpg123/output_sdl.so path=usr/lib/mpg123/output_sdl.so
+file usr/lib/mpg123/output_sun.so path=usr/lib/mpg123/output_sun.so
+file usr/lib/pkgconfig/libmpg123.pc path=usr/lib/pkgconfig/libmpg123.pc
+file usr/lib/pkgconfig/libout123.pc path=usr/lib/pkgconfig/libout123.pc
+license COPYING license=LGPLv2.1
