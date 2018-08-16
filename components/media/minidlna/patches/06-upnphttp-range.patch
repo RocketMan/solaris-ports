@@ -1,0 +1,67 @@
+--- a/upnphttp.c	2017-08-24 18:28:25.000000000 +0000
++++ b/upnphttp.c	2018-08-16 17:47:33.480652193 +0000
+@@ -848,6 +848,8 @@
+ 		}
+ 	}
+ 
++	DPRINTF(E_DEBUG, L_HTTP, "HTTP REQUEST: %.*s\n", h->req_buflen, h->req_buf);
++
+ 	ParseHttpHeaders(h);
+ 
+ 	/* see if we need to wait for remaining data */
+@@ -886,7 +888,6 @@
+ 		h->state = 100;
+ 	}
+ 
+-	DPRINTF(E_DEBUG, L_HTTP, "HTTP REQUEST: %.*s\n", h->req_buflen, h->req_buf);
+ 	if(strcmp("POST", HttpCommand) == 0)
+ 	{
+ 		h->req_command = EPost;
+@@ -1058,7 +1059,7 @@
+ 		}
+ 		else if(n==0)
+ 		{
+-			DPRINTF(E_WARN, L_HTTP, "HTTP Connection closed unexpectedly\n");
++			DPRINTF(E_DEBUG, L_HTTP, "HTTP Connection closed unexpectedly\n");
+ 			h->state = 100;
+ 		}
+ 		else
+@@ -1104,7 +1105,7 @@
+ 		}
+ 		else if(n == 0)
+ 		{
+-			DPRINTF(E_WARN, L_HTTP, "HTTP Connection closed unexpectedly\n");
++			DPRINTF(E_DEBUG, L_HTTP, "HTTP Connection closed unexpectedly\n");
+ 			h->state = 100;
+ 		}
+ 		else
+@@ -1994,20 +1995,21 @@
+ 
+ 	if( h->reqflags & FLAG_RANGE )
+ 	{
+-		if( !h->req_RangeEnd || h->req_RangeEnd == size )
++		if( h->req_RangeStart < 0 ||
++			(h->req_RangeEnd && (h->req_RangeStart > h->req_RangeEnd)) )
+ 		{
+-			h->req_RangeEnd = size - 1;
+-		}
+-		if( (h->req_RangeStart > h->req_RangeEnd) || (h->req_RangeStart < 0) )
+-		{
+-			DPRINTF(E_WARN, L_HTTP, "Specified range was invalid!\n");
++			DPRINTF(E_DEBUG, L_HTTP, "Specified range was invalid!\n");
+ 			Send400(h);
+ 			close(sendfh);
+ 			goto error;
+ 		}
+-		if( h->req_RangeEnd >= size )
++		if( !h->req_RangeEnd || h->req_RangeEnd >= size )
++		{
++			h->req_RangeEnd = size - 1;
++		}
++		if( h->req_RangeStart > h->req_RangeEnd )
+ 		{
+-			DPRINTF(E_WARN, L_HTTP, "Specified range was outside file boundaries!\n");
++			DPRINTF(E_DEBUG, L_HTTP, "Specified range was outside file boundaries!\n");
+ 			Send416(h);
+ 			close(sendfh);
+ 			goto error;
