@@ -1,0 +1,163 @@
+--- a/gtk-3.0/gtk-widgets.css	2018-05-21 14:57:27.000000000 +0000
++++ b/gtk-3.0/gtk-widgets.css	2018-09-05 18:41:20.479002275 +0000
+@@ -977,7 +977,7 @@
+ headerbar .primary-toolbar menu,
+ menu {
+     margin: 4px;    /* avoid minify of menu */
+-    padding: 0;
++    padding: 0px;
+     border-radius: 0;
+     background-color: @menu_bg_color;
+     color: @menu_fg_color;
+@@ -1253,8 +1253,8 @@
+ 
+ popover.background,
+ .csd popover.background {
+-    box-shadow: 0 0 2px 0px gray;
+-    border: 1px solid @borders;
++    box-shadow: 0 0 4px 0px gray;
++    border: 1px solid #666666;
+ }
+ 
+ /************
+@@ -1948,8 +1948,9 @@
+     -gtk-icon-source: none;
+     border-style: none;
+     background-color: transparent;
+-    background-image: image(shade(@borders, 0.95));
++    background-image: image(#bbbbbb);
+     background-size: 1px 1px;
++    margin: 3px 0px 3px;
+ }
+ 
+ button > separator,
+@@ -2567,6 +2569,12 @@
+     padding: 0 12px;
+ }
+ 
++headerbar .title:backdrop {
++    background-image: linear-gradient(to bottom,
++                                      #abafb8,
++                                      #c0c4cb);
++}
++
+ headerbar .subtitle {
+     font-size: smaller;
+     padding: 0 12px;
+@@ -2706,18 +2714,18 @@
+  * tooltip *
+  ***********/
+ tooltip {
+-    border-radius: 4px;
++    border-radius: 1px;
+     box-shadow: none;
+ }
+ 
+ tooltip.background {
+-    border: 1px solid shade(@tooltip_bg_color, 0.8);
++    border: 1px solid #000000;
+     background-color: @tooltip_bg_color;
+     background-clip: padding-box;
+ }
+ 
+ tooltip.background label {
+-    padding: 1px;
++    padding: 0px;
+ }
+ 
+ tooltip * {
+@@ -3166,6 +3174,10 @@
+ /******************************
+  * suggested action buttons *
+  ******************************/
++.suggested-action, .suggested-action:hover {
++    background-color: @suggested_bg_color;
++}
++
+ .suggested-action button {
+     border-width: 1px;
+     border-style: solid;
+@@ -3376,11 +3388,6 @@
+     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(0, 0, 0, 0.13);
+ }
+ 
+-/*tooltip.csd decoration {
+-    border-radius: 0;
+-    box-shadow: none;
+-}
+- */
+ messagedialog.csd decoration {
+     border-radius: 0;
+     background-color: @theme_bg_color;
+@@ -3389,10 +3396,11 @@
+ 
+ .solid-csd decoration {
+     margin: 0;
+-    padding: 4px;
+     background-color: @theme_bg_color;
+-    border: solid 1px shade(@theme_bg_color, 0.8);
+-    border-radius: 0;
++    border-top: none;
++    border-left: solid 5px shade(@theme_bg_color, 0.8);
++    border-right: solid 5px shade(@theme_bg_color, 0.8);
++    border-bottom: solid 5px shade(@theme_bg_color, 0.8); 
+     box-shadow: inset 0 0 0 3px rgba(0,0,0,0.3), inset 0 1px rgba(20, 20, 20, 0.8);
+ }
+ 
+@@ -3402,7 +3413,7 @@
+ 
+ /* titlebutton */
+ .titlebar .titlebutton:not(separator) {
+-    padding: 4px;
++    padding: 0px;
+     margin: 0;
+     border-radius: 4px;
+     background-color: @theme_selected_bg_color;
+@@ -3474,9 +3485,8 @@
+ /* decoration for windows */
+ .titlebar,
+ .titlebar:not(headerbar) {
+-    border-radius: 2px 2px 0 0;
+     background-color: transparent;
+-    background-image: linear-gradient(to bottom,
++    background-image: linear-gradient(to top,
+                                       #e3e5e8,
+                                       #aaafb9);
+     color: mix(@titlebar_fg_color, @titlebar_bg_color, 0.1);
+@@ -3518,3 +3529,8 @@
+                                       #abafb8,
+                                       #c0c4cb);
+ }
++
++decoration {
++    border: 4px solid #abafb8;
++    background: #abafb8;
++}
+--- a/gtk-3.0/gtk.css	2018-05-21 14:57:27.000000000 +0000
++++ b/gtk-3.0/gtk.css	2018-09-05 18:15:57.460628929 +0000
+@@ -5,7 +5,8 @@
+ @define-color text_color #000;
+ @define-color selected_bg_color #4b6983;
+ @define-color selected_fg_color #ffffff;
+-@define-color tooltip_bg_color #ffffff;
++@define-color suggested_bg_color #7d9bb5;
++@define-color tooltip_bg_color #ffffe0;
+ @define-color tooltip_fg_color #000;
+ @define-color unfocused_bg_color #e4e4e4;
+ @define-color unfocused_fg_color #8c8c8c;
+--- a/gtk-3.0/README	1970-01-01 01:00:00.000000000 +0000
++++ b/gtk-3.0/README	2018-09-04 15:57:02.561454203 +0000
+@@ -0,0 +1,13 @@
++GTK 3 theme based on the appearance of Solaris 11's 'Nimbus' theme
++
++Minor changes made to original source for theme to co-exist more
++seamlessly alongside GTK 2 Nimbus in a Gnome 2 environment.
++
++Adapted from original source:
++
++Maintainer: Christian Medel (https://github.com/Elbullazul)
++Distributor: B00merang Project (https://github.com/B00merang-Project)
++
++License: GPLv3
++
++More info: http://b00merang.weebly.com/solaris-11.html
