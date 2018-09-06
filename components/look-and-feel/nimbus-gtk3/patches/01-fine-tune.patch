@@ -37,8 +37,8 @@
  
 +headerbar .title:backdrop {
 +    background-image: linear-gradient(to bottom,
-+                                      #abafb8,
-+                                      #c0c4cb);
++                                      #b0b4bd,
++                                      #bbbfc6);
 +}
 +
  headerbar .subtitle {
