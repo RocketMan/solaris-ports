@@ -6,11 +6,13 @@ set name=info.classification \
 set name=info.repository-url value=$(GIT_REPO)
 set name=info.upstream-url value=$(COMPONENT_PROJECT_URL)
 set name=org.opensolaris.consolidation value=$(CONSOLIDATION)
-file gtk-3.0/README path=usr/share/themes/nimbus/gtk-3.0/README
+file files/README path=usr/share/themes/nimbus/gtk-3.0/README
 file gtk-3.0/apps/budgie.css \
     path=usr/share/themes/nimbus/gtk-3.0/apps/budgie.css
 file gtk-3.0/apps/desktop.css \
     path=usr/share/themes/nimbus/gtk-3.0/apps/desktop.css
+file gtk-3.0/apps/gnome-calculator.css \
+    path=usr/share/themes/nimbus/gtk-3.0/apps/gnome-calculator.css
 file gtk-3.0/apps/gnome-flashback.css \
     path=usr/share/themes/nimbus/gtk-3.0/apps/gnome-flashback.css
 file gtk-3.0/apps/gnome-terminal.css \
@@ -78,4 +80,6 @@ file gtk-3.0/gtk-widgets.css \
     path=usr/share/themes/nimbus/gtk-3.0/gtk-widgets.css
 file gtk-3.0/gtk.css path=usr/share/themes/nimbus/gtk-3.0/gtk.css
 file gtk-3.0/settings.ini path=usr/share/themes/nimbus/gtk-3.0/settings.ini
+file files/suggested-action.css \
+    path=usr/share/themes/nimbus/gtk-3.0/suggested-action.css
 license LICENSE.md license=GPLv3
