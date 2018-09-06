@@ -1,0 +1,126 @@
+--- a/gtk-3.0/gtk-widgets.css	2018-05-21 14:57:31.000000000 +0000
++++ b/gtk-3.0/gtk-widgets.css	2018-09-06 17:57:13.354310042 +0000
+@@ -1253,8 +1253,8 @@
+ 
+ popover.background,
+ .csd popover.background {
+-    box-shadow: 0 0 2px 0px gray;
+-    border: 1px solid @borders;
++    box-shadow: 0 0 4px 0px gray;
++    border: 1px solid #666666;
+ }
+ 
+ /************
+@@ -1950,8 +1950,9 @@
+     -gtk-icon-source: none;
+     border-style: none;
+     background-color: transparent;
+-    background-image: image(shade(@borders, 0.95));
++    background-image: image(#bbbbbb);
+     background-size: 1px 1px;
++    margin: 3px 0px 3px;
+ }
+ 
+ button > separator,
+@@ -2569,6 +2570,12 @@
+     padding: 0 12px;
+ }
+ 
++headerbar .title:backdrop {
++    background-image: linear-gradient(to bottom,
++                                      #25334f,
++                                      #2c3e62);
++}
++
+ headerbar .subtitle {
+     font-size: smaller;
+     padding: 0 12px;
+@@ -2708,18 +2715,18 @@
+  * tooltip *
+  ***********/
+ tooltip {
+-    border-radius: 4px;
++    border-radius: 1px;
+     box-shadow: none;
+ }
+ 
+ tooltip.background {
+-    border: 1px solid shade(@tooltip_bg_color, 0.8);
++    border: 1px solid #000000;
+     background-color: @tooltip_bg_color;
+     background-clip: padding-box;
+ }
+ 
+ tooltip.background label {
+-    padding: 1px;
++    padding: 0px;
+ }
+ 
+ tooltip * {
+@@ -3391,10 +3398,11 @@
+ 
+ .solid-csd decoration {
+     margin: 0;
+-    padding: 4px;
+     background-color: @theme_bg_color;
+-    border: solid 1px shade(@theme_bg_color, 0.8);
+-    border-radius: 0;
++    border-top: none;
++    border-left: solid 5px shade(@theme_bg_color, 0.8);
++    border-right: solid 5px shade(@theme_bg_color, 0.8);
++    border-bottom: solid 5px shade(@theme_bg_color, 0.8); 
+     box-shadow: inset 0 0 0 3px rgba(0,0,0,0.3), inset 0 1px rgba(20, 20, 20, 0.8);
+ }
+ 
+@@ -3404,7 +3412,7 @@
+ 
+ /* titlebutton */
+ .titlebar .titlebutton:not(separator) {
+-    padding: 4px;
++    padding: 0px;
+     margin: 0;
+     border-radius: 4px;
+     background-color: @theme_selected_bg_color;
+@@ -3476,9 +3484,8 @@
+ /* decoration for windows */
+ .titlebar,
+ .titlebar:not(headerbar) {
+-    border-radius: 2px 2px 0 0;
+     background-color: transparent;
+-    background-image: linear-gradient(to bottom,
++    background-image: linear-gradient(to top,
+                                       #485975,
+                                       #25334f,
+                                       #394f7c);
+@@ -3522,3 +3529,8 @@
+                                       #23314d,
+                                       #2e4064);
+ }
++
++decoration {
++    border: 4px solid #abafb8;
++    background: #abafb8;
++}
+--- a/gtk-3.0/gtk.css	2018-05-21 14:57:31.000000000 +0000
++++ b/gtk-3.0/gtk.css	2018-09-06 17:47:57.373783214 +0000
+@@ -99,6 +99,7 @@
+ @import url("apps/unity.css");
+ @import url("apps/budgie.css");
+ @import url("apps/libreoffice.css");
++@import url("apps/gnome-calculator.css");
+ @import url("apps/gnome-terminal.css");
+ @import url("apps/gnome-flashback.css");
+ @import url("apps/desktop.css");
+--- a/gtk-3.0/apps/gnome-calculator.css	1970-01-01 01:00:00.000000000 +0000
++++ b/gtk-3.0/apps/gnome-calculator.css	2018-09-06 15:09:36.230567237 +0000
+@@ -0,0 +1,3 @@
++.math-buttons button {
++    padding: 6px 14px;
++}
+--- a/gtk-3.0/settings.ini	2018-05-21 14:57:31.000000000 +0000
++++ b/gtk-3.0/settings.ini	2018-09-06 17:59:43.406640179 +0000
+@@ -1,3 +1,4 @@
+ [Settings]
+ gtk-auto-mnemonics = 1
+ gtk-visible-focus = automatic
++gtk-primary-button-warps-slider = 0

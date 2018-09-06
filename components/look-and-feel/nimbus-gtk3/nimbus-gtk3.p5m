@@ -6,80 +6,232 @@ set name=info.classification \
 set name=info.repository-url value=$(GIT_REPO)
 set name=info.upstream-url value=$(COMPONENT_PROJECT_URL)
 set name=org.opensolaris.consolidation value=$(CONSOLIDATION)
-file files/README path=usr/share/themes/nimbus/gtk-3.0/README
-file gtk-3.0/apps/budgie.css \
+file $(DARK)/gtk-3.0/apps/budgie.css \
+    path=usr/share/themes/dark-nimbus/gtk-3.0/apps/budgie.css
+file $(DARK)/gtk-3.0/apps/desktop.css \
+    path=usr/share/themes/dark-nimbus/gtk-3.0/apps/desktop.css
+file $(DARK)/gtk-3.0/apps/gnome-calculator.css \
+    path=usr/share/themes/dark-nimbus/gtk-3.0/apps/gnome-calculator.css
+file $(DARK)/gtk-3.0/apps/gnome-flashback.css \
+    path=usr/share/themes/dark-nimbus/gtk-3.0/apps/gnome-flashback.css
+file $(DARK)/gtk-3.0/apps/gnome-terminal.css \
+    path=usr/share/themes/dark-nimbus/gtk-3.0/apps/gnome-terminal.css
+file $(DARK)/gtk-3.0/apps/libreoffice.css \
+    path=usr/share/themes/dark-nimbus/gtk-3.0/apps/libreoffice.css
+file $(DARK)/gtk-3.0/apps/synaptic.css \
+    path=usr/share/themes/dark-nimbus/gtk-3.0/apps/synaptic.css
+file $(DARK)/gtk-3.0/apps/unity.css \
+    path=usr/share/themes/dark-nimbus/gtk-3.0/apps/unity.css
+file $(DARK)/gtk-3.0/assets/checkbox-checked-active.png \
+    path=usr/share/themes/dark-nimbus/gtk-3.0/assets/checkbox-checked-active.png
+file $(DARK)/gtk-3.0/assets/checkbox-checked-hover.png \
+    path=usr/share/themes/dark-nimbus/gtk-3.0/assets/checkbox-checked-hover.png
+file $(DARK)/gtk-3.0/assets/checkbox-checked-insensitive.png \
+    path=usr/share/themes/dark-nimbus/gtk-3.0/assets/checkbox-checked-insensitive.png
+file $(DARK)/gtk-3.0/assets/checkbox-checked.png \
+    path=usr/share/themes/dark-nimbus/gtk-3.0/assets/checkbox-checked.png
+file $(DARK)/gtk-3.0/assets/checkbox-mixed-active.png \
+    path=usr/share/themes/dark-nimbus/gtk-3.0/assets/checkbox-mixed-active.png
+file $(DARK)/gtk-3.0/assets/checkbox-mixed-hover.png \
+    path=usr/share/themes/dark-nimbus/gtk-3.0/assets/checkbox-mixed-hover.png
+file $(DARK)/gtk-3.0/assets/checkbox-mixed-insensitive.png \
+    path=usr/share/themes/dark-nimbus/gtk-3.0/assets/checkbox-mixed-insensitive.png
+file $(DARK)/gtk-3.0/assets/checkbox-mixed.png \
+    path=usr/share/themes/dark-nimbus/gtk-3.0/assets/checkbox-mixed.png
+file $(DARK)/gtk-3.0/assets/checkbox-unchecked-active.png \
+    path=usr/share/themes/dark-nimbus/gtk-3.0/assets/checkbox-unchecked-active.png
+file $(DARK)/gtk-3.0/assets/checkbox-unchecked-hover.png \
+    path=usr/share/themes/dark-nimbus/gtk-3.0/assets/checkbox-unchecked-hover.png
+file $(DARK)/gtk-3.0/assets/checkbox-unchecked-insensitive.png \
+    path=usr/share/themes/dark-nimbus/gtk-3.0/assets/checkbox-unchecked-insensitive.png
+file $(DARK)/gtk-3.0/assets/checkbox-unchecked.png \
+    path=usr/share/themes/dark-nimbus/gtk-3.0/assets/checkbox-unchecked.png
+file $(DARK)/gtk-3.0/assets/radio-mixed-active.png \
+    path=usr/share/themes/dark-nimbus/gtk-3.0/assets/radio-mixed-active.png
+file $(DARK)/gtk-3.0/assets/radio-mixed-hover.png \
+    path=usr/share/themes/dark-nimbus/gtk-3.0/assets/radio-mixed-hover.png
+file $(DARK)/gtk-3.0/assets/radio-mixed-insensitive.png \
+    path=usr/share/themes/dark-nimbus/gtk-3.0/assets/radio-mixed-insensitive.png
+file $(DARK)/gtk-3.0/assets/radio-mixed.png \
+    path=usr/share/themes/dark-nimbus/gtk-3.0/assets/radio-mixed.png
+file $(DARK)/gtk-3.0/assets/radio-selected-active.png \
+    path=usr/share/themes/dark-nimbus/gtk-3.0/assets/radio-selected-active.png
+file $(DARK)/gtk-3.0/assets/radio-selected-hover.png \
+    path=usr/share/themes/dark-nimbus/gtk-3.0/assets/radio-selected-hover.png
+file $(DARK)/gtk-3.0/assets/radio-selected-insensitive.png \
+    path=usr/share/themes/dark-nimbus/gtk-3.0/assets/radio-selected-insensitive.png
+file $(DARK)/gtk-3.0/assets/radio-selected.png \
+    path=usr/share/themes/dark-nimbus/gtk-3.0/assets/radio-selected.png
+file $(DARK)/gtk-3.0/assets/radio-unselected-active.png \
+    path=usr/share/themes/dark-nimbus/gtk-3.0/assets/radio-unselected-active.png
+file $(DARK)/gtk-3.0/assets/radio-unselected-hover.png \
+    path=usr/share/themes/dark-nimbus/gtk-3.0/assets/radio-unselected-hover.png
+file $(DARK)/gtk-3.0/assets/radio-unselected-insensitive.png \
+    path=usr/share/themes/dark-nimbus/gtk-3.0/assets/radio-unselected-insensitive.png
+file $(DARK)/gtk-3.0/assets/radio-unselected.png \
+    path=usr/share/themes/dark-nimbus/gtk-3.0/assets/radio-unselected.png
+file $(DARK)/gtk-3.0/assets/scrollbar-slider-horiz.png \
+    path=usr/share/themes/dark-nimbus/gtk-3.0/assets/scrollbar-slider-horiz.png
+file $(DARK)/gtk-3.0/assets/scrollbar-slider.png \
+    path=usr/share/themes/dark-nimbus/gtk-3.0/assets/scrollbar-slider.png
+file $(DARK)/gtk-3.0/gtk-widgets-assets.css \
+    path=usr/share/themes/dark-nimbus/gtk-3.0/gtk-widgets-assets.css
+file $(DARK)/gtk-3.0/gtk-widgets.css \
+    path=usr/share/themes/dark-nimbus/gtk-3.0/gtk-widgets.css
+file $(DARK)/gtk-3.0/gtk.css path=usr/share/themes/dark-nimbus/gtk-3.0/gtk.css
+file $(DARK)/gtk-3.0/settings.ini \
+    path=usr/share/themes/dark-nimbus/gtk-3.0/settings.ini
+file $(LIGHT)/gtk-3.0/apps/budgie.css \
+    path=usr/share/themes/light-nimbus/gtk-3.0/apps/budgie.css
+file $(LIGHT)/gtk-3.0/apps/desktop.css \
+    path=usr/share/themes/light-nimbus/gtk-3.0/apps/desktop.css
+file $(LIGHT)/gtk-3.0/apps/gnome-calculator.css \
+    path=usr/share/themes/light-nimbus/gtk-3.0/apps/gnome-calculator.css
+file $(LIGHT)/gtk-3.0/apps/gnome-flashback.css \
+    path=usr/share/themes/light-nimbus/gtk-3.0/apps/gnome-flashback.css
+file $(LIGHT)/gtk-3.0/apps/gnome-terminal.css \
+    path=usr/share/themes/light-nimbus/gtk-3.0/apps/gnome-terminal.css
+file $(LIGHT)/gtk-3.0/apps/libreoffice.css \
+    path=usr/share/themes/light-nimbus/gtk-3.0/apps/libreoffice.css
+file $(LIGHT)/gtk-3.0/apps/synaptic.css \
+    path=usr/share/themes/light-nimbus/gtk-3.0/apps/synaptic.css
+file $(LIGHT)/gtk-3.0/apps/unity.css \
+    path=usr/share/themes/light-nimbus/gtk-3.0/apps/unity.css
+file $(LIGHT)/gtk-3.0/assets/checkbox-checked-active.png \
+    path=usr/share/themes/light-nimbus/gtk-3.0/assets/checkbox-checked-active.png
+file $(LIGHT)/gtk-3.0/assets/checkbox-checked-hover.png \
+    path=usr/share/themes/light-nimbus/gtk-3.0/assets/checkbox-checked-hover.png
+file $(LIGHT)/gtk-3.0/assets/checkbox-checked-insensitive.png \
+    path=usr/share/themes/light-nimbus/gtk-3.0/assets/checkbox-checked-insensitive.png
+file $(LIGHT)/gtk-3.0/assets/checkbox-checked.png \
+    path=usr/share/themes/light-nimbus/gtk-3.0/assets/checkbox-checked.png
+file $(LIGHT)/gtk-3.0/assets/checkbox-mixed-active.png \
+    path=usr/share/themes/light-nimbus/gtk-3.0/assets/checkbox-mixed-active.png
+file $(LIGHT)/gtk-3.0/assets/checkbox-mixed-hover.png \
+    path=usr/share/themes/light-nimbus/gtk-3.0/assets/checkbox-mixed-hover.png
+file $(LIGHT)/gtk-3.0/assets/checkbox-mixed-insensitive.png \
+    path=usr/share/themes/light-nimbus/gtk-3.0/assets/checkbox-mixed-insensitive.png
+file $(LIGHT)/gtk-3.0/assets/checkbox-mixed.png \
+    path=usr/share/themes/light-nimbus/gtk-3.0/assets/checkbox-mixed.png
+file $(LIGHT)/gtk-3.0/assets/checkbox-unchecked-active.png \
+    path=usr/share/themes/light-nimbus/gtk-3.0/assets/checkbox-unchecked-active.png
+file $(LIGHT)/gtk-3.0/assets/checkbox-unchecked-hover.png \
+    path=usr/share/themes/light-nimbus/gtk-3.0/assets/checkbox-unchecked-hover.png
+file $(LIGHT)/gtk-3.0/assets/checkbox-unchecked-insensitive.png \
+    path=usr/share/themes/light-nimbus/gtk-3.0/assets/checkbox-unchecked-insensitive.png
+file $(LIGHT)/gtk-3.0/assets/checkbox-unchecked.png \
+    path=usr/share/themes/light-nimbus/gtk-3.0/assets/checkbox-unchecked.png
+file $(LIGHT)/gtk-3.0/assets/radio-mixed-active.png \
+    path=usr/share/themes/light-nimbus/gtk-3.0/assets/radio-mixed-active.png
+file $(LIGHT)/gtk-3.0/assets/radio-mixed-hover.png \
+    path=usr/share/themes/light-nimbus/gtk-3.0/assets/radio-mixed-hover.png
+file $(LIGHT)/gtk-3.0/assets/radio-mixed-insensitive.png \
+    path=usr/share/themes/light-nimbus/gtk-3.0/assets/radio-mixed-insensitive.png
+file $(LIGHT)/gtk-3.0/assets/radio-mixed.png \
+    path=usr/share/themes/light-nimbus/gtk-3.0/assets/radio-mixed.png
+file $(LIGHT)/gtk-3.0/assets/radio-selected-active.png \
+    path=usr/share/themes/light-nimbus/gtk-3.0/assets/radio-selected-active.png
+file $(LIGHT)/gtk-3.0/assets/radio-selected-hover.png \
+    path=usr/share/themes/light-nimbus/gtk-3.0/assets/radio-selected-hover.png
+file $(LIGHT)/gtk-3.0/assets/radio-selected-insensitive.png \
+    path=usr/share/themes/light-nimbus/gtk-3.0/assets/radio-selected-insensitive.png
+file $(LIGHT)/gtk-3.0/assets/radio-selected.png \
+    path=usr/share/themes/light-nimbus/gtk-3.0/assets/radio-selected.png
+file $(LIGHT)/gtk-3.0/assets/radio-unselected-active.png \
+    path=usr/share/themes/light-nimbus/gtk-3.0/assets/radio-unselected-active.png
+file $(LIGHT)/gtk-3.0/assets/radio-unselected-hover.png \
+    path=usr/share/themes/light-nimbus/gtk-3.0/assets/radio-unselected-hover.png
+file $(LIGHT)/gtk-3.0/assets/radio-unselected-insensitive.png \
+    path=usr/share/themes/light-nimbus/gtk-3.0/assets/radio-unselected-insensitive.png
+file $(LIGHT)/gtk-3.0/assets/radio-unselected.png \
+    path=usr/share/themes/light-nimbus/gtk-3.0/assets/radio-unselected.png
+file $(LIGHT)/gtk-3.0/assets/scrollbar-slider-horiz.png \
+    path=usr/share/themes/light-nimbus/gtk-3.0/assets/scrollbar-slider-horiz.png
+file $(LIGHT)/gtk-3.0/assets/scrollbar-slider.png \
+    path=usr/share/themes/light-nimbus/gtk-3.0/assets/scrollbar-slider.png
+file $(LIGHT)/gtk-3.0/gtk-widgets-assets.css \
+    path=usr/share/themes/light-nimbus/gtk-3.0/gtk-widgets-assets.css
+file $(LIGHT)/gtk-3.0/gtk-widgets.css \
+    path=usr/share/themes/light-nimbus/gtk-3.0/gtk-widgets.css
+file $(LIGHT)/gtk-3.0/gtk.css path=usr/share/themes/light-nimbus/gtk-3.0/gtk.css
+file $(LIGHT)/gtk-3.0/settings.ini \
+    path=usr/share/themes/light-nimbus/gtk-3.0/settings.ini
+file $(NORMAL)/gtk-3.0/apps/budgie.css \
     path=usr/share/themes/nimbus/gtk-3.0/apps/budgie.css
-file gtk-3.0/apps/desktop.css \
+file $(NORMAL)/gtk-3.0/apps/desktop.css \
     path=usr/share/themes/nimbus/gtk-3.0/apps/desktop.css
-file gtk-3.0/apps/gnome-calculator.css \
+file $(NORMAL)/gtk-3.0/apps/gnome-calculator.css \
     path=usr/share/themes/nimbus/gtk-3.0/apps/gnome-calculator.css
-file gtk-3.0/apps/gnome-flashback.css \
+file $(NORMAL)/gtk-3.0/apps/gnome-flashback.css \
     path=usr/share/themes/nimbus/gtk-3.0/apps/gnome-flashback.css
-file gtk-3.0/apps/gnome-terminal.css \
+file $(NORMAL)/gtk-3.0/apps/gnome-terminal.css \
     path=usr/share/themes/nimbus/gtk-3.0/apps/gnome-terminal.css
-file gtk-3.0/apps/libreoffice.css \
+file $(NORMAL)/gtk-3.0/apps/libreoffice.css \
     path=usr/share/themes/nimbus/gtk-3.0/apps/libreoffice.css
-file gtk-3.0/apps/synaptic.css \
+file $(NORMAL)/gtk-3.0/apps/synaptic.css \
     path=usr/share/themes/nimbus/gtk-3.0/apps/synaptic.css
-file gtk-3.0/apps/unity.css path=usr/share/themes/nimbus/gtk-3.0/apps/unity.css
-file gtk-3.0/assets/checkbox-checked-active.png \
+file $(NORMAL)/gtk-3.0/apps/unity.css \
+    path=usr/share/themes/nimbus/gtk-3.0/apps/unity.css
+file $(NORMAL)/gtk-3.0/assets/checkbox-checked-active.png \
     path=usr/share/themes/nimbus/gtk-3.0/assets/checkbox-checked-active.png
-file gtk-3.0/assets/checkbox-checked-hover.png \
+file $(NORMAL)/gtk-3.0/assets/checkbox-checked-hover.png \
     path=usr/share/themes/nimbus/gtk-3.0/assets/checkbox-checked-hover.png
-file gtk-3.0/assets/checkbox-checked-insensitive.png \
+file $(NORMAL)/gtk-3.0/assets/checkbox-checked-insensitive.png \
     path=usr/share/themes/nimbus/gtk-3.0/assets/checkbox-checked-insensitive.png
-file gtk-3.0/assets/checkbox-checked.png \
+file $(NORMAL)/gtk-3.0/assets/checkbox-checked.png \
     path=usr/share/themes/nimbus/gtk-3.0/assets/checkbox-checked.png
-file gtk-3.0/assets/checkbox-mixed-active.png \
+file $(NORMAL)/gtk-3.0/assets/checkbox-mixed-active.png \
     path=usr/share/themes/nimbus/gtk-3.0/assets/checkbox-mixed-active.png
-file gtk-3.0/assets/checkbox-mixed-hover.png \
+file $(NORMAL)/gtk-3.0/assets/checkbox-mixed-hover.png \
     path=usr/share/themes/nimbus/gtk-3.0/assets/checkbox-mixed-hover.png
-file gtk-3.0/assets/checkbox-mixed-insensitive.png \
+file $(NORMAL)/gtk-3.0/assets/checkbox-mixed-insensitive.png \
     path=usr/share/themes/nimbus/gtk-3.0/assets/checkbox-mixed-insensitive.png
-file gtk-3.0/assets/checkbox-mixed.png \
+file $(NORMAL)/gtk-3.0/assets/checkbox-mixed.png \
     path=usr/share/themes/nimbus/gtk-3.0/assets/checkbox-mixed.png
-file gtk-3.0/assets/checkbox-unchecked-active.png \
+file $(NORMAL)/gtk-3.0/assets/checkbox-unchecked-active.png \
     path=usr/share/themes/nimbus/gtk-3.0/assets/checkbox-unchecked-active.png
-file gtk-3.0/assets/checkbox-unchecked-hover.png \
+file $(NORMAL)/gtk-3.0/assets/checkbox-unchecked-hover.png \
     path=usr/share/themes/nimbus/gtk-3.0/assets/checkbox-unchecked-hover.png
-file gtk-3.0/assets/checkbox-unchecked-insensitive.png \
+file $(NORMAL)/gtk-3.0/assets/checkbox-unchecked-insensitive.png \
     path=usr/share/themes/nimbus/gtk-3.0/assets/checkbox-unchecked-insensitive.png
-file gtk-3.0/assets/checkbox-unchecked.png \
+file $(NORMAL)/gtk-3.0/assets/checkbox-unchecked.png \
     path=usr/share/themes/nimbus/gtk-3.0/assets/checkbox-unchecked.png
-file gtk-3.0/assets/radio-mixed-active.png \
+file $(NORMAL)/gtk-3.0/assets/radio-mixed-active.png \
     path=usr/share/themes/nimbus/gtk-3.0/assets/radio-mixed-active.png
-file gtk-3.0/assets/radio-mixed-hover.png \
+file $(NORMAL)/gtk-3.0/assets/radio-mixed-hover.png \
     path=usr/share/themes/nimbus/gtk-3.0/assets/radio-mixed-hover.png
-file gtk-3.0/assets/radio-mixed-insensitive.png \
+file $(NORMAL)/gtk-3.0/assets/radio-mixed-insensitive.png \
     path=usr/share/themes/nimbus/gtk-3.0/assets/radio-mixed-insensitive.png
-file gtk-3.0/assets/radio-mixed.png \
+file $(NORMAL)/gtk-3.0/assets/radio-mixed.png \
     path=usr/share/themes/nimbus/gtk-3.0/assets/radio-mixed.png
-file gtk-3.0/assets/radio-selected-active.png \
+file $(NORMAL)/gtk-3.0/assets/radio-selected-active.png \
     path=usr/share/themes/nimbus/gtk-3.0/assets/radio-selected-active.png
-file gtk-3.0/assets/radio-selected-hover.png \
+file $(NORMAL)/gtk-3.0/assets/radio-selected-hover.png \
     path=usr/share/themes/nimbus/gtk-3.0/assets/radio-selected-hover.png
-file gtk-3.0/assets/radio-selected-insensitive.png \
+file $(NORMAL)/gtk-3.0/assets/radio-selected-insensitive.png \
     path=usr/share/themes/nimbus/gtk-3.0/assets/radio-selected-insensitive.png
-file gtk-3.0/assets/radio-selected.png \
+file $(NORMAL)/gtk-3.0/assets/radio-selected.png \
     path=usr/share/themes/nimbus/gtk-3.0/assets/radio-selected.png
-file gtk-3.0/assets/radio-unselected-active.png \
+file $(NORMAL)/gtk-3.0/assets/radio-unselected-active.png \
     path=usr/share/themes/nimbus/gtk-3.0/assets/radio-unselected-active.png
-file gtk-3.0/assets/radio-unselected-hover.png \
+file $(NORMAL)/gtk-3.0/assets/radio-unselected-hover.png \
     path=usr/share/themes/nimbus/gtk-3.0/assets/radio-unselected-hover.png
-file gtk-3.0/assets/radio-unselected-insensitive.png \
+file $(NORMAL)/gtk-3.0/assets/radio-unselected-insensitive.png \
     path=usr/share/themes/nimbus/gtk-3.0/assets/radio-unselected-insensitive.png
-file gtk-3.0/assets/radio-unselected.png \
+file $(NORMAL)/gtk-3.0/assets/radio-unselected.png \
     path=usr/share/themes/nimbus/gtk-3.0/assets/radio-unselected.png
-file gtk-3.0/assets/scrollbar-slider-horiz.png \
+file $(NORMAL)/gtk-3.0/assets/scrollbar-slider-horiz.png \
     path=usr/share/themes/nimbus/gtk-3.0/assets/scrollbar-slider-horiz.png
-file gtk-3.0/assets/scrollbar-slider.png \
+file $(NORMAL)/gtk-3.0/assets/scrollbar-slider.png \
     path=usr/share/themes/nimbus/gtk-3.0/assets/scrollbar-slider.png
-file gtk-3.0/gtk-widgets-assets.css \
+file $(NORMAL)/gtk-3.0/gtk-widgets-assets.css \
     path=usr/share/themes/nimbus/gtk-3.0/gtk-widgets-assets.css
-file gtk-3.0/gtk-widgets.css \
+file $(NORMAL)/gtk-3.0/gtk-widgets.css \
     path=usr/share/themes/nimbus/gtk-3.0/gtk-widgets.css
-file gtk-3.0/gtk.css path=usr/share/themes/nimbus/gtk-3.0/gtk.css
-file gtk-3.0/settings.ini path=usr/share/themes/nimbus/gtk-3.0/settings.ini
+file $(NORMAL)/gtk-3.0/gtk.css path=usr/share/themes/nimbus/gtk-3.0/gtk.css
+file $(NORMAL)/gtk-3.0/settings.ini \
+    path=usr/share/themes/nimbus/gtk-3.0/settings.ini
 file files/suggested-action.css \
     path=usr/share/themes/nimbus/gtk-3.0/suggested-action.css
 license LICENSE.md license=GPLv3
+
