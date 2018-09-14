@@ -36,7 +36,7 @@
      padding: 0 12px;
  }
  
-+headerbar .title:backdrop {
++headerbar.titlebar .title:backdrop {
 +    background-image: linear-gradient(to bottom,
 +                                      #d4d3d9,
 +                                      #dddee2);
