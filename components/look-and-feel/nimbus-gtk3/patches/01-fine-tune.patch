@@ -1,5 +1,5 @@
 --- a/gtk-3.0/gtk-widgets.css	2018-05-21 14:57:27.000000000 +0000
-+++ b/gtk-3.0/gtk-widgets.css	2018-09-08 09:39:09.234190562 +0000
++++ b/gtk-3.0/gtk-widgets.css	2018-09-14 20:08:16.954380064 +0000
 @@ -567,7 +567,8 @@
  }
  
@@ -41,20 +41,7 @@
  }
  
  button > separator,
-@@ -2567,6 +2569,12 @@
-     padding: 0 12px;
- }
- 
-+headerbar.titlebar .title:backdrop {
-+    background-image: linear-gradient(to bottom,
-+                                      #b0b4bd,
-+                                      #bbbfc6);
-+}
-+
- headerbar .subtitle {
-     font-size: smaller;
-     padding: 0 12px;
-@@ -2706,18 +2714,18 @@
+@@ -2706,18 +2708,18 @@
   * tooltip *
   ***********/
  tooltip {
@@ -76,7 +63,7 @@
  }
  
  tooltip * {
-@@ -3376,11 +3384,6 @@
+@@ -3376,11 +3378,6 @@
      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(0, 0, 0, 0.13);
  }
  
@@ -88,7 +75,7 @@
  messagedialog.csd decoration {
      border-radius: 0;
      background-color: @theme_bg_color;
-@@ -3389,10 +3392,11 @@
+@@ -3389,10 +3386,11 @@
  
  .solid-csd decoration {
      margin: 0;
@@ -103,7 +90,7 @@
      box-shadow: inset 0 0 0 3px rgba(0,0,0,0.3), inset 0 1px rgba(20, 20, 20, 0.8);
  }
  
-@@ -3402,7 +3406,7 @@
+@@ -3402,7 +3400,7 @@
  
  /* titlebutton */
  .titlebar .titlebutton:not(separator) {
@@ -112,7 +99,7 @@
      margin: 0;
      border-radius: 4px;
      background-color: @theme_selected_bg_color;
-@@ -3474,9 +3478,8 @@
+@@ -3474,9 +3472,8 @@
  /* decoration for windows */
  .titlebar,
  .titlebar:not(headerbar) {
@@ -123,7 +110,15 @@
                                        #e3e5e8,
                                        #aaafb9);
      color: mix(@titlebar_fg_color, @titlebar_bg_color, 0.1);
-@@ -3518,3 +3521,8 @@
+@@ -3490,7 +3487,6 @@
+     background-image: linear-gradient(to bottom,
+                                       #abafb8,
+                                       #c0c4cb);
+-    background-color: @theme_bg_color;
+     color: @theme_fg_color;
+     text-shadow: none;
+ }
+@@ -3518,3 +3514,8 @@
                                        #abafb8,
                                        #c0c4cb);
  }
