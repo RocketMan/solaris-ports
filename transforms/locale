@@ -33,6 +33,13 @@
     path=.*/locale/([^/@\.]+)(.+){0,1}(/.+){0,1}$ -> \
     default facet.locale.%<\1> true>
 
+# JM: add locale specific facets from locale name encoded in
+# the pathname.  We don't need the portion after the '@' or '.', only
+# usr/share/help/{locale-name}[@.]*.
+<transform dir file link hardlink \
+    path=usr/share/help/([^/@\.]+)(.+){0,1}(/.+){0,1}$ -> \
+    default facet.locale.%<\1> true>
+
 # thunderbird uses the locale format ab-CD instead of ab_CD, which is the 
 # Solaris standard. Convert the locale facet to Solaris standard format. 
 # pkgmogrify doesn't seem to support using a regular expression as the 
