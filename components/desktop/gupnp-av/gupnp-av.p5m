@@ -1,0 +1,161 @@
+#
+# CDDL HEADER START
+#
+# The contents of this file are subject to the terms of the
+# Common Development and Distribution License (the "License").
+# You may not use this file except in compliance with the License.
+#
+# You can obtain a copy of the license at usr/src/OPENSOLARIS.LICENSE
+# or http://www.opensolaris.org/os/licensing.
+# See the License for the specific language governing permissions
+# and limitations under the License.
+#
+# When distributing Covered Code, include this CDDL HEADER in each
+# file and include the License file at usr/src/OPENSOLARIS.LICENSE.
+# If applicable, add the following below this CDDL HEADER, with the
+# fields enclosed by brackets "[]" replaced with your own identifying
+# information: Portions Copyright [yyyy] [name of copyright owner]
+#
+# CDDL HEADER END
+#
+
+#
+# Copyright (c) 2018 Jim Mason <jmason at ibinx dot com>.  All rights reserved.
+#
+
+<transform file path=usr.*/man/.+ -> \
+    default mangler.man.stability "pass-through volatile">
+set name=pkg.fmri \
+    value=pkg:/library/desktop/gupnp-av@$(IPS_COMPONENT_VERSION),$(BUILD_VERSION)
+set name=pkg.summary \
+    value="A supplemental library for gupnp providing UPnP AV services"
+set name=info.classification \
+    value="org.opensolaris.category.2008:Desktop (GNOME)/Libraries"
+set name=info.source-url value=$(COMPONENT_ARCHIVE_URL)
+set name=info.upstream-url value=$(COMPONENT_PROJECT_URL)
+set name=org.opensolaris.consolidation value=$(CONSOLIDATION)
+file usr/include/gupnp-av-1.0/libgupnp-av/gupnp-av-enums.h \
+    path=usr/include/gupnp-av-1.0/libgupnp-av/gupnp-av-enums.h
+file usr/include/gupnp-av-1.0/libgupnp-av/gupnp-av-error.h \
+    path=usr/include/gupnp-av-1.0/libgupnp-av/gupnp-av-error.h
+file usr/include/gupnp-av-1.0/libgupnp-av/gupnp-av.h \
+    path=usr/include/gupnp-av-1.0/libgupnp-av/gupnp-av.h
+file usr/include/gupnp-av-1.0/libgupnp-av/gupnp-cds-last-change-parser.h \
+    path=usr/include/gupnp-av-1.0/libgupnp-av/gupnp-cds-last-change-parser.h
+file usr/include/gupnp-av-1.0/libgupnp-av/gupnp-didl-lite-container.h \
+    path=usr/include/gupnp-av-1.0/libgupnp-av/gupnp-didl-lite-container.h
+file usr/include/gupnp-av-1.0/libgupnp-av/gupnp-didl-lite-contributor.h \
+    path=usr/include/gupnp-av-1.0/libgupnp-av/gupnp-didl-lite-contributor.h
+file usr/include/gupnp-av-1.0/libgupnp-av/gupnp-didl-lite-createclass.h \
+    path=usr/include/gupnp-av-1.0/libgupnp-av/gupnp-didl-lite-createclass.h
+file usr/include/gupnp-av-1.0/libgupnp-av/gupnp-didl-lite-descriptor.h \
+    path=usr/include/gupnp-av-1.0/libgupnp-av/gupnp-didl-lite-descriptor.h
+file usr/include/gupnp-av-1.0/libgupnp-av/gupnp-didl-lite-item.h \
+    path=usr/include/gupnp-av-1.0/libgupnp-av/gupnp-didl-lite-item.h
+file usr/include/gupnp-av-1.0/libgupnp-av/gupnp-didl-lite-object.h \
+    path=usr/include/gupnp-av-1.0/libgupnp-av/gupnp-didl-lite-object.h
+file usr/include/gupnp-av-1.0/libgupnp-av/gupnp-didl-lite-parser.h \
+    path=usr/include/gupnp-av-1.0/libgupnp-av/gupnp-didl-lite-parser.h
+file usr/include/gupnp-av-1.0/libgupnp-av/gupnp-didl-lite-resource.h \
+    path=usr/include/gupnp-av-1.0/libgupnp-av/gupnp-didl-lite-resource.h
+file usr/include/gupnp-av-1.0/libgupnp-av/gupnp-didl-lite-writer.h \
+    path=usr/include/gupnp-av-1.0/libgupnp-av/gupnp-didl-lite-writer.h
+file usr/include/gupnp-av-1.0/libgupnp-av/gupnp-dlna.h \
+    path=usr/include/gupnp-av-1.0/libgupnp-av/gupnp-dlna.h
+file usr/include/gupnp-av-1.0/libgupnp-av/gupnp-feature-list-parser.h \
+    path=usr/include/gupnp-av-1.0/libgupnp-av/gupnp-feature-list-parser.h
+file usr/include/gupnp-av-1.0/libgupnp-av/gupnp-feature.h \
+    path=usr/include/gupnp-av-1.0/libgupnp-av/gupnp-feature.h
+file usr/include/gupnp-av-1.0/libgupnp-av/gupnp-last-change-parser.h \
+    path=usr/include/gupnp-av-1.0/libgupnp-av/gupnp-last-change-parser.h
+file usr/include/gupnp-av-1.0/libgupnp-av/gupnp-media-collection.h \
+    path=usr/include/gupnp-av-1.0/libgupnp-av/gupnp-media-collection.h
+file usr/include/gupnp-av-1.0/libgupnp-av/gupnp-protocol-info.h \
+    path=usr/include/gupnp-av-1.0/libgupnp-av/gupnp-protocol-info.h
+file usr/include/gupnp-av-1.0/libgupnp-av/gupnp-search-criteria-parser.h \
+    path=usr/include/gupnp-av-1.0/libgupnp-av/gupnp-search-criteria-parser.h
+file usr/lib/amd64/girepository-1.0/GUPnPAV-1.0.typelib \
+    path=usr/lib/amd64/girepository-1.0/GUPnPAV-1.0.typelib
+file usr/lib/amd64/libgupnp-av-1.0.la path=usr/lib/amd64/libgupnp-av-1.0.la
+link path=usr/lib/amd64/libgupnp-av-1.0.so target=libgupnp-av-1.0.so.2.0.0
+link path=usr/lib/amd64/libgupnp-av-1.0.so.2 target=libgupnp-av-1.0.so.2.0.0
+file usr/lib/amd64/libgupnp-av-1.0.so.2.0.0 \
+    path=usr/lib/amd64/libgupnp-av-1.0.so.2.0.0
+file usr/lib/amd64/pkgconfig/gupnp-av-1.0.pc \
+    path=usr/lib/amd64/pkgconfig/gupnp-av-1.0.pc
+file usr/lib/girepository-1.0/GUPnPAV-1.0.typelib \
+    path=usr/lib/girepository-1.0/GUPnPAV-1.0.typelib
+file usr/lib/libgupnp-av-1.0.la path=usr/lib/libgupnp-av-1.0.la
+link path=usr/lib/libgupnp-av-1.0.so target=libgupnp-av-1.0.so.2.0.0
+link path=usr/lib/libgupnp-av-1.0.so.2 target=libgupnp-av-1.0.so.2.0.0
+file usr/lib/libgupnp-av-1.0.so.2.0.0 path=usr/lib/libgupnp-av-1.0.so.2.0.0
+file usr/lib/pkgconfig/gupnp-av-1.0.pc path=usr/lib/pkgconfig/gupnp-av-1.0.pc
+file usr/share/gir-1.0/GUPnPAV-1.0.gir path=usr/share/gir-1.0/GUPnPAV-1.0.gir
+file usr/share/gtk-doc/html/gupnp-av/GUPnPCDSLastChangeParser.html \
+    path=usr/share/gtk-doc/html/gupnp-av/GUPnPCDSLastChangeParser.html
+file usr/share/gtk-doc/html/gupnp-av/GUPnPDIDLLiteContainer.html \
+    path=usr/share/gtk-doc/html/gupnp-av/GUPnPDIDLLiteContainer.html
+file usr/share/gtk-doc/html/gupnp-av/GUPnPDIDLLiteContributor.html \
+    path=usr/share/gtk-doc/html/gupnp-av/GUPnPDIDLLiteContributor.html
+file usr/share/gtk-doc/html/gupnp-av/GUPnPDIDLLiteDescriptor.html \
+    path=usr/share/gtk-doc/html/gupnp-av/GUPnPDIDLLiteDescriptor.html
+file usr/share/gtk-doc/html/gupnp-av/GUPnPDIDLLiteItem.html \
+    path=usr/share/gtk-doc/html/gupnp-av/GUPnPDIDLLiteItem.html
+file usr/share/gtk-doc/html/gupnp-av/GUPnPDIDLLiteObject.html \
+    path=usr/share/gtk-doc/html/gupnp-av/GUPnPDIDLLiteObject.html
+file usr/share/gtk-doc/html/gupnp-av/GUPnPDIDLLiteParser.html \
+    path=usr/share/gtk-doc/html/gupnp-av/GUPnPDIDLLiteParser.html
+file usr/share/gtk-doc/html/gupnp-av/GUPnPDIDLLiteResource.html \
+    path=usr/share/gtk-doc/html/gupnp-av/GUPnPDIDLLiteResource.html
+file usr/share/gtk-doc/html/gupnp-av/GUPnPDIDLLiteWriter.html \
+    path=usr/share/gtk-doc/html/gupnp-av/GUPnPDIDLLiteWriter.html
+file usr/share/gtk-doc/html/gupnp-av/GUPnPFeature.html \
+    path=usr/share/gtk-doc/html/gupnp-av/GUPnPFeature.html
+file usr/share/gtk-doc/html/gupnp-av/GUPnPFeatureListParser.html \
+    path=usr/share/gtk-doc/html/gupnp-av/GUPnPFeatureListParser.html
+file usr/share/gtk-doc/html/gupnp-av/GUPnPLastChangeParser.html \
+    path=usr/share/gtk-doc/html/gupnp-av/GUPnPLastChangeParser.html
+file usr/share/gtk-doc/html/gupnp-av/GUPnPMediaCollection.html \
+    path=usr/share/gtk-doc/html/gupnp-av/GUPnPMediaCollection.html
+file usr/share/gtk-doc/html/gupnp-av/GUPnPProtocolInfo.html \
+    path=usr/share/gtk-doc/html/gupnp-av/GUPnPProtocolInfo.html
+file usr/share/gtk-doc/html/gupnp-av/GUPnPSearchCriteriaParser.html \
+    path=usr/share/gtk-doc/html/gupnp-av/GUPnPSearchCriteriaParser.html
+file usr/share/gtk-doc/html/gupnp-av/ch01.html \
+    path=usr/share/gtk-doc/html/gupnp-av/ch01.html
+file usr/share/gtk-doc/html/gupnp-av/ch02.html \
+    path=usr/share/gtk-doc/html/gupnp-av/ch02.html
+file usr/share/gtk-doc/html/gupnp-av/gupnp-av-Error-codes.html \
+    path=usr/share/gtk-doc/html/gupnp-av/gupnp-av-Error-codes.html
+file usr/share/gtk-doc/html/gupnp-av/gupnp-av-GUPnPDIDLLiteCreateClass.html \
+    path=usr/share/gtk-doc/html/gupnp-av/gupnp-av-GUPnPDIDLLiteCreateClass.html
+file usr/share/gtk-doc/html/gupnp-av/gupnp-av.devhelp \
+    path=usr/share/gtk-doc/html/gupnp-av/gupnp-av.devhelp
+file usr/share/gtk-doc/html/gupnp-av/gupnp-av.devhelp2 \
+    path=usr/share/gtk-doc/html/gupnp-av/gupnp-av.devhelp2
+file usr/share/gtk-doc/html/gupnp-av/home.png \
+    path=usr/share/gtk-doc/html/gupnp-av/home.png
+file usr/share/gtk-doc/html/gupnp-av/index.html \
+    path=usr/share/gtk-doc/html/gupnp-av/index.html
+file usr/share/gtk-doc/html/gupnp-av/index.sgml \
+    path=usr/share/gtk-doc/html/gupnp-av/index.sgml
+file usr/share/gtk-doc/html/gupnp-av/left.png \
+    path=usr/share/gtk-doc/html/gupnp-av/left.png
+file usr/share/gtk-doc/html/gupnp-av/right.png \
+    path=usr/share/gtk-doc/html/gupnp-av/right.png
+file usr/share/gtk-doc/html/gupnp-av/style.css \
+    path=usr/share/gtk-doc/html/gupnp-av/style.css
+file usr/share/gtk-doc/html/gupnp-av/up.png \
+    path=usr/share/gtk-doc/html/gupnp-av/up.png
+file usr/share/gupnp-av/av.xsd path=usr/share/gupnp-av/av.xsd
+file usr/share/gupnp-av/didl-lite-v2.xsd \
+    path=usr/share/gupnp-av/didl-lite-v2.xsd
+file usr/share/gupnp-av/simpledc20021212.xsd \
+    path=usr/share/gupnp-av/simpledc20021212.xsd
+file usr/share/gupnp-av/upnp.xsd path=usr/share/gupnp-av/upnp.xsd
+file usr/share/gupnp-av/xml.xsd path=usr/share/gupnp-av/xml.xsd
+file usr/share/vala/vapi/gupnp-av-1.0.deps \
+    path=usr/share/vala/vapi/gupnp-av-1.0.deps
+file usr/share/vala/vapi/gupnp-av-1.0.vapi \
+    path=usr/share/vala/vapi/gupnp-av-1.0.vapi
+license COPYING license=LGPLv2.1
