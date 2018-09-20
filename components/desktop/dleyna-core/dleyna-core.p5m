@@ -1,0 +1,76 @@
+#
+# CDDL HEADER START
+#
+# The contents of this file are subject to the terms of the
+# Common Development and Distribution License (the "License").
+# You may not use this file except in compliance with the License.
+#
+# You can obtain a copy of the license at usr/src/OPENSOLARIS.LICENSE
+# or http://www.opensolaris.org/os/licensing.
+# See the License for the specific language governing permissions
+# and limitations under the License.
+#
+# When distributing Covered Code, include this CDDL HEADER in each
+# file and include the License file at usr/src/OPENSOLARIS.LICENSE.
+# If applicable, add the following below this CDDL HEADER, with the
+# fields enclosed by brackets "[]" replaced with your own identifying
+# information: Portions Copyright [yyyy] [name of copyright owner]
+#
+# CDDL HEADER END
+#
+
+#
+# Copyright (c) 2018 Jim Mason <jmason at ibinx dot com>.  All rights reserved.
+#
+
+<transform file path=usr.*/man/.+ -> default mangler.man.stability uncommitted>
+set name=pkg.fmri \
+    value=pkg:/library/desktop/dleyna-core@$(IPS_COMPONENT_VERSION),$(BUILD_VERSION)
+set name=pkg.summary \
+    value="dleyna-core is a library of utility functions that are used by the higher level dLeyna libraries that communicate with DLNA devices"
+set name=info.classification \
+    value="org.opensolaris.category.2008:System/Multimedia Libraries"
+set name=info.repository-url value=$(GIT_REPO)
+set name=info.upstream-url value=$(COMPONENT_PROJECT_URL)
+set name=org.opensolaris.consolidation value=$(CONSOLIDATION)
+file usr/include/dleyna-1.0/libdleyna/core/connector-mgr.h \
+    path=usr/include/dleyna-1.0/libdleyna/core/connector-mgr.h
+file usr/include/dleyna-1.0/libdleyna/core/connector.h \
+    path=usr/include/dleyna-1.0/libdleyna/core/connector.h
+file usr/include/dleyna-1.0/libdleyna/core/control-point.h \
+    path=usr/include/dleyna-1.0/libdleyna/core/control-point.h
+file usr/include/dleyna-1.0/libdleyna/core/core.h \
+    path=usr/include/dleyna-1.0/libdleyna/core/core.h
+file usr/include/dleyna-1.0/libdleyna/core/error.h \
+    path=usr/include/dleyna-1.0/libdleyna/core/error.h
+file usr/include/dleyna-1.0/libdleyna/core/log.h \
+    path=usr/include/dleyna-1.0/libdleyna/core/log.h
+file usr/include/dleyna-1.0/libdleyna/core/main-loop.h \
+    path=usr/include/dleyna-1.0/libdleyna/core/main-loop.h
+file usr/include/dleyna-1.0/libdleyna/core/service-task.h \
+    path=usr/include/dleyna-1.0/libdleyna/core/service-task.h
+file usr/include/dleyna-1.0/libdleyna/core/settings.h \
+    path=usr/include/dleyna-1.0/libdleyna/core/settings.h
+file usr/include/dleyna-1.0/libdleyna/core/task-atom.h \
+    path=usr/include/dleyna-1.0/libdleyna/core/task-atom.h
+file usr/include/dleyna-1.0/libdleyna/core/task-processor.h \
+    path=usr/include/dleyna-1.0/libdleyna/core/task-processor.h
+file usr/include/dleyna-1.0/libdleyna/core/white-list.h \
+    path=usr/include/dleyna-1.0/libdleyna/core/white-list.h
+file usr/lib/amd64/libdleyna-core-1.0.la \
+    path=usr/lib/amd64/libdleyna-core-1.0.la
+link path=usr/lib/amd64/libdleyna-core-1.0.so target=libdleyna-core-1.0.so.5.0.0
+link path=usr/lib/amd64/libdleyna-core-1.0.so.5 \
+    target=libdleyna-core-1.0.so.5.0.0
+file usr/lib/amd64/libdleyna-core-1.0.so.5.0.0 \
+    path=usr/lib/amd64/libdleyna-core-1.0.so.5.0.0
+file usr/lib/amd64/pkgconfig/dleyna-core-1.0.pc \
+    path=usr/lib/amd64/pkgconfig/dleyna-core-1.0.pc
+file usr/lib/libdleyna-core-1.0.la path=usr/lib/libdleyna-core-1.0.la
+link path=usr/lib/libdleyna-core-1.0.so target=libdleyna-core-1.0.so.5.0.0
+link path=usr/lib/libdleyna-core-1.0.so.5 target=libdleyna-core-1.0.so.5.0.0
+file usr/lib/libdleyna-core-1.0.so.5.0.0 \
+    path=usr/lib/libdleyna-core-1.0.so.5.0.0
+file usr/lib/pkgconfig/dleyna-core-1.0.pc \
+    path=usr/lib/pkgconfig/dleyna-core-1.0.pc
+license COPYING license=GPLv2
