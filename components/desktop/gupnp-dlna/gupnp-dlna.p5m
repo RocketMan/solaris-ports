@@ -1,0 +1,252 @@
+#
+# CDDL HEADER START
+#
+# The contents of this file are subject to the terms of the
+# Common Development and Distribution License (the "License").
+# You may not use this file except in compliance with the License.
+#
+# You can obtain a copy of the license at usr/src/OPENSOLARIS.LICENSE
+# or http://www.opensolaris.org/os/licensing.
+# See the License for the specific language governing permissions
+# and limitations under the License.
+#
+# When distributing Covered Code, include this CDDL HEADER in each
+# file and include the License file at usr/src/OPENSOLARIS.LICENSE.
+# If applicable, add the following below this CDDL HEADER, with the
+# fields enclosed by brackets "[]" replaced with your own identifying
+# information: Portions Copyright [yyyy] [name of copyright owner]
+#
+# CDDL HEADER END
+#
+
+#
+# Copyright (c) 2018 Jim Mason <jmason at ibinx dot com>.  All rights reserved.
+#
+
+<transform file path=usr.*/man/.+ -> \
+    default mangler.man.stability "pass-through volatile">
+set name=pkg.fmri \
+    value=pkg:/library/desktop/gupnp-dlna@$(IPS_COMPONENT_VERSION),$(BUILD_VERSION)
+set name=pkg.summary \
+    value="A supplemental library for gupnp providing UPnP DLNA services"
+set name=info.classification \
+    value="org.opensolaris.category.2008:Desktop (GNOME)/Libraries"
+set name=info.source-url value=$(COMPONENT_ARCHIVE_URL)
+set name=info.upstream-url value=$(COMPONENT_PROJECT_URL)
+set name=org.opensolaris.consolidation value=$(CONSOLIDATION)
+file usr/bin/gupnp-dlna-info-2.0 path=usr/bin/gupnp-dlna-info-2.0
+file usr/bin/gupnp-dlna-ls-profiles-2.0 path=usr/bin/gupnp-dlna-ls-profiles-2.0
+file usr/include/gupnp-dlna-2.0/libgupnp-dlna/gupnp-dlna-audio-information.h \
+    path=usr/include/gupnp-dlna-2.0/libgupnp-dlna/gupnp-dlna-audio-information.h
+file usr/include/gupnp-dlna-2.0/libgupnp-dlna/gupnp-dlna-container-information.h \
+    path=usr/include/gupnp-dlna-2.0/libgupnp-dlna/gupnp-dlna-container-information.h
+file usr/include/gupnp-dlna-2.0/libgupnp-dlna/gupnp-dlna-g-values.h \
+    path=usr/include/gupnp-dlna-2.0/libgupnp-dlna/gupnp-dlna-g-values.h
+file usr/include/gupnp-dlna-2.0/libgupnp-dlna/gupnp-dlna-gst-utils.h \
+    path=usr/include/gupnp-dlna-2.0/libgupnp-dlna/gupnp-dlna-gst-utils.h
+file usr/include/gupnp-dlna-2.0/libgupnp-dlna/gupnp-dlna-image-information.h \
+    path=usr/include/gupnp-dlna-2.0/libgupnp-dlna/gupnp-dlna-image-information.h
+file usr/include/gupnp-dlna-2.0/libgupnp-dlna/gupnp-dlna-information.h \
+    path=usr/include/gupnp-dlna-2.0/libgupnp-dlna/gupnp-dlna-information.h
+file usr/include/gupnp-dlna-2.0/libgupnp-dlna/gupnp-dlna-profile-guesser.h \
+    path=usr/include/gupnp-dlna-2.0/libgupnp-dlna/gupnp-dlna-profile-guesser.h
+file usr/include/gupnp-dlna-2.0/libgupnp-dlna/gupnp-dlna-profile.h \
+    path=usr/include/gupnp-dlna-2.0/libgupnp-dlna/gupnp-dlna-profile.h
+file usr/include/gupnp-dlna-2.0/libgupnp-dlna/gupnp-dlna-restriction.h \
+    path=usr/include/gupnp-dlna-2.0/libgupnp-dlna/gupnp-dlna-restriction.h
+file usr/include/gupnp-dlna-2.0/libgupnp-dlna/gupnp-dlna-value-list.h \
+    path=usr/include/gupnp-dlna-2.0/libgupnp-dlna/gupnp-dlna-value-list.h
+file usr/include/gupnp-dlna-2.0/libgupnp-dlna/gupnp-dlna-values.h \
+    path=usr/include/gupnp-dlna-2.0/libgupnp-dlna/gupnp-dlna-values.h
+file usr/include/gupnp-dlna-2.0/libgupnp-dlna/gupnp-dlna-video-information.h \
+    path=usr/include/gupnp-dlna-2.0/libgupnp-dlna/gupnp-dlna-video-information.h
+file usr/include/gupnp-dlna-2.0/libgupnp-dlna/gupnp-dlna.h \
+    path=usr/include/gupnp-dlna-2.0/libgupnp-dlna/gupnp-dlna.h
+file usr/include/gupnp-dlna-2.0/libgupnp-dlna/metadata/gupnp-dlna-metadata-extractor.h \
+    path=usr/include/gupnp-dlna-2.0/libgupnp-dlna/metadata/gupnp-dlna-metadata-extractor.h
+file usr/lib/amd64/girepository-1.0/GUPnPDLNA-2.0.typelib \
+    path=usr/lib/amd64/girepository-1.0/GUPnPDLNA-2.0.typelib
+file usr/lib/amd64/girepository-1.0/GUPnPDLNAGst-2.0.typelib \
+    path=usr/lib/amd64/girepository-1.0/GUPnPDLNAGst-2.0.typelib
+file usr/lib/amd64/gupnp-dlna/libgstreamer.la \
+    path=usr/lib/amd64/gupnp-dlna/libgstreamer.la
+file usr/lib/amd64/gupnp-dlna/libgstreamer.so \
+    path=usr/lib/amd64/gupnp-dlna/libgstreamer.so
+file usr/lib/amd64/libgupnp-dlna-2.0.la path=usr/lib/amd64/libgupnp-dlna-2.0.la
+link path=usr/lib/amd64/libgupnp-dlna-2.0.so target=libgupnp-dlna-2.0.so.3.0.0
+link path=usr/lib/amd64/libgupnp-dlna-2.0.so.3 target=libgupnp-dlna-2.0.so.3.0.0
+file usr/lib/amd64/libgupnp-dlna-2.0.so.3.0.0 \
+    path=usr/lib/amd64/libgupnp-dlna-2.0.so.3.0.0
+file usr/lib/amd64/libgupnp-dlna-gst-2.0.la \
+    path=usr/lib/amd64/libgupnp-dlna-gst-2.0.la
+link path=usr/lib/amd64/libgupnp-dlna-gst-2.0.so \
+    target=libgupnp-dlna-gst-2.0.so.3.0.0
+link path=usr/lib/amd64/libgupnp-dlna-gst-2.0.so.3 \
+    target=libgupnp-dlna-gst-2.0.so.3.0.0
+file usr/lib/amd64/libgupnp-dlna-gst-2.0.so.3.0.0 \
+    path=usr/lib/amd64/libgupnp-dlna-gst-2.0.so.3.0.0
+file usr/lib/amd64/pkgconfig/gupnp-dlna-2.0.pc \
+    path=usr/lib/amd64/pkgconfig/gupnp-dlna-2.0.pc
+file usr/lib/amd64/pkgconfig/gupnp-dlna-gst-2.0.pc \
+    path=usr/lib/amd64/pkgconfig/gupnp-dlna-gst-2.0.pc
+file usr/lib/amd64/pkgconfig/gupnp-dlna-metadata-2.0.pc \
+    path=usr/lib/amd64/pkgconfig/gupnp-dlna-metadata-2.0.pc
+file usr/lib/girepository-1.0/GUPnPDLNA-2.0.typelib \
+    path=usr/lib/girepository-1.0/GUPnPDLNA-2.0.typelib
+file usr/lib/girepository-1.0/GUPnPDLNAGst-2.0.typelib \
+    path=usr/lib/girepository-1.0/GUPnPDLNAGst-2.0.typelib
+file usr/lib/gupnp-dlna/libgstreamer.la path=usr/lib/gupnp-dlna/libgstreamer.la
+file usr/lib/gupnp-dlna/libgstreamer.so path=usr/lib/gupnp-dlna/libgstreamer.so
+file usr/lib/libgupnp-dlna-2.0.la path=usr/lib/libgupnp-dlna-2.0.la
+link path=usr/lib/libgupnp-dlna-2.0.so target=libgupnp-dlna-2.0.so.3.0.0
+link path=usr/lib/libgupnp-dlna-2.0.so.3 target=libgupnp-dlna-2.0.so.3.0.0
+file usr/lib/libgupnp-dlna-2.0.so.3.0.0 path=usr/lib/libgupnp-dlna-2.0.so.3.0.0
+file usr/lib/libgupnp-dlna-gst-2.0.la path=usr/lib/libgupnp-dlna-gst-2.0.la
+link path=usr/lib/libgupnp-dlna-gst-2.0.so target=libgupnp-dlna-gst-2.0.so.3.0.0
+link path=usr/lib/libgupnp-dlna-gst-2.0.so.3 \
+    target=libgupnp-dlna-gst-2.0.so.3.0.0
+file usr/lib/libgupnp-dlna-gst-2.0.so.3.0.0 \
+    path=usr/lib/libgupnp-dlna-gst-2.0.so.3.0.0
+file usr/lib/pkgconfig/gupnp-dlna-2.0.pc \
+    path=usr/lib/pkgconfig/gupnp-dlna-2.0.pc
+file usr/lib/pkgconfig/gupnp-dlna-gst-2.0.pc \
+    path=usr/lib/pkgconfig/gupnp-dlna-gst-2.0.pc
+file usr/lib/pkgconfig/gupnp-dlna-metadata-2.0.pc \
+    path=usr/lib/pkgconfig/gupnp-dlna-metadata-2.0.pc
+file usr/share/gir-1.0/GUPnPDLNA-2.0.gir \
+    path=usr/share/gir-1.0/GUPnPDLNA-2.0.gir
+file usr/share/gir-1.0/GUPnPDLNAGst-2.0.gir \
+    path=usr/share/gir-1.0/GUPnPDLNAGst-2.0.gir
+file usr/share/gtk-doc/html/gupnp-dlna-gst/annotation-glossary.html \
+    path=usr/share/gtk-doc/html/gupnp-dlna-gst/annotation-glossary.html
+file usr/share/gtk-doc/html/gupnp-dlna-gst/ch01.html \
+    path=usr/share/gtk-doc/html/gupnp-dlna-gst/ch01.html
+file usr/share/gtk-doc/html/gupnp-dlna-gst/gupnp-dlna-gst-gupnp-dlna-gst-utils.html \
+    path=usr/share/gtk-doc/html/gupnp-dlna-gst/gupnp-dlna-gst-gupnp-dlna-gst-utils.html
+file usr/share/gtk-doc/html/gupnp-dlna-gst/gupnp-dlna-gst.devhelp \
+    path=usr/share/gtk-doc/html/gupnp-dlna-gst/gupnp-dlna-gst.devhelp
+file usr/share/gtk-doc/html/gupnp-dlna-gst/gupnp-dlna-gst.devhelp2 \
+    path=usr/share/gtk-doc/html/gupnp-dlna-gst/gupnp-dlna-gst.devhelp2
+file usr/share/gtk-doc/html/gupnp-dlna-gst/home.png \
+    path=usr/share/gtk-doc/html/gupnp-dlna-gst/home.png
+file usr/share/gtk-doc/html/gupnp-dlna-gst/index.html \
+    path=usr/share/gtk-doc/html/gupnp-dlna-gst/index.html
+file usr/share/gtk-doc/html/gupnp-dlna-gst/index.sgml \
+    path=usr/share/gtk-doc/html/gupnp-dlna-gst/index.sgml
+file usr/share/gtk-doc/html/gupnp-dlna-gst/left.png \
+    path=usr/share/gtk-doc/html/gupnp-dlna-gst/left.png
+file usr/share/gtk-doc/html/gupnp-dlna-gst/right.png \
+    path=usr/share/gtk-doc/html/gupnp-dlna-gst/right.png
+file usr/share/gtk-doc/html/gupnp-dlna-gst/style.css \
+    path=usr/share/gtk-doc/html/gupnp-dlna-gst/style.css
+file usr/share/gtk-doc/html/gupnp-dlna-gst/up.png \
+    path=usr/share/gtk-doc/html/gupnp-dlna-gst/up.png
+file usr/share/gtk-doc/html/gupnp-dlna-metadata/GUPnPDLNAMetadataExtractor.html \
+    path=usr/share/gtk-doc/html/gupnp-dlna-metadata/GUPnPDLNAMetadataExtractor.html
+file usr/share/gtk-doc/html/gupnp-dlna-metadata/annotation-glossary.html \
+    path=usr/share/gtk-doc/html/gupnp-dlna-metadata/annotation-glossary.html
+file usr/share/gtk-doc/html/gupnp-dlna-metadata/ch01.html \
+    path=usr/share/gtk-doc/html/gupnp-dlna-metadata/ch01.html
+file usr/share/gtk-doc/html/gupnp-dlna-metadata/gupnp-dlna-metadata.devhelp \
+    path=usr/share/gtk-doc/html/gupnp-dlna-metadata/gupnp-dlna-metadata.devhelp
+file usr/share/gtk-doc/html/gupnp-dlna-metadata/gupnp-dlna-metadata.devhelp2 \
+    path=usr/share/gtk-doc/html/gupnp-dlna-metadata/gupnp-dlna-metadata.devhelp2
+file usr/share/gtk-doc/html/gupnp-dlna-metadata/home.png \
+    path=usr/share/gtk-doc/html/gupnp-dlna-metadata/home.png
+file usr/share/gtk-doc/html/gupnp-dlna-metadata/index.html \
+    path=usr/share/gtk-doc/html/gupnp-dlna-metadata/index.html
+file usr/share/gtk-doc/html/gupnp-dlna-metadata/index.sgml \
+    path=usr/share/gtk-doc/html/gupnp-dlna-metadata/index.sgml
+file usr/share/gtk-doc/html/gupnp-dlna-metadata/left.png \
+    path=usr/share/gtk-doc/html/gupnp-dlna-metadata/left.png
+file usr/share/gtk-doc/html/gupnp-dlna-metadata/right.png \
+    path=usr/share/gtk-doc/html/gupnp-dlna-metadata/right.png
+file usr/share/gtk-doc/html/gupnp-dlna-metadata/style.css \
+    path=usr/share/gtk-doc/html/gupnp-dlna-metadata/style.css
+file usr/share/gtk-doc/html/gupnp-dlna-metadata/up.png \
+    path=usr/share/gtk-doc/html/gupnp-dlna-metadata/up.png
+file usr/share/gtk-doc/html/gupnp-dlna/GUPnPDLNAProfile.html \
+    path=usr/share/gtk-doc/html/gupnp-dlna/GUPnPDLNAProfile.html
+file usr/share/gtk-doc/html/gupnp-dlna/GUPnPDLNAProfileGuesser.html \
+    path=usr/share/gtk-doc/html/gupnp-dlna/GUPnPDLNAProfileGuesser.html
+file usr/share/gtk-doc/html/gupnp-dlna/annotation-glossary.html \
+    path=usr/share/gtk-doc/html/gupnp-dlna/annotation-glossary.html
+file usr/share/gtk-doc/html/gupnp-dlna/ch01.html \
+    path=usr/share/gtk-doc/html/gupnp-dlna/ch01.html
+file usr/share/gtk-doc/html/gupnp-dlna/gupnp-dlna-GUPnP-DLNA-Values.html \
+    path=usr/share/gtk-doc/html/gupnp-dlna/gupnp-dlna-GUPnP-DLNA-Values.html
+file usr/share/gtk-doc/html/gupnp-dlna/gupnp-dlna-GUPnPDLNAAudioInformation.html \
+    path=usr/share/gtk-doc/html/gupnp-dlna/gupnp-dlna-GUPnPDLNAAudioInformation.html
+file usr/share/gtk-doc/html/gupnp-dlna/gupnp-dlna-GUPnPDLNAContainerInformation.html \
+    path=usr/share/gtk-doc/html/gupnp-dlna/gupnp-dlna-GUPnPDLNAContainerInformation.html
+file usr/share/gtk-doc/html/gupnp-dlna/gupnp-dlna-GUPnPDLNAImageInformation.html \
+    path=usr/share/gtk-doc/html/gupnp-dlna/gupnp-dlna-GUPnPDLNAImageInformation.html
+file usr/share/gtk-doc/html/gupnp-dlna/gupnp-dlna-GUPnPDLNAInformation.html \
+    path=usr/share/gtk-doc/html/gupnp-dlna/gupnp-dlna-GUPnPDLNAInformation.html
+file usr/share/gtk-doc/html/gupnp-dlna/gupnp-dlna-GUPnPDLNAVideoInformation.html \
+    path=usr/share/gtk-doc/html/gupnp-dlna/gupnp-dlna-GUPnPDLNAVideoInformation.html
+file usr/share/gtk-doc/html/gupnp-dlna/gupnp-dlna-gupnp-dlna-g-values.html \
+    path=usr/share/gtk-doc/html/gupnp-dlna/gupnp-dlna-gupnp-dlna-g-values.html
+file usr/share/gtk-doc/html/gupnp-dlna/gupnp-dlna-gupnp-dlna-restriction.html \
+    path=usr/share/gtk-doc/html/gupnp-dlna/gupnp-dlna-gupnp-dlna-restriction.html
+file usr/share/gtk-doc/html/gupnp-dlna/gupnp-dlna-gupnp-dlna-value-list.html \
+    path=usr/share/gtk-doc/html/gupnp-dlna/gupnp-dlna-gupnp-dlna-value-list.html
+file usr/share/gtk-doc/html/gupnp-dlna/gupnp-dlna.devhelp \
+    path=usr/share/gtk-doc/html/gupnp-dlna/gupnp-dlna.devhelp
+file usr/share/gtk-doc/html/gupnp-dlna/gupnp-dlna.devhelp2 \
+    path=usr/share/gtk-doc/html/gupnp-dlna/gupnp-dlna.devhelp2
+file usr/share/gtk-doc/html/gupnp-dlna/home.png \
+    path=usr/share/gtk-doc/html/gupnp-dlna/home.png
+file usr/share/gtk-doc/html/gupnp-dlna/index.html \
+    path=usr/share/gtk-doc/html/gupnp-dlna/index.html
+file usr/share/gtk-doc/html/gupnp-dlna/index.sgml \
+    path=usr/share/gtk-doc/html/gupnp-dlna/index.sgml
+file usr/share/gtk-doc/html/gupnp-dlna/left.png \
+    path=usr/share/gtk-doc/html/gupnp-dlna/left.png
+file usr/share/gtk-doc/html/gupnp-dlna/right.png \
+    path=usr/share/gtk-doc/html/gupnp-dlna/right.png
+file usr/share/gtk-doc/html/gupnp-dlna/style.css \
+    path=usr/share/gtk-doc/html/gupnp-dlna/style.css
+file usr/share/gtk-doc/html/gupnp-dlna/up.png \
+    path=usr/share/gtk-doc/html/gupnp-dlna/up.png
+file usr/share/gupnp-dlna-2.0/dlna-profiles/aac.xml \
+    path=usr/share/gupnp-dlna-2.0/dlna-profiles/aac.xml
+file usr/share/gupnp-dlna-2.0/dlna-profiles/ac3.xml \
+    path=usr/share/gupnp-dlna-2.0/dlna-profiles/ac3.xml
+file usr/share/gupnp-dlna-2.0/dlna-profiles/amr.xml \
+    path=usr/share/gupnp-dlna-2.0/dlna-profiles/amr.xml
+file usr/share/gupnp-dlna-2.0/dlna-profiles/avc.xml \
+    path=usr/share/gupnp-dlna-2.0/dlna-profiles/avc.xml
+file usr/share/gupnp-dlna-2.0/dlna-profiles/common.xml \
+    path=usr/share/gupnp-dlna-2.0/dlna-profiles/common.xml
+file usr/share/gupnp-dlna-2.0/dlna-profiles/dlna-profiles.rng \
+    path=usr/share/gupnp-dlna-2.0/dlna-profiles/dlna-profiles.rng
+file usr/share/gupnp-dlna-2.0/dlna-profiles/jpeg.xml \
+    path=usr/share/gupnp-dlna-2.0/dlna-profiles/jpeg.xml
+file usr/share/gupnp-dlna-2.0/dlna-profiles/lpcm.xml \
+    path=usr/share/gupnp-dlna-2.0/dlna-profiles/lpcm.xml
+file usr/share/gupnp-dlna-2.0/dlna-profiles/mp3.xml \
+    path=usr/share/gupnp-dlna-2.0/dlna-profiles/mp3.xml
+file usr/share/gupnp-dlna-2.0/dlna-profiles/mpeg-common.xml \
+    path=usr/share/gupnp-dlna-2.0/dlna-profiles/mpeg-common.xml
+file usr/share/gupnp-dlna-2.0/dlna-profiles/mpeg-ps.xml \
+    path=usr/share/gupnp-dlna-2.0/dlna-profiles/mpeg-ps.xml
+file usr/share/gupnp-dlna-2.0/dlna-profiles/mpeg-ts.xml \
+    path=usr/share/gupnp-dlna-2.0/dlna-profiles/mpeg-ts.xml
+file usr/share/gupnp-dlna-2.0/dlna-profiles/mpeg1.xml \
+    path=usr/share/gupnp-dlna-2.0/dlna-profiles/mpeg1.xml
+file usr/share/gupnp-dlna-2.0/dlna-profiles/mpeg4.xml \
+    path=usr/share/gupnp-dlna-2.0/dlna-profiles/mpeg4.xml
+file usr/share/gupnp-dlna-2.0/dlna-profiles/png.xml \
+    path=usr/share/gupnp-dlna-2.0/dlna-profiles/png.xml
+file usr/share/gupnp-dlna-2.0/dlna-profiles/wma.xml \
+    path=usr/share/gupnp-dlna-2.0/dlna-profiles/wma.xml
+file usr/share/vala/vapi/gupnp-dlna-2.0.deps \
+    path=usr/share/vala/vapi/gupnp-dlna-2.0.deps
+file usr/share/vala/vapi/gupnp-dlna-2.0.vapi \
+    path=usr/share/vala/vapi/gupnp-dlna-2.0.vapi
+file usr/share/vala/vapi/gupnp-dlna-gst-2.0.deps \
+    path=usr/share/vala/vapi/gupnp-dlna-gst-2.0.deps
+file usr/share/vala/vapi/gupnp-dlna-gst-2.0.vapi \
+    path=usr/share/vala/vapi/gupnp-dlna-gst-2.0.vapi
+license COPYING license=LGPLv2.1
