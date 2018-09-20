@@ -1,0 +1,22 @@
+--- a/src/ephy-header-bar.c	2018-06-08 03:22:24.000000000 +0000
++++ b/src/ephy-header-bar.c	2018-09-17 12:43:22.794145599 +0000
+@@ -747,7 +747,7 @@
+   button = gtk_menu_button_new ();
+   header_bar->bookmarks_button = button;
+   gtk_button_set_image (GTK_BUTTON (button),
+-                        gtk_image_new_from_icon_name ("ephy-bookmarks-symbolic", GTK_ICON_SIZE_BUTTON));
++                        gtk_image_new_from_icon_name ("user-bookmarks-symbolic", GTK_ICON_SIZE_BUTTON));
+   gtk_widget_set_valign (button, GTK_ALIGN_CENTER);
+   /* Translators: tooltip for the bookmarks popover button */
+   gtk_widget_set_tooltip_text (button, _("View and manage your bookmarks"));
+--- a/src/bookmarks/ephy-bookmarks-popover.c	2018-04-17 01:56:57.000000000 +0000
++++ b/src/bookmarks/ephy-bookmarks-popover.c	2018-09-17 18:40:54.690299958 +0000
+@@ -250,7 +250,7 @@
+     image = gtk_image_new_from_icon_name ("emblem-favorite-symbolic", GTK_ICON_SIZE_MENU);
+     label = gtk_label_new (_(EPHY_BOOKMARKS_FAVORITES_TAG));
+   } else {
+-    image = gtk_image_new_from_icon_name ("ephy-bookmark-tag-symbolic", GTK_ICON_SIZE_MENU);
++    image = gtk_image_new_from_icon_name ("bookmark-new-symbolic", GTK_ICON_SIZE_MENU);
+     label = gtk_label_new (tag);
+   }
+ 
