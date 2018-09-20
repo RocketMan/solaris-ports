@@ -1,0 +1,76 @@
+--- a/src/meson.build	2018-09-05 05:25:53.000000000 +0000
++++ b/src/meson.build	2018-09-17 14:29:08.804448674 +0000
+@@ -84,7 +84,7 @@
+ ]
+ 
+ libdazzle_deps = [
+-  dependency('gio-2.0', version: '>=2.56.0'),
++  dependency('gio-2.0', version: '>=2.52.0'),
+   dependency('gmodule-2.0'),
+   dependency('gtk+-3.0'),
+   cc.find_library('m', required: false),
+--- a/src/dazzle.h	2018-09-05 05:25:53.000000000 +0000
++++ b/src/dazzle.h	2018-09-17 14:34:55.486668370 +0000
+@@ -23,8 +23,8 @@
+ 
+ G_BEGIN_DECLS
+ 
+-#if !GTK_CHECK_VERSION(3, 22, 15)
+-# error "libdazzle requires gtk+-3.0 >= 3.22.15"
++#if !GTK_CHECK_VERSION(3, 22, 12)
++# error "libdazzle requires gtk+-3.0 >= 3.22.12"
+ #endif
+ 
+ #if !GLIB_CHECK_VERSION(2, 52, 0)
+--- a/src/util/dzl-macros.h	2018-09-05 05:25:53.000000000 +0000
++++ b/src/util/dzl-macros.h	2018-09-17 14:57:23.721040630 +0000
+@@ -39,8 +39,10 @@
+ #endif
+ 
+ /* These were upstreamed into GLib, just use them */
+-#define dzl_clear_weak_pointer(ptr) g_clear_weak_pointer(ptr)
+-#define dzl_set_weak_pointer(ptr,obj) g_set_weak_pointer(ptr,obj)
++#define dzl_clear_weak_pointer(ptr) \
++  (*(ptr) ? (g_object_remove_weak_pointer((GObject*)*(ptr), (gpointer*)ptr),*(ptr)=NULL,1) : 0)
++#define dzl_set_weak_pointer(ptr,obj) \
++  ((obj!=*(ptr))?(dzl_clear_weak_pointer(ptr),*(ptr)=obj, ((obj)?g_object_add_weak_pointer((GObject*)obj,(gpointer*)ptr),NULL:NULL),1):0)
+ 
+ /* A more type-correct form of g_clear_pointer(), to help find bugs.
+  * GLib ended up with a similar feature which we can rely on now.
+--- a/src/shortcuts/dzl-shortcut-controller.c	2018-09-05 05:25:53.000000000 +0000
++++ b/src/shortcuts/dzl-shortcut-controller.c	2018-09-17 14:35:42.872175893 +0000
+@@ -259,7 +259,7 @@
+   g_assert (GTK_IS_WIDGET (widget));
+ 
+   dzl_shortcut_controller_disconnect (self);
+-  g_clear_weak_pointer (&priv->widget);
++  dzl_clear_weak_pointer (&priv->widget);
+ 
+   if (priv->root != NULL)
+     {
+@@ -380,12 +380,12 @@
+       if (priv->widget != NULL)
+         {
+           dzl_shortcut_controller_disconnect (self);
+-          g_clear_weak_pointer (&priv->widget);
++          dzl_clear_weak_pointer (&priv->widget);
+         }
+ 
+       if (widget != NULL && widget != priv->widget)
+         {
+-          g_set_weak_pointer (&priv->widget, widget);
++          dzl_set_weak_pointer (&priv->widget, widget);
+           dzl_shortcut_controller_connect (self);
+         }
+ 
+--- a/tests/test-recursive-monitor.c	2018-09-05 05:25:53.000000000 +0000
++++ b/tests/test-recursive-monitor.c	2018-09-17 14:44:53.884505649 +0000
+@@ -170,7 +170,7 @@
+   /* Build our list of directories to create/test */
+   for (guint i = 0; layer1[i]; i++)
+     {
+-      g_autoptr(GFile) file1 = g_file_new_build_filename ("recursive-dir", layer1[i], NULL);
++      g_autoptr(GFile) file1 = g_file_new_for_path(g_build_filename ("recursive-dir", layer1[i], NULL));
+ 
+       g_queue_push_tail (&state.dirs, g_object_ref (file1));
+ 

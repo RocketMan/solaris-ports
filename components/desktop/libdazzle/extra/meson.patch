@@ -1,0 +1,22 @@
+--- a/mesonbuild/compilers/compilers.py	2018-09-13 20:20:48.000000000 +0000
++++ b/mesonbuild/compilers/compilers.py	2018-09-16 19:30:37.517909576 +0000
+@@ -1103,19 +1103,6 @@
+             # linked against local libraries will fail to resolve them.
+             args.append('-Wl,-z,origin')
+         args.append('-Wl,-rpath,' + paths)
+-        if get_compiler_is_linuxlike(self):
+-            # Rpaths to use while linking must be absolute. These are not
+-            # written to the binary. Needed only with GNU ld:
+-            # https://sourceware.org/bugzilla/show_bug.cgi?id=16936
+-            # Not needed on Windows or other platforms that don't use RPATH
+-            # https://github.com/mesonbuild/meson/issues/1897
+-            lpaths = ':'.join([os.path.join(build_dir, p) for p in rpath_paths])
+-
+-            # clang expands '-Wl,rpath-link,' to ['-rpath-link'] instead of ['-rpath-link','']
+-            # This eats the next argument, which happens to be 'ldstdc++', causing link failures.
+-            # We can dodge this problem by not adding any rpath_paths if the argument is empty.
+-            if lpaths.strip() != '':
+-                args += ['-Wl,-rpath-link,' + lpaths]
+         return args
+ 
+     def thread_flags(self, env):
