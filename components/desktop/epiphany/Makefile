@@ -79,11 +79,11 @@ $(NINJA_DIR)/.built: $(NINJA_DIR)/.unpacked
 
 
 REQUIRED_PACKAGES += database/sqlite-3
-REQUIRED_PACKAGES += desktop/library/libdazzle
 REQUIRED_PACKAGES += gnome/gnome-shell
 REQUIRED_PACKAGES += library/desktop/gdk-pixbuf
 REQUIRED_PACKAGES += library/desktop/gtk3
 REQUIRED_PACKAGES += library/desktop/cairo
+REQUIRED_PACKAGES += library/desktop/libdazzle
 REQUIRED_PACKAGES += library/desktop/libnotify
 REQUIRED_PACKAGES += library/desktop/libwnck3
 REQUIRED_PACKAGES += library/desktop/pango
