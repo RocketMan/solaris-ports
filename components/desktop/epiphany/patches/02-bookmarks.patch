@@ -1,14 +1,21 @@
---- a/src/ephy-header-bar.c	2018-06-08 03:22:24.000000000 +0000
-+++ b/src/ephy-header-bar.c	2018-09-17 12:43:22.794145599 +0000
-@@ -747,7 +747,7 @@
-   button = gtk_menu_button_new ();
-   header_bar->bookmarks_button = button;
-   gtk_button_set_image (GTK_BUTTON (button),
--                        gtk_image_new_from_icon_name ("ephy-bookmarks-symbolic", GTK_ICON_SIZE_BUTTON));
-+                        gtk_image_new_from_icon_name ("user-bookmarks-symbolic", GTK_ICON_SIZE_BUTTON));
-   gtk_widget_set_valign (button, GTK_ALIGN_CENTER);
-   /* Translators: tooltip for the bookmarks popover button */
-   gtk_widget_set_tooltip_text (button, _("View and manage your bookmarks"));
+--- a/src/resources/gtk/action-bar-end.ui	2018-09-02 21:17:31.000000000 +0000
++++ b/src/resources/gtk/action-bar-end.ui	2018-09-21 19:21:58.502766014 +0000
+@@ -15,7 +15,7 @@
+         <child>
+           <object class="GtkImage" id="bookmarks_image">
+             <property name="visible">True</property>
+-            <property name="icon-name">ephy-bookmarks-symbolic</property>
++            <property name="icon-name">user-bookmarks-symbolic</property>
+             <property name="icon-size">1</property>
+           </object>
+         </child>
+@@ -82,4 +82,4 @@
+   <object class="EphyBookmarksPopover" id="bookmarks_popover">
+     <property name="visible">True</property>
+   </object>
+-</interface>
+\ No newline at end of file
++</interface>
 --- a/src/bookmarks/ephy-bookmarks-popover.c	2018-04-17 01:56:57.000000000 +0000
 +++ b/src/bookmarks/ephy-bookmarks-popover.c	2018-09-17 18:40:54.690299958 +0000
 @@ -250,7 +250,7 @@
@@ -20,3 +27,14 @@
      label = gtk_label_new (tag);
    }
  
+--- a/lib/widgets/ephy-location-entry.c	2018-09-02 21:17:31.000000000 +0000
++++ b/lib/widgets/ephy-location-entry.c	2018-09-22 00:03:55.428554439 +0000
+@@ -851,7 +851,7 @@
+ 
+   /* Reader Mode */
+   entry->reader_mode_event_box = gtk_event_box_new ();
+-  entry->reader_mode = gtk_image_new_from_icon_name ("ephy-reader-mode-symbolic", GTK_ICON_SIZE_MENU);
++  entry->reader_mode = gtk_image_new_from_icon_name ("view-dual-symbolic", GTK_ICON_SIZE_MENU);
+   gtk_widget_show (entry->reader_mode);
+   gtk_container_add (GTK_CONTAINER(entry->reader_mode_event_box), entry->reader_mode);
+   gtk_box_pack_end (GTK_BOX (button_box), entry->reader_mode_event_box, FALSE, FALSE, 6);

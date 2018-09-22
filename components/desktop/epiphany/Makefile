@@ -28,11 +28,11 @@ COMPILER =		gcc
 include ../../../make-rules/shared-macros.mk
 
 COMPONENT_NAME=		epiphany
-COMPONENT_VERSION=	3.29.1
+COMPONENT_VERSION=	3.30.0
 COMPONENT_SRC=		$(COMPONENT_NAME)-$(COMPONENT_VERSION)
 COMPONENT_ARCHIVE_URL=	$(GIT_REPO)/archive/$(COMPONENT_VERSION).tar.gz
 GIT_REPO=		https://github.com/GNOME/epiphany
-GIT_COMMIT_ID=		3.29.1
+GIT_COMMIT_ID=		3.30.0
 COMPONENT_PROJECT_URL=	https://wiki.gnome.org/Apps/Web
 
 COMPONENT_NAME_1=	meson
@@ -52,8 +52,6 @@ PATH=$(NINJA_DIR):/usr/gnu/bin:/usr/bin
 
 include $(WS_MAKE_RULES)/common.mk
 
-$(SOLARIS_11_3_ONLY)CFLAGS += -DTHUMBNAIL_PATCH
-
 LDFLAGS += -lm -lsocket -lnsl
 $(SOLARIS_11_3_ONLY)LDFLAGS += -licuuc_gcc
 
@@ -69,11 +67,7 @@ COMPONENT_PRE_BUILD_ACTION = ( \
 	$(CP) $(COMPONENT_DIR)/extra/Makefile $(BUILD_DIR_$(BITS)) ; \
 )
 
-$(SOURCE_DIR)/.patched: $(MESON_DIR)/.patched $(SOURCE_DIR)/.patched-thumbnails
-
-$(SOURCE_DIR)/.patched-thumbnails:
-	$(SOLARIS_11_3_ONLY) $(CP) $(COMPONENT_DIR)/files/* $(SOURCE_DIR)/lib
-	$(TOUCH) $(SOURCE_DIR)/.patched-thumbnails
+$(SOURCE_DIR)/.patched: $(MESON_DIR)/.patched
 
 $(MESON_DIR)/.patched: $(NINJA_DIR)/.built $(MESON_DIR)/.unpacked
 	cd $(@D); $(GPATCH) $(GPATCH_FLAGS) -d $(@D) < $(COMPONENT_DIR)/extra/meson.patch
@@ -85,6 +79,7 @@ $(NINJA_DIR)/.built: $(NINJA_DIR)/.unpacked
 
 
 REQUIRED_PACKAGES += database/sqlite-3
+REQUIRED_PACKAGES += desktop/library/libdazzle
 REQUIRED_PACKAGES += gnome/gnome-shell
 REQUIRED_PACKAGES += library/desktop/gdk-pixbuf
 REQUIRED_PACKAGES += library/desktop/gtk3
