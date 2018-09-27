@@ -10,16 +10,17 @@
  }
  
  expander:hover {
-@@ -977,7 +978,7 @@
+@@ -977,7 +978,8 @@
  headerbar .primary-toolbar menu,
  menu {
      margin: 4px;    /* avoid minify of menu */
 -    padding: 0;
 +    padding: 0px;
++    border: 1px solid #666666;
      border-radius: 0;
      background-color: @menu_bg_color;
      color: @menu_fg_color;
-@@ -1253,8 +1254,8 @@
+@@ -1253,8 +1255,8 @@
  
  popover.background,
  .csd popover.background {
@@ -30,7 +31,7 @@
  }
  
  /************
-@@ -1948,8 +1949,9 @@
+@@ -1948,8 +1950,9 @@
      -gtk-icon-source: none;
      border-style: none;
      background-color: transparent;
@@ -41,7 +42,7 @@
  }
  
  button > separator,
-@@ -2706,18 +2708,18 @@
+@@ -2706,18 +2709,18 @@
   * tooltip *
   ***********/
  tooltip {
@@ -63,7 +64,7 @@
  }
  
  tooltip * {
-@@ -3082,10 +3084,15 @@
+@@ -3082,10 +3085,15 @@
  
  .osd progressbar progress,
  progressbar.osd progress {
@@ -82,7 +83,7 @@
  }
  
  .osd view,
-@@ -3376,11 +3383,6 @@
+@@ -3376,11 +3384,6 @@
      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(0, 0, 0, 0.13);
  }
  
@@ -94,7 +95,7 @@
  messagedialog.csd decoration {
      border-radius: 0;
      background-color: @theme_bg_color;
-@@ -3389,10 +3391,11 @@
+@@ -3389,10 +3392,11 @@
  
  .solid-csd decoration {
      margin: 0;
@@ -109,7 +110,7 @@
      box-shadow: inset 0 0 0 3px rgba(0,0,0,0.3), inset 0 1px rgba(20, 20, 20, 0.8);
  }
  
-@@ -3402,7 +3405,7 @@
+@@ -3402,7 +3406,7 @@
  
  /* titlebutton */
  .titlebar .titlebutton:not(separator) {
@@ -118,7 +119,7 @@
      margin: 0;
      border-radius: 4px;
      background-color: @theme_selected_bg_color;
-@@ -3474,9 +3477,8 @@
+@@ -3474,9 +3478,8 @@
  /* decoration for windows */
  .titlebar,
  .titlebar:not(headerbar) {
@@ -129,7 +130,7 @@
                                        #e3e5e8,
                                        #aaafb9);
      color: mix(@titlebar_fg_color, @titlebar_bg_color, 0.1);
-@@ -3490,7 +3492,6 @@
+@@ -3490,7 +3493,6 @@
      background-image: linear-gradient(to bottom,
                                        #abafb8,
                                        #c0c4cb);
@@ -137,7 +138,7 @@
      color: @theme_fg_color;
      text-shadow: none;
  }
-@@ -3518,3 +3519,8 @@
+@@ -3518,3 +3520,8 @@
                                        #abafb8,
                                        #c0c4cb);
  }

@@ -10,7 +10,15 @@
  }
  
  expander:hover {
-@@ -1253,8 +1254,8 @@
+@@ -978,6 +979,7 @@
+ menu {
+     margin: 4px;    /* avoid minify of menu */
+     padding: 0;
++    border: 1px solid #666666;
+     border-radius: 0;
+     background-color: @menu_bg_color;
+     color: @menu_fg_color;
+@@ -1253,8 +1255,8 @@
  
  popover.background,
  .csd popover.background {
@@ -21,7 +29,7 @@
  }
  
  /************
-@@ -1950,8 +1951,9 @@
+@@ -1950,8 +1952,9 @@
      -gtk-icon-source: none;
      border-style: none;
      background-color: transparent;
@@ -32,7 +40,7 @@
  }
  
  button > separator,
-@@ -2708,18 +2710,18 @@
+@@ -2708,18 +2711,18 @@
   * tooltip *
   ***********/
  tooltip {
@@ -54,7 +62,7 @@
  }
  
  tooltip * {
-@@ -3084,10 +3086,15 @@
+@@ -3084,10 +3087,15 @@
  
  .osd progressbar progress,
  progressbar.osd progress {
@@ -73,7 +81,7 @@
  }
  
  .osd view,
-@@ -3391,10 +3398,11 @@
+@@ -3391,10 +3399,11 @@
  
  .solid-csd decoration {
      margin: 0;
@@ -88,7 +96,7 @@
      box-shadow: inset 0 0 0 3px rgba(0,0,0,0.3), inset 0 1px rgba(20, 20, 20, 0.8);
  }
  
-@@ -3404,7 +3412,7 @@
+@@ -3404,7 +3413,7 @@
  
  /* titlebutton */
  .titlebar .titlebutton:not(separator) {
@@ -97,7 +105,7 @@
      margin: 0;
      border-radius: 4px;
      background-color: @theme_selected_bg_color;
-@@ -3476,9 +3484,8 @@
+@@ -3476,9 +3485,8 @@
  /* decoration for windows */
  .titlebar,
  .titlebar:not(headerbar) {
@@ -108,7 +116,7 @@
                                        #485975,
                                        #25334f,
                                        #394f7c);
-@@ -3493,7 +3500,6 @@
+@@ -3493,7 +3501,6 @@
      background-image: linear-gradient(to bottom,
                                        #23314d,
                                        #2e4064);
@@ -116,7 +124,7 @@
      color: @theme_fg_color;
      text-shadow: none;
  }
-@@ -3522,3 +3528,8 @@
+@@ -3522,3 +3529,8 @@
                                        #23314d,
                                        #2e4064);
  }
