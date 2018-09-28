@@ -139,6 +139,15 @@
 +}
 --- a/gtk-3.0/gtk.css	2018-05-21 14:57:35.000000000 +0000
 +++ b/gtk-3.0/gtk.css	2018-09-06 18:00:13.228703028 +0000
+@@ -62,7 +62,7 @@
+ @define-color menubar_fg_color @dark_fg_color;
+ @define-color toolbar_bg_color @dark_bg_color; /*@theme_bg_color;*/
+ @define-color toolbar_fg_color @dark_fg_color; /*@theme_fg_color;*/
+-@define-color menu_bg_color @bg_color;
++@define-color menu_bg_color #eff0f2;
+ @define-color menu_fg_color @fg_color;
+ /* GTK somehow doesn't like panel_* named colors. Use panebar* colors instead */
+ @define-color panel_bg_color #f6f6f6;
 @@ -99,6 +99,7 @@
  @import url("apps/unity.css");
  @import url("apps/budgie.css");
