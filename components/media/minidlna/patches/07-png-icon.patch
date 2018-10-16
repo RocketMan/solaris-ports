@@ -1,0 +1,29 @@
+--- a/upnpdescgen.c	2017-08-24 18:28:25.000000000 +0000
++++ b/upnpdescgen.c	2018-10-16 10:04:12.360330728 +0000
+@@ -153,6 +153,18 @@
+ 	{"/height", "120"},
+ 	{"/depth", "24"},
+ 	{"/url", "/icons/lrg.png"},
++#ifdef ADVERTISE_PNG_ONLY
++	{"/mimetype", "image/png"},
++	{"/width", "48"},
++	{"/height", "48"},
++	{"/depth", "24"},
++	{"/url", "/icons/sm.png"},
++	{"/mimetype", "image/png"},
++	{"/width", "120"},
++	{"/height", "120"},
++	{"/depth", "24"},
++	{"/url", "/icons/lrg.png"},
++#else
+ 	{"/mimetype", "image/jpeg"},
+ 	{"/width", "48"},
+ 	{"/height", "48"},
+@@ -163,6 +175,7 @@
+ 	{"/height", "120"},
+ 	{"/depth", "24"},
+ 	{"/url", "/icons/lrg.jpg"},
++#endif
+ 	{"service", INITHELPER((46),5)},
+ 	{"service", INITHELPER((51),5)},
+ 	{"service", INITHELPER((56),5)},
