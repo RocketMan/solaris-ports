@@ -74,6 +74,8 @@ file $(DARK)/gtk-3.0/assets/scrollbar-slider-horiz.png \
     path=usr/share/themes/dark-nimbus/gtk-3.0/assets/scrollbar-slider-horiz.png
 file $(DARK)/gtk-3.0/assets/scrollbar-slider.png \
     path=usr/share/themes/dark-nimbus/gtk-3.0/assets/scrollbar-slider.png
+link path=usr/share/themes/dark-nimbus/gtk-3.0/assets/title-buttons \
+    target=../../../nimbus/gtk-3.0/assets/title-buttons
 file $(DARK)/gtk-3.0/gtk-widgets-assets.css \
     path=usr/share/themes/dark-nimbus/gtk-3.0/gtk-widgets-assets.css
 file $(DARK)/gtk-3.0/gtk-widgets.css \
@@ -81,6 +83,8 @@ file $(DARK)/gtk-3.0/gtk-widgets.css \
 file $(DARK)/gtk-3.0/gtk.css path=usr/share/themes/dark-nimbus/gtk-3.0/gtk.css
 file $(DARK)/gtk-3.0/settings.ini \
     path=usr/share/themes/dark-nimbus/gtk-3.0/settings.ini
+link path=usr/share/themes/dark-nimbus/gtk-3.0/title-buttons.css \
+    target=../../nimbus/gtk-3.0/title-buttons.css
 file $(LIGHT)/gtk-3.0/apps/budgie.css \
     path=usr/share/themes/light-nimbus/gtk-3.0/apps/budgie.css
 file $(LIGHT)/gtk-3.0/apps/desktop.css \
@@ -149,6 +153,8 @@ file $(LIGHT)/gtk-3.0/assets/scrollbar-slider-horiz.png \
     path=usr/share/themes/light-nimbus/gtk-3.0/assets/scrollbar-slider-horiz.png
 file $(LIGHT)/gtk-3.0/assets/scrollbar-slider.png \
     path=usr/share/themes/light-nimbus/gtk-3.0/assets/scrollbar-slider.png
+link path=usr/share/themes/light-nimbus/gtk-3.0/assets/title-buttons \
+    target=../../../nimbus/gtk-3.0/assets/title-buttons
 file $(LIGHT)/gtk-3.0/gtk-widgets-assets.css \
     path=usr/share/themes/light-nimbus/gtk-3.0/gtk-widgets-assets.css
 file $(LIGHT)/gtk-3.0/gtk-widgets.css \
@@ -156,6 +162,8 @@ file $(LIGHT)/gtk-3.0/gtk-widgets.css \
 file $(LIGHT)/gtk-3.0/gtk.css path=usr/share/themes/light-nimbus/gtk-3.0/gtk.css
 file $(LIGHT)/gtk-3.0/settings.ini \
     path=usr/share/themes/light-nimbus/gtk-3.0/settings.ini
+link path=usr/share/themes/light-nimbus/gtk-3.0/title-buttons.css \
+    target=../../nimbus/gtk-3.0/title-buttons.css
 file $(NORMAL)/gtk-3.0/apps/budgie.css \
     path=usr/share/themes/nimbus/gtk-3.0/apps/budgie.css
 file $(NORMAL)/gtk-3.0/apps/desktop.css \
@@ -224,6 +232,38 @@ file $(NORMAL)/gtk-3.0/assets/scrollbar-slider-horiz.png \
     path=usr/share/themes/nimbus/gtk-3.0/assets/scrollbar-slider-horiz.png
 file $(NORMAL)/gtk-3.0/assets/scrollbar-slider.png \
     path=usr/share/themes/nimbus/gtk-3.0/assets/scrollbar-slider.png
+file files/title-buttons/button-close-icon-prelight.png \
+    path=usr/share/themes/nimbus/gtk-3.0/assets/title-buttons/button-close-icon-prelight.png
+file files/title-buttons/button-close-icon-pressed.png \
+    path=usr/share/themes/nimbus/gtk-3.0/assets/title-buttons/button-close-icon-pressed.png
+file files/title-buttons/button-close-icon-unfocused.png \
+    path=usr/share/themes/nimbus/gtk-3.0/assets/title-buttons/button-close-icon-unfocused.png
+file files/title-buttons/button-close-icon.png \
+    path=usr/share/themes/nimbus/gtk-3.0/assets/title-buttons/button-close-icon.png
+file files/title-buttons/button-max-icon-prelight.png \
+    path=usr/share/themes/nimbus/gtk-3.0/assets/title-buttons/button-max-icon-prelight.png
+file files/title-buttons/button-max-icon-pressed.png \
+    path=usr/share/themes/nimbus/gtk-3.0/assets/title-buttons/button-max-icon-pressed.png
+file files/title-buttons/button-max-icon-unfocused.png \
+    path=usr/share/themes/nimbus/gtk-3.0/assets/title-buttons/button-max-icon-unfocused.png
+file files/title-buttons/button-max-icon.png \
+    path=usr/share/themes/nimbus/gtk-3.0/assets/title-buttons/button-max-icon.png
+file files/title-buttons/button-min-icon-prelight.png \
+    path=usr/share/themes/nimbus/gtk-3.0/assets/title-buttons/button-min-icon-prelight.png
+file files/title-buttons/button-min-icon-pressed.png \
+    path=usr/share/themes/nimbus/gtk-3.0/assets/title-buttons/button-min-icon-pressed.png
+file files/title-buttons/button-min-icon-unfocused.png \
+    path=usr/share/themes/nimbus/gtk-3.0/assets/title-buttons/button-min-icon-unfocused.png
+file files/title-buttons/button-min-icon.png \
+    path=usr/share/themes/nimbus/gtk-3.0/assets/title-buttons/button-min-icon.png
+file files/title-buttons/button-unmax-icon-prelight.png \
+    path=usr/share/themes/nimbus/gtk-3.0/assets/title-buttons/button-unmax-icon-prelight.png
+file files/title-buttons/button-unmax-icon-pressed.png \
+    path=usr/share/themes/nimbus/gtk-3.0/assets/title-buttons/button-unmax-icon-pressed.png
+file files/title-buttons/button-unmax-icon-unfocused.png \
+    path=usr/share/themes/nimbus/gtk-3.0/assets/title-buttons/button-unmax-icon-unfocused.png
+file files/title-buttons/button-unmax-icon.png \
+    path=usr/share/themes/nimbus/gtk-3.0/assets/title-buttons/button-unmax-icon.png
 file $(NORMAL)/gtk-3.0/gtk-widgets-assets.css \
     path=usr/share/themes/nimbus/gtk-3.0/gtk-widgets-assets.css
 file $(NORMAL)/gtk-3.0/gtk-widgets.css \
@@ -233,5 +273,6 @@ file $(NORMAL)/gtk-3.0/settings.ini \
     path=usr/share/themes/nimbus/gtk-3.0/settings.ini
 file files/suggested-action.css \
     path=usr/share/themes/nimbus/gtk-3.0/suggested-action.css
+file files/title-buttons.css \
+    path=usr/share/themes/nimbus/gtk-3.0/title-buttons.css
 license LICENSE.md license=GPLv3
-

@@ -1,0 +1,39 @@
+--- a/gtk-3.0/gtk-widgets.css	2018-10-10 13:44:31.823222172 +0000
++++ a/gtk-3.0/gtk-widgets.css	2018-10-18 11:28:47.736896582 +0000
+@@ -3405,7 +3405,7 @@
+ }
+ 
+ /* titlebutton */
+-.titlebar .titlebutton:not(separator) {
++.titlebar .titlebutton:not(separator):not(.close):not(.maximize):not(.minimize)  {
+     padding: 0px;
+     margin: 0;
+     border-radius: 4px;
+@@ -3416,10 +3416,11 @@
+ }
+ 
+ /* Cancel opacify icons */
+-.titlebar .titlebutton:not(:backdrop) image {
++.titlebar .titlebutton:not(:backdrop):not(.close):not(.maximize):not(.minimize)  image {
+     color: white;
+ }
+ 
++/*
+ .titlebar .titlebutton.minimize {
+     background-color: #bf6204;
+     border-top-color: #580000;
+@@ -3469,6 +3470,7 @@
+     border-top-color: #888d97;
+     -gtk-icon-shadow: none;
+ }
++*/
+ 
+ /* disable color for not titlebar headerbars */
+ .titlebar headerbar {
+--- a/gtk-3.0/gtk.css	2018-10-10 13:44:31.832477373 +0000
++++ b/gtk-3.0/gtk.css	2018-10-18 11:49:51.505421286 +0000
+@@ -104,3 +104,4 @@
+ @import url("apps/gnome-flashback.css");
+ @import url("apps/desktop.css");
+ @import url("suggested-action.css");
++@import url("title-buttons.css");

@@ -1,0 +1,88 @@
+/* close */
+.titlebutton.close {
+  background-image: -gtk-scaled(url("assets/title-buttons/button-close-icon.png"));
+}
+
+.titlebutton.close:active,
+.titlebutton.close:active:hover {
+  background-image: -gtk-scaled(url("assets/title-buttons/button-close-icon-pressed.png"));
+}
+
+.titlebutton.close:hover,
+.titlebutton.close:hover:focus {
+  background-image: -gtk-scaled(url("assets/title-buttons/button-close-icon-prelight.png"));
+}
+
+.titlebutton.close:backdrop {
+  background-image: -gtk-scaled(url("assets/title-buttons/button-close-icon-unfocused.png"));
+}
+
+/* minimize */
+.titlebutton.minimize {
+  background-image: -gtk-scaled(url("assets/title-buttons/button-min-icon.png"));
+}
+
+.titlebutton.minimize:active,
+.titlebutton.minimize:active:hover {
+  background-image: -gtk-scaled(url("assets/title-buttons/button-min-icon-pressed.png"));
+}
+
+.titlebutton.minimize:hover,
+.titlebutton.minimize:hover:focus {
+  background-image: -gtk-scaled(url("assets/title-buttons/button-min-icon-prelight.png"));
+}
+
+.titlebutton.minimize:backdrop {
+  background-image: -gtk-scaled(url("assets/title-buttons/button-min-icon-unfocused.png"));
+}
+
+/* maximize */
+.titlebutton.maximize {
+  background-image: -gtk-scaled(url("assets/title-buttons/button-max-icon.png"));
+}
+
+.titlebutton.maximize:active,
+.titlebutton.maximize:active:hover {
+  background-image: -gtk-scaled(url("assets/title-buttons/button-max-icon-pressed.png"));
+}
+
+.titlebutton.maximize:hover,
+.titlebutton.maximize:hover:focus {
+  background-image: -gtk-scaled(url("assets/title-buttons/button-max-icon-prelight.png"));
+}
+
+.titlebutton.maximize:backdrop {
+  background-image: -gtk-scaled(url("assets/title-buttons/button-max-icon-unfocused.png"));
+}
+
+/* unmaximize */
+.maximized .titlebutton.maximize {
+  background-image: -gtk-scaled(url("assets/title-buttons/button-unmax-icon.png"));
+}
+
+.maximized .titlebutton.maximize:active,
+.maximized .titlebutton.maximize:active:hover {
+  background-image: -gtk-scaled(url("assets/title-buttons/button-unmax-icon-pressed.png"));
+}
+
+.maximized .titlebutton.maximize:hover,
+.maximized .titlebutton.maximize:hover:focus {
+  background-image: -gtk-scaled(url("assets/title-buttons/button-unmax-icon-prelight.png"));
+}
+
+.maximized .titlebutton.maximize:backdrop {
+  background-image: -gtk-scaled(url("assets/title-buttons/button-unmax-icon-unfocused.png"));
+}
+
+.titlebutton.close,
+.titlebutton.maximize,
+.titlebutton.minimize {
+  color: transparent;
+  background-color: transparent;
+  border: 0px;
+  margin: -1px;
+  padding: 2px;
+  box-shadow: none;
+  background-position: center;
+  background-repeat: no-repeat;
+}
