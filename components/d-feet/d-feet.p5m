@@ -1,0 +1,248 @@
+#
+# CDDL HEADER START
+#
+# The contents of this file are subject to the terms of the
+# Common Development and Distribution License (the "License").
+# You may not use this file except in compliance with the License.
+#
+# You can obtain a copy of the license at usr/src/OPENSOLARIS.LICENSE
+# or http://www.opensolaris.org/os/licensing.
+# See the License for the specific language governing permissions
+# and limitations under the License.
+#
+# When distributing Covered Code, include this CDDL HEADER in each
+# file and include the License file at usr/src/OPENSOLARIS.LICENSE.
+# If applicable, add the following below this CDDL HEADER, with the
+# fields enclosed by brackets "[]" replaced with your own identifying
+# information: Portions Copyright [yyyy] [name of copyright owner]
+#
+# CDDL HEADER END
+#
+
+#
+# Copyright (c) 2018 Jim Mason <jmason at ibinx dot com>.  All rights reserved.
+#
+
+<transform file path=usr.*/man/.+ -> \
+    default mangler.man.stability "pass-through volatile">
+<transform file path=.*\.pyc$ -> drop>
+set name=pkg.fmri \
+    value=pkg:/developer/gnome/d-feet@$(IPS_COMPONENT_VERSION),$(BUILD_VERSION)
+set name=pkg.summary value="D-Feet D-Bus Debugger"
+set name=com.oracle.info.description \
+    value="D-Feet is an easy to use D-Bus debugger. D-Feet can be used to inspect D-Bus interfaces of running programs and invoke methods on those interfaces. "
+set name=info.classification \
+    value="org.opensolaris.category.2008:Development/GNOME and GTK+"
+set name=info.source-url value=$(COMPONENT_ARCHIVE_URL)
+set name=info.upstream-url value=$(COMPONENT_PROJECT_URL)
+set name=org.opensolaris.consolidation value=$(CONSOLIDATION)
+file usr/bin/d-feet path=usr/bin/d-feet
+file usr/lib/python2.7/site-packages/dfeet/__init__.py \
+    path=usr/lib/python2.7/site-packages/dfeet/__init__.py
+file usr/lib/python2.7/site-packages/dfeet/__init__.pyc \
+    path=usr/lib/python2.7/site-packages/dfeet/__init__.pyc
+file usr/lib/python2.7/site-packages/dfeet/__init__.pyo \
+    path=usr/lib/python2.7/site-packages/dfeet/__init__.pyo
+file usr/lib/python2.7/site-packages/dfeet/addconnectiondialog.py \
+    path=usr/lib/python2.7/site-packages/dfeet/addconnectiondialog.py
+file usr/lib/python2.7/site-packages/dfeet/addconnectiondialog.pyc \
+    path=usr/lib/python2.7/site-packages/dfeet/addconnectiondialog.pyc
+file usr/lib/python2.7/site-packages/dfeet/addconnectiondialog.pyo \
+    path=usr/lib/python2.7/site-packages/dfeet/addconnectiondialog.pyo
+file usr/lib/python2.7/site-packages/dfeet/application.py \
+    path=usr/lib/python2.7/site-packages/dfeet/application.py
+file usr/lib/python2.7/site-packages/dfeet/application.pyc \
+    path=usr/lib/python2.7/site-packages/dfeet/application.pyc
+file usr/lib/python2.7/site-packages/dfeet/application.pyo \
+    path=usr/lib/python2.7/site-packages/dfeet/application.pyo
+file usr/lib/python2.7/site-packages/dfeet/bus_watch.py \
+    path=usr/lib/python2.7/site-packages/dfeet/bus_watch.py
+file usr/lib/python2.7/site-packages/dfeet/bus_watch.pyc \
+    path=usr/lib/python2.7/site-packages/dfeet/bus_watch.pyc
+file usr/lib/python2.7/site-packages/dfeet/bus_watch.pyo \
+    path=usr/lib/python2.7/site-packages/dfeet/bus_watch.pyo
+file usr/lib/python2.7/site-packages/dfeet/dbus_utils.py \
+    path=usr/lib/python2.7/site-packages/dfeet/dbus_utils.py
+file usr/lib/python2.7/site-packages/dfeet/dbus_utils.pyc \
+    path=usr/lib/python2.7/site-packages/dfeet/dbus_utils.pyc
+file usr/lib/python2.7/site-packages/dfeet/dbus_utils.pyo \
+    path=usr/lib/python2.7/site-packages/dfeet/dbus_utils.pyo
+file usr/lib/python2.7/site-packages/dfeet/executemethoddialog.py \
+    path=usr/lib/python2.7/site-packages/dfeet/executemethoddialog.py
+file usr/lib/python2.7/site-packages/dfeet/executemethoddialog.pyc \
+    path=usr/lib/python2.7/site-packages/dfeet/executemethoddialog.pyc
+file usr/lib/python2.7/site-packages/dfeet/executemethoddialog.pyo \
+    path=usr/lib/python2.7/site-packages/dfeet/executemethoddialog.pyo
+file usr/lib/python2.7/site-packages/dfeet/introspection.py \
+    path=usr/lib/python2.7/site-packages/dfeet/introspection.py
+file usr/lib/python2.7/site-packages/dfeet/introspection.pyc \
+    path=usr/lib/python2.7/site-packages/dfeet/introspection.pyc
+file usr/lib/python2.7/site-packages/dfeet/introspection.pyo \
+    path=usr/lib/python2.7/site-packages/dfeet/introspection.pyo
+file usr/lib/python2.7/site-packages/dfeet/introspection_helper.py \
+    path=usr/lib/python2.7/site-packages/dfeet/introspection_helper.py
+file usr/lib/python2.7/site-packages/dfeet/introspection_helper.pyc \
+    path=usr/lib/python2.7/site-packages/dfeet/introspection_helper.pyc
+file usr/lib/python2.7/site-packages/dfeet/introspection_helper.pyo \
+    path=usr/lib/python2.7/site-packages/dfeet/introspection_helper.pyo
+file usr/lib/python2.7/site-packages/dfeet/settings.py \
+    path=usr/lib/python2.7/site-packages/dfeet/settings.py
+file usr/lib/python2.7/site-packages/dfeet/settings.pyc \
+    path=usr/lib/python2.7/site-packages/dfeet/settings.pyc
+file usr/lib/python2.7/site-packages/dfeet/settings.pyo \
+    path=usr/lib/python2.7/site-packages/dfeet/settings.pyo
+file usr/lib/python2.7/site-packages/dfeet/uiloader.py \
+    path=usr/lib/python2.7/site-packages/dfeet/uiloader.py
+file usr/lib/python2.7/site-packages/dfeet/uiloader.pyc \
+    path=usr/lib/python2.7/site-packages/dfeet/uiloader.pyc
+file usr/lib/python2.7/site-packages/dfeet/uiloader.pyo \
+    path=usr/lib/python2.7/site-packages/dfeet/uiloader.pyo
+file usr/lib/python2.7/site-packages/dfeet/window.py \
+    path=usr/lib/python2.7/site-packages/dfeet/window.py
+file usr/lib/python2.7/site-packages/dfeet/window.pyc \
+    path=usr/lib/python2.7/site-packages/dfeet/window.pyc
+file usr/lib/python2.7/site-packages/dfeet/window.pyo \
+    path=usr/lib/python2.7/site-packages/dfeet/window.pyo
+file usr/lib/python2.7/site-packages/dfeet/wnck_utils.py \
+    path=usr/lib/python2.7/site-packages/dfeet/wnck_utils.py
+file usr/lib/python2.7/site-packages/dfeet/wnck_utils.pyc \
+    path=usr/lib/python2.7/site-packages/dfeet/wnck_utils.pyc
+file usr/lib/python2.7/site-packages/dfeet/wnck_utils.pyo \
+    path=usr/lib/python2.7/site-packages/dfeet/wnck_utils.pyo
+file usr/share/appdata/d-feet.appdata.xml \
+    path=usr/share/appdata/d-feet.appdata.xml
+file usr/share/applications/d-feet.desktop \
+    path=usr/share/applications/d-feet.desktop
+file usr/share/d-feet/ui/addconnectiondialog.ui \
+    path=usr/share/d-feet/ui/addconnectiondialog.ui
+file usr/share/d-feet/ui/app-menu.ui path=usr/share/d-feet/ui/app-menu.ui
+file usr/share/d-feet/ui/bus.ui path=usr/share/d-feet/ui/bus.ui
+file usr/share/d-feet/ui/executedialog.ui \
+    path=usr/share/d-feet/ui/executedialog.ui
+file usr/share/d-feet/ui/introspection.ui \
+    path=usr/share/d-feet/ui/introspection.ui
+file usr/share/d-feet/ui/mainwindow.ui path=usr/share/d-feet/ui/mainwindow.ui
+file usr/share/glib-2.0/schemas/org.gnome.d-feet.gschema.xml \
+    path=usr/share/glib-2.0/schemas/org.gnome.d-feet.gschema.xml
+file usr/share/help/C/d-feet/basics.page \
+    path=usr/share/help/C/d-feet/basics.page
+file usr/share/help/C/d-feet/figures/icon.png \
+    path=usr/share/help/C/d-feet/figures/icon.png
+file usr/share/help/C/d-feet/index.page path=usr/share/help/C/d-feet/index.page
+file usr/share/help/cs/d-feet/basics.page \
+    path=usr/share/help/cs/d-feet/basics.page
+link path=usr/share/help/cs/d-feet/figures/icon.png \
+    target=../../../C/d-feet/figures/icon.png
+file usr/share/help/cs/d-feet/index.page \
+    path=usr/share/help/cs/d-feet/index.page
+file usr/share/help/de/d-feet/basics.page \
+    path=usr/share/help/de/d-feet/basics.page
+link path=usr/share/help/de/d-feet/figures/icon.png \
+    target=../../../C/d-feet/figures/icon.png
+file usr/share/help/de/d-feet/index.page \
+    path=usr/share/help/de/d-feet/index.page
+file usr/share/help/el/d-feet/basics.page \
+    path=usr/share/help/el/d-feet/basics.page
+link path=usr/share/help/el/d-feet/figures/icon.png \
+    target=../../../C/d-feet/figures/icon.png
+file usr/share/help/el/d-feet/index.page \
+    path=usr/share/help/el/d-feet/index.page
+file usr/share/help/es/d-feet/basics.page \
+    path=usr/share/help/es/d-feet/basics.page
+link path=usr/share/help/es/d-feet/figures/icon.png \
+    target=../../../C/d-feet/figures/icon.png
+file usr/share/help/es/d-feet/index.page \
+    path=usr/share/help/es/d-feet/index.page
+file usr/share/help/pl/d-feet/basics.page \
+    path=usr/share/help/pl/d-feet/basics.page
+link path=usr/share/help/pl/d-feet/figures/icon.png \
+    target=../../../C/d-feet/figures/icon.png
+file usr/share/help/pl/d-feet/index.page \
+    path=usr/share/help/pl/d-feet/index.page
+file usr/share/help/sv/d-feet/basics.page \
+    path=usr/share/help/sv/d-feet/basics.page
+link path=usr/share/help/sv/d-feet/figures/icon.png \
+    target=../../../C/d-feet/figures/icon.png
+file usr/share/help/sv/d-feet/index.page \
+    path=usr/share/help/sv/d-feet/index.page
+file usr/share/icons/HighContrast/scalable/apps/d-feet.svg \
+    path=usr/share/icons/HighContrast/scalable/apps/d-feet.svg
+file usr/share/icons/hicolor/16x16/apps/d-feet.png \
+    path=usr/share/icons/hicolor/16x16/apps/d-feet.png
+file usr/share/icons/hicolor/16x16/apps/dfeet-icon-default-service.png \
+    path=usr/share/icons/hicolor/16x16/apps/dfeet-icon-default-service.png
+file usr/share/icons/hicolor/16x16/apps/dfeet-method-category.png \
+    path=usr/share/icons/hicolor/16x16/apps/dfeet-method-category.png
+file usr/share/icons/hicolor/16x16/apps/dfeet-method.png \
+    path=usr/share/icons/hicolor/16x16/apps/dfeet-method.png
+file usr/share/icons/hicolor/16x16/apps/dfeet-object.png \
+    path=usr/share/icons/hicolor/16x16/apps/dfeet-object.png
+file usr/share/icons/hicolor/16x16/apps/dfeet-property-category.png \
+    path=usr/share/icons/hicolor/16x16/apps/dfeet-property-category.png
+file usr/share/icons/hicolor/16x16/apps/dfeet-property.png \
+    path=usr/share/icons/hicolor/16x16/apps/dfeet-property.png
+file usr/share/icons/hicolor/16x16/apps/dfeet-signal-category.png \
+    path=usr/share/icons/hicolor/16x16/apps/dfeet-signal-category.png
+file usr/share/icons/hicolor/16x16/apps/dfeet-signal.png \
+    path=usr/share/icons/hicolor/16x16/apps/dfeet-signal.png
+file usr/share/icons/hicolor/24x24/apps/d-feet.png \
+    path=usr/share/icons/hicolor/24x24/apps/d-feet.png
+file usr/share/icons/hicolor/256x256/apps/d-feet.png \
+    path=usr/share/icons/hicolor/256x256/apps/d-feet.png
+file usr/share/icons/hicolor/32x32/apps/d-feet.png \
+    path=usr/share/icons/hicolor/32x32/apps/d-feet.png
+file usr/share/icons/hicolor/48x48/apps/d-feet.png \
+    path=usr/share/icons/hicolor/48x48/apps/d-feet.png
+file usr/share/icons/hicolor/scalable/apps/d-feet.svg \
+    path=usr/share/icons/hicolor/scalable/apps/d-feet.svg
+file usr/share/locale/bs/LC_MESSAGES/d-feet.mo \
+    path=usr/share/locale/bs/LC_MESSAGES/d-feet.mo
+file usr/share/locale/cs/LC_MESSAGES/d-feet.mo \
+    path=usr/share/locale/cs/LC_MESSAGES/d-feet.mo
+file usr/share/locale/da/LC_MESSAGES/d-feet.mo \
+    path=usr/share/locale/da/LC_MESSAGES/d-feet.mo
+file usr/share/locale/de/LC_MESSAGES/d-feet.mo \
+    path=usr/share/locale/de/LC_MESSAGES/d-feet.mo
+file usr/share/locale/el/LC_MESSAGES/d-feet.mo \
+    path=usr/share/locale/el/LC_MESSAGES/d-feet.mo
+file usr/share/locale/es/LC_MESSAGES/d-feet.mo \
+    path=usr/share/locale/es/LC_MESSAGES/d-feet.mo
+file usr/share/locale/fi/LC_MESSAGES/d-feet.mo \
+    path=usr/share/locale/fi/LC_MESSAGES/d-feet.mo
+file usr/share/locale/fr/LC_MESSAGES/d-feet.mo \
+    path=usr/share/locale/fr/LC_MESSAGES/d-feet.mo
+file usr/share/locale/fur/LC_MESSAGES/d-feet.mo \
+    path=usr/share/locale/fur/LC_MESSAGES/d-feet.mo
+file usr/share/locale/gl/LC_MESSAGES/d-feet.mo \
+    path=usr/share/locale/gl/LC_MESSAGES/d-feet.mo
+file usr/share/locale/hu/LC_MESSAGES/d-feet.mo \
+    path=usr/share/locale/hu/LC_MESSAGES/d-feet.mo
+file usr/share/locale/id/LC_MESSAGES/d-feet.mo \
+    path=usr/share/locale/id/LC_MESSAGES/d-feet.mo
+file usr/share/locale/lv/LC_MESSAGES/d-feet.mo \
+    path=usr/share/locale/lv/LC_MESSAGES/d-feet.mo
+file usr/share/locale/nb/LC_MESSAGES/d-feet.mo \
+    path=usr/share/locale/nb/LC_MESSAGES/d-feet.mo
+file usr/share/locale/oc/LC_MESSAGES/d-feet.mo \
+    path=usr/share/locale/oc/LC_MESSAGES/d-feet.mo
+file usr/share/locale/pl/LC_MESSAGES/d-feet.mo \
+    path=usr/share/locale/pl/LC_MESSAGES/d-feet.mo
+file usr/share/locale/pt/LC_MESSAGES/d-feet.mo \
+    path=usr/share/locale/pt/LC_MESSAGES/d-feet.mo
+file usr/share/locale/pt_BR/LC_MESSAGES/d-feet.mo \
+    path=usr/share/locale/pt_BR/LC_MESSAGES/d-feet.mo
+file usr/share/locale/ru/LC_MESSAGES/d-feet.mo \
+    path=usr/share/locale/ru/LC_MESSAGES/d-feet.mo
+file usr/share/locale/sl/LC_MESSAGES/d-feet.mo \
+    path=usr/share/locale/sl/LC_MESSAGES/d-feet.mo
+file usr/share/locale/sr/LC_MESSAGES/d-feet.mo \
+    path=usr/share/locale/sr/LC_MESSAGES/d-feet.mo
+file usr/share/locale/sr@latin/LC_MESSAGES/d-feet.mo \
+    path=usr/share/locale/sr@latin/LC_MESSAGES/d-feet.mo
+file usr/share/locale/sv/LC_MESSAGES/d-feet.mo \
+    path=usr/share/locale/sv/LC_MESSAGES/d-feet.mo
+file usr/share/locale/tr/LC_MESSAGES/d-feet.mo \
+    path=usr/share/locale/tr/LC_MESSAGES/d-feet.mo
+file usr/share/locale/zh_CN/LC_MESSAGES/d-feet.mo \
+    path=usr/share/locale/zh_CN/LC_MESSAGES/d-feet.mo
+license COPYING license=GPLv2
