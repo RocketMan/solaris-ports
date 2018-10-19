@@ -13,12 +13,12 @@ This component is based on the B00merang Project nimbus themes.
 Below are two gtk3 apps (system monitor, calculator) running alongside
 a gtk2 app (terminal) under GNOME 2:
 
-![screenshot](https://raw.githubusercontent.com/RinTinCan/solaris-rtutils/master/components/look-and-feel/nimbus-gtk3/screenshot.png "screenshot")
+![screenshot](https://raw.githubusercontent.com/RocketMan/solaris-ports/master/components/look-and-feel/nimbus-gtk3/screenshot.png)
 
 GNOME calculator (gtk3):
 
-![gnome-calculator](https://raw.githubusercontent.com/RinTinCan/solaris-rtutils/master/components/look-and-feel/nimbus-gtk3/screenshot-calc.png "gnome-calculator")
+![gnome-calculator](https://raw.githubusercontent.com/RocketMan/solaris-ports/master/components/look-and-feel/nimbus-gtk3/screenshot-calc.png "gnome-calculator")
 
 evince (gtk3):
 
-![evince](https://raw.githubusercontent.com/RinTinCan/solaris-rtutils/master/components/look-and-feel/nimbus-gtk3/screenshot-evince.png "evince")
+![evince](https://raw.githubusercontent.com/RocketMan/solaris-ports/master/components/look-and-feel/nimbus-gtk3/screenshot-evince.png "evince")

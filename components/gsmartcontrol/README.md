@@ -20,4 +20,4 @@ S.M.A.R.T. data to determine its health as well as run various tests.
 * can read in smartctl output from a saved file, interpreting it as a read-only virtual device.
 
 ## Screenshot
-![screenshot](https://raw.githubusercontent.com/RinTinCan/solaris-rtutils/master/components/gsmartcontrol/screenshot.png "GSmartControl")
+![screenshot](https://raw.githubusercontent.com/RocketMan/solaris-ports/master/components/gsmartcontrol/screenshot.png "GSmartControl")

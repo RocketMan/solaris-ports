@@ -14,7 +14,7 @@ downloaded from their sites as part of the build process.
 ## Getting Started
 In order to build or develop in the repository, you will need to clone it:
 
-    $ git clone https://github.com/RinTinCan/solaris-ports /scratch/clone
+    $ git clone https://github.com/RocketMan/solaris-ports /scratch/clone
 
 ## Building the individual components
 You can build individual components or the contents of the entire repo.
