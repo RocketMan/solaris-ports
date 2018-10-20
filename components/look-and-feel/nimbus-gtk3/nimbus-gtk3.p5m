@@ -10,6 +10,8 @@ file $(DARK)/gtk-3.0/apps/budgie.css \
     path=usr/share/themes/dark-nimbus/gtk-3.0/apps/budgie.css
 file $(DARK)/gtk-3.0/apps/desktop.css \
     path=usr/share/themes/dark-nimbus/gtk-3.0/apps/desktop.css
+file $(DARK)/gtk-3.0/apps/epiphany.css \
+    path=usr/share/themes/dark-nimbus/gtk-3.0/apps/epiphany.css
 file $(DARK)/gtk-3.0/apps/gnome-calculator.css \
     path=usr/share/themes/dark-nimbus/gtk-3.0/apps/gnome-calculator.css
 file $(DARK)/gtk-3.0/apps/gnome-flashback.css \
@@ -89,6 +91,8 @@ file $(LIGHT)/gtk-3.0/apps/budgie.css \
     path=usr/share/themes/light-nimbus/gtk-3.0/apps/budgie.css
 file $(LIGHT)/gtk-3.0/apps/desktop.css \
     path=usr/share/themes/light-nimbus/gtk-3.0/apps/desktop.css
+file $(LIGHT)/gtk-3.0/apps/epiphany.css \
+    path=usr/share/themes/light-nimbus/gtk-3.0/apps/epiphany.css
 file $(LIGHT)/gtk-3.0/apps/gnome-calculator.css \
     path=usr/share/themes/light-nimbus/gtk-3.0/apps/gnome-calculator.css
 file $(LIGHT)/gtk-3.0/apps/gnome-flashback.css \
@@ -168,6 +172,8 @@ file $(NORMAL)/gtk-3.0/apps/budgie.css \
     path=usr/share/themes/nimbus/gtk-3.0/apps/budgie.css
 file $(NORMAL)/gtk-3.0/apps/desktop.css \
     path=usr/share/themes/nimbus/gtk-3.0/apps/desktop.css
+file $(NORMAL)/gtk-3.0/apps/epiphany.css \
+    path=usr/share/themes/nimbus/gtk-3.0/apps/epiphany.css
 file $(NORMAL)/gtk-3.0/apps/gnome-calculator.css \
     path=usr/share/themes/nimbus/gtk-3.0/apps/gnome-calculator.css
 file $(NORMAL)/gtk-3.0/apps/gnome-flashback.css \
@@ -276,3 +282,4 @@ file files/suggested-action.css \
 file files/title-buttons.css \
     path=usr/share/themes/nimbus/gtk-3.0/title-buttons.css
 license LICENSE.md license=GPLv3
+depend type=require fmri=pkg:/gnome/theme/nimbus

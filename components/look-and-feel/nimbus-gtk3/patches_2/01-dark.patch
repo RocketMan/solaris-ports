@@ -135,9 +135,10 @@
 +}
 --- a/gtk-3.0/gtk.css	2018-05-21 14:57:31.000000000 +0000
 +++ b/gtk-3.0/gtk.css	2018-09-06 17:47:57.373783214 +0000
-@@ -99,6 +99,7 @@
+@@ -99,6 +99,8 @@
  @import url("apps/unity.css");
  @import url("apps/budgie.css");
++@import url("apps/epiphany.css");
  @import url("apps/libreoffice.css");
 +@import url("apps/gnome-calculator.css");
  @import url("apps/gnome-terminal.css");
@@ -149,6 +150,15 @@
 +.math-buttons button {
 +    padding: 6px 14px;
 +    margin: 0px;
++}
+--- a/gtk-3.0/apps/epiphany.css	1970-01-01 01:00:00.000000000 +0000
++++ b/gtk-3.0/apps/epiphany.css	2018-10-20 10:38:23.567237328 +0000
+@@ -0,0 +1,6 @@
++.incognito-mode.titlebar .titlebutton:not(separator) {
++    padding: 0px;
++    margin: 0px;
++    border: 1px solid black;
++    border-radius: 4px;
 +}
 --- a/gtk-3.0/settings.ini	2018-05-21 14:57:31.000000000 +0000
 +++ b/gtk-3.0/settings.ini	2018-09-06 17:59:43.406640179 +0000
