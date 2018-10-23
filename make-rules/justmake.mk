@@ -54,10 +54,13 @@ COMPONENT_BUILD_ACTION ?= \
 	cd $(@D); $(ENV) $(COMPONENT_BUILD_ENV) \
 	$(GMAKE) $(COMPONENT_BUILD_ARGS) $(COMPONENT_BUILD_TARGETS)
 
-# build the configured source
-$(BUILD_DIR)/%/.built:	$(SOURCE_DIR)/.prep
+$(BUILD_DIR)/%/.cloned: $(SOURCE_DIR)/.prep
 	$(RM) -r $(@D) ; $(MKDIR) $(@D)
 	$(CLONEY) $(SOURCE_DIR) $(@D)
+	$(TOUCH) $@
+
+# build the configured source
+$(BUILD_DIR)/%/.built: $(BUILD_DIR)/%/.cloned
 	$(COMPONENT_PRE_BUILD_ACTION)
 	($(COMPONENT_BUILD_ACTION))
 	$(COMPONENT_POST_BUILD_ACTION)
@@ -105,16 +108,9 @@ $(BUILD_DIR)/%/.tested:    $(BUILD_DIR)/%/.built
 	$(COMPONENT_TEST_CLEANUP)
 	$(TOUCH) $@
 
-# Test the installed packages.  The targets above depend on .built which
-# means $(CLONEY) has already run.  System-test needs cloning but not
-# building; thus ideally, we would want to depend on .cloned here and below,
-# but since we don't have that, we depend on .prep and run $(CLONEY) here.  If
-# the output file shows up in the environment or arguments, don't redirect
-# stdout/stderr to it.
-$(BUILD_DIR)/%/.system-tested-and-compared:    $(SOURCE_DIR)/.prep
+$(BUILD_DIR)/%/.system-tested-and-compared:    $(BUILD_DIR)/%/.cloned
 	$(RM) -rf $(COMPONENT_TEST_BUILD_DIR)
 	$(MKDIR) $(COMPONENT_TEST_BUILD_DIR)
-	$(CLONEY) $(SOURCE_DIR) $(@D)
 	$(COMPONENT_PRE_SYSTEM_TEST_ACTION)
 	-(cd $(COMPONENT_SYSTEM_TEST_DIR) ; \
 		$(COMPONENT_SYSTEM_TEST_ENV_CMD) $(COMPONENT_SYSTEM_TEST_ENV) \
@@ -128,8 +124,7 @@ $(BUILD_DIR)/%/.system-tested-and-compared:    $(SOURCE_DIR)/.prep
 	$(COMPONENT_SYSTEM_TEST_CLEANUP)
 	$(TOUCH) $@
 
-$(BUILD_DIR)/%/.system-tested:    $(SOURCE_DIR)/.prep
-	$(CLONEY) $(SOURCE_DIR) $(@D)
+$(BUILD_DIR)/%/.system-tested:    $(BUILD_DIR)/%/.cloned
 	$(COMPONENT_PRE_SYSTEM_TEST_ACTION)
 	(cd $(COMPONENT_SYSTEM_TEST_DIR) ; \
 		$(COMPONENT_SYSTEM_TEST_ENV_CMD) $(COMPONENT_SYSTEM_TEST_ENV) \
