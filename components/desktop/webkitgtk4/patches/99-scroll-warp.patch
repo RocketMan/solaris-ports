@@ -1,0 +1,19 @@
+--- a/Source/WebCore/platform/gtk/ScrollbarThemeGtk.cpp	2017-11-30 10:23:29.000000000 +0000
++++ b/Source/WebCore/platform/gtk/ScrollbarThemeGtk.cpp	2018-10-21 19:16:46.965573240 +0000
+@@ -775,8 +775,14 @@
+     switch (pressedPart) {
+     case BackTrackPart:
+     case ForwardTrackPart:
+-        if (event.button() == LeftButton)
+-            return ScrollbarButtonPressAction::CenterOnThumb;
++        if (event.button() == LeftButton) {
++            gboolean warps_slider = FALSE;
++            g_object_get ( gtk_settings_get_default(),
++                           "gtk-primary-button-warps-slider",
++                           &warps_slider, NULL );
++            return warps_slider?ScrollbarButtonPressAction::CenterOnThumb:
++                                ScrollbarButtonPressAction::Scroll;
++        }
+         if (event.button() == RightButton)
+             return ScrollbarButtonPressAction::Scroll;
+         break;

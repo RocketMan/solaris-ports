@@ -1,0 +1,11 @@
+--- webkitgtk-2.22.1/Source/WebCore/platform/graphics/OpenGLShims.h	2018-09-21 16:54:21.031801583 +0000
++++ webkitgtk-2.22.1/Source/WebCore/platform/graphics/OpenGLShims.h	2018-09-21 16:54:54.862617521 +0000
+@@ -387,4 +387,8 @@
+ #define glVertexAttribPointer                  LOOKUP_GL_FUNCTION(glVertexAttribPointer)
+ #endif
+ 
++#ifndef GL_MAX_VARYING_VECTORS
++#define GL_MAX_VARYING_VECTORS            0x8DFC
++#endif
++
+ #endif

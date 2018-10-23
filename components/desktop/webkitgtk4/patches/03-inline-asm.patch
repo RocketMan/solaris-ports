@@ -1,0 +1,24 @@
+--- webkitgtk-2.22.1/Source/WTF/wtf/InlineASM.h.~1~	2018-07-03 10:11:27.000000000 +0000
++++ webkitgtk-2.22.1/Source/WTF/wtf/InlineASM.h	2018-09-21 15:34:57.594095446 +0000
+@@ -42,11 +42,11 @@
+ #define THUMB_FUNC_PARAM(name)
+ #endif
+ 
+-#if (OS(LINUX) || OS(FREEBSD)) && CPU(X86_64)
++#if (OS(LINUX) || OS(FREEBSD) || OS(SOLARIS)) && CPU(X86_64)
+ #define GLOBAL_REFERENCE(name) #name "@plt"
+ #elif CPU(X86) && COMPILER(MINGW)
+ #define GLOBAL_REFERENCE(name) "@" #name "@4"
+-#elif OS(LINUX) && CPU(X86) && defined(__PIC__)
++#elif (OS(LINUX) || OS(SOLARIS)) && CPU(X86) && defined(__PIC__)
+ #define GLOBAL_REFERENCE(name) SYMBOL_STRING(name) "@plt"
+ #else
+ #define GLOBAL_REFERENCE(name) SYMBOL_STRING(name)
+@@ -82,6 +82,7 @@
+ #if OS(DARWIN)
+ #define LOCAL_LABEL_STRING(name) "L" #name
+ #elif  OS(LINUX)               \
++    || OS(SOLARIS)              \
+     || OS(FREEBSD)             \
+     || OS(FUCHSIA)             \
+     || OS(OPENBSD)             \
