@@ -42,9 +42,24 @@ COMPONENT_ARCHIVE=	$(COMPONENT_SRC).tar.xz
 COMPONENT_ARCHIVE_HASH= \
 	sha256:345487d4d1896e711683f951d1e09387d3b90d7cf59295c0e634af7f515e99ba
 COMPONENT_ARCHIVE_URL=	https://webkitgtk.org/releases/$(COMPONENT_ARCHIVE)
-COMPONENT_BUGDB=	library/webkitgtk
 COMPONENT_ANITYA_ID=	5355
 
+
+# Condition support for GStreamer GL on presence of gst-plugins-bad
+DETECT_GST_BAD ?= $(shell pkg list \
+	library/desktop/gstreamer-1/gst-plugins-bad > /dev/null 2>&1 ; \
+	echo $$?)
+# DETECT_GST_BAD is 0 if present, 1 if not present
+ifeq ($(DETECT_GST_BAD),1)
+HAVE_GST_PLUGINS_BAD = \#
+NO_GST_PLUGINS_BAD =
+else
+HAVE_GST_PLUGINS_BAD =
+NO_GST_PLUGINS_BAD = \#
+endif
+
+PKG_MACROS += HAVE_GST_PLUGINS_BAD=$(HAVE_GST_PLUGINS_BAD)
+PKG_MACROS += NO_GST_PLUGINS_BAD=$(NO_GST_PLUGINS_BAD)
 
 # Use project's own optimization flags instead.
 gcc_OPT=
@@ -87,7 +102,7 @@ CMAKE_OPTIONS += -DCMAKE_BUILD_TYPE=Release
 CMAKE_OPTIONS += -DENABLE_MINIBROWSER=ON
 CMAKE_OPTIONS += -DPORT=GTK
 CMAKE_OPTIONS += -DENABLE_GLES2=OFF
-CMAKE_OPTIONS += -DUSE_GSTREAMER_GL=OFF
+$(NO_GST_PLUGINS_BAD)CMAKE_OPTIONS += -DUSE_GSTREAMER_GL=OFF
 CMAKE_OPTIONS += -DUSE_LIBHYPHEN=OFF
 CMAKE_OPTIONS += -DUSE_WOFF2=OFF
 CMAKE_OPTIONS += -DENABLE_SAMPLING_PROFILER=OFF
@@ -131,6 +146,8 @@ REQUIRED_PACKAGES += library/desktop/atk
 REQUIRED_PACKAGES += library/desktop/cairo
 REQUIRED_PACKAGES += library/desktop/gdk-pixbuf
 REQUIRED_PACKAGES += library/desktop/gstreamer-1
+$(HAVE_GST_PLUGINS_BAD)REQUIRED_PACKAGES += \
+                     library/desktop/gstreamer-1/gst-plugins-bad
 REQUIRED_PACKAGES += library/desktop/gstreamer-1/gst-plugins-base
 REQUIRED_PACKAGES += library/desktop/gtk2
 REQUIRED_PACKAGES += library/desktop/gtk3
