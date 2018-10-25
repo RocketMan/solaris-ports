@@ -62,6 +62,14 @@
  }
  
  tooltip * {
+@@ -2731,6 +2731,7 @@
+ tooltip decoration {
+     border-radius: 4px;
+     box-shadow: 0 1px 3px 1px rgba(0, 0, 0, 0.1);
++    border-style: none;
+ }
+ 
+ /************
 @@ -3082,10 +3085,15 @@
  
  .osd progressbar progress,
