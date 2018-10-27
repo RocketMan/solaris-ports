@@ -315,12 +315,13 @@ file usr/include/libdazzle-1.0/widgets/dzl-stack-list.h \
     path=usr/include/libdazzle-1.0/widgets/dzl-stack-list.h
 file usr/include/libdazzle-1.0/widgets/dzl-three-grid.h \
     path=usr/include/libdazzle-1.0/widgets/dzl-three-grid.h
-file usr/lib/amd64/girepository-1.0/Dazzle-1.0.typelib \
-    path=usr/lib/amd64/girepository-1.0/Dazzle-1.0.typelib
-link path=usr/lib/amd64/libdazzle-1.0.so target=libdazzle-1.0.so.0
-file usr/lib/amd64/libdazzle-1.0.so.0 path=usr/lib/amd64/libdazzle-1.0.so.0
-file usr/lib/amd64/pkgconfig/libdazzle-1.0.pc \
-    path=usr/lib/amd64/pkgconfig/libdazzle-1.0.pc
+file usr/lib/$(MACH64)/girepository-1.0/Dazzle-1.0.typelib \
+    path=usr/lib/$(MACH64)/girepository-1.0/Dazzle-1.0.typelib
+link path=usr/lib/$(MACH64)/libdazzle-1.0.so target=libdazzle-1.0.so.0
+file usr/lib/$(MACH64)/libdazzle-1.0.so.0 \
+    path=usr/lib/$(MACH64)/libdazzle-1.0.so.0
+file usr/lib/$(MACH64)/pkgconfig/libdazzle-1.0.pc \
+    path=usr/lib/$(MACH64)/pkgconfig/libdazzle-1.0.pc
 file usr/lib/girepository-1.0/Dazzle-1.0.typelib \
     path=usr/lib/girepository-1.0/Dazzle-1.0.typelib
 link path=usr/lib/libdazzle-1.0.so target=libdazzle-1.0.so.0

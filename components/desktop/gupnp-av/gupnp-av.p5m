@@ -74,15 +74,16 @@ file usr/include/gupnp-av-1.0/libgupnp-av/gupnp-protocol-info.h \
     path=usr/include/gupnp-av-1.0/libgupnp-av/gupnp-protocol-info.h
 file usr/include/gupnp-av-1.0/libgupnp-av/gupnp-search-criteria-parser.h \
     path=usr/include/gupnp-av-1.0/libgupnp-av/gupnp-search-criteria-parser.h
-file usr/lib/amd64/girepository-1.0/GUPnPAV-1.0.typelib \
-    path=usr/lib/amd64/girepository-1.0/GUPnPAV-1.0.typelib
-file usr/lib/amd64/libgupnp-av-1.0.la path=usr/lib/amd64/libgupnp-av-1.0.la
-link path=usr/lib/amd64/libgupnp-av-1.0.so target=libgupnp-av-1.0.so.2.0.0
-link path=usr/lib/amd64/libgupnp-av-1.0.so.2 target=libgupnp-av-1.0.so.2.0.0
-file usr/lib/amd64/libgupnp-av-1.0.so.2.0.0 \
-    path=usr/lib/amd64/libgupnp-av-1.0.so.2.0.0
-file usr/lib/amd64/pkgconfig/gupnp-av-1.0.pc \
-    path=usr/lib/amd64/pkgconfig/gupnp-av-1.0.pc
+file usr/lib/$(MACH64)/girepository-1.0/GUPnPAV-1.0.typelib \
+    path=usr/lib/$(MACH64)/girepository-1.0/GUPnPAV-1.0.typelib
+file usr/lib/$(MACH64)/libgupnp-av-1.0.la \
+    path=usr/lib/$(MACH64)/libgupnp-av-1.0.la
+link path=usr/lib/$(MACH64)/libgupnp-av-1.0.so target=libgupnp-av-1.0.so.2.0.0
+link path=usr/lib/$(MACH64)/libgupnp-av-1.0.so.2 target=libgupnp-av-1.0.so.2.0.0
+file usr/lib/$(MACH64)/libgupnp-av-1.0.so.2.0.0 \
+    path=usr/lib/$(MACH64)/libgupnp-av-1.0.so.2.0.0
+file usr/lib/$(MACH64)/pkgconfig/gupnp-av-1.0.pc \
+    path=usr/lib/$(MACH64)/pkgconfig/gupnp-av-1.0.pc
 file usr/lib/girepository-1.0/GUPnPAV-1.0.typelib \
     path=usr/lib/girepository-1.0/GUPnPAV-1.0.typelib
 file usr/lib/libgupnp-av-1.0.la path=usr/lib/libgupnp-av-1.0.la

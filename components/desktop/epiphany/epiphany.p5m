@@ -37,14 +37,14 @@ set name=info.repository-url value=$(GIT_REPO)
 set name=info.upstream-url value=$(COMPONENT_PROJECT_URL)
 set name=org.opensolaris.consolidation value=$(CONSOLIDATION)
 file usr/bin/epiphany path=usr/bin/epiphany
-file usr/lib/amd64/epiphany/libephymain.so \
-    path=usr/lib/amd64/epiphany/libephymain.so
-file usr/lib/amd64/epiphany/libephymisc.so \
-    path=usr/lib/amd64/epiphany/libephymisc.so
-file usr/lib/amd64/epiphany/libephysync.so \
-    path=usr/lib/amd64/epiphany/libephysync.so
-file usr/lib/amd64/epiphany/web-extensions/libephywebextension.so \
-    path=usr/lib/amd64/epiphany/web-extensions/libephywebextension.so
+file usr/lib/$(MACH64)/epiphany/libephymain.so \
+    path=usr/lib/$(MACH64)/epiphany/libephymain.so
+file usr/lib/$(MACH64)/epiphany/libephymisc.so \
+    path=usr/lib/$(MACH64)/epiphany/libephymisc.so
+file usr/lib/$(MACH64)/epiphany/libephysync.so \
+    path=usr/lib/$(MACH64)/epiphany/libephysync.so
+file usr/lib/$(MACH64)/epiphany/web-extensions/libephywebextension.so \
+    path=usr/lib/$(MACH64)/epiphany/web-extensions/libephywebextension.so
 file usr/libexec/epiphany-search-provider \
     path=usr/libexec/epiphany-search-provider
 file usr/libexec/epiphany/ephy-profile-migrator \
@@ -1008,4 +1008,4 @@ file usr/share/metainfo/org.gnome.Epiphany.appdata.xml \
     path=usr/share/metainfo/org.gnome.Epiphany.appdata.xml
 license COPYING license=GPLv2
 depend type=require fmri=__TBD pkg.debug.depend.file=libephymisc.so \
-    pkg.debug.depend.path=usr/lib/amd64/epiphany
+    pkg.debug.depend.path=usr/lib/$(MACH64)/epiphany

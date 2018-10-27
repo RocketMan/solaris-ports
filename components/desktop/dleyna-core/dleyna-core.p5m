@@ -57,15 +57,16 @@ file usr/include/dleyna-1.0/libdleyna/core/task-processor.h \
     path=usr/include/dleyna-1.0/libdleyna/core/task-processor.h
 file usr/include/dleyna-1.0/libdleyna/core/white-list.h \
     path=usr/include/dleyna-1.0/libdleyna/core/white-list.h
-file usr/lib/amd64/libdleyna-core-1.0.la \
-    path=usr/lib/amd64/libdleyna-core-1.0.la
-link path=usr/lib/amd64/libdleyna-core-1.0.so target=libdleyna-core-1.0.so.5.0.0
-link path=usr/lib/amd64/libdleyna-core-1.0.so.5 \
+file usr/lib/$(MACH64)/libdleyna-core-1.0.la \
+    path=usr/lib/$(MACH64)/libdleyna-core-1.0.la
+link path=usr/lib/$(MACH64)/libdleyna-core-1.0.so \
     target=libdleyna-core-1.0.so.5.0.0
-file usr/lib/amd64/libdleyna-core-1.0.so.5.0.0 \
-    path=usr/lib/amd64/libdleyna-core-1.0.so.5.0.0
-file usr/lib/amd64/pkgconfig/dleyna-core-1.0.pc \
-    path=usr/lib/amd64/pkgconfig/dleyna-core-1.0.pc
+link path=usr/lib/$(MACH64)/libdleyna-core-1.0.so.5 \
+    target=libdleyna-core-1.0.so.5.0.0
+file usr/lib/$(MACH64)/libdleyna-core-1.0.so.5.0.0 \
+    path=usr/lib/$(MACH64)/libdleyna-core-1.0.so.5.0.0
+file usr/lib/$(MACH64)/pkgconfig/dleyna-core-1.0.pc \
+    path=usr/lib/$(MACH64)/pkgconfig/dleyna-core-1.0.pc
 file usr/lib/libdleyna-core-1.0.la path=usr/lib/libdleyna-core-1.0.la
 link path=usr/lib/libdleyna-core-1.0.so target=libdleyna-core-1.0.so.5.0.0
 link path=usr/lib/libdleyna-core-1.0.so.5 target=libdleyna-core-1.0.so.5.0.0

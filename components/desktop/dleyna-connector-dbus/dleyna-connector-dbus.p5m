@@ -33,10 +33,10 @@ set name=info.classification \
 set name=info.repository-url value=$(GIT_REPO)
 set name=info.upstream-url value=$(COMPONENT_PROJECT_URL)
 set name=org.opensolaris.consolidation value=$(CONSOLIDATION)
-file usr/lib/amd64/dleyna-1.0/connectors/libdleyna-connector-dbus.la \
-    path=usr/lib/amd64/dleyna-1.0/connectors/libdleyna-connector-dbus.la
-file usr/lib/amd64/dleyna-1.0/connectors/libdleyna-connector-dbus.so \
-    path=usr/lib/amd64/dleyna-1.0/connectors/libdleyna-connector-dbus.so
-file usr/lib/amd64/pkgconfig/dleyna-connector-dbus-1.0.pc \
-    path=usr/lib/amd64/pkgconfig/dleyna-connector-dbus-1.0.pc
+file usr/lib/$(MACH64)/dleyna-1.0/connectors/libdleyna-connector-dbus.la \
+    path=usr/lib/$(MACH64)/dleyna-1.0/connectors/libdleyna-connector-dbus.la
+file usr/lib/$(MACH64)/dleyna-1.0/connectors/libdleyna-connector-dbus.so \
+    path=usr/lib/$(MACH64)/dleyna-1.0/connectors/libdleyna-connector-dbus.so
+file usr/lib/$(MACH64)/pkgconfig/dleyna-connector-dbus-1.0.pc \
+    path=usr/lib/$(MACH64)/pkgconfig/dleyna-connector-dbus-1.0.pc
 license COPYING license=GPLv2

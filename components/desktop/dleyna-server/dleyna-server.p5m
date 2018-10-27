@@ -36,16 +36,16 @@ set name=org.opensolaris.consolidation value=$(CONSOLIDATION)
 file etc/dleyna-server-service.conf path=etc/dleyna-server-service.conf
 file usr/include/dleyna-1.0/libdleyna/server/control-point-server.h \
     path=usr/include/dleyna-1.0/libdleyna/server/control-point-server.h
-file usr/lib/amd64/dleyna-server/libdleyna-server-1.0.la \
-    path=usr/lib/amd64/dleyna-server/libdleyna-server-1.0.la
-link path=usr/lib/amd64/dleyna-server/libdleyna-server-1.0.so \
+file usr/lib/$(MACH64)/dleyna-server/libdleyna-server-1.0.la \
+    path=usr/lib/$(MACH64)/dleyna-server/libdleyna-server-1.0.la
+link path=usr/lib/$(MACH64)/dleyna-server/libdleyna-server-1.0.so \
     target=libdleyna-server-1.0.so.1.0.3
-link path=usr/lib/amd64/dleyna-server/libdleyna-server-1.0.so.1 \
+link path=usr/lib/$(MACH64)/dleyna-server/libdleyna-server-1.0.so.1 \
     target=libdleyna-server-1.0.so.1.0.3
-file usr/lib/amd64/dleyna-server/libdleyna-server-1.0.so.1.0.3 \
-    path=usr/lib/amd64/dleyna-server/libdleyna-server-1.0.so.1.0.3
-file usr/lib/amd64/pkgconfig/dleyna-server-service-1.0.pc \
-    path=usr/lib/amd64/pkgconfig/dleyna-server-service-1.0.pc
+file usr/lib/$(MACH64)/dleyna-server/libdleyna-server-1.0.so.1.0.3 \
+    path=usr/lib/$(MACH64)/dleyna-server/libdleyna-server-1.0.so.1.0.3
+file usr/lib/$(MACH64)/pkgconfig/dleyna-server-service-1.0.pc \
+    path=usr/lib/$(MACH64)/pkgconfig/dleyna-server-service-1.0.pc
 file usr/libexec/dleyna-server-service path=usr/libexec/dleyna-server-service \
     mode=0555
 file usr/share/dbus-1/services/com.intel.dleyna-server.service \
