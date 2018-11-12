@@ -5,7 +5,7 @@ set name=pkg.summary \
     value="MPlayer is a movie player which runs on many systems"
 set name=pkg.description \
     value="MPlayer plays most MPEG/VOB, AVI, Ogg/OGM, VIVO, ASF/WMA/WMV, QT/MOV/MP4, RealMedia, Matroska, NUT, NuppelVideo, FLI, YUV4MPEG, FILM, RoQ, PVA files, supported by many native, XAnim, and Win32 DLL codecs. You can watch VideoCD, SVCD, DVD, 3ivx, DivX 3/4/5, WMV and even H.264 movies."
-set name=pkg.depend.bypass-generate value=libGL\.so\.1
+set name=pkg.depend.bypass-generate value=libEGL\.so\.1 value=libGL\.so\.1
 set name=info.classification \
     value="org.opensolaris.category.2008:Applications/Sound and Video"
 set name=info.source-url value=$(COMPONENT_ARCHIVE_URL)
@@ -16,4 +16,5 @@ file usr/bin/mplayer path=usr/bin/mplayer
 link path=usr/share/man/man1/mencoder.1 target=mplayer.1
 file usr/share/man/man1/mplayer.1 path=usr/share/man/man1/mplayer.1
 license LICENSE license=GPLv2
+depend type=require fmri=__TBD pkg.debug.depend.file=usr/lib/mesa/libEGL.so.1
 depend type=require fmri=__TBD pkg.debug.depend.file=usr/lib/mesa/libGL.so.1
