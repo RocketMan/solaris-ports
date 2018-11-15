@@ -21,5 +21,12 @@ preference with respect to button clicks in the scrollbar trough.  Thus,
 for themes such as Adwaita, the scrollbar will warp as usual, whereas for
 nimbus-gtk3, it will paginate as expected.
 
+## Requirements
+
+To build WebKitGTK+, you will need [GStreamer 1.14.4](../gstreamer/),
+available in this repo.  Specifically, version 1.14.4 of `gstreamer`,
+`gst-plugins-base`, and `gst-plugins-good` are required.  (It is no
+longer necessary to have `gst-plugins-bad` for GL support in WebKit.)
+
 ## Screenshot
 ![screenshot](https://raw.githubusercontent.com/RocketMan/solaris-ports/master/components/desktop/webkitgtk4/screenshot.png "Epiphany/WebKitGTK+")

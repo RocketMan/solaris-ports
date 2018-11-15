@@ -36,30 +36,13 @@ COMPILER= gcc
 include ../../../make-rules/shared-macros.mk
 
 COMPONENT_NAME=		webkitgtk
-COMPONENT_VERSION=	2.22.2
+COMPONENT_VERSION=	2.22.3
 COMPONENT_PROJECT_URL=	https://webkitgtk.org
 COMPONENT_ARCHIVE=	$(COMPONENT_SRC).tar.xz
 COMPONENT_ARCHIVE_HASH= \
-	sha256:345487d4d1896e711683f951d1e09387d3b90d7cf59295c0e634af7f515e99ba
+	sha256:9dfd542902953be9af8ff32bd37fe662ca3d75f7348514ebac15c6252a6ccd72
 COMPONENT_ARCHIVE_URL=	https://webkitgtk.org/releases/$(COMPONENT_ARCHIVE)
 COMPONENT_ANITYA_ID=	5355
-
-
-# Condition support for GStreamer GL on presence of gst-plugins-bad
-IGNORE_GST_BAD ?= $(shell pkg list \
-	library/desktop/gstreamer-1/gst-plugins-bad > /dev/null 2>&1 ; \
-	echo $$?)
-# IGNORE_GST_BAD is 0 if present, 1 if not present
-ifeq ($(IGNORE_GST_BAD),1)
-WITH_GST_PLUGINS_BAD = \#
-NO_GST_PLUGINS_BAD =
-else
-WITH_GST_PLUGINS_BAD =
-NO_GST_PLUGINS_BAD = \#
-endif
-
-PKG_MACROS += WITH_GST_PLUGINS_BAD=$(WITH_GST_PLUGINS_BAD)
-PKG_MACROS += NO_GST_PLUGINS_BAD=$(NO_GST_PLUGINS_BAD)
 
 # Use project's own optimization flags instead.
 gcc_OPT=
@@ -102,11 +85,12 @@ CMAKE_OPTIONS += -DCMAKE_BUILD_TYPE=Release
 CMAKE_OPTIONS += -DENABLE_MINIBROWSER=ON
 CMAKE_OPTIONS += -DPORT=GTK
 CMAKE_OPTIONS += -DENABLE_GLES2=OFF
-$(NO_GST_PLUGINS_BAD)CMAKE_OPTIONS += -DUSE_GSTREAMER_GL=OFF
+CMAKE_OPTIONS += -DUSE_GSTREAMER_GL=ON
 CMAKE_OPTIONS += -DUSE_LIBHYPHEN=OFF
 CMAKE_OPTIONS += -DUSE_WOFF2=OFF
 CMAKE_OPTIONS += -DENABLE_SAMPLING_PROFILER=OFF
 CMAKE_OPTIONS += -DENABLE_SUBTLE_CRYPTO=OFF
+CMAKE_OPTIONS += -DENABLE_PLUGIN_PROCESS_GTK2=OFF
 
 # JM 2018-10-20 commenting out, as 99-solaris-jit.patch allows JIT
 # to compile on all platforms
@@ -146,8 +130,6 @@ REQUIRED_PACKAGES += library/desktop/atk
 REQUIRED_PACKAGES += library/desktop/cairo
 REQUIRED_PACKAGES += library/desktop/gdk-pixbuf
 REQUIRED_PACKAGES += library/desktop/gstreamer-1
-$(WITH_GST_PLUGINS_BAD)REQUIRED_PACKAGES += \
-                     library/desktop/gstreamer-1/gst-plugins-bad
 REQUIRED_PACKAGES += library/desktop/gstreamer-1/gst-plugins-base
 REQUIRED_PACKAGES += library/desktop/gtk2
 REQUIRED_PACKAGES += library/desktop/gtk3

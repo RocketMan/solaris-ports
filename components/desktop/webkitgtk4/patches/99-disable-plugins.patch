@@ -1,0 +1,11 @@
+--- a/Source/cmake/WebKitFeatures.cmake	2018-10-27 22:20:58.000000000 +0000
++++ b/Source/cmake/WebKitFeatures.cmake	2018-11-01 09:35:36.090448948 +0000
+@@ -152,7 +152,7 @@
+     WEBKIT_OPTION_DEFINE(ENABLE_MINIBROWSER "Whether to enable MiniBrowser compilation." PRIVATE OFF)
+     WEBKIT_OPTION_DEFINE(ENABLE_MOUSE_CURSOR_SCALE "Toggle Scaled mouse cursor support" PRIVATE OFF)
+     WEBKIT_OPTION_DEFINE(ENABLE_NAVIGATOR_CONTENT_UTILS "Toggle Navigator Content Utils support" PRIVATE OFF)
+-    WEBKIT_OPTION_DEFINE(ENABLE_NETSCAPE_PLUGIN_API "Toggle Netscape Plugin support" PRIVATE ON)
++    WEBKIT_OPTION_DEFINE(ENABLE_NETSCAPE_PLUGIN_API "Toggle Netscape Plugin support" PRIVATE OFF)
+     WEBKIT_OPTION_DEFINE(ENABLE_NOTIFICATIONS "Toggle Desktop Notifications Support" PRIVATE ON)
+     WEBKIT_OPTION_DEFINE(ENABLE_ORIENTATION_EVENTS "Toggle Orientation Events support" PRIVATE OFF)
+     WEBKIT_OPTION_DEFINE(ENABLE_PDFKIT_PLUGIN "Toggle PDFKit plugin support" PRIVATE OFF)

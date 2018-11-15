@@ -29,9 +29,10 @@ file upstream bug after resolving issues documented above
  # Temporary workaround to allow the build to succeed.
 --- webkitgtk-2.22.1/Source/WebKit/webkitglib-symbols.map.~3~	2018-07-20 08:47:48.000000000 +0000
 +++ webkitgtk-2.22.1/Source/WebKit/webkitglib-symbols.map	2018-09-21 17:41:13.648351711 +0000
-@@ -1,21 +1,2009 @@
+@@ -1,22 +1,2008 @@
  {
  global:
+-  jsc_*;
 -  webkit_*;
 +  webkit_application_info_get_name;
 +  webkit_application_info_get_type;
@@ -2028,7 +2029,7 @@ file upstream bug after resolving issues documented above
 +  webkit_window_properties_get_type;
    WebProcessMainUnix;
    NetworkProcessMainUnix;
-   PluginProcessMainUnix;
+-  PluginProcessMainUnix;
    StorageProcessMainUnix;
 -  extern "C++" {
 -    "bmalloc::PerProcess<bmalloc::IsoTLSDeallocatorEntry<bmalloc::IsoConfig<40u> > >::s_data";

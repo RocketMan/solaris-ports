@@ -33,6 +33,7 @@ set name=pkg.fmri \
 set name=pkg.summary value="A library port of the WebKit rendering engine"
 set name=pkg.description \
     value="WebKitGTK+ is a full-featured port of the WebKit rendering engine, suitable for projects requiring any kind of web integration, from hybrid HTML/CSS applications to full-fledged web browsers."
+set name=pkg.depend.bypass-generate value=libEGL\.so\.1 value=libGL\.so\.1
 # pkgdepend needs help to follow the runtime generated symlinks to libGL
 set name=pkg.depend.runpath \
     value=$PKGDEPEND_RUNPATH:usr/lib/mesa:usr/lib/mesa/$(MACH64)
@@ -452,10 +453,10 @@ file usr/include/webkitgtk-4.0/webkitdom/webkitdomdefines.h \
 file usr/lib/$(MACH64)/MiniBrowser path=usr/lib/$(MACH64)/MiniBrowser mode=0555
 file usr/lib/$(MACH64)/WebKitNetworkProcess \
     path=usr/lib/$(MACH64)/WebKitNetworkProcess mode=0555
-file usr/lib/$(MACH64)/WebKitPluginProcess \
-    path=usr/lib/$(MACH64)/WebKitPluginProcess mode=0555
-file usr/lib/$(MACH64)/WebKitPluginProcess2 \
-    path=usr/lib/$(MACH64)/WebKitPluginProcess2 mode=0555
+#file usr/lib/$(MACH64)/WebKitPluginProcess
+#    path=usr/lib/$(MACH64)/WebKitPluginProcess mode=0555
+#file usr/lib/$(MACH64)/WebKitPluginProcess2
+#    path=usr/lib/$(MACH64)/WebKitPluginProcess2 mode=0555
 file usr/lib/$(MACH64)/WebKitStorageProcess \
     path=usr/lib/$(MACH64)/WebKitStorageProcess mode=0555
 file usr/lib/$(MACH64)/WebKitWebProcess \
@@ -470,14 +471,14 @@ file usr/lib/$(MACH64)/jsc path=usr/lib/$(MACH64)/jsc mode=0555
 link path=usr/lib/$(MACH64)/libjavascriptcoregtk-4.0.so \
     target=libjavascriptcoregtk-4.0.so.18
 link path=usr/lib/$(MACH64)/libjavascriptcoregtk-4.0.so.18 \
-    target=libjavascriptcoregtk-4.0.so.18.11.3
-file usr/lib/$(MACH64)/libjavascriptcoregtk-4.0.so.18.11.3 \
-    path=usr/lib/$(MACH64)/libjavascriptcoregtk-4.0.so.18.11.3
+    target=libjavascriptcoregtk-4.0.so.18.11.4
+file usr/lib/$(MACH64)/libjavascriptcoregtk-4.0.so.18.11.4 \
+    path=usr/lib/$(MACH64)/libjavascriptcoregtk-4.0.so.18.11.4
 link path=usr/lib/$(MACH64)/libwebkit2gtk-4.0.so target=libwebkit2gtk-4.0.so.37
 link path=usr/lib/$(MACH64)/libwebkit2gtk-4.0.so.37 \
-    target=libwebkit2gtk-4.0.so.37.33.3
-file usr/lib/$(MACH64)/libwebkit2gtk-4.0.so.37.33.3 \
-    path=usr/lib/$(MACH64)/libwebkit2gtk-4.0.so.37.33.3
+    target=libwebkit2gtk-4.0.so.37.33.4
+file usr/lib/$(MACH64)/libwebkit2gtk-4.0.so.37.33.4 \
+    path=usr/lib/$(MACH64)/libwebkit2gtk-4.0.so.37.33.4
 file usr/lib/$(MACH64)/pkgconfig/javascriptcoregtk-4.0.pc \
     path=usr/lib/$(MACH64)/pkgconfig/javascriptcoregtk-4.0.pc
 file usr/lib/$(MACH64)/pkgconfig/webkit2gtk-4.0.pc \
@@ -588,3 +589,5 @@ file usr/share/locale/vi/LC_MESSAGES/WebKit2GTK-4.0.mo \
 file usr/share/locale/zh_CN/LC_MESSAGES/WebKit2GTK-4.0.mo \
     path=usr/share/locale/zh_CN/LC_MESSAGES/WebKit2GTK-4.0.mo
 license webkit.license license=LGPLv2.1
+depend type=require fmri=__TBD pkg.debug.depend.file=usr/lib/mesa/libEGL.so.1
+depend type=require fmri=__TBD pkg.debug.depend.file=usr/lib/mesa/libGL.so.1
