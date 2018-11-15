@@ -96,9 +96,6 @@ CMAKE_OPTIONS += -DENABLE_PLUGIN_PROCESS_GTK2=OFF
 # to compile on all platforms
 #CMAKE_OPTIONS += -DENABLE_JIT=OFF
 
-# JM 2018-10-20 disabling geolocation... if you want it, comment this out:
-CMAKE_OPTIONS += -DENABLE_GEOLOCATION=OFF
-
 CMAKE_OPTIONS += -DLIB_INSTALL_DIR="$(USRLIB)"
 CMAKE_OPTIONS += -DLIBEXEC_INSTALL_DIR="$(USRLIB)"
 CMAKE_OPTIONS += -DEXEC_INSTALL_DIR="$(USRBIN)"
@@ -129,6 +126,8 @@ REQUIRED_PACKAGES += image/library/libwebp
 REQUIRED_PACKAGES += library/desktop/atk
 REQUIRED_PACKAGES += library/desktop/cairo
 REQUIRED_PACKAGES += library/desktop/gdk-pixbuf
+REQUIRED_PACKAGES += library/desktop/geoclue
+REQUIRED_PACKAGES += library/desktop/geocode-glib
 REQUIRED_PACKAGES += library/desktop/gstreamer-1
 REQUIRED_PACKAGES += library/desktop/gstreamer-1/gst-plugins-base
 REQUIRED_PACKAGES += library/desktop/gtk2
