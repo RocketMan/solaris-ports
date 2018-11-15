@@ -7,8 +7,7 @@ that you link with icu must be built with Studio.
 
 The Solaris userland gate includes an icu for 11.4 and later that is
 built with gcc; however, we cannot replace the library/icu package in 11.3,
-as it is part of the l10n-incorporation; this incorporation does not
-provide a version-lock facet.
+as it would break existing dependencies.
 
 This package builds the icu libraries with gcc, but installs these
 libraries alongside their Studio counterparts rather than replacing
