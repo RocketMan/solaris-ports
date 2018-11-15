@@ -25,7 +25,6 @@ All of the components listed below may be obtained from this repo.
     * **libid3tag**
     * **libmpg123**
     * **libopus**
-    * **libvpx**
     * **libx264** (**see note)
     * **lzo**
 
