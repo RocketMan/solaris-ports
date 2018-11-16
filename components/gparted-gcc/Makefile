@@ -25,7 +25,7 @@
 
 BUILD_BITS =            32
 COMPILER =		gcc
-include ../../../make-rules/shared-macros.mk
+include ../../make-rules/shared-macros.mk
 
 COMPONENT_NAME=		gparted
 COMPONENT_VERSION=	0.4.5
