@@ -19,16 +19,16 @@ S.M.A.R.T. data to determine its health as well as run various tests.
 * displays drive identity information, capabilities, attributes, device statistics, etc.;
 * can read in smartctl output from a saved file, interpreting it as a read-only virtual device.
 
-## Solaris Studio C++ Name Mangling
+## GNU C++ Name Mangling
 
 Solaris 11.4 and later ship with various C++ libraries that employ GNU C++
 name mangling.  Among them are: glibmm, cairomm, pangomm, gtkmm, and sigcpp.
 
-If you are running on 11.3 and have the original libraries above built with
-Studio, then this is the target for you.
+If you are running on 11.4 or later, or have rebuilt these libraries on 11.3,
+then this is the target for you.
 
-If you are running on 11.4 or later, or have rebuilt the above libraries
-on 11.3, then you should use [gsmartcontrol](../gsmartcontrol-gcc/).
+If you are running on 11.3 and have the original libraries above built with
+Studio, then you should use [gsmartcontrol](../gsmartcontrol/).
 
 ## Screenshot
 ![screenshot](https://raw.githubusercontent.com/RocketMan/solaris-ports/master/components/gsmartcontrol/screenshot.png "GSmartControl")
