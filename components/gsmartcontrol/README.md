@@ -28,7 +28,7 @@ If you are running on 11.3 and have the original libraries above built with
 Studio, then this is the target for you.
 
 If you are running on 11.4 or later, or have rebuilt the above libraries
-on 11.3, then you should use [gsmartcontrol](../gsmartcontrol-gcc/).
+on 11.3, then you should use [gsmartcontrol-gcc](../gsmartcontrol-gcc/).
 
 ## Screenshot
 ![screenshot](https://raw.githubusercontent.com/RocketMan/solaris-ports/master/components/gsmartcontrol/screenshot.png "GSmartControl")
