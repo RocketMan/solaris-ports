@@ -13,7 +13,7 @@
      };
  
      // We use old_accelerators to keep track of the accelerators we temporarily disabled.
-@@ -92,8 +94,17 @@
+@@ -92,8 +94,18 @@
          // Now add our actions to the window and their accelerators
          foreach (string action in ComposerWidget.action_accelerators.get_keys()) {
              this.top_window.add_action(composer.get_action(action));
@@ -22,12 +22,13 @@
 +            string[] accels =
 +                    ComposerWidget.action_accelerators[action].to_array();
 +
-+            // it seems to_array() is not creating a null-terminated array
-+            // as required by Glib, so we do this manually for now
-+            string[] accelsn = new string[accels.length + 1];
++            // It seems gee's to_array() is not creating a null-terminated
++            // array as required by Glib, so we do this manually for now.
++            // Vala always null-pads arrays, so we just allocate a new
++            // array and copy.
++            string[] accelsn = new string[accels.length];
 +            for(int i=0; i<accels.length; i++)
 +                accelsn[i] = accels[i];
-+            accelsn[accels.length] = null;
 +
 +            app.set_accels_for_action("win." + action, accelsn);
          }
