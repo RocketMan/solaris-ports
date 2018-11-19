@@ -1,0 +1,1 @@
+desktop/vala: desktop/graphviz

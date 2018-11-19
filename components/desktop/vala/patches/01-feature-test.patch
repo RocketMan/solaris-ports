@@ -1,0 +1,23 @@
+--- a/vapi/glib-2.0.vapi	2018-11-06 21:11:24.000000000 +0000
++++ b/vapi/glib-2.0.vapi	2018-11-19 13:10:16.668319465 +0000
+@@ -2910,9 +2910,9 @@
+ 		[CCode (cname = "tm_isdst")]
+ 		public int isdst;
+ 
+-		[CCode (cname = "gmtime_r", feature_test_macro = "_XOPEN_SOURCE")]
++		[CCode (cname = "gmtime_r", feature_test_macro = "_XOPEN_SOURCE 600")]
+ 		static void gmtime_r (ref time_t time, out Time result);
+-		[CCode (cname = "localtime_r", feature_test_macro = "_XOPEN_SOURCE")]
++		[CCode (cname = "localtime_r", feature_test_macro = "_XOPEN_SOURCE 600")]
+ 		static void localtime_r (ref time_t time, out Time result);
+ 
+ 		public static Time gm (time_t time) {
+@@ -2941,7 +2941,7 @@
+ 
+ 		[CCode (cname = "strftime", instance_pos = -1)]
+ 		public size_t strftime (char[] s, string format);
+-		[CCode (cname = "strptime", instance_pos = -1, feature_test_macro = "_XOPEN_SOURCE")]
++		[CCode (cname = "strptime", instance_pos = -1, feature_test_macro = "_XOPEN_SOURCE 600")]
+ 		public unowned string? strptime (string buf, string format);
+ 	}
+ 
