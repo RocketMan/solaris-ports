@@ -41,56 +41,37 @@ set name=org.opensolaris.consolidation value=$(CONSOLIDATION)
 link path=usr/bin/$(MACH64)/vala target=vala-0.42
 link path=usr/bin/$(MACH64)/vala-0.42 target=valac-0.42
 link path=usr/bin/$(MACH64)/vala-gen-introspect target=vala-gen-introspect-0.42
-file path=usr/bin/$(MACH64)/vala-gen-introspect-0.42 mode=0555
+file path=usr/bin/$(MACH64)/vala-gen-introspect-0.42
 link path=usr/bin/$(MACH64)/valac target=valac-0.42
 file path=usr/bin/$(MACH64)/valac-0.42
-link path=usr/bin/$(MACH64)/valadoc target=valadoc-0.42
-file path=usr/bin/$(MACH64)/valadoc-0.42
 link path=usr/bin/$(MACH64)/vapigen target=vapigen-0.42
 file path=usr/bin/$(MACH64)/vapigen-0.42
 link path=usr/bin/vala target=vala-0.42
 link path=usr/bin/vala-0.42 target=valac-0.42
 link path=usr/bin/vala-gen-introspect target=vala-gen-introspect-0.42
-file path=usr/bin/vala-gen-introspect-0.42 mode=0555
+file path=usr/bin/vala-gen-introspect-0.42
 link path=usr/bin/valac target=valac-0.42
 file path=usr/bin/valac-0.42
-link path=usr/bin/valadoc target=valadoc-0.42
-file path=usr/bin/valadoc-0.42
 link path=usr/bin/vapigen target=vapigen-0.42
 file path=usr/bin/vapigen-0.42
 file path=usr/include/vala-0.42/vala.h
 file path=usr/include/vala-0.42/valagee.h
-file path=usr/include/valadoc-0.42/valadoc.h
 link path=usr/lib/$(MACH64)/libvala-0.42.so target=libvala-0.42.so.0.0.0
 link path=usr/lib/$(MACH64)/libvala-0.42.so.0 target=libvala-0.42.so.0.0.0
 file path=usr/lib/$(MACH64)/libvala-0.42.so.0.0.0
-link path=usr/lib/$(MACH64)/libvaladoc-0.42.so target=libvaladoc-0.42.so.0.0.0
-link path=usr/lib/$(MACH64)/libvaladoc-0.42.so.0 target=libvaladoc-0.42.so.0.0.0
-file path=usr/lib/$(MACH64)/libvaladoc-0.42.so.0.0.0
 file path=usr/lib/$(MACH64)/pkgconfig/libvala-0.42.pc
-file path=usr/lib/$(MACH64)/pkgconfig/valadoc-0.42.pc
 file path=usr/lib/$(MACH64)/pkgconfig/vapigen-0.42.pc
 link path=usr/lib/$(MACH64)/pkgconfig/vapigen.pc target=vapigen-0.42.pc
-file path=usr/lib/$(MACH64)/vala-0.42/gen-introspect-0.42
+file path=usr/lib/$(MACH64)/vala-0.42/gen-introspect-0.42 mode=0555
 file path=usr/lib/$(MACH64)/vala-0.42/libvalaccodegen.so
-file path=usr/lib/$(MACH64)/valadoc/doclets/devhelp/libdoclet.so
-file path=usr/lib/$(MACH64)/valadoc/doclets/gtkdoc/libdoclet.so
-file path=usr/lib/$(MACH64)/valadoc/doclets/html/libdoclet.so
 link path=usr/lib/libvala-0.42.so target=libvala-0.42.so.0.0.0
 link path=usr/lib/libvala-0.42.so.0 target=libvala-0.42.so.0.0.0
 file path=usr/lib/libvala-0.42.so.0.0.0
-link path=usr/lib/libvaladoc-0.42.so target=libvaladoc-0.42.so.0.0.0
-link path=usr/lib/libvaladoc-0.42.so.0 target=libvaladoc-0.42.so.0.0.0
-file path=usr/lib/libvaladoc-0.42.so.0.0.0
 file path=usr/lib/pkgconfig/libvala-0.42.pc
-file path=usr/lib/pkgconfig/valadoc-0.42.pc
 file path=usr/lib/pkgconfig/vapigen-0.42.pc
 link path=usr/lib/pkgconfig/vapigen.pc target=vapigen-0.42.pc
-file path=usr/lib/vala-0.42/gen-introspect-0.42
+file path=usr/lib/vala-0.42/gen-introspect-0.42 mode=0555
 file path=usr/lib/vala-0.42/libvalaccodegen.so
-file path=usr/lib/valadoc/doclets/devhelp/libdoclet.so
-file path=usr/lib/valadoc/doclets/gtkdoc/libdoclet.so
-file path=usr/lib/valadoc/doclets/html/libdoclet.so
 file path=usr/share/aclocal/vala.m4
 file path=usr/share/aclocal/vapigen.m4
 file path=usr/share/devhelp/books/vala-0.42/Attributes.html
@@ -119,8 +100,6 @@ link path=usr/share/man/man1/vala-gen-introspect.1 \
     target=vala-gen-introspect-0.42.1
 file path=usr/share/man/man1/valac-0.42.1
 link path=usr/share/man/man1/valac.1 target=valac-0.42.1
-file path=usr/share/man/man1/valadoc-0.42.1
-link path=usr/share/man/man1/valadoc.1 target=valadoc-0.42.1
 file path=usr/share/man/man1/vapigen-0.42.1
 link path=usr/share/man/man1/vapigen.1 target=vapigen-0.42.1
 file path=usr/share/vala-0.42/vapi/alsa.deps
@@ -389,37 +368,4 @@ file path=usr/share/vala-0.42/vapi/xtst.vapi
 file path=usr/share/vala-0.42/vapi/zlib.vapi
 file path=usr/share/vala/Makefile.vapigen
 file path=usr/share/vala/vapi/libvala-0.42.vapi
-file path=usr/share/vala/vapi/valadoc-0.42.deps
-file path=usr/share/vala/vapi/valadoc-0.42.vapi
-file path=usr/share/valadoc/icons/abstractclass.png
-file path=usr/share/valadoc/icons/abstractmethod.png
-file path=usr/share/valadoc/icons/abstractproperty.png
-file path=usr/share/valadoc/icons/class.png
-file path=usr/share/valadoc/icons/coll_close.png
-file path=usr/share/valadoc/icons/coll_open.png
-file path=usr/share/valadoc/icons/constant.png
-file path=usr/share/valadoc/icons/constructor.png
-file path=usr/share/valadoc/icons/delegate.png
-file path=usr/share/valadoc/icons/devhelpstyle.css
-file path=usr/share/valadoc/icons/enum.png
-file path=usr/share/valadoc/icons/enumvalue.png
-file path=usr/share/valadoc/icons/errorcode.png
-file path=usr/share/valadoc/icons/errordomain.png
-file path=usr/share/valadoc/icons/field.png
-file path=usr/share/valadoc/icons/interface.png
-file path=usr/share/valadoc/icons/method.png
-file path=usr/share/valadoc/icons/namespace.png
-file path=usr/share/valadoc/icons/package.png
-file path=usr/share/valadoc/icons/packages.png
-file path=usr/share/valadoc/icons/property.png
-file path=usr/share/valadoc/icons/scripts.js
-file path=usr/share/valadoc/icons/signal.png
-file path=usr/share/valadoc/icons/staticmethod.png
-file path=usr/share/valadoc/icons/struct.png
-file path=usr/share/valadoc/icons/style.css
-file path=usr/share/valadoc/icons/tip.png
-file path=usr/share/valadoc/icons/virtualmethod.png
-file path=usr/share/valadoc/icons/virtualproperty.png
-file path=usr/share/valadoc/icons/warning.png
-file path=usr/share/valadoc/icons/wikistyle.css
 license COPYING license=LGPLv2.1
