@@ -35,47 +35,12 @@ GIT_REPO=		https://github.com/GNOME/epiphany
 GIT_COMMIT_ID=		3.30.2
 COMPONENT_PROJECT_URL=	https://wiki.gnome.org/Apps/Web
 
-COMPONENT_NAME_1=	meson
-GIT_REPO_1=		https://github.com/mesonbuild/meson
-GIT_COMMIT_ID_1=	0.47.2
-COMPONENT_ARCHIVE_URL_1=$(GIT_REPO_1)/archive/$(GIT_COMMIT_ID_1).tar.gz
-MESON_DIR=		$(SOURCE_DIR_1)
 
-COMPONENT_NAME_2=	ninja
-GIT_REPO_2=		https://github.com/ninja-build/ninja
-GIT_COMMIT_ID_2=	v1.8.2
-#COMPONENT_ARCHIVE_URL_2=$(GIT_REPO_2)/archive/$(GIT_COMMIT_ID_2).tar.gz
-NINJA_DIR=		$(SOURCE_DIR_2)
-
-
-PATH=$(NINJA_DIR):/usr/gnu/bin:/usr/bin
-
+BUILD_STYLE = meson
 include $(WS_MAKE_RULES)/common.mk
 
 LDFLAGS += -lm -lsocket -lnsl
 $(SOLARIS_11_3_ONLY)LDFLAGS += -licuuc_gcc
-
-COMPONENT_BUILD_ENV += NINJA=$(NINJA_DIR)/ninja
-COMPONENT_INSTALL_ENV += PROTO_DIR=$(PROTO_DIR)
-COMPONENT_INSTALL_ENV += NINJA=$(NINJA_DIR)/ninja
-CONFIGURE_OPTIONS += $(SOURCE_DIR)
-
-undefine CONFIG_SHELL
-CONFIGURE_SCRIPT = $(MESON_DIR)/meson.py
-
-COMPONENT_PRE_BUILD_ACTION = ( \
-	$(CP) $(COMPONENT_DIR)/extra/Makefile $(BUILD_DIR_$(BITS)) ; \
-)
-
-$(SOURCE_DIR)/.patched: $(MESON_DIR)/.patched
-
-$(MESON_DIR)/.patched: $(NINJA_DIR)/.built $(MESON_DIR)/.unpacked
-	cd $(@D); $(GPATCH) $(GPATCH_FLAGS) -d $(@D) < $(COMPONENT_DIR)/extra/meson.patch
-	$(TOUCH) $(@D)/.patched
-
-$(NINJA_DIR)/.built: $(NINJA_DIR)/.unpacked
-	cd $(@D); ./configure.py --bootstrap
-	$(TOUCH) $(@D)/.built
 
 
 REQUIRED_PACKAGES += database/sqlite-3
