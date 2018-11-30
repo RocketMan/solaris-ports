@@ -18,6 +18,8 @@ file $(DARK)/gtk-3.0/apps/gnome-flashback.css \
     path=usr/share/themes/dark-nimbus/gtk-3.0/apps/gnome-flashback.css
 file $(DARK)/gtk-3.0/apps/gnome-terminal.css \
     path=usr/share/themes/dark-nimbus/gtk-3.0/apps/gnome-terminal.css
+file $(DARK)/gtk-3.0/apps/gnome-weather.css \
+    path=usr/share/themes/dark-nimbus/gtk-3.0/apps/gnome-weather.css
 file $(DARK)/gtk-3.0/apps/libreoffice.css \
     path=usr/share/themes/dark-nimbus/gtk-3.0/apps/libreoffice.css
 file $(DARK)/gtk-3.0/apps/synaptic.css \
@@ -99,6 +101,8 @@ file $(LIGHT)/gtk-3.0/apps/gnome-flashback.css \
     path=usr/share/themes/light-nimbus/gtk-3.0/apps/gnome-flashback.css
 file $(LIGHT)/gtk-3.0/apps/gnome-terminal.css \
     path=usr/share/themes/light-nimbus/gtk-3.0/apps/gnome-terminal.css
+file $(LIGHT)/gtk-3.0/apps/gnome-weather.css \
+    path=usr/share/themes/light-nimbus/gtk-3.0/apps/gnome-weather.css
 file $(LIGHT)/gtk-3.0/apps/libreoffice.css \
     path=usr/share/themes/light-nimbus/gtk-3.0/apps/libreoffice.css
 file $(LIGHT)/gtk-3.0/apps/synaptic.css \
@@ -180,6 +184,8 @@ file $(NORMAL)/gtk-3.0/apps/gnome-flashback.css \
     path=usr/share/themes/nimbus/gtk-3.0/apps/gnome-flashback.css
 file $(NORMAL)/gtk-3.0/apps/gnome-terminal.css \
     path=usr/share/themes/nimbus/gtk-3.0/apps/gnome-terminal.css
+file $(NORMAL)/gtk-3.0/apps/gnome-weather.css \
+    path=usr/share/themes/nimbus/gtk-3.0/apps/gnome-weather.css
 file $(NORMAL)/gtk-3.0/apps/libreoffice.css \
     path=usr/share/themes/nimbus/gtk-3.0/apps/libreoffice.css
 file $(NORMAL)/gtk-3.0/apps/synaptic.css \
