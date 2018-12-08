@@ -15,5 +15,8 @@ JetStream test:
 theme, available in this repo.)
 
 ### Firefox 52.9.0 ESR (32-bits)
-![screenshot](https://raw.githubusercontent.com/RocketMan/solaris-ports/master/components/desktop/epiphany/screenshot-firefox.png "Firefox")
+![screenshot](https://raw.githubusercontent.com/RocketMan/solaris-ports/master/components/desktop/epiphany/screenshot-firefox.png "Firefox 52.9.0esr")
+
+### Firefox 60.3.0 ESR (64-bits)
+![screenshot](https://raw.githubusercontent.com/RocketMan/solaris-ports/master/components/desktop/epiphany/screenshot-firefox-60.3.0.png "Firefox 60.3.0esr")
 
