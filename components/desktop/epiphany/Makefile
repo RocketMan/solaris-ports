@@ -40,7 +40,7 @@ BUILD_STYLE = meson
 include $(WS_MAKE_RULES)/common.mk
 
 LDFLAGS += -lm -lsocket -lnsl
-$(SOLARIS_11_3_ONLY)LDFLAGS += -licuuc_gcc
+#$(SOLARIS_11_3_ONLY)LDFLAGS += -licuuc_gcc
 
 
 REQUIRED_PACKAGES += database/sqlite-3
@@ -58,7 +58,7 @@ REQUIRED_PACKAGES += library/gmp
 REQUIRED_PACKAGES += library/gnome/libsecret
 REQUIRED_PACKAGES += library/gnome/gcr
 REQUIRED_PACKAGES += library/icu
-REQUIRED_PACKAGES += library/icu-gcc
+#REQUIRED_PACKAGES += library/icu-gcc
 REQUIRED_PACKAGES += library/json-glib
 REQUIRED_PACKAGES += library/libsoup
 REQUIRED_PACKAGES += library/libxml2

@@ -6,6 +6,11 @@ To build and run, you need the [webkitgtk4](../webkitgtk4/) package
 from this repo, in place of webkitgtk4 from the Solaris userland gate.
 In addition, you will need `libdazzle`, also found in this repo.
 
+By default, this package depends on the icu from the userland gate.
+If you are running under 11.3 and have dependencies on the existing
+icu, then build the [icu-gcc](../../icu-gcc) in this repo and uncomment
+the relevant lines in the Makefile to use it.
+
 Performance is decent relative to Firefox.  Compare the results of the
 JetStream test:
 
