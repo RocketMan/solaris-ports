@@ -48,7 +48,8 @@ COMPONENT_ANITYA_ID=	5355
 gcc_OPT=
 
 LDFLAGS += -lsocket  -lnsl
-$(SOLARIS_11_3_ONLY)LDFLAGS += -licuuc_gcc
+# Uncomment this line if you are using the icu-gcc from this repo:
+#$(SOLARIS_11_3_ONLY)LDFLAGS += -licuuc_gcc
 
 # We don't have JHbuild needed for tests
 TEST_TARGET= $(NO_TESTS)
@@ -138,7 +139,8 @@ REQUIRED_PACKAGES += library/gnome/libsecret
 REQUIRED_PACKAGES += library/glib2
 REQUIRED_PACKAGES += library/gnutls-3
 REQUIRED_PACKAGES += library/icu
-REQUIRED_PACKAGES += library/icu-gcc
+# Uncomment this line if you are using the icu-gcc from this repo:
+#REQUIRED_PACKAGES += library/icu-gcc
 REQUIRED_PACKAGES += library/desktop/libnotify
 REQUIRED_PACKAGES += library/libsoup
 REQUIRED_PACKAGES += library/libxml2
