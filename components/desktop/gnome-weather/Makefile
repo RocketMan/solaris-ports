@@ -34,9 +34,9 @@ COMPONENT_ARCHIVE_URL=	$(GIT_REPO)/archive/$(GIT_COMMIT_ID).tar.gz
 GIT_REPO=		https://github.com/GNOME/gnome-weather
 GIT_COMMIT_ID=		3.24.0
 COMPONENT_PROJECT_URL=	https://wiki.gnome.org/Apps/Weather
+COMPONENT_ANITYA_ID=	9546
 
-
-PATH=/usr/gnu/bin:/usr/bin
+PATH=$(GNUBIN):$(USRBINDIR)
 
 COMPONENT_PREP_ACTION = \
 	(cd $(@D) ; \

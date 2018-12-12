@@ -34,6 +34,7 @@ COMPONENT_ARCHIVE_URL=	$(GIT_REPO)/archive/$(COMPONENT_VERSION).tar.gz
 GIT_REPO=		https://github.com/GNOME/epiphany
 GIT_COMMIT_ID=		3.30.2
 COMPONENT_PROJECT_URL=	https://wiki.gnome.org/Apps/Web
+COMPONENT_ANITYA_ID=	10903
 
 
 BUILD_STYLE = meson

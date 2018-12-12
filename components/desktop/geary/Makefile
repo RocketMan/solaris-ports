@@ -34,9 +34,9 @@ COMPONENT_ARCHIVE_URL=	$(GIT_REPO)/archive/$(GIT_COMMIT_ID).tar.gz
 GIT_REPO=		https://github.com/GNOME/geary
 GIT_COMMIT_ID=		geary-0.12.4
 COMPONENT_PROJECT_URL=	https://wiki.gnome.org/Apps/Geary
+COMPONENT_ANITYA_ID=	888
 
-
-PATH=/usr/gnu/bin:/usr/bin
+PATH=$(GNUBIN):$(USRBINDIR)
 
 include $(WS_MAKE_RULES)/common.mk
 
