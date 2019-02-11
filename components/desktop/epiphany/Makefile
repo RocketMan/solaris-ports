@@ -28,7 +28,7 @@ COMPILER =		gcc
 include ../../../make-rules/shared-macros.mk
 
 COMPONENT_NAME=		epiphany
-COMPONENT_VERSION=	3.30.2
+COMPONENT_VERSION=	3.30.3
 COMPONENT_SRC=		$(COMPONENT_NAME)-$(COMPONENT_VERSION)
 COMPONENT_ARCHIVE_URL=	$(GIT_REPO)/archive/$(COMPONENT_VERSION).tar.gz
 GIT_REPO=		https://github.com/GNOME/epiphany
