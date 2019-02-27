@@ -28,16 +28,17 @@ COMPILER =		gcc
 include ../../../make-rules/shared-macros.mk
 
 COMPONENT_NAME=		geary
-COMPONENT_VERSION=	0.12.4
+COMPONENT_VERSION=	0.13.1
 COMPONENT_SRC=		$(COMPONENT_NAME)-$(GIT_COMMIT_ID)
 COMPONENT_ARCHIVE_URL=	$(GIT_REPO)/archive/$(GIT_COMMIT_ID).tar.gz
 GIT_REPO=		https://github.com/GNOME/geary
-GIT_COMMIT_ID=		geary-0.12.4
+GIT_COMMIT_ID=		geary-0.13.1
 COMPONENT_PROJECT_URL=	https://wiki.gnome.org/Apps/Geary
 COMPONENT_ANITYA_ID=	888
 
 PATH=$(GNUBIN):$(USRBINDIR)
 
+BUILD_STYLE = meson
 include $(WS_MAKE_RULES)/common.mk
 
 COMPONENT_BUILD_ENV += VERBOSE=1
@@ -55,6 +56,8 @@ REQUIRED_PACKAGES += library/glib2
 REQUIRED_PACKAGES += library/gmime
 REQUIRED_PACKAGES += library/gnome/libsecret
 REQUIRED_PACKAGES += library/gnome/gcr
+REQUIRED_PACKAGES += library/gnome/gnome-online-accounts
+REQUIRED_PACKAGES += library/json-glib
 REQUIRED_PACKAGES += library/libsoup
 REQUIRED_PACKAGES += library/libxml2
 REQUIRED_PACKAGES += library/spell-checking/enchant

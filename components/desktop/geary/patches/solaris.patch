@@ -1,0 +1,73 @@
+This is a very hacky patch for the latest unstable geary.
+
+For certain, the new e-mail blacklisting feature will not work as advertised,
+and perhaps some other things as well.  Caveat emptor.
+
+--- a/meson.build	2019-02-21 01:50:57.000000000 +0000
++++ b/meson.build	2019-02-27 18:42:48.381009948 +0000
+@@ -41,8 +41,8 @@
+ # Required libraries and other dependencies
+ #
+ 
+-target_glib = '2.54' # Also passed to valac, so don't include a point rev
+-target_gtk = '3.22.26'
++target_glib = '2.52' # Also passed to valac, so don't include a point rev
++target_gtk = '3.22.12'
+ target_webkit = '2.20'
+ 
+ # Primary deps
+@@ -71,11 +71,12 @@
+ libsecret = dependency('libsecret-1', version: '>= 0.11')
+ libsoup = dependency('libsoup-2.4', version: '>= 2.48')
+ libunwind_dep = dependency(
+-  'libunwind', version: '>= 1.1', required: not get_option('libunwind_optional')
+-)
+-libunwind_generic_dep = dependency(
+-  'libunwind-generic', version: '>= 1.1', required: not get_option('libunwind_optional')
++#  'libunwind', version: '>= 1.1', required: not get_option('libunwind_optional')
++  'libunwind', version: '>= 1.1', required: false
+ )
++#libunwind_generic_dep = dependency(
++#  'libunwind-generic', version: '>= 1.1', required: not get_option('libunwind_optional')
++#)
+ libxml = dependency('libxml-2.0', version: '>= 2.7.8')
+ posix = valac.find_library('posix')
+ webkit2gtk_web_extension = dependency('webkit2gtk-web-extension-4.0', version: '>=' + target_webkit)
+@@ -161,4 +162,4 @@
+ subdir('sql')
+ subdir('ui')
+ subdir('src')
+-subdir('test')
++#subdir('test')
+--- a/src/engine/api/geary-account-information.vala	2019-02-21 01:50:57.000000000 +0000
++++ b/src/engine/api/geary-account-information.vala	2019-02-27 17:15:09.922824011 +0000
+@@ -307,7 +307,8 @@
+      * @see Geary.RFC822.MailboxAddress.equal_to
+      */
+     public bool has_sender_mailbox(Geary.RFC822.MailboxAddress email) {
+-        return this.mailboxes.any_match((alt) => alt.equal_to(email));
++        return this.mailboxes.index_of(email) >= 0;
++//        return this.mailboxes.any_match((alt) => alt.equal_to(email));
+     }
+ 
+     /**
+--- a/src/engine/app/app-conversation.vala	2019-02-21 01:50:57.000000000 +0000
++++ b/src/engine/app/app-conversation.vala	2019-02-27 17:18:51.878872196 +0000
+@@ -244,7 +244,7 @@
+                 (e) => (e.email_flags != null) ? !e.email_flags.is_deleted() : true
+             );
+         }
+-
++/*
+         if (blacklist != null && !blacklist.is_empty) {
+             if (blacklist.size == 1) {
+                 FolderPath blacklist_path =
+@@ -260,7 +260,7 @@
+                 );
+             }
+         }
+-
++*/
+         return filtered.to_array_list();
+     }
+ 
