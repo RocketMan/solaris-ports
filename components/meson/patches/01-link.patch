@@ -20,3 +20,14 @@
          return args
  
      def thread_flags(self, env):
+--- a/mesonbuild/compilers/c.py	2018-11-08 22:43:05.000000000 +0000
++++ b/mesonbuild/compilers/c.py	2019-02-27 16:21:01.139018987 +0000
+@@ -169,7 +169,7 @@
+                 return ['-Wl,-undefined,dynamic_lookup']
+             else:
+                 # GNU ld and LLVM lld
+-                return ['-Wl,--allow-shlib-undefined']
++                return ['-Wl,-z,nodefs']
+         elif self.id == 'msvc':
+             # link.exe
+             return ['/FORCE:UNRESOLVED']
