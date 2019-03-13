@@ -23,9 +23,9 @@ file upstream bug
  #if BOS(LINUX)
      SYSCALL(madvise(p, vmSize, MADV_DODUMP));
  #endif
---- a/Source/WTF/wtf/OSAllocatorPosix.cpp	2018-08-06 13:09:34.376041801 -0700
-+++ b/Source/WTF/wtf/OSAllocatorPosix.cpp	2018-08-06 13:10:15.211824683 -0700
-@@ -155,7 +155,7 @@
+--- a/Source/WTF/wtf/posix/OSAllocatorPOSIX.cpp	2018-08-06 13:09:34.376041801 -0700
++++ b/Source/WTF/wtf/posix/OSAllocatorPOSIX.cpp	2018-08-06 13:10:15.211824683 -0700
+@@ -153,7 +153,7 @@
  #elif HAVE(MADV_FREE_REUSE)
      while (madvise(address, bytes, MADV_FREE_REUSABLE) == -1 && errno == EAGAIN) { }
  #elif HAVE(MADV_FREE)

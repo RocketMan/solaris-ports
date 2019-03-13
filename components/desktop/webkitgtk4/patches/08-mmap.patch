@@ -2,8 +2,8 @@ Solaris doesn't have MAP_FILE
 
 Not suitable for upstream
 
---- a/Source/WebCore/platform/FileSystem.cpp	2018-02-18 18:59:38.879497608 -0800
-+++ b/Source/WebCore/platform/FileSystem.cpp	2018-02-18 19:00:03.699372671 -0800
+--- a/Source/WTF/wtf/FileSystem.cpp	2019-02-15 12:32:52.000000000 +0000
++++ b/Source/WTF/wtf/FileSystem.cpp	2019-02-15 12:51:12.458160543 +0000
 @@ -316,7 +316,7 @@
          return;
      }

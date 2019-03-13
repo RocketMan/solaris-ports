@@ -36,16 +36,18 @@ COMPILER= gcc
 include ../../../make-rules/shared-macros.mk
 
 COMPONENT_NAME=		webkitgtk
-COMPONENT_VERSION=	2.22.5
+COMPONENT_VERSION=	2.24.0
 COMPONENT_PROJECT_URL=	https://webkitgtk.org
 COMPONENT_ARCHIVE=	$(COMPONENT_SRC).tar.xz
 COMPONENT_ARCHIVE_HASH= \
-	sha256:99d3863f418a7c3a3e37e5062950dbf2d91fb106ec1633459b0ef6f2d5f6cb13
+	sha256:2e4ad1503fe482ceb5a83cf70ac9cd42f37eb718555a4d6844fe4c59a9214407
 COMPONENT_ARCHIVE_URL=	https://webkitgtk.org/releases/$(COMPONENT_ARCHIVE)
 COMPONENT_ANITYA_ID=	5355
 
 # Use project's own optimization flags instead.
 gcc_OPT=
+
+CXXFLAGS += -fpermissive
 
 LDFLAGS += -lsocket  -lnsl
 # Uncomment this line if you are using the icu-gcc from this repo:
@@ -84,6 +86,7 @@ LD_OPTIONS += $(LD_OPTIONS.$(BITS))
 # target is curently broken.
 CMAKE_OPTIONS += -DCMAKE_BUILD_TYPE=Release
 CMAKE_OPTIONS += -DENABLE_MINIBROWSER=ON
+CMAKE_OPTIONS += -DENABLE_INTROSPECTION=ON
 CMAKE_OPTIONS += -DPORT=GTK
 CMAKE_OPTIONS += -DENABLE_GLES2=OFF
 CMAKE_OPTIONS += -DUSE_GSTREAMER_GL=ON
@@ -92,14 +95,25 @@ CMAKE_OPTIONS += -DUSE_WOFF2=OFF
 CMAKE_OPTIONS += -DENABLE_SAMPLING_PROFILER=OFF
 CMAKE_OPTIONS += -DENABLE_SUBTLE_CRYPTO=OFF
 CMAKE_OPTIONS += -DENABLE_PLUGIN_PROCESS_GTK2=OFF
-
-# JM 2018-10-20 commenting out, as 99-solaris-jit.patch allows JIT
-# to compile on all platforms
-#CMAKE_OPTIONS += -DENABLE_JIT=OFF
+CMAKE_OPTIONS += -DENABLE_JIT=ON
+CMAKE_OPTIONS += -DENABLE_C_LOOP=OFF
+CMAKE_OPTIONS += -DUSE_SYSTEM_MALLOC=OFF
 
 CMAKE_OPTIONS += -DLIB_INSTALL_DIR="$(USRLIB)"
 CMAKE_OPTIONS += -DLIBEXEC_INSTALL_DIR="$(USRLIB)"
 CMAKE_OPTIONS += -DEXEC_INSTALL_DIR="$(USRBIN)"
+
+# JM 2018-12-28 fix for WTF architecture detection on x86_64
+ifeq ($(MACH), i386)
+CMAKE_OPTIONS.64 += -DCMAKE_SYSTEM_NAME=SunOS
+CMAKE_OPTIONS.64 += -DCMAKE_SYSTEM_PROCESSOR=x86_64
+CMAKE_OPTIONS.64 += -DCMAKE_CROSSCOMPILING=0
+endif
+
+# JM 2019-02-15 cmake is incorrectly detecting 32-bit openjpeg on 64-bit
+OPENJPEG_CMAKE_DIR = $(shell pkg-config --modversion libopenjp2 | \
+			perl -F'\.' -nae 'print "openjpeg-$$F[0].$$F[1]"')
+CMAKE_OPTIONS.64 += -DOpenJPEG_DIR=/usr/lib/$(MACH64)/cmake/$(OPENJPEG_CMAKE_DIR)
 
 # Tell g-ir-scanner not to cache results in homedir of user running the build
 COMPONENT_BUILD_ENV += GI_SCANNER_DISABLE_CACHE=""
@@ -124,6 +138,7 @@ REQUIRED_PACKAGES += image/library/libjpeg
 REQUIRED_PACKAGES += image/library/libpng
 REQUIRED_PACKAGES += image/library/libpng14
 REQUIRED_PACKAGES += image/library/libwebp
+REQUIRED_PACKAGES += image/library/openjpeg2
 REQUIRED_PACKAGES += library/desktop/atk
 REQUIRED_PACKAGES += library/desktop/cairo
 REQUIRED_PACKAGES += library/desktop/gdk-pixbuf
@@ -143,6 +158,7 @@ REQUIRED_PACKAGES += library/icu
 #REQUIRED_PACKAGES += library/icu-gcc
 REQUIRED_PACKAGES += library/desktop/libnotify
 REQUIRED_PACKAGES += library/libsoup
+REQUIRED_PACKAGES += library/libtasn1
 REQUIRED_PACKAGES += library/libxml2
 REQUIRED_PACKAGES += library/libxslt
 REQUIRED_PACKAGES += library/spell-checking/enchant

@@ -116,8 +116,8 @@ Potentially suitable to send upstream
  #elif OS(UNIX)
  
  #if OS(OPENBSD)
---- a/Source/WTF/wtf/ThreadingPthreads.cpp	2018-08-15 10:18:02.570722929 -0700
-+++ b/Source/WTF/wtf/ThreadingPthreads.cpp	2018-08-15 10:19:25.133374993 -0700
+--- a/Source/WTF/wtf/posix/ThreadingPOSIX.cpp	2018-08-15 10:18:02.570722929 -0700
++++ b/Source/WTF/wtf/posix/ThreadingPOSIX.cpp	2018-08-15 10:19:25.133374993 -0700
 @@ -59,7 +59,12 @@
  #include <semaphore.h>
  #include <sys/mman.h>

@@ -70,6 +70,8 @@ file usr/include/webkitgtk-4.0/jsc/JSCDefines.h \
     path=usr/include/webkitgtk-4.0/jsc/JSCDefines.h
 file usr/include/webkitgtk-4.0/jsc/JSCException.h \
     path=usr/include/webkitgtk-4.0/jsc/JSCException.h
+file usr/include/webkitgtk-4.0/jsc/JSCOptions.h \
+    path=usr/include/webkitgtk-4.0/jsc/JSCOptions.h
 file usr/include/webkitgtk-4.0/jsc/JSCValue.h \
     path=usr/include/webkitgtk-4.0/jsc/JSCValue.h
 file usr/include/webkitgtk-4.0/jsc/JSCVersion.h \
@@ -108,6 +110,8 @@ file usr/include/webkitgtk-4.0/webkit2/WebKitCredential.h \
     path=usr/include/webkitgtk-4.0/webkit2/WebKitCredential.h
 file usr/include/webkitgtk-4.0/webkit2/WebKitDefines.h \
     path=usr/include/webkitgtk-4.0/webkit2/WebKitDefines.h
+file usr/include/webkitgtk-4.0/webkit2/WebKitDeviceInfoPermissionRequest.h \
+    path=usr/include/webkitgtk-4.0/webkit2/WebKitDeviceInfoPermissionRequest.h
 file usr/include/webkitgtk-4.0/webkit2/WebKitDownload.h \
     path=usr/include/webkitgtk-4.0/webkit2/WebKitDownload.h
 file usr/include/webkitgtk-4.0/webkit2/WebKitEditingCommands.h \
@@ -182,8 +186,12 @@ file usr/include/webkitgtk-4.0/webkit2/WebKitURIResponse.h \
     path=usr/include/webkitgtk-4.0/webkit2/WebKitURIResponse.h
 file usr/include/webkitgtk-4.0/webkit2/WebKitURISchemeRequest.h \
     path=usr/include/webkitgtk-4.0/webkit2/WebKitURISchemeRequest.h
+file usr/include/webkitgtk-4.0/webkit2/WebKitURIUtilities.h \
+    path=usr/include/webkitgtk-4.0/webkit2/WebKitURIUtilities.h
 file usr/include/webkitgtk-4.0/webkit2/WebKitUserContent.h \
     path=usr/include/webkitgtk-4.0/webkit2/WebKitUserContent.h
+file usr/include/webkitgtk-4.0/webkit2/WebKitUserContentFilterStore.h \
+    path=usr/include/webkitgtk-4.0/webkit2/WebKitUserContentFilterStore.h
 file usr/include/webkitgtk-4.0/webkit2/WebKitUserContentManager.h \
     path=usr/include/webkitgtk-4.0/webkit2/WebKitUserContentManager.h
 file usr/include/webkitgtk-4.0/webkit2/WebKitUserMediaPermissionRequest.h \
@@ -453,12 +461,8 @@ file usr/include/webkitgtk-4.0/webkitdom/webkitdomdefines.h \
 file usr/lib/$(MACH64)/MiniBrowser path=usr/lib/$(MACH64)/MiniBrowser mode=0555
 file usr/lib/$(MACH64)/WebKitNetworkProcess \
     path=usr/lib/$(MACH64)/WebKitNetworkProcess mode=0555
-#file usr/lib/$(MACH64)/WebKitPluginProcess
-#    path=usr/lib/$(MACH64)/WebKitPluginProcess mode=0555
-#file usr/lib/$(MACH64)/WebKitPluginProcess2
-#    path=usr/lib/$(MACH64)/WebKitPluginProcess2 mode=0555
-file usr/lib/$(MACH64)/WebKitStorageProcess \
-    path=usr/lib/$(MACH64)/WebKitStorageProcess mode=0555
+file usr/lib/$(MACH64)/WebKitPluginProcess \
+    path=usr/lib/$(MACH64)/WebKitPluginProcess mode=0555
 file usr/lib/$(MACH64)/WebKitWebProcess \
     path=usr/lib/$(MACH64)/WebKitWebProcess mode=0555
 file usr/lib/$(MACH64)/girepository-1.0/JavaScriptCore-4.0.typelib \
@@ -471,18 +475,14 @@ file usr/lib/$(MACH64)/jsc path=usr/lib/$(MACH64)/jsc mode=0555
 link path=usr/lib/$(MACH64)/libjavascriptcoregtk-4.0.so \
     target=libjavascriptcoregtk-4.0.so.18
 link path=usr/lib/$(MACH64)/libjavascriptcoregtk-4.0.so.18 \
-    target=libjavascriptcoregtk-4.0.so.18.11.6
-file usr/lib/$(MACH64)/libjavascriptcoregtk-4.0.so.18.11.5 \
-    path=usr/lib/$(MACH64)/libjavascriptcoregtk-4.0.so.18.11.5
-file usr/lib/$(MACH64)/libjavascriptcoregtk-4.0.so.18.11.6 \
-    path=usr/lib/$(MACH64)/libjavascriptcoregtk-4.0.so.18.11.6
+    target=libjavascriptcoregtk-4.0.so.18.13.3
+file usr/lib/$(MACH64)/libjavascriptcoregtk-4.0.so.18.13.3 \
+    path=usr/lib/$(MACH64)/libjavascriptcoregtk-4.0.so.18.13.3
 link path=usr/lib/$(MACH64)/libwebkit2gtk-4.0.so target=libwebkit2gtk-4.0.so.37
 link path=usr/lib/$(MACH64)/libwebkit2gtk-4.0.so.37 \
-    target=libwebkit2gtk-4.0.so.37.33.6
-file usr/lib/$(MACH64)/libwebkit2gtk-4.0.so.37.33.5 \
-    path=usr/lib/$(MACH64)/libwebkit2gtk-4.0.so.37.33.5
-file usr/lib/$(MACH64)/libwebkit2gtk-4.0.so.37.33.6 \
-    path=usr/lib/$(MACH64)/libwebkit2gtk-4.0.so.37.33.6
+    target=libwebkit2gtk-4.0.so.37.37.2
+file usr/lib/$(MACH64)/libwebkit2gtk-4.0.so.37.37.2 \
+    path=usr/lib/$(MACH64)/libwebkit2gtk-4.0.so.37.37.2
 file usr/lib/$(MACH64)/pkgconfig/javascriptcoregtk-4.0.pc \
     path=usr/lib/$(MACH64)/pkgconfig/javascriptcoregtk-4.0.pc
 file usr/lib/$(MACH64)/pkgconfig/webkit2gtk-4.0.pc \
