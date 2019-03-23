@@ -1,0 +1,13 @@
+--- a/smartctl.8.in	2019-03-23 13:55:19.139921142 +0000
++++ b/smartctl.8.in	2019-03-23 13:57:01.983898542 +0000
+@@ -2383,6 +2383,10 @@
+ \fBupdate-smart-drivedb\fP(8).
+ .\" %ENDIF ENABLE_UPDATE_SMART_DRIVEDB
+ .Sp
++.SH WARNING
++The smartctl utility accesses the internals of your system and its
++incorrect usage may render your system inoperable.
++
+ .SH REFERENCES
+ Please see the following web site for more info:
+ <\fBhttps://www.smartmontools.org/\fP>

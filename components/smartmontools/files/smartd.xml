@@ -1,0 +1,73 @@
+<?xml version="1.0"?>
+<!DOCTYPE service_bundle SYSTEM "/usr/share/lib/xml/dtd/service_bundle.dtd.1">
+
+<service_bundle type='manifest' name='smartd'>
+
+  <service
+      name='system/smartd'
+      type='service'
+      version='1'>
+
+    <instance name='default' enabled='false'>
+      <exec_method
+          type='method'
+          name='start'
+          exec='/usr/sbin/smartd'
+          timeout_seconds='60'>
+          <method_context>
+              <method_credential
+                 user='root'
+                 group='root'
+                 privileges='basic,file_dac_read,file_dac_write,sys_devices' />
+          </method_context>
+      </exec_method>
+
+      <exec_method
+          type='method'
+          name='stop'
+          exec=':kill'
+          timeout_seconds='15'>
+          <method_context>
+              <method_credential
+                  user='root'
+                  group='root' />
+          </method_context>
+      </exec_method>
+
+      <exec_method
+          type='method'
+          name='refresh'
+          exec=':kill -HUP'
+          timeout_seconds='15'>
+          <method_context>
+              <method_credential
+                  user='root'
+                  group='root' />
+          </method_context>
+      </exec_method>
+
+      <property_group name='startd' type='framework'>
+        <!-- sub-process core dumps shouldn't restart
+             session -->
+        <propval name='ignore_error' type='astring'
+                 value='core,signal' />
+      </property_group>
+
+    </instance>
+
+    <stability value='Evolving' />
+
+    <template>
+      <common_name>
+        <loctext xml:lang='C'>
+          SMART Disk Monitoring Daemon
+        </loctext>
+      </common_name>
+      <documentation>
+        <doc_link name='smartmontools wiki'
+                  uri='https://www.smartmontools.org/' />
+      </documentation>
+    </template>
+  </service>
+
+</service_bundle>
