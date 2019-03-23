@@ -30,5 +30,7 @@ then this is the target for you.
 If you are running on 11.3 and have the original libraries above built with
 Studio, then you should use [gsmartcontrol](../gsmartcontrol/).
 
-## Screenshot
-![screenshot](https://raw.githubusercontent.com/RocketMan/solaris-ports/master/components/gsmartcontrol/screenshot.png "GSmartControl")
+## Screenshots
+![screenshot](https://raw.githubusercontent.com/RocketMan/solaris-ports/master/components/gsmartcontrol-gcc/screenshot.png "GSmartControl")
+![screenshot](https://raw.githubusercontent.com/RocketMan/solaris-ports/master/components/gsmartcontrol-gcc/screenshot2.png "GSmartControl Details")
+![screenshot](https://raw.githubusercontent.com/RocketMan/solaris-ports/master/components/gsmartcontrol-gcc/screenshot3.png "GSmartControl Temperature Log")

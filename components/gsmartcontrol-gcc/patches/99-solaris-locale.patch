@@ -1,0 +1,14 @@
+--- a/src/gsc_init.cpp	2017-11-12 09:45:46.000000000 +0000
++++ b/src/gsc_init.cpp	2019-03-23 17:59:26.632849880 +0000
+@@ -327,6 +327,11 @@
+ 	hz::env_set_value("GTK_CSD", "0");
+ #endif
+ 
++#ifdef __sun__
++	// Only C and POSIX locales work for Solaris.
++	hz::env_set_value("LC_ALL", "C");
++#endif
++
+ 	// Glib needs the C locale set to system locale for command line args.
+ 	// We will reset it later if needed.
+ 	hz::locale_c_set("");  // set the current locale to system locale

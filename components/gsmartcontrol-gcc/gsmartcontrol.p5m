@@ -1,4 +1,5 @@
 <transform file path=usr.*/man/.+ -> default mangler.man.stability Uncommitted>
+<transform file path=usr/share/doc/.* -> drop>
 set name=pkg.fmri \
     value=pkg:/desktop/system-monitor/gsmartcontrol@$(IPS_COMPONENT_VERSION),$(BUILD_VERSION)
 set name=pkg.summary value="Graphical user interface for S.M.A.R.T. tools"
@@ -8,41 +9,72 @@ set name=info.classification \
 set name=info.source-url value=$(COMPONENT_ARCHIVE_URL)
 set name=info.upstream-url value=$(COMPONENT_PROJECT_URL)
 set name=org.opensolaris.consolidation value=$(CONSOLIDATION)
-file path=usr/bin/gsmartcontrol
-file path=usr/bin/gsmartcontrol-root
-file path=usr/share/applications/gsmartcontrol.desktop
-file path=usr/share/doc/gsmartcontrol/AUTHORS.txt
-file path=usr/share/doc/gsmartcontrol/ChangeLog
-file path=usr/share/doc/gsmartcontrol/LICENSE_boost_1_0.txt
-file path=usr/share/doc/gsmartcontrol/LICENSE_bsd-ac.txt
-file path=usr/share/doc/gsmartcontrol/LICENSE_bsd-ucb.txt
-file path=usr/share/doc/gsmartcontrol/LICENSE_gpl2.txt
-file path=usr/share/doc/gsmartcontrol/LICENSE_gpl3.txt
-file path=usr/share/doc/gsmartcontrol/LICENSE_gsmartcontrol.txt
-file path=usr/share/doc/gsmartcontrol/LICENSE_hz.txt
-file path=usr/share/doc/gsmartcontrol/LICENSE_pcrecpp.txt
-file path=usr/share/doc/gsmartcontrol/LICENSE_unlicense.txt
-file path=usr/share/doc/gsmartcontrol/LICENSE_zlib.txt
-file path=usr/share/doc/gsmartcontrol/NEWS
-file path=usr/share/doc/gsmartcontrol/README.txt
-file path=usr/share/doc/gsmartcontrol/contrib/cron-based_noadmin/README
-file path=usr/share/doc/gsmartcontrol/contrib/cron-based_noadmin/cron_gather_smart.sh
-file path=usr/share/doc/gsmartcontrol/contrib/cron-based_noadmin/crontab.example
-file path=usr/share/doc/gsmartcontrol/contrib/cron-based_noadmin/smartctl_subst.sh
-file path=usr/share/gsmartcontrol/icon_cddvd.png
-file path=usr/share/gsmartcontrol/icon_hdd.png
-file path=usr/share/icons/hicolor/128x128/apps/gsmartcontrol.png
-file path=usr/share/icons/hicolor/16x16/apps/gsmartcontrol.png
-file path=usr/share/icons/hicolor/22x22/apps/gsmartcontrol.png
-file path=usr/share/icons/hicolor/24x24/apps/gsmartcontrol.png
-file path=usr/share/icons/hicolor/256x256/apps/gsmartcontrol.png
-file path=usr/share/icons/hicolor/32x32/apps/gsmartcontrol.png
-file path=usr/share/icons/hicolor/48x48/apps/gsmartcontrol.png
-file path=usr/share/icons/hicolor/64x64/apps/gsmartcontrol.png
+file usr/bin/gsmartcontrol-root path=usr/bin/gsmartcontrol-root
+file usr/sbin/gsmartcontrol path=usr/sbin/gsmartcontrol
+file usr/share/applications/gsmartcontrol.desktop \
+    path=usr/share/applications/gsmartcontrol.desktop
+file usr/share/doc/gsmartcontrol/AUTHORS.txt \
+    path=usr/share/doc/gsmartcontrol/AUTHORS.txt
+file usr/share/doc/gsmartcontrol/ChangeLog \
+    path=usr/share/doc/gsmartcontrol/ChangeLog
+file usr/share/doc/gsmartcontrol/LICENSE_boost_1_0.txt \
+    path=usr/share/doc/gsmartcontrol/LICENSE_boost_1_0.txt
+file usr/share/doc/gsmartcontrol/LICENSE_bsd-ac.txt \
+    path=usr/share/doc/gsmartcontrol/LICENSE_bsd-ac.txt
+file usr/share/doc/gsmartcontrol/LICENSE_bsd-ucb.txt \
+    path=usr/share/doc/gsmartcontrol/LICENSE_bsd-ucb.txt
+file usr/share/doc/gsmartcontrol/LICENSE_gpl2.txt \
+    path=usr/share/doc/gsmartcontrol/LICENSE_gpl2.txt
+file usr/share/doc/gsmartcontrol/LICENSE_gpl3.txt \
+    path=usr/share/doc/gsmartcontrol/LICENSE_gpl3.txt
+file usr/share/doc/gsmartcontrol/LICENSE_gsmartcontrol.txt \
+    path=usr/share/doc/gsmartcontrol/LICENSE_gsmartcontrol.txt
+file usr/share/doc/gsmartcontrol/LICENSE_hz.txt \
+    path=usr/share/doc/gsmartcontrol/LICENSE_hz.txt
+file usr/share/doc/gsmartcontrol/LICENSE_unlicense.txt \
+    path=usr/share/doc/gsmartcontrol/LICENSE_unlicense.txt
+file usr/share/doc/gsmartcontrol/LICENSE_zlib.txt \
+    path=usr/share/doc/gsmartcontrol/LICENSE_zlib.txt
+file usr/share/doc/gsmartcontrol/NEWS path=usr/share/doc/gsmartcontrol/NEWS
+file usr/share/doc/gsmartcontrol/README.txt \
+    path=usr/share/doc/gsmartcontrol/README.txt
+file usr/share/doc/gsmartcontrol/contrib/cron-based_noadmin/README \
+    path=usr/share/doc/gsmartcontrol/contrib/cron-based_noadmin/README
+file usr/share/doc/gsmartcontrol/contrib/cron-based_noadmin/cron_gather_smart.sh \
+    path=usr/share/doc/gsmartcontrol/contrib/cron-based_noadmin/cron_gather_smart.sh
+file usr/share/doc/gsmartcontrol/contrib/cron-based_noadmin/crontab.example \
+    path=usr/share/doc/gsmartcontrol/contrib/cron-based_noadmin/crontab.example
+file usr/share/doc/gsmartcontrol/contrib/cron-based_noadmin/smartctl_subst.sh \
+    path=usr/share/doc/gsmartcontrol/contrib/cron-based_noadmin/smartctl_subst.sh
+file usr/share/gsmartcontrol/icon_cddvd.png \
+    path=usr/share/gsmartcontrol/icon_cddvd.png
+file usr/share/gsmartcontrol/icon_hdd.png \
+    path=usr/share/gsmartcontrol/icon_hdd.png
+file usr/share/icons/hicolor/128x128/apps/gsmartcontrol.png \
+    path=usr/share/icons/hicolor/128x128/apps/gsmartcontrol.png
+file usr/share/icons/hicolor/16x16/apps/gsmartcontrol.png \
+    path=usr/share/icons/hicolor/16x16/apps/gsmartcontrol.png
+file usr/share/icons/hicolor/22x22/apps/gsmartcontrol.png \
+    path=usr/share/icons/hicolor/22x22/apps/gsmartcontrol.png
+file usr/share/icons/hicolor/24x24/apps/gsmartcontrol.png \
+    path=usr/share/icons/hicolor/24x24/apps/gsmartcontrol.png
+file usr/share/icons/hicolor/256x256/apps/gsmartcontrol.png \
+    path=usr/share/icons/hicolor/256x256/apps/gsmartcontrol.png
+file usr/share/icons/hicolor/32x32/apps/gsmartcontrol.png \
+    path=usr/share/icons/hicolor/32x32/apps/gsmartcontrol.png
+file usr/share/icons/hicolor/48x48/apps/gsmartcontrol.png \
+    path=usr/share/icons/hicolor/48x48/apps/gsmartcontrol.png
+file usr/share/icons/hicolor/64x64/apps/gsmartcontrol.png \
+    path=usr/share/icons/hicolor/64x64/apps/gsmartcontrol.png
 link path=usr/share/man/man1/gsmartcontrol-root.1 target=gsmartcontrol.1
-file path=usr/share/man/man1/gsmartcontrol.1
-file path=usr/share/metainfo/gsmartcontrol.appdata.xml
-file path=usr/share/pixmaps/gsmartcontrol.png
-file path=usr/share/pixmaps/gsmartcontrol.xpm
+file usr/share/man/man1/gsmartcontrol.1 path=usr/share/man/man1/gsmartcontrol.1
+file usr/share/metainfo/gsmartcontrol.appdata.xml \
+    path=usr/share/metainfo/gsmartcontrol.appdata.xml
+file usr/share/pixmaps/gsmartcontrol.png \
+    path=usr/share/pixmaps/gsmartcontrol.png
+file usr/share/pixmaps/gsmartcontrol.xpm \
+    path=usr/share/pixmaps/gsmartcontrol.xpm
+file usr/share/polkit-1/actions/org.gsmartcontrol.policy \
+    path=usr/share/polkit-1/actions/org.gsmartcontrol.policy
 license COPYING license=GPLv2
 depend type=require fmri=pkg:/system/storage/smartmontools@6.5-11.4.0.1.0.18.0

@@ -23,16 +23,15 @@
 # Copyright (c) 2018 Jim Mason <jmason at ibinx dot com>.  All rights reserved.
 #
 
-BUILD_BITS =            32
+BUILD_BITS =            64
 COMPILER =		gcc
 include ../../make-rules/shared-macros.mk
 
 COMPONENT_NAME=		gsmartcontrol
-COMPONENT_VERSION=	0.9.0
-IPS_COMPONENT_VERSION=	0.9.0.1
+COMPONENT_VERSION=	1.1.3
 COMPONENT_ARCHIVE =	$(COMPONENT_SRC).tar.bz2
 COMPONENT_ARCHIVE_HASH=	\
-	sha256:5da6435aa0845acef134f72c2b5f6fce79f9c51bebe9d099402e0f21a3388651
+	sha256:b64f62cffa4430a90b6d06cd52ebadd5bcf39d548df581e67dfb275a673b12a9
 SOURCEFORGE_URL =	https://downloads.sourceforge.net/project
 COMPONENT_ARCHIVE_URL = $(SOURCEFORGE_URL)/$(COMPONENT_NAME)/$(COMPONENT_VERSION)/$(COMPONENT_ARCHIVE)
 COMPONENT_PROJECT_URL=	https://gsmartcontrol.sourceforge.io/
@@ -49,9 +48,11 @@ CONFIGURE_OPTIONS += --sysconfdir=/etc
 REQUIRED_PACKAGES += library/c++/glibmm
 REQUIRED_PACKAGES += library/c++/sigcpp
 REQUIRED_PACKAGES += library/desktop/c++/atkmm
-REQUIRED_PACKAGES += library/desktop/c++/gtkmm
+REQUIRED_PACKAGES += library/desktop/c++/cairomm
+REQUIRED_PACKAGES += library/desktop/c++/gtkmm3
 REQUIRED_PACKAGES += library/desktop/c++/pangomm
-REQUIRED_PACKAGES += library/desktop/gtk2
+REQUIRED_PACKAGES += library/desktop/cairo
+REQUIRED_PACKAGES += library/desktop/gtk3
 REQUIRED_PACKAGES += library/glib2
 REQUIRED_PACKAGES += library/pcre
 REQUIRED_PACKAGES += system/core-os
