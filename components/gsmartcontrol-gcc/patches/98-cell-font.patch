@@ -1,0 +1,11 @@
+--- a/src/gsc_info_window.cpp	2019-03-24 18:06:15.675547307 +0000
++++ b/src/gsc_info_window.cpp	2019-03-24 18:05:45.824879110 +0000
+@@ -130,7 +130,7 @@
+ 			if (p->value_statistic.is_header) {
+ 				crt->property_weight() = Pango::WEIGHT_BOLD;
+ 			} else {
+-				crt->property_weight().reset_value();
++				crt->property_weight() = Pango::WEIGHT_NORMAL;
+ 			}
+ 		}
+ 	}
