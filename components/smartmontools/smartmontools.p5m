@@ -43,7 +43,7 @@ set name=org.opensolaris.consolidation value=$(CONSOLIDATION)
 file files/exec_attr path=etc/security/exec_attr.d/system:storage:smartmontools
 file files/prof_attr path=etc/security/prof_attr.d/system:storage:smartmontools
 file etc/smartd.conf path=etc/smartd.conf mode=0644 preserve=renamenew
-file etc/smartd_warning.sh path=etc/smartd_warning.sh
+file etc/smartd_warning.sh path=etc/smartd_warning.sh mode=0555
 file files/smartd.xml path=lib/svc/manifest/system/smartd.xml
 file usr/sbin/smartctl path=usr/sbin/smartctl
 file usr/sbin/smartd path=usr/sbin/smartd
