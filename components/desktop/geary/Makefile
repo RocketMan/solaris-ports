@@ -28,11 +28,11 @@ COMPILER =		gcc
 include ../../../make-rules/shared-macros.mk
 
 COMPONENT_NAME=		geary
-COMPONENT_VERSION=	0.13.2
+COMPONENT_VERSION=	3.32.0
 COMPONENT_SRC=		$(COMPONENT_NAME)-$(GIT_COMMIT_ID)
 COMPONENT_ARCHIVE_URL=	$(GIT_REPO)/archive/$(GIT_COMMIT_ID).tar.gz
 GIT_REPO=		https://github.com/GNOME/geary
-GIT_COMMIT_ID=		geary-0.13.2
+GIT_COMMIT_ID=		3.32.0
 COMPONENT_PROJECT_URL=	https://wiki.gnome.org/Apps/Geary
 COMPONENT_ANITYA_ID=	888
 

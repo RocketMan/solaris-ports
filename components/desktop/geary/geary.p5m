@@ -349,18 +349,6 @@ file usr/share/help/tr/geary/shortcuts.page \
     path=usr/share/help/tr/geary/shortcuts.page
 file usr/share/help/tr/geary/star.page path=usr/share/help/tr/geary/star.page
 file usr/share/help/tr/geary/write.page path=usr/share/help/tr/geary/write.page
-file usr/share/icons/hicolor/16x16/apps/org.gnome.Geary.png \
-    path=usr/share/icons/hicolor/16x16/apps/org.gnome.Geary.png
-file usr/share/icons/hicolor/24x24/apps/org.gnome.Geary.png \
-    path=usr/share/icons/hicolor/24x24/apps/org.gnome.Geary.png
-file usr/share/icons/hicolor/256x256/apps/org.gnome.Geary.png \
-    path=usr/share/icons/hicolor/256x256/apps/org.gnome.Geary.png
-file usr/share/icons/hicolor/32x32/apps/org.gnome.Geary.png \
-    path=usr/share/icons/hicolor/32x32/apps/org.gnome.Geary.png
-file usr/share/icons/hicolor/48x48/apps/org.gnome.Geary.png \
-    path=usr/share/icons/hicolor/48x48/apps/org.gnome.Geary.png
-file usr/share/icons/hicolor/512x512/apps/org.gnome.Geary.png \
-    path=usr/share/icons/hicolor/512x512/apps/org.gnome.Geary.png
 file usr/share/icons/hicolor/scalable/actions/close-symbolic.svg \
     path=usr/share/icons/hicolor/scalable/actions/close-symbolic.svg
 file usr/share/icons/hicolor/scalable/actions/detach-symbolic.svg \
@@ -411,6 +399,8 @@ file usr/share/icons/hicolor/scalable/actions/tag-symbolic.svg \
     path=usr/share/icons/hicolor/scalable/actions/tag-symbolic.svg
 file usr/share/icons/hicolor/scalable/actions/text-x-generic-symbolic.svg \
     path=usr/share/icons/hicolor/scalable/actions/text-x-generic-symbolic.svg
+file usr/share/icons/hicolor/scalable/apps/org.gnome.Geary.svg \
+    path=usr/share/icons/hicolor/scalable/apps/org.gnome.Geary.svg
 file usr/share/icons/hicolor/symbolic/apps/org.gnome.Geary-symbolic.svg \
     path=usr/share/icons/hicolor/symbolic/apps/org.gnome.Geary-symbolic.svg
 file usr/share/locale/ar/LC_MESSAGES/geary.mo \
@@ -447,6 +437,8 @@ file usr/share/locale/fi/LC_MESSAGES/geary.mo \
     path=usr/share/locale/fi/LC_MESSAGES/geary.mo
 file usr/share/locale/fr/LC_MESSAGES/geary.mo \
     path=usr/share/locale/fr/LC_MESSAGES/geary.mo
+file usr/share/locale/fur/LC_MESSAGES/geary.mo \
+    path=usr/share/locale/fur/LC_MESSAGES/geary.mo
 file usr/share/locale/gl/LC_MESSAGES/geary.mo \
     path=usr/share/locale/gl/LC_MESSAGES/geary.mo
 file usr/share/locale/he/LC_MESSAGES/geary.mo \
