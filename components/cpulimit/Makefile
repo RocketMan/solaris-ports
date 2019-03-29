@@ -22,17 +22,17 @@
 #
 # Copyright (c) 2018 Jim Mason <jmason at ibinx dot com>.  All rights reserved.
 #
-BUILD_BITS=64
-COMPILER=gcc
+BUILD_BITS=		64
+COMPILER=		gcc
 include ../../make-rules/shared-macros.mk
 
 COMPONENT_NAME=		cpulimit
-COMPONENT_VERSION=	0.3.1
+COMPONENT_VERSION=	0.3.2
 COMPONENT_ARCHIVE=	$(COMPONENT_NAME)-$(COMPONENT_VERSION).tar.gz
 COMPONENT_ARCHIVE_URL=	https://github.com/denji/$(COMPONENT_NAME)/archive/$(COMPONENT_VERSION).tar.gz
 COMPONENT_PROJECT_URL=	http://cpulimit.sourceforge.net/
 COMPONENT_ARCHIVE_HASH=	\
-    sha256:2c4cae9e4da26bf9f42940120641470fa7cf9021b941cb65822139dd0d1e8350
+    sha256:0c61d394407fdd0547b53e6435ecb817d2e3ba914b48aa9f48ccf42c8278d3a6
 
 BUILD_STYLE=justmake
 

@@ -1,7 +1,7 @@
---- a/src/Makefile	2018-04-11 17:03:42.000000000 +0100
-+++ b/src/Makefile	2018-04-12 14:12:14.778245285 +0100
-@@ -6,9 +6,9 @@
- LIBS        = list.o process_iterator.o process_group.o
+--- a/src/Makefile	2019-03-19 06:29:41.000000000 +0000
++++ b/src/Makefile	2019-03-29 18:44:20.169985118 +0000
+@@ -7,9 +7,9 @@
+ MANDIR     ?= $(PREFIX)/share/man/man1
  MAN_NAME   := "CPU Utilization Limiter"
  MAN_SEC    := 1
 -MAN_SRC    := $(shell git remote get-url origin)
@@ -12,16 +12,19 @@
  STRIP      := $(shell which strip)
  SUDO       := $(shell which sudo)
  TARGETS     = $(BIN_TARGET) $(MAN_TARGET)
-@@ -27,13 +27,15 @@
- 	$(STRIP) $<
+@@ -30,9 +30,8 @@
+ 	touch strip
  
  install: $(TARGETS)
--	$(SUDO) install $^ $(BINDIR)
-+	install -d $(DESTDIR)$(BINDIR) $(DESTDIR)$(MANDIR)
-+	install $(BIN_TARGET) $(DESTDIR)$(BINDIR)
-+	install $(MAN_TARGET) $(DESTDIR)$(MANDIR)
+-	$(SUDO) install -D $(BIN_TARGET) $(BINDIR)/$(BIN_TARGET)
+-	$(SUDO) install -D $(MAN_TARGET) $(MANDIR)/$(MAN_TARGET)
+-	touch install
++	install -D $(BIN_TARGET) $(DESTDIR)$(BINDIR)/$(BIN_TARGET)
++	install -D $(MAN_TARGET) $(DESTDIR)$(MANDIR)/$(MAN_TARGET)
  
- $(BIN_TARGET):	cpulimit.c $(LIBS)
+ static_install: static strip install
+ 	touch static_install
+@@ -41,7 +40,7 @@
  	$(CC) -o cpulimit cpulimit.c $(LIBS) $(CFLAGS)
  
  $(MAN_TARGET): $(BIN_TARGET) $(HELP2MAN)
