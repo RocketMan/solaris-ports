@@ -39,7 +39,11 @@ BUILD_STYLE=justmake
 gcc_OPT.i386.64 = -O2
 CFLAGS += -D_GNU_SOURCE
 
-SYSTEM_TEST_TARGET= build $(SYSTEM_TEST_NO_ARCH)
+COMPONENT_INSTALL_ENV += PREFIX=/usr
+
+TEST_TARGET= $(NO_TESTS)
+
 include $(WS_MAKE_RULES)/gnu-component.mk
+
 
 REQUIRED_PACKAGES += system/library
