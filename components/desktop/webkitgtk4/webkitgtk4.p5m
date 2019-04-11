@@ -475,14 +475,14 @@ file usr/lib/$(MACH64)/jsc path=usr/lib/$(MACH64)/jsc mode=0555
 link path=usr/lib/$(MACH64)/libjavascriptcoregtk-4.0.so \
     target=libjavascriptcoregtk-4.0.so.18
 link path=usr/lib/$(MACH64)/libjavascriptcoregtk-4.0.so.18 \
-    target=libjavascriptcoregtk-4.0.so.18.13.3
-file usr/lib/$(MACH64)/libjavascriptcoregtk-4.0.so.18.13.3 \
-    path=usr/lib/$(MACH64)/libjavascriptcoregtk-4.0.so.18.13.3
+    target=libjavascriptcoregtk-4.0.so.18.13.4
+file usr/lib/$(MACH64)/libjavascriptcoregtk-4.0.so.18.13.4 \
+    path=usr/lib/$(MACH64)/libjavascriptcoregtk-4.0.so.18.13.4
 link path=usr/lib/$(MACH64)/libwebkit2gtk-4.0.so target=libwebkit2gtk-4.0.so.37
 link path=usr/lib/$(MACH64)/libwebkit2gtk-4.0.so.37 \
-    target=libwebkit2gtk-4.0.so.37.37.2
-file usr/lib/$(MACH64)/libwebkit2gtk-4.0.so.37.37.2 \
-    path=usr/lib/$(MACH64)/libwebkit2gtk-4.0.so.37.37.2
+    target=libwebkit2gtk-4.0.so.37.37.3
+file usr/lib/$(MACH64)/libwebkit2gtk-4.0.so.37.37.3 \
+    path=usr/lib/$(MACH64)/libwebkit2gtk-4.0.so.37.37.3
 file usr/lib/$(MACH64)/pkgconfig/javascriptcoregtk-4.0.pc \
     path=usr/lib/$(MACH64)/pkgconfig/javascriptcoregtk-4.0.pc
 file usr/lib/$(MACH64)/pkgconfig/webkit2gtk-4.0.pc \
