@@ -28,12 +28,12 @@ COMPILER =		gcc
 include ../../../make-rules/shared-macros.mk
 
 COMPONENT_NAME=		MPlayer
-COMPONENT_VERSION=	1.3.0
+COMPONENT_VERSION=	1.4
 COMPONENT_ARCHIVE=	$(COMPONENT_NAME)-$(COMPONENT_VERSION).tar.xz
 COMPONENT_PROJECT_URL=	http://www.mplayerhq.hu/
 COMPONENT_ARCHIVE_URL=	http://www.mplayerhq.hu/MPlayer/releases/$(COMPONENT_ARCHIVE)
 COMPONENT_ARCHIVE_HASH=	\
-    sha256:3ad0846c92d89ab2e4e6fb83bf991ea677e7aa2ea775845814cbceb608b09843
+    sha256:82596ed558478d28248c7bc3828eb09e6948c099bbd76bb7ee745a0e3275b548
 COMPONENT_ANITYA_ID=	9765
 
 # Move bundled ffmpeg out of the way so the build will use the
