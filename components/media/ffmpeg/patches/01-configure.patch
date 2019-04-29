@@ -1,5 +1,5 @@
---- a/configure	2018-04-14 00:34:39.000000000 +0000
-+++ b/configure	2018-07-11 16:05:45.119981197 +0000
+--- a/configure	2019-04-01 12:16:30.000000000 +0000
++++ b/configure	2019-04-25 17:30:24.605669302 +0000
 @@ -54,7 +54,7 @@
      exit 1
  fi
@@ -9,21 +9,29 @@
  
  show_help(){
      cat <<EOF
-@@ -4829,7 +4829,7 @@
-         check_header dispatch/dispatch.h &&
-             add_cppflags '-I\$(SRC_PATH)/compat/dispatch_semaphore'
+@@ -5138,6 +5138,7 @@
+         nm_default='nm -P -g'
+         version_script='-M'
+         VERSION_SCRIPT_POSTPROCESS_CMD='perl $(SRC_PATH)/compat/solaris/make_sunver.pl - $(OBJS)'
++        striptype=""
+         ;;
+     netbsd)
+         disable symver
+@@ -5184,7 +5185,7 @@
+             is_in -isysroot $ld $LDFLAGS          || check_ldflags  -isysroot $sysroot
+         fi
          version_script='-exported_symbols_list'
 -        VERSION_SCRIPT_POSTPROCESS_CMD='tr " " "\n" | sed -n /global:/,/local:/p | grep ";" | tr ";" "\n" | sed -E "s/(.+)/_\1/g" | sed -E "s/(.+[^*])$$$$/\1*/"'
 +        VERSION_SCRIPT_POSTPROCESS_CMD='tr " " "\n" | sed -n /global:/,/local:/p | grep ";" | tr ";" "\n" | sed -r "s/(.+)/_\1/g" | sed -r "s/(.+[^*])$$$$/\1*/"'
          ;;
      msys*)
          die "Native MSYS builds are discouraged, please use the MINGW environment."
-@@ -6152,7 +6152,7 @@
+@@ -6515,7 +6516,7 @@
  
  # add some linker flags
  check_ldflags -Wl,--warn-common
 -check_ldflags -Wl,-rpath-link=libpostproc:libswresample:libswscale:libavfilter:libavdevice:libavformat:libavcodec:libavutil:libavresample
 +#check_ldflags -Wl,-rpath-link=libpostproc:libswresample:libswscale:libavfilter:libavdevice:libavformat:libavcodec:libavutil:libavresample
- enabled rpath && add_ldexeflags -Wl,-rpath,$libdir
- enabled rpath && add_ldlibflags -Wl,-rpath,$libdir
+ enabled rpath && add_ldexeflags -Wl,-rpath,$libdir && add_ldsoflags -Wl,-rpath,$libdir
  test_ldflags -Wl,-Bsymbolic && append SHFLAGS -Wl,-Bsymbolic
+ 
