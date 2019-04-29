@@ -28,11 +28,11 @@ COMPILER =              gcc
 include ../../../../make-rules/shared-macros.mk
 
 COMPONENT_NAME=		gst-libav
-COMPONENT_VERSION=	1.14.4
+COMPONENT_VERSION=	1.16.0
 COMPONENT_PROJECT_URL=	https://gstreamer.freedesktop.org/
 COMPONENT_ARCHIVE=	$(COMPONENT_SRC).tar.xz
 COMPONENT_ARCHIVE_HASH= \
-	sha256:dfd78591901df7853eab7e56a86c34a1b03635da0d3d56b89aa577f1897865da
+	sha256:dfac119043a9cfdcacd7acde77f674ab172cf2537b5812be52f49e9cddc53d9a
 COMPONENT_ARCHIVE_URL=	https://gstreamer.freedesktop.org/src/$(COMPONENT_NAME)/$(COMPONENT_ARCHIVE)
 COMPONENT_BUGDB=	gnome/multimedia
 

@@ -51,467 +51,263 @@ file path=usr/bin/gst-inspect-1.0
 file path=usr/bin/gst-launch-1.0
 file path=usr/bin/gst-stats-1.0
 file path=usr/bin/gst-typefind-1.0
-file usr/include/gstreamer-1.0/gst/base/base-prelude.h \
-    path=usr/include/gstreamer-1.0/gst/base/base-prelude.h
-file usr/include/gstreamer-1.0/gst/base/base.h \
-    path=usr/include/gstreamer-1.0/gst/base/base.h
-file usr/include/gstreamer-1.0/gst/base/gstadapter.h \
-    path=usr/include/gstreamer-1.0/gst/base/gstadapter.h
-file usr/include/gstreamer-1.0/gst/base/gstaggregator.h \
-    path=usr/include/gstreamer-1.0/gst/base/gstaggregator.h
-file usr/include/gstreamer-1.0/gst/base/gstbaseparse.h \
-    path=usr/include/gstreamer-1.0/gst/base/gstbaseparse.h
-file usr/include/gstreamer-1.0/gst/base/gstbasesink.h \
-    path=usr/include/gstreamer-1.0/gst/base/gstbasesink.h
-file usr/include/gstreamer-1.0/gst/base/gstbasesrc.h \
-    path=usr/include/gstreamer-1.0/gst/base/gstbasesrc.h
-file usr/include/gstreamer-1.0/gst/base/gstbasetransform.h \
-    path=usr/include/gstreamer-1.0/gst/base/gstbasetransform.h
-file usr/include/gstreamer-1.0/gst/base/gstbitreader.h \
-    path=usr/include/gstreamer-1.0/gst/base/gstbitreader.h
-file usr/include/gstreamer-1.0/gst/base/gstbytereader.h \
-    path=usr/include/gstreamer-1.0/gst/base/gstbytereader.h
-file usr/include/gstreamer-1.0/gst/base/gstbytewriter.h \
-    path=usr/include/gstreamer-1.0/gst/base/gstbytewriter.h
-file usr/include/gstreamer-1.0/gst/base/gstcollectpads.h \
-    path=usr/include/gstreamer-1.0/gst/base/gstcollectpads.h
-file usr/include/gstreamer-1.0/gst/base/gstdataqueue.h \
-    path=usr/include/gstreamer-1.0/gst/base/gstdataqueue.h
-file usr/include/gstreamer-1.0/gst/base/gstflowcombiner.h \
-    path=usr/include/gstreamer-1.0/gst/base/gstflowcombiner.h
-file usr/include/gstreamer-1.0/gst/base/gstpushsrc.h \
-    path=usr/include/gstreamer-1.0/gst/base/gstpushsrc.h
-file usr/include/gstreamer-1.0/gst/base/gstqueuearray.h \
-    path=usr/include/gstreamer-1.0/gst/base/gstqueuearray.h
-file usr/include/gstreamer-1.0/gst/base/gsttypefindhelper.h \
-    path=usr/include/gstreamer-1.0/gst/base/gsttypefindhelper.h
-file usr/include/gstreamer-1.0/gst/check/check-prelude.h \
-    path=usr/include/gstreamer-1.0/gst/check/check-prelude.h
-file usr/include/gstreamer-1.0/gst/check/check.h \
-    path=usr/include/gstreamer-1.0/gst/check/check.h
-file usr/include/gstreamer-1.0/gst/check/gstbufferstraw.h \
-    path=usr/include/gstreamer-1.0/gst/check/gstbufferstraw.h
-file usr/include/gstreamer-1.0/gst/check/gstcheck.h \
-    path=usr/include/gstreamer-1.0/gst/check/gstcheck.h
-file usr/include/gstreamer-1.0/gst/check/gstconsistencychecker.h \
-    path=usr/include/gstreamer-1.0/gst/check/gstconsistencychecker.h
-file usr/include/gstreamer-1.0/gst/check/gstharness.h \
-    path=usr/include/gstreamer-1.0/gst/check/gstharness.h
-file usr/include/gstreamer-1.0/gst/check/gsttestclock.h \
-    path=usr/include/gstreamer-1.0/gst/check/gsttestclock.h
-file usr/include/gstreamer-1.0/gst/check/internal-check.h \
-    path=usr/include/gstreamer-1.0/gst/check/internal-check.h
-file usr/include/gstreamer-1.0/gst/controller/controller-enumtypes.h \
-    path=usr/include/gstreamer-1.0/gst/controller/controller-enumtypes.h
-file usr/include/gstreamer-1.0/gst/controller/controller-prelude.h \
-    path=usr/include/gstreamer-1.0/gst/controller/controller-prelude.h
-file usr/include/gstreamer-1.0/gst/controller/controller.h \
-    path=usr/include/gstreamer-1.0/gst/controller/controller.h
-file usr/include/gstreamer-1.0/gst/controller/gstargbcontrolbinding.h \
-    path=usr/include/gstreamer-1.0/gst/controller/gstargbcontrolbinding.h
-file usr/include/gstreamer-1.0/gst/controller/gstdirectcontrolbinding.h \
-    path=usr/include/gstreamer-1.0/gst/controller/gstdirectcontrolbinding.h
-file usr/include/gstreamer-1.0/gst/controller/gstinterpolationcontrolsource.h \
-    path=usr/include/gstreamer-1.0/gst/controller/gstinterpolationcontrolsource.h
-file usr/include/gstreamer-1.0/gst/controller/gstlfocontrolsource.h \
-    path=usr/include/gstreamer-1.0/gst/controller/gstlfocontrolsource.h
-file usr/include/gstreamer-1.0/gst/controller/gstproxycontrolbinding.h \
-    path=usr/include/gstreamer-1.0/gst/controller/gstproxycontrolbinding.h
-file usr/include/gstreamer-1.0/gst/controller/gsttimedvaluecontrolsource.h \
-    path=usr/include/gstreamer-1.0/gst/controller/gsttimedvaluecontrolsource.h
-file usr/include/gstreamer-1.0/gst/controller/gsttriggercontrolsource.h \
-    path=usr/include/gstreamer-1.0/gst/controller/gsttriggercontrolsource.h
-file usr/include/gstreamer-1.0/gst/glib-compat.h \
-    path=usr/include/gstreamer-1.0/gst/glib-compat.h
-file usr/include/gstreamer-1.0/gst/gst.h \
-    path=usr/include/gstreamer-1.0/gst/gst.h
-file usr/include/gstreamer-1.0/gst/gstallocator.h \
-    path=usr/include/gstreamer-1.0/gst/gstallocator.h
-file usr/include/gstreamer-1.0/gst/gstatomicqueue.h \
-    path=usr/include/gstreamer-1.0/gst/gstatomicqueue.h
-file usr/include/gstreamer-1.0/gst/gstbin.h \
-    path=usr/include/gstreamer-1.0/gst/gstbin.h
-file usr/include/gstreamer-1.0/gst/gstbuffer.h \
-    path=usr/include/gstreamer-1.0/gst/gstbuffer.h
-file usr/include/gstreamer-1.0/gst/gstbufferlist.h \
-    path=usr/include/gstreamer-1.0/gst/gstbufferlist.h
-file usr/include/gstreamer-1.0/gst/gstbufferpool.h \
-    path=usr/include/gstreamer-1.0/gst/gstbufferpool.h
-file usr/include/gstreamer-1.0/gst/gstbus.h \
-    path=usr/include/gstreamer-1.0/gst/gstbus.h
-file usr/include/gstreamer-1.0/gst/gstcaps.h \
-    path=usr/include/gstreamer-1.0/gst/gstcaps.h
-file usr/include/gstreamer-1.0/gst/gstcapsfeatures.h \
-    path=usr/include/gstreamer-1.0/gst/gstcapsfeatures.h
-file usr/include/gstreamer-1.0/gst/gstchildproxy.h \
-    path=usr/include/gstreamer-1.0/gst/gstchildproxy.h
-file usr/include/gstreamer-1.0/gst/gstclock.h \
-    path=usr/include/gstreamer-1.0/gst/gstclock.h
-file usr/include/gstreamer-1.0/gst/gstcompat.h \
-    path=usr/include/gstreamer-1.0/gst/gstcompat.h
-file usr/include/gstreamer-1.0/gst/gstconfig.h \
-    path=usr/include/gstreamer-1.0/gst/gstconfig.h
-file usr/include/gstreamer-1.0/gst/gstcontext.h \
-    path=usr/include/gstreamer-1.0/gst/gstcontext.h
-file usr/include/gstreamer-1.0/gst/gstcontrolbinding.h \
-    path=usr/include/gstreamer-1.0/gst/gstcontrolbinding.h
-file usr/include/gstreamer-1.0/gst/gstcontrolsource.h \
-    path=usr/include/gstreamer-1.0/gst/gstcontrolsource.h
-file usr/include/gstreamer-1.0/gst/gstdatetime.h \
-    path=usr/include/gstreamer-1.0/gst/gstdatetime.h
-file usr/include/gstreamer-1.0/gst/gstdebugutils.h \
-    path=usr/include/gstreamer-1.0/gst/gstdebugutils.h
-file usr/include/gstreamer-1.0/gst/gstdevice.h \
-    path=usr/include/gstreamer-1.0/gst/gstdevice.h
-file usr/include/gstreamer-1.0/gst/gstdevicemonitor.h \
-    path=usr/include/gstreamer-1.0/gst/gstdevicemonitor.h
-file usr/include/gstreamer-1.0/gst/gstdeviceprovider.h \
-    path=usr/include/gstreamer-1.0/gst/gstdeviceprovider.h
-file usr/include/gstreamer-1.0/gst/gstdeviceproviderfactory.h \
-    path=usr/include/gstreamer-1.0/gst/gstdeviceproviderfactory.h
-file usr/include/gstreamer-1.0/gst/gstdynamictypefactory.h \
-    path=usr/include/gstreamer-1.0/gst/gstdynamictypefactory.h
-file usr/include/gstreamer-1.0/gst/gstelement.h \
-    path=usr/include/gstreamer-1.0/gst/gstelement.h
-file usr/include/gstreamer-1.0/gst/gstelementfactory.h \
-    path=usr/include/gstreamer-1.0/gst/gstelementfactory.h
-file usr/include/gstreamer-1.0/gst/gstelementmetadata.h \
-    path=usr/include/gstreamer-1.0/gst/gstelementmetadata.h
-file usr/include/gstreamer-1.0/gst/gstenumtypes.h \
-    path=usr/include/gstreamer-1.0/gst/gstenumtypes.h
-file usr/include/gstreamer-1.0/gst/gsterror.h \
-    path=usr/include/gstreamer-1.0/gst/gsterror.h
-file usr/include/gstreamer-1.0/gst/gstevent.h \
-    path=usr/include/gstreamer-1.0/gst/gstevent.h
-file usr/include/gstreamer-1.0/gst/gstformat.h \
-    path=usr/include/gstreamer-1.0/gst/gstformat.h
-file usr/include/gstreamer-1.0/gst/gstghostpad.h \
-    path=usr/include/gstreamer-1.0/gst/gstghostpad.h
-file usr/include/gstreamer-1.0/gst/gstinfo.h \
-    path=usr/include/gstreamer-1.0/gst/gstinfo.h
-file usr/include/gstreamer-1.0/gst/gstiterator.h \
-    path=usr/include/gstreamer-1.0/gst/gstiterator.h
-file usr/include/gstreamer-1.0/gst/gstmacros.h \
-    path=usr/include/gstreamer-1.0/gst/gstmacros.h
-file usr/include/gstreamer-1.0/gst/gstmemory.h \
-    path=usr/include/gstreamer-1.0/gst/gstmemory.h
-file usr/include/gstreamer-1.0/gst/gstmessage.h \
-    path=usr/include/gstreamer-1.0/gst/gstmessage.h
-file usr/include/gstreamer-1.0/gst/gstmeta.h \
-    path=usr/include/gstreamer-1.0/gst/gstmeta.h
-file usr/include/gstreamer-1.0/gst/gstminiobject.h \
-    path=usr/include/gstreamer-1.0/gst/gstminiobject.h
-file usr/include/gstreamer-1.0/gst/gstobject.h \
-    path=usr/include/gstreamer-1.0/gst/gstobject.h
-file usr/include/gstreamer-1.0/gst/gstpad.h \
-    path=usr/include/gstreamer-1.0/gst/gstpad.h
-file usr/include/gstreamer-1.0/gst/gstpadtemplate.h \
-    path=usr/include/gstreamer-1.0/gst/gstpadtemplate.h
-file usr/include/gstreamer-1.0/gst/gstparamspecs.h \
-    path=usr/include/gstreamer-1.0/gst/gstparamspecs.h
-file usr/include/gstreamer-1.0/gst/gstparse.h \
-    path=usr/include/gstreamer-1.0/gst/gstparse.h
-file usr/include/gstreamer-1.0/gst/gstpipeline.h \
-    path=usr/include/gstreamer-1.0/gst/gstpipeline.h
-file usr/include/gstreamer-1.0/gst/gstplugin.h \
-    path=usr/include/gstreamer-1.0/gst/gstplugin.h
-file usr/include/gstreamer-1.0/gst/gstpluginfeature.h \
-    path=usr/include/gstreamer-1.0/gst/gstpluginfeature.h
-file usr/include/gstreamer-1.0/gst/gstpoll.h \
-    path=usr/include/gstreamer-1.0/gst/gstpoll.h
-file usr/include/gstreamer-1.0/gst/gstpreset.h \
-    path=usr/include/gstreamer-1.0/gst/gstpreset.h
-file usr/include/gstreamer-1.0/gst/gstpromise.h \
-    path=usr/include/gstreamer-1.0/gst/gstpromise.h
-file usr/include/gstreamer-1.0/gst/gstprotection.h \
-    path=usr/include/gstreamer-1.0/gst/gstprotection.h
-file usr/include/gstreamer-1.0/gst/gstquery.h \
-    path=usr/include/gstreamer-1.0/gst/gstquery.h
-file usr/include/gstreamer-1.0/gst/gstregistry.h \
-    path=usr/include/gstreamer-1.0/gst/gstregistry.h
-file usr/include/gstreamer-1.0/gst/gstsample.h \
-    path=usr/include/gstreamer-1.0/gst/gstsample.h
-file usr/include/gstreamer-1.0/gst/gstsegment.h \
-    path=usr/include/gstreamer-1.0/gst/gstsegment.h
-file usr/include/gstreamer-1.0/gst/gststreamcollection.h \
-    path=usr/include/gstreamer-1.0/gst/gststreamcollection.h
-file usr/include/gstreamer-1.0/gst/gststreams.h \
-    path=usr/include/gstreamer-1.0/gst/gststreams.h
-file usr/include/gstreamer-1.0/gst/gststructure.h \
-    path=usr/include/gstreamer-1.0/gst/gststructure.h
-file usr/include/gstreamer-1.0/gst/gstsystemclock.h \
-    path=usr/include/gstreamer-1.0/gst/gstsystemclock.h
-file usr/include/gstreamer-1.0/gst/gsttaglist.h \
-    path=usr/include/gstreamer-1.0/gst/gsttaglist.h
-file usr/include/gstreamer-1.0/gst/gsttagsetter.h \
-    path=usr/include/gstreamer-1.0/gst/gsttagsetter.h
-file usr/include/gstreamer-1.0/gst/gsttask.h \
-    path=usr/include/gstreamer-1.0/gst/gsttask.h
-file usr/include/gstreamer-1.0/gst/gsttaskpool.h \
-    path=usr/include/gstreamer-1.0/gst/gsttaskpool.h
-file usr/include/gstreamer-1.0/gst/gsttoc.h \
-    path=usr/include/gstreamer-1.0/gst/gsttoc.h
-file usr/include/gstreamer-1.0/gst/gsttocsetter.h \
-    path=usr/include/gstreamer-1.0/gst/gsttocsetter.h
-file usr/include/gstreamer-1.0/gst/gsttracer.h \
-    path=usr/include/gstreamer-1.0/gst/gsttracer.h
-file usr/include/gstreamer-1.0/gst/gsttracerfactory.h \
-    path=usr/include/gstreamer-1.0/gst/gsttracerfactory.h
-file usr/include/gstreamer-1.0/gst/gsttracerrecord.h \
-    path=usr/include/gstreamer-1.0/gst/gsttracerrecord.h
-file usr/include/gstreamer-1.0/gst/gsttypefind.h \
-    path=usr/include/gstreamer-1.0/gst/gsttypefind.h
-file usr/include/gstreamer-1.0/gst/gsttypefindfactory.h \
-    path=usr/include/gstreamer-1.0/gst/gsttypefindfactory.h
-file usr/include/gstreamer-1.0/gst/gsturi.h \
-    path=usr/include/gstreamer-1.0/gst/gsturi.h
-file usr/include/gstreamer-1.0/gst/gstutils.h \
-    path=usr/include/gstreamer-1.0/gst/gstutils.h
-file usr/include/gstreamer-1.0/gst/gstvalue.h \
-    path=usr/include/gstreamer-1.0/gst/gstvalue.h
-file usr/include/gstreamer-1.0/gst/gstversion.h \
-    path=usr/include/gstreamer-1.0/gst/gstversion.h
-file usr/include/gstreamer-1.0/gst/math-compat.h \
-    path=usr/include/gstreamer-1.0/gst/math-compat.h
-file usr/include/gstreamer-1.0/gst/net/gstnet.h \
-    path=usr/include/gstreamer-1.0/gst/net/gstnet.h
-file usr/include/gstreamer-1.0/gst/net/gstnetaddressmeta.h \
-    path=usr/include/gstreamer-1.0/gst/net/gstnetaddressmeta.h
-file usr/include/gstreamer-1.0/gst/net/gstnetclientclock.h \
-    path=usr/include/gstreamer-1.0/gst/net/gstnetclientclock.h
-file usr/include/gstreamer-1.0/gst/net/gstnetcontrolmessagemeta.h \
-    path=usr/include/gstreamer-1.0/gst/net/gstnetcontrolmessagemeta.h
-file usr/include/gstreamer-1.0/gst/net/gstnettimepacket.h \
-    path=usr/include/gstreamer-1.0/gst/net/gstnettimepacket.h
-file usr/include/gstreamer-1.0/gst/net/gstnettimeprovider.h \
-    path=usr/include/gstreamer-1.0/gst/net/gstnettimeprovider.h
-file usr/include/gstreamer-1.0/gst/net/gstptpclock.h \
-    path=usr/include/gstreamer-1.0/gst/net/gstptpclock.h
-file usr/include/gstreamer-1.0/gst/net/net-prelude.h \
-    path=usr/include/gstreamer-1.0/gst/net/net-prelude.h
-file usr/include/gstreamer-1.0/gst/net/net.h \
-    path=usr/include/gstreamer-1.0/gst/net/net.h
-file usr/lib/amd64/girepository-1.0/Gst-1.0.typelib \
-    path=usr/lib/$(MACH64)/girepository-1.0/Gst-1.0.typelib
-file usr/lib/amd64/girepository-1.0/GstBase-1.0.typelib \
-    path=usr/lib/$(MACH64)/girepository-1.0/GstBase-1.0.typelib
-file usr/lib/amd64/girepository-1.0/GstCheck-1.0.typelib \
-    path=usr/lib/$(MACH64)/girepository-1.0/GstCheck-1.0.typelib
-file usr/lib/amd64/girepository-1.0/GstController-1.0.typelib \
-    path=usr/lib/$(MACH64)/girepository-1.0/GstController-1.0.typelib
-file usr/lib/amd64/girepository-1.0/GstNet-1.0.typelib \
-    path=usr/lib/$(MACH64)/girepository-1.0/GstNet-1.0.typelib
-file usr/lib/amd64/gstreamer-1.0/gst-completion-helper \
-    path=usr/lib/$(MACH64)/gstreamer-1.0/gst-completion-helper mode=0555
-file usr/lib/amd64/gstreamer-1.0/gst-plugin-scanner \
-    path=usr/lib/$(MACH64)/gstreamer-1.0/gst-plugin-scanner mode=0555
-file usr/lib/amd64/gstreamer-1.0/gst-ptp-helper \
-    path=usr/lib/$(MACH64)/gstreamer-1.0/gst-ptp-helper mode=0555
-file usr/lib/amd64/gstreamer-1.0/libgstcoreelements.la \
-    path=usr/lib/$(MACH64)/gstreamer-1.0/libgstcoreelements.la
-file usr/lib/amd64/gstreamer-1.0/libgstcoreelements.so \
-    path=usr/lib/$(MACH64)/gstreamer-1.0/libgstcoreelements.so
-file usr/lib/amd64/gstreamer-1.0/libgstcoretracers.la \
-    path=usr/lib/$(MACH64)/gstreamer-1.0/libgstcoretracers.la
-file usr/lib/amd64/gstreamer-1.0/libgstcoretracers.so \
-    path=usr/lib/$(MACH64)/gstreamer-1.0/libgstcoretracers.so
-file usr/lib/amd64/libgstbase-1.0.la path=usr/lib/$(MACH64)/libgstbase-1.0.la
-link path=usr/lib/$(MACH64)/libgstbase-1.0.so target=libgstbase-1.0.so.0.1404.0
+file path=usr/include/gstreamer-1.0/gst/base/base-prelude.h
+file path=usr/include/gstreamer-1.0/gst/base/base.h
+file path=usr/include/gstreamer-1.0/gst/base/gstadapter.h
+file path=usr/include/gstreamer-1.0/gst/base/gstaggregator.h
+file path=usr/include/gstreamer-1.0/gst/base/gstbaseparse.h
+file path=usr/include/gstreamer-1.0/gst/base/gstbasesink.h
+file path=usr/include/gstreamer-1.0/gst/base/gstbasesrc.h
+file path=usr/include/gstreamer-1.0/gst/base/gstbasetransform.h
+file path=usr/include/gstreamer-1.0/gst/base/gstbitreader.h
+file path=usr/include/gstreamer-1.0/gst/base/gstbitwriter.h
+file path=usr/include/gstreamer-1.0/gst/base/gstbytereader.h
+file path=usr/include/gstreamer-1.0/gst/base/gstbytewriter.h
+file path=usr/include/gstreamer-1.0/gst/base/gstcollectpads.h
+file path=usr/include/gstreamer-1.0/gst/base/gstdataqueue.h
+file path=usr/include/gstreamer-1.0/gst/base/gstflowcombiner.h
+file path=usr/include/gstreamer-1.0/gst/base/gstpushsrc.h
+file path=usr/include/gstreamer-1.0/gst/base/gstqueuearray.h
+file path=usr/include/gstreamer-1.0/gst/base/gsttypefindhelper.h
+file path=usr/include/gstreamer-1.0/gst/check/check-prelude.h
+file path=usr/include/gstreamer-1.0/gst/check/check.h
+file path=usr/include/gstreamer-1.0/gst/check/gstbufferstraw.h
+file path=usr/include/gstreamer-1.0/gst/check/gstcheck.h
+file path=usr/include/gstreamer-1.0/gst/check/gstconsistencychecker.h
+file path=usr/include/gstreamer-1.0/gst/check/gstharness.h
+file path=usr/include/gstreamer-1.0/gst/check/gsttestclock.h
+file path=usr/include/gstreamer-1.0/gst/check/internal-check.h
+file path=usr/include/gstreamer-1.0/gst/controller/controller-enumtypes.h
+file path=usr/include/gstreamer-1.0/gst/controller/controller-prelude.h
+file path=usr/include/gstreamer-1.0/gst/controller/controller.h
+file path=usr/include/gstreamer-1.0/gst/controller/gstargbcontrolbinding.h
+file path=usr/include/gstreamer-1.0/gst/controller/gstdirectcontrolbinding.h
+file path=usr/include/gstreamer-1.0/gst/controller/gstinterpolationcontrolsource.h
+file path=usr/include/gstreamer-1.0/gst/controller/gstlfocontrolsource.h
+file path=usr/include/gstreamer-1.0/gst/controller/gstproxycontrolbinding.h
+file path=usr/include/gstreamer-1.0/gst/controller/gsttimedvaluecontrolsource.h
+file path=usr/include/gstreamer-1.0/gst/controller/gsttriggercontrolsource.h
+file path=usr/include/gstreamer-1.0/gst/glib-compat.h
+file path=usr/include/gstreamer-1.0/gst/gst.h
+file path=usr/include/gstreamer-1.0/gst/gstallocator.h
+file path=usr/include/gstreamer-1.0/gst/gstatomicqueue.h
+file path=usr/include/gstreamer-1.0/gst/gstbin.h
+file path=usr/include/gstreamer-1.0/gst/gstbuffer.h
+file path=usr/include/gstreamer-1.0/gst/gstbufferlist.h
+file path=usr/include/gstreamer-1.0/gst/gstbufferpool.h
+file path=usr/include/gstreamer-1.0/gst/gstbus.h
+file path=usr/include/gstreamer-1.0/gst/gstcaps.h
+file path=usr/include/gstreamer-1.0/gst/gstcapsfeatures.h
+file path=usr/include/gstreamer-1.0/gst/gstchildproxy.h
+file path=usr/include/gstreamer-1.0/gst/gstclock.h
+file path=usr/include/gstreamer-1.0/gst/gstcompat.h
+file path=usr/include/gstreamer-1.0/gst/gstconfig.h
+file path=usr/include/gstreamer-1.0/gst/gstcontext.h
+file path=usr/include/gstreamer-1.0/gst/gstcontrolbinding.h
+file path=usr/include/gstreamer-1.0/gst/gstcontrolsource.h
+file path=usr/include/gstreamer-1.0/gst/gstdatetime.h
+file path=usr/include/gstreamer-1.0/gst/gstdebugutils.h
+file path=usr/include/gstreamer-1.0/gst/gstdevice.h
+file path=usr/include/gstreamer-1.0/gst/gstdevicemonitor.h
+file path=usr/include/gstreamer-1.0/gst/gstdeviceprovider.h
+file path=usr/include/gstreamer-1.0/gst/gstdeviceproviderfactory.h
+file path=usr/include/gstreamer-1.0/gst/gstdynamictypefactory.h
+file path=usr/include/gstreamer-1.0/gst/gstelement.h
+file path=usr/include/gstreamer-1.0/gst/gstelementfactory.h
+file path=usr/include/gstreamer-1.0/gst/gstelementmetadata.h
+file path=usr/include/gstreamer-1.0/gst/gstenumtypes.h
+file path=usr/include/gstreamer-1.0/gst/gsterror.h
+file path=usr/include/gstreamer-1.0/gst/gstevent.h
+file path=usr/include/gstreamer-1.0/gst/gstformat.h
+file path=usr/include/gstreamer-1.0/gst/gstghostpad.h
+file path=usr/include/gstreamer-1.0/gst/gstinfo.h
+file path=usr/include/gstreamer-1.0/gst/gstiterator.h
+file path=usr/include/gstreamer-1.0/gst/gstmacros.h
+file path=usr/include/gstreamer-1.0/gst/gstmemory.h
+file path=usr/include/gstreamer-1.0/gst/gstmessage.h
+file path=usr/include/gstreamer-1.0/gst/gstmeta.h
+file path=usr/include/gstreamer-1.0/gst/gstminiobject.h
+file path=usr/include/gstreamer-1.0/gst/gstobject.h
+file path=usr/include/gstreamer-1.0/gst/gstpad.h
+file path=usr/include/gstreamer-1.0/gst/gstpadtemplate.h
+file path=usr/include/gstreamer-1.0/gst/gstparamspecs.h
+file path=usr/include/gstreamer-1.0/gst/gstparse.h
+file path=usr/include/gstreamer-1.0/gst/gstpipeline.h
+file path=usr/include/gstreamer-1.0/gst/gstplugin.h
+file path=usr/include/gstreamer-1.0/gst/gstpluginfeature.h
+file path=usr/include/gstreamer-1.0/gst/gstpoll.h
+file path=usr/include/gstreamer-1.0/gst/gstpreset.h
+file path=usr/include/gstreamer-1.0/gst/gstpromise.h
+file path=usr/include/gstreamer-1.0/gst/gstprotection.h
+file path=usr/include/gstreamer-1.0/gst/gstquery.h
+file path=usr/include/gstreamer-1.0/gst/gstregistry.h
+file path=usr/include/gstreamer-1.0/gst/gstsample.h
+file path=usr/include/gstreamer-1.0/gst/gstsegment.h
+file path=usr/include/gstreamer-1.0/gst/gststreamcollection.h
+file path=usr/include/gstreamer-1.0/gst/gststreams.h
+file path=usr/include/gstreamer-1.0/gst/gststructure.h
+file path=usr/include/gstreamer-1.0/gst/gstsystemclock.h
+file path=usr/include/gstreamer-1.0/gst/gsttaglist.h
+file path=usr/include/gstreamer-1.0/gst/gsttagsetter.h
+file path=usr/include/gstreamer-1.0/gst/gsttask.h
+file path=usr/include/gstreamer-1.0/gst/gsttaskpool.h
+file path=usr/include/gstreamer-1.0/gst/gsttoc.h
+file path=usr/include/gstreamer-1.0/gst/gsttocsetter.h
+file path=usr/include/gstreamer-1.0/gst/gsttracer.h
+file path=usr/include/gstreamer-1.0/gst/gsttracerfactory.h
+file path=usr/include/gstreamer-1.0/gst/gsttracerrecord.h
+file path=usr/include/gstreamer-1.0/gst/gsttypefind.h
+file path=usr/include/gstreamer-1.0/gst/gsttypefindfactory.h
+file path=usr/include/gstreamer-1.0/gst/gsturi.h
+file path=usr/include/gstreamer-1.0/gst/gstutils.h
+file path=usr/include/gstreamer-1.0/gst/gstvalue.h
+file path=usr/include/gstreamer-1.0/gst/gstversion.h
+file path=usr/include/gstreamer-1.0/gst/math-compat.h
+file path=usr/include/gstreamer-1.0/gst/net/gstnet.h
+file path=usr/include/gstreamer-1.0/gst/net/gstnetaddressmeta.h
+file path=usr/include/gstreamer-1.0/gst/net/gstnetclientclock.h
+file path=usr/include/gstreamer-1.0/gst/net/gstnetcontrolmessagemeta.h
+file path=usr/include/gstreamer-1.0/gst/net/gstnettimepacket.h
+file path=usr/include/gstreamer-1.0/gst/net/gstnettimeprovider.h
+file path=usr/include/gstreamer-1.0/gst/net/gstptpclock.h
+file path=usr/include/gstreamer-1.0/gst/net/net-prelude.h
+file path=usr/include/gstreamer-1.0/gst/net/net.h
+file path=usr/lib/$(MACH64)/girepository-1.0/Gst-1.0.typelib
+file path=usr/lib/$(MACH64)/girepository-1.0/GstBase-1.0.typelib
+file path=usr/lib/$(MACH64)/girepository-1.0/GstCheck-1.0.typelib
+file path=usr/lib/$(MACH64)/girepository-1.0/GstController-1.0.typelib
+file path=usr/lib/$(MACH64)/girepository-1.0/GstNet-1.0.typelib
+file path=usr/lib/$(MACH64)/gstreamer-1.0/gst-completion-helper mode=0555
+file path=usr/lib/$(MACH64)/gstreamer-1.0/gst-plugin-scanner mode=0555
+file path=usr/lib/$(MACH64)/gstreamer-1.0/gst-ptp-helper mode=0555
+file path=usr/lib/$(MACH64)/gstreamer-1.0/libgstcoreelements.la
+file path=usr/lib/$(MACH64)/gstreamer-1.0/libgstcoreelements.so
+file path=usr/lib/$(MACH64)/gstreamer-1.0/libgstcoretracers.la
+file path=usr/lib/$(MACH64)/gstreamer-1.0/libgstcoretracers.so
+file path=usr/lib/$(MACH64)/libgstbase-1.0.la
+link path=usr/lib/$(MACH64)/libgstbase-1.0.so target=libgstbase-1.0.so.0.1600.0
 link path=usr/lib/$(MACH64)/libgstbase-1.0.so.0 \
-    target=libgstbase-1.0.so.0.1404.0
-file usr/lib/amd64/libgstbase-1.0.so.0.1404.0 \
-    path=usr/lib/$(MACH64)/libgstbase-1.0.so.0.1404.0
-file usr/lib/amd64/libgstcheck-1.0.la path=usr/lib/$(MACH64)/libgstcheck-1.0.la
+    target=libgstbase-1.0.so.0.1600.0
+file path=usr/lib/$(MACH64)/libgstbase-1.0.so.0.1600.0
+file path=usr/lib/$(MACH64)/libgstcheck-1.0.la
 link path=usr/lib/$(MACH64)/libgstcheck-1.0.so \
-    target=libgstcheck-1.0.so.0.1404.0
+    target=libgstcheck-1.0.so.0.1600.0
 link path=usr/lib/$(MACH64)/libgstcheck-1.0.so.0 \
-    target=libgstcheck-1.0.so.0.1404.0
-file usr/lib/amd64/libgstcheck-1.0.so.0.1404.0 \
-    path=usr/lib/$(MACH64)/libgstcheck-1.0.so.0.1404.0
-file usr/lib/amd64/libgstcontroller-1.0.la \
-    path=usr/lib/$(MACH64)/libgstcontroller-1.0.la
+    target=libgstcheck-1.0.so.0.1600.0
+file path=usr/lib/$(MACH64)/libgstcheck-1.0.so.0.1600.0
+file path=usr/lib/$(MACH64)/libgstcontroller-1.0.la
 link path=usr/lib/$(MACH64)/libgstcontroller-1.0.so \
-    target=libgstcontroller-1.0.so.0.1404.0
+    target=libgstcontroller-1.0.so.0.1600.0
 link path=usr/lib/$(MACH64)/libgstcontroller-1.0.so.0 \
-    target=libgstcontroller-1.0.so.0.1404.0
-file usr/lib/amd64/libgstcontroller-1.0.so.0.1404.0 \
-    path=usr/lib/$(MACH64)/libgstcontroller-1.0.so.0.1404.0
-file usr/lib/amd64/libgstnet-1.0.la path=usr/lib/$(MACH64)/libgstnet-1.0.la
-link path=usr/lib/$(MACH64)/libgstnet-1.0.so target=libgstnet-1.0.so.0.1404.0
-link path=usr/lib/$(MACH64)/libgstnet-1.0.so.0 target=libgstnet-1.0.so.0.1404.0
-file usr/lib/amd64/libgstnet-1.0.so.0.1404.0 \
-    path=usr/lib/$(MACH64)/libgstnet-1.0.so.0.1404.0
-file usr/lib/amd64/libgstreamer-1.0.la \
-    path=usr/lib/$(MACH64)/libgstreamer-1.0.la
+    target=libgstcontroller-1.0.so.0.1600.0
+file path=usr/lib/$(MACH64)/libgstcontroller-1.0.so.0.1600.0
+file path=usr/lib/$(MACH64)/libgstnet-1.0.la
+link path=usr/lib/$(MACH64)/libgstnet-1.0.so target=libgstnet-1.0.so.0.1600.0
+link path=usr/lib/$(MACH64)/libgstnet-1.0.so.0 target=libgstnet-1.0.so.0.1600.0
+file path=usr/lib/$(MACH64)/libgstnet-1.0.so.0.1600.0
+file path=usr/lib/$(MACH64)/libgstreamer-1.0.la
 link path=usr/lib/$(MACH64)/libgstreamer-1.0.so \
-    target=libgstreamer-1.0.so.0.1404.0
+    target=libgstreamer-1.0.so.0.1600.0
 link path=usr/lib/$(MACH64)/libgstreamer-1.0.so.0 \
-    target=libgstreamer-1.0.so.0.1404.0
-file usr/lib/amd64/libgstreamer-1.0.so.0.1404.0 \
-    path=usr/lib/$(MACH64)/libgstreamer-1.0.so.0.1404.0
-file usr/lib/amd64/pkgconfig/gstreamer-1.0.pc \
-    path=usr/lib/$(MACH64)/pkgconfig/gstreamer-1.0.pc
-file usr/lib/amd64/pkgconfig/gstreamer-base-1.0.pc \
-    path=usr/lib/$(MACH64)/pkgconfig/gstreamer-base-1.0.pc
-file usr/lib/amd64/pkgconfig/gstreamer-check-1.0.pc \
-    path=usr/lib/$(MACH64)/pkgconfig/gstreamer-check-1.0.pc
-file usr/lib/amd64/pkgconfig/gstreamer-controller-1.0.pc \
-    path=usr/lib/$(MACH64)/pkgconfig/gstreamer-controller-1.0.pc
-file usr/lib/amd64/pkgconfig/gstreamer-net-1.0.pc \
-    path=usr/lib/$(MACH64)/pkgconfig/gstreamer-net-1.0.pc
-file usr/lib/girepository-1.0/Gst-1.0.typelib \
-    path=usr/lib/girepository-1.0/Gst-1.0.typelib
-file usr/lib/girepository-1.0/GstBase-1.0.typelib \
-    path=usr/lib/girepository-1.0/GstBase-1.0.typelib
-file usr/lib/girepository-1.0/GstCheck-1.0.typelib \
-    path=usr/lib/girepository-1.0/GstCheck-1.0.typelib
-file usr/lib/girepository-1.0/GstController-1.0.typelib \
-    path=usr/lib/girepository-1.0/GstController-1.0.typelib
-file usr/lib/girepository-1.0/GstNet-1.0.typelib \
-    path=usr/lib/girepository-1.0/GstNet-1.0.typelib
-file usr/lib/gstreamer-1.0/gst-completion-helper \
-    path=usr/lib/gstreamer-1.0/gst-completion-helper mode=0555
-file usr/lib/gstreamer-1.0/gst-plugin-scanner \
-    path=usr/lib/gstreamer-1.0/gst-plugin-scanner mode=0555
-file usr/lib/gstreamer-1.0/gst-ptp-helper \
-    path=usr/lib/gstreamer-1.0/gst-ptp-helper mode=0555
-file usr/lib/gstreamer-1.0/libgstcoreelements.la \
-    path=usr/lib/gstreamer-1.0/libgstcoreelements.la
-file usr/lib/gstreamer-1.0/libgstcoreelements.so \
-    path=usr/lib/gstreamer-1.0/libgstcoreelements.so
-file usr/lib/gstreamer-1.0/libgstcoretracers.la \
-    path=usr/lib/gstreamer-1.0/libgstcoretracers.la
-file usr/lib/gstreamer-1.0/libgstcoretracers.so \
-    path=usr/lib/gstreamer-1.0/libgstcoretracers.so
-file usr/lib/libgstbase-1.0.la path=usr/lib/libgstbase-1.0.la
-link path=usr/lib/libgstbase-1.0.so target=libgstbase-1.0.so.0.1404.0
-link path=usr/lib/libgstbase-1.0.so.0 target=libgstbase-1.0.so.0.1404.0
-file usr/lib/libgstbase-1.0.so.0.1404.0 path=usr/lib/libgstbase-1.0.so.0.1404.0
-file usr/lib/libgstcheck-1.0.la path=usr/lib/libgstcheck-1.0.la
-link path=usr/lib/libgstcheck-1.0.so target=libgstcheck-1.0.so.0.1404.0
-link path=usr/lib/libgstcheck-1.0.so.0 target=libgstcheck-1.0.so.0.1404.0
-file usr/lib/libgstcheck-1.0.so.0.1404.0 \
-    path=usr/lib/libgstcheck-1.0.so.0.1404.0
-file usr/lib/libgstcontroller-1.0.la path=usr/lib/libgstcontroller-1.0.la
+    target=libgstreamer-1.0.so.0.1600.0
+file path=usr/lib/$(MACH64)/libgstreamer-1.0.so.0.1600.0
+file path=usr/lib/$(MACH64)/pkgconfig/gstreamer-1.0.pc
+file path=usr/lib/$(MACH64)/pkgconfig/gstreamer-base-1.0.pc
+file path=usr/lib/$(MACH64)/pkgconfig/gstreamer-check-1.0.pc
+file path=usr/lib/$(MACH64)/pkgconfig/gstreamer-controller-1.0.pc
+file path=usr/lib/$(MACH64)/pkgconfig/gstreamer-net-1.0.pc
+file path=usr/lib/girepository-1.0/Gst-1.0.typelib
+file path=usr/lib/girepository-1.0/GstBase-1.0.typelib
+file path=usr/lib/girepository-1.0/GstCheck-1.0.typelib
+file path=usr/lib/girepository-1.0/GstController-1.0.typelib
+file path=usr/lib/girepository-1.0/GstNet-1.0.typelib
+file path=usr/lib/gstreamer-1.0/gst-completion-helper mode=0555
+file path=usr/lib/gstreamer-1.0/gst-plugin-scanner mode=0555
+file path=usr/lib/gstreamer-1.0/gst-ptp-helper mode=0555
+file path=usr/lib/gstreamer-1.0/libgstcoreelements.la
+file path=usr/lib/gstreamer-1.0/libgstcoreelements.so
+file path=usr/lib/gstreamer-1.0/libgstcoretracers.la
+file path=usr/lib/gstreamer-1.0/libgstcoretracers.so
+file path=usr/lib/libgstbase-1.0.la
+link path=usr/lib/libgstbase-1.0.so target=libgstbase-1.0.so.0.1600.0
+link path=usr/lib/libgstbase-1.0.so.0 target=libgstbase-1.0.so.0.1600.0
+file path=usr/lib/libgstbase-1.0.so.0.1600.0
+file path=usr/lib/libgstcheck-1.0.la
+link path=usr/lib/libgstcheck-1.0.so target=libgstcheck-1.0.so.0.1600.0
+link path=usr/lib/libgstcheck-1.0.so.0 target=libgstcheck-1.0.so.0.1600.0
+file path=usr/lib/libgstcheck-1.0.so.0.1600.0
+file path=usr/lib/libgstcontroller-1.0.la
 link path=usr/lib/libgstcontroller-1.0.so \
-    target=libgstcontroller-1.0.so.0.1404.0
+    target=libgstcontroller-1.0.so.0.1600.0
 link path=usr/lib/libgstcontroller-1.0.so.0 \
-    target=libgstcontroller-1.0.so.0.1404.0
-file usr/lib/libgstcontroller-1.0.so.0.1404.0 \
-    path=usr/lib/libgstcontroller-1.0.so.0.1404.0
-file usr/lib/libgstnet-1.0.la path=usr/lib/libgstnet-1.0.la
-link path=usr/lib/libgstnet-1.0.so target=libgstnet-1.0.so.0.1404.0
-link path=usr/lib/libgstnet-1.0.so.0 target=libgstnet-1.0.so.0.1404.0
-file usr/lib/libgstnet-1.0.so.0.1404.0 path=usr/lib/libgstnet-1.0.so.0.1404.0
-file usr/lib/libgstreamer-1.0.la path=usr/lib/libgstreamer-1.0.la
-link path=usr/lib/libgstreamer-1.0.so target=libgstreamer-1.0.so.0.1404.0
-link path=usr/lib/libgstreamer-1.0.so.0 target=libgstreamer-1.0.so.0.1404.0
-file usr/lib/libgstreamer-1.0.so.0.1404.0 \
-    path=usr/lib/libgstreamer-1.0.so.0.1404.0
-file usr/lib/pkgconfig/gstreamer-1.0.pc path=usr/lib/pkgconfig/gstreamer-1.0.pc
-file usr/lib/pkgconfig/gstreamer-base-1.0.pc \
-    path=usr/lib/pkgconfig/gstreamer-base-1.0.pc
-file usr/lib/pkgconfig/gstreamer-check-1.0.pc \
-    path=usr/lib/pkgconfig/gstreamer-check-1.0.pc
-file usr/lib/pkgconfig/gstreamer-controller-1.0.pc \
-    path=usr/lib/pkgconfig/gstreamer-controller-1.0.pc
-file usr/lib/pkgconfig/gstreamer-net-1.0.pc \
-    path=usr/lib/pkgconfig/gstreamer-net-1.0.pc
-file usr/share/aclocal/gst-element-check-1.0.m4 \
-    path=usr/share/aclocal/gst-element-check-1.0.m4
-file usr/share/gir-1.0/Gst-1.0.gir path=usr/share/gir-1.0/Gst-1.0.gir
-file usr/share/gir-1.0/GstBase-1.0.gir path=usr/share/gir-1.0/GstBase-1.0.gir
-file usr/share/gir-1.0/GstCheck-1.0.gir path=usr/share/gir-1.0/GstCheck-1.0.gir
-file usr/share/gir-1.0/GstController-1.0.gir \
-    path=usr/share/gir-1.0/GstController-1.0.gir
-file usr/share/gir-1.0/GstNet-1.0.gir path=usr/share/gir-1.0/GstNet-1.0.gir
-file usr/share/locale/af/LC_MESSAGES/gstreamer-1.0.mo \
-    path=usr/share/locale/af/LC_MESSAGES/gstreamer-1.0.mo
-file usr/share/locale/ast/LC_MESSAGES/gstreamer-1.0.mo \
-    path=usr/share/locale/ast/LC_MESSAGES/gstreamer-1.0.mo
-file usr/share/locale/az/LC_MESSAGES/gstreamer-1.0.mo \
-    path=usr/share/locale/az/LC_MESSAGES/gstreamer-1.0.mo
-file usr/share/locale/be/LC_MESSAGES/gstreamer-1.0.mo \
-    path=usr/share/locale/be/LC_MESSAGES/gstreamer-1.0.mo
-file usr/share/locale/bg/LC_MESSAGES/gstreamer-1.0.mo \
-    path=usr/share/locale/bg/LC_MESSAGES/gstreamer-1.0.mo
-file usr/share/locale/ca/LC_MESSAGES/gstreamer-1.0.mo \
-    path=usr/share/locale/ca/LC_MESSAGES/gstreamer-1.0.mo
-file usr/share/locale/cs/LC_MESSAGES/gstreamer-1.0.mo \
-    path=usr/share/locale/cs/LC_MESSAGES/gstreamer-1.0.mo
-file usr/share/locale/da/LC_MESSAGES/gstreamer-1.0.mo \
-    path=usr/share/locale/da/LC_MESSAGES/gstreamer-1.0.mo
-file usr/share/locale/de/LC_MESSAGES/gstreamer-1.0.mo \
-    path=usr/share/locale/de/LC_MESSAGES/gstreamer-1.0.mo
-file usr/share/locale/el/LC_MESSAGES/gstreamer-1.0.mo \
-    path=usr/share/locale/el/LC_MESSAGES/gstreamer-1.0.mo
-file usr/share/locale/en_GB/LC_MESSAGES/gstreamer-1.0.mo \
-    path=usr/share/locale/en_GB/LC_MESSAGES/gstreamer-1.0.mo
-file usr/share/locale/eo/LC_MESSAGES/gstreamer-1.0.mo \
-    path=usr/share/locale/eo/LC_MESSAGES/gstreamer-1.0.mo
-file usr/share/locale/es/LC_MESSAGES/gstreamer-1.0.mo \
-    path=usr/share/locale/es/LC_MESSAGES/gstreamer-1.0.mo
-file usr/share/locale/eu/LC_MESSAGES/gstreamer-1.0.mo \
-    path=usr/share/locale/eu/LC_MESSAGES/gstreamer-1.0.mo
-file usr/share/locale/fi/LC_MESSAGES/gstreamer-1.0.mo \
-    path=usr/share/locale/fi/LC_MESSAGES/gstreamer-1.0.mo
-file usr/share/locale/fr/LC_MESSAGES/gstreamer-1.0.mo \
-    path=usr/share/locale/fr/LC_MESSAGES/gstreamer-1.0.mo
-file usr/share/locale/fur/LC_MESSAGES/gstreamer-1.0.mo \
-    path=usr/share/locale/fur/LC_MESSAGES/gstreamer-1.0.mo
-file usr/share/locale/gl/LC_MESSAGES/gstreamer-1.0.mo \
-    path=usr/share/locale/gl/LC_MESSAGES/gstreamer-1.0.mo
-file usr/share/locale/hr/LC_MESSAGES/gstreamer-1.0.mo \
-    path=usr/share/locale/hr/LC_MESSAGES/gstreamer-1.0.mo
-file usr/share/locale/hu/LC_MESSAGES/gstreamer-1.0.mo \
-    path=usr/share/locale/hu/LC_MESSAGES/gstreamer-1.0.mo
-file usr/share/locale/id/LC_MESSAGES/gstreamer-1.0.mo \
-    path=usr/share/locale/id/LC_MESSAGES/gstreamer-1.0.mo
-file usr/share/locale/it/LC_MESSAGES/gstreamer-1.0.mo \
-    path=usr/share/locale/it/LC_MESSAGES/gstreamer-1.0.mo
-file usr/share/locale/ja/LC_MESSAGES/gstreamer-1.0.mo \
-    path=usr/share/locale/ja/LC_MESSAGES/gstreamer-1.0.mo
-file usr/share/locale/lt/LC_MESSAGES/gstreamer-1.0.mo \
-    path=usr/share/locale/lt/LC_MESSAGES/gstreamer-1.0.mo
-file usr/share/locale/nb/LC_MESSAGES/gstreamer-1.0.mo \
-    path=usr/share/locale/nb/LC_MESSAGES/gstreamer-1.0.mo
-file usr/share/locale/nl/LC_MESSAGES/gstreamer-1.0.mo \
-    path=usr/share/locale/nl/LC_MESSAGES/gstreamer-1.0.mo
-file usr/share/locale/pl/LC_MESSAGES/gstreamer-1.0.mo \
-    path=usr/share/locale/pl/LC_MESSAGES/gstreamer-1.0.mo
-file usr/share/locale/pt_BR/LC_MESSAGES/gstreamer-1.0.mo \
-    path=usr/share/locale/pt_BR/LC_MESSAGES/gstreamer-1.0.mo
-file usr/share/locale/ro/LC_MESSAGES/gstreamer-1.0.mo \
-    path=usr/share/locale/ro/LC_MESSAGES/gstreamer-1.0.mo
-file usr/share/locale/ru/LC_MESSAGES/gstreamer-1.0.mo \
-    path=usr/share/locale/ru/LC_MESSAGES/gstreamer-1.0.mo
-file usr/share/locale/rw/LC_MESSAGES/gstreamer-1.0.mo \
-    path=usr/share/locale/rw/LC_MESSAGES/gstreamer-1.0.mo
-file usr/share/locale/sk/LC_MESSAGES/gstreamer-1.0.mo \
-    path=usr/share/locale/sk/LC_MESSAGES/gstreamer-1.0.mo
-file usr/share/locale/sl/LC_MESSAGES/gstreamer-1.0.mo \
-    path=usr/share/locale/sl/LC_MESSAGES/gstreamer-1.0.mo
-file usr/share/locale/sq/LC_MESSAGES/gstreamer-1.0.mo \
-    path=usr/share/locale/sq/LC_MESSAGES/gstreamer-1.0.mo
-file usr/share/locale/sr/LC_MESSAGES/gstreamer-1.0.mo \
-    path=usr/share/locale/sr/LC_MESSAGES/gstreamer-1.0.mo
-file usr/share/locale/sv/LC_MESSAGES/gstreamer-1.0.mo \
-    path=usr/share/locale/sv/LC_MESSAGES/gstreamer-1.0.mo
-file usr/share/locale/tr/LC_MESSAGES/gstreamer-1.0.mo \
-    path=usr/share/locale/tr/LC_MESSAGES/gstreamer-1.0.mo
-file usr/share/locale/uk/LC_MESSAGES/gstreamer-1.0.mo \
-    path=usr/share/locale/uk/LC_MESSAGES/gstreamer-1.0.mo
-file usr/share/locale/vi/LC_MESSAGES/gstreamer-1.0.mo \
-    path=usr/share/locale/vi/LC_MESSAGES/gstreamer-1.0.mo
-file usr/share/locale/zh_CN/LC_MESSAGES/gstreamer-1.0.mo \
-    path=usr/share/locale/zh_CN/LC_MESSAGES/gstreamer-1.0.mo
-file usr/share/locale/zh_TW/LC_MESSAGES/gstreamer-1.0.mo \
-    path=usr/share/locale/zh_TW/LC_MESSAGES/gstreamer-1.0.mo
-file usr/share/man/man1/gst-inspect-1.0.1 \
-    path=usr/share/man/man1/gst-inspect-1.0.1
-file usr/share/man/man1/gst-launch-1.0.1 \
-    path=usr/share/man/man1/gst-launch-1.0.1
-file usr/share/man/man1/gst-stats-1.0.1 path=usr/share/man/man1/gst-stats-1.0.1
-file usr/share/man/man1/gst-typefind-1.0.1 \
-    path=usr/share/man/man1/gst-typefind-1.0.1
+    target=libgstcontroller-1.0.so.0.1600.0
+file path=usr/lib/libgstcontroller-1.0.so.0.1600.0
+file path=usr/lib/libgstnet-1.0.la
+link path=usr/lib/libgstnet-1.0.so target=libgstnet-1.0.so.0.1600.0
+link path=usr/lib/libgstnet-1.0.so.0 target=libgstnet-1.0.so.0.1600.0
+file path=usr/lib/libgstnet-1.0.so.0.1600.0
+file path=usr/lib/libgstreamer-1.0.la
+link path=usr/lib/libgstreamer-1.0.so target=libgstreamer-1.0.so.0.1600.0
+link path=usr/lib/libgstreamer-1.0.so.0 target=libgstreamer-1.0.so.0.1600.0
+file path=usr/lib/libgstreamer-1.0.so.0.1600.0
+file path=usr/lib/pkgconfig/gstreamer-1.0.pc
+file path=usr/lib/pkgconfig/gstreamer-base-1.0.pc
+file path=usr/lib/pkgconfig/gstreamer-check-1.0.pc
+file path=usr/lib/pkgconfig/gstreamer-controller-1.0.pc
+file path=usr/lib/pkgconfig/gstreamer-net-1.0.pc
+file path=usr/share/aclocal/gst-element-check-1.0.m4
+file path=usr/share/gdb/auto-load/usr/lib/$(MACH64)/libgstreamer-1.0.so.0.1600.0-gdb.py
+file path=usr/share/gdb/auto-load/usr/lib/libgstreamer-1.0.so.0.1600.0-gdb.py
+file path=usr/share/gir-1.0/Gst-1.0.gir
+file path=usr/share/gir-1.0/GstBase-1.0.gir
+file path=usr/share/gir-1.0/GstCheck-1.0.gir
+file path=usr/share/gir-1.0/GstController-1.0.gir
+file path=usr/share/gir-1.0/GstNet-1.0.gir
+file path=usr/share/gstreamer-1.0/gdb/glib_gobject_helper.py
+file path=usr/share/gstreamer-1.0/gdb/gst_gdb.py
+file path=usr/share/locale/af/LC_MESSAGES/gstreamer-1.0.mo
+file path=usr/share/locale/ast/LC_MESSAGES/gstreamer-1.0.mo
+file path=usr/share/locale/az/LC_MESSAGES/gstreamer-1.0.mo
+file path=usr/share/locale/be/LC_MESSAGES/gstreamer-1.0.mo
+file path=usr/share/locale/bg/LC_MESSAGES/gstreamer-1.0.mo
+file path=usr/share/locale/ca/LC_MESSAGES/gstreamer-1.0.mo
+file path=usr/share/locale/cs/LC_MESSAGES/gstreamer-1.0.mo
+file path=usr/share/locale/da/LC_MESSAGES/gstreamer-1.0.mo
+file path=usr/share/locale/de/LC_MESSAGES/gstreamer-1.0.mo
+file path=usr/share/locale/el/LC_MESSAGES/gstreamer-1.0.mo
+file path=usr/share/locale/en_GB/LC_MESSAGES/gstreamer-1.0.mo
+file path=usr/share/locale/eo/LC_MESSAGES/gstreamer-1.0.mo
+file path=usr/share/locale/es/LC_MESSAGES/gstreamer-1.0.mo
+file path=usr/share/locale/eu/LC_MESSAGES/gstreamer-1.0.mo
+file path=usr/share/locale/fi/LC_MESSAGES/gstreamer-1.0.mo
+file path=usr/share/locale/fr/LC_MESSAGES/gstreamer-1.0.mo
+file path=usr/share/locale/fur/LC_MESSAGES/gstreamer-1.0.mo
+file path=usr/share/locale/gl/LC_MESSAGES/gstreamer-1.0.mo
+file path=usr/share/locale/hr/LC_MESSAGES/gstreamer-1.0.mo
+file path=usr/share/locale/hu/LC_MESSAGES/gstreamer-1.0.mo
+file path=usr/share/locale/id/LC_MESSAGES/gstreamer-1.0.mo
+file path=usr/share/locale/it/LC_MESSAGES/gstreamer-1.0.mo
+file path=usr/share/locale/ja/LC_MESSAGES/gstreamer-1.0.mo
+file path=usr/share/locale/lt/LC_MESSAGES/gstreamer-1.0.mo
+file path=usr/share/locale/nb/LC_MESSAGES/gstreamer-1.0.mo
+file path=usr/share/locale/nl/LC_MESSAGES/gstreamer-1.0.mo
+file path=usr/share/locale/pl/LC_MESSAGES/gstreamer-1.0.mo
+file path=usr/share/locale/pt_BR/LC_MESSAGES/gstreamer-1.0.mo
+file path=usr/share/locale/ro/LC_MESSAGES/gstreamer-1.0.mo
+file path=usr/share/locale/ru/LC_MESSAGES/gstreamer-1.0.mo
+file path=usr/share/locale/rw/LC_MESSAGES/gstreamer-1.0.mo
+file path=usr/share/locale/sk/LC_MESSAGES/gstreamer-1.0.mo
+file path=usr/share/locale/sl/LC_MESSAGES/gstreamer-1.0.mo
+file path=usr/share/locale/sq/LC_MESSAGES/gstreamer-1.0.mo
+file path=usr/share/locale/sr/LC_MESSAGES/gstreamer-1.0.mo
+file path=usr/share/locale/sv/LC_MESSAGES/gstreamer-1.0.mo
+file path=usr/share/locale/tr/LC_MESSAGES/gstreamer-1.0.mo
+file path=usr/share/locale/uk/LC_MESSAGES/gstreamer-1.0.mo
+file path=usr/share/locale/vi/LC_MESSAGES/gstreamer-1.0.mo
+file path=usr/share/locale/zh_CN/LC_MESSAGES/gstreamer-1.0.mo
+file path=usr/share/locale/zh_TW/LC_MESSAGES/gstreamer-1.0.mo
+file path=usr/share/man/man1/gst-inspect-1.0.1
+file path=usr/share/man/man1/gst-launch-1.0.1
+file path=usr/share/man/man1/gst-stats-1.0.1
+file path=usr/share/man/man1/gst-typefind-1.0.1
 license COPYING license=LGPLv2

@@ -33,11 +33,11 @@ COMPILER =              gcc
 include ../../../../make-rules/shared-macros.mk
 
 COMPONENT_NAME=		gst-plugins-good
-COMPONENT_VERSION=	1.14.4
+COMPONENT_VERSION=	1.16.0
 COMPONENT_PROJECT_URL=	https://gstreamer.freedesktop.org/
 COMPONENT_ARCHIVE=	$(COMPONENT_SRC).tar.xz
 COMPONENT_ARCHIVE_HASH= \
-	sha256:5f8b553260cb0aac56890053d8511db1528d53cae10f0287cfce2cb2acc70979
+	sha256:654adef33380d604112f702c2927574cfc285e31307b79e584113858838bb0fd
 COMPONENT_ARCHIVE_URL=	https://gstreamer.freedesktop.org/src/$(COMPONENT_NAME)/$(COMPONENT_ARCHIVE)
 COMPONENT_ANITYA_ID=	1263
 
