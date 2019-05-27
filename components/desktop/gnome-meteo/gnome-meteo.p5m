@@ -33,72 +33,40 @@ set name=info.classification \
 set name=info.source-url value=$(COMPONENT_ARCHIVE_URL)
 set name=info.upstream-url value=$(COMPONENT_PROJECT_URL)
 set name=org.opensolaris.consolidation value=$(CONSOLIDATION)
-file usr/bin/com.gitlab.bitseater.meteo path=usr/bin/com.gitlab.bitseater.meteo
+file path=usr/bin/com.gitlab.bitseater.meteo
 link path=usr/bin/gnome-meteo target=com.gitlab.bitseater.meteo
-file usr/share/applications/com.gitlab.bitseater.meteo.desktop \
-    path=usr/share/applications/com.gitlab.bitseater.meteo.desktop
-file usr/share/glib-2.0/schemas/com.gitlab.bitseater.meteo.gschema.xml \
-    path=usr/share/glib-2.0/schemas/com.gitlab.bitseater.meteo.gschema.xml
-file usr/share/icons/hicolor/128x128/apps/com.gitlab.bitseater.meteo.svg \
-    path=usr/share/icons/hicolor/128x128/apps/com.gitlab.bitseater.meteo.svg
-file usr/share/icons/hicolor/128x128@2/apps/com.gitlab.bitseater.meteo.svg \
-    path=usr/share/icons/hicolor/128x128@2/apps/com.gitlab.bitseater.meteo.svg
-file usr/share/icons/hicolor/16x16/apps/com.gitlab.bitseater.meteo.svg \
-    path=usr/share/icons/hicolor/16x16/apps/com.gitlab.bitseater.meteo.svg
-file usr/share/icons/hicolor/16x16@2/apps/com.gitlab.bitseater.meteo.svg \
-    path=usr/share/icons/hicolor/16x16@2/apps/com.gitlab.bitseater.meteo.svg
-file usr/share/icons/hicolor/192x192/apps/com.gitlab.bitseater.meteo.svg \
-    path=usr/share/icons/hicolor/192x192/apps/com.gitlab.bitseater.meteo.svg
-file usr/share/icons/hicolor/192x192@2/apps/com.gitlab.bitseater.meteo.svg \
-    path=usr/share/icons/hicolor/192x192@2/apps/com.gitlab.bitseater.meteo.svg
-file usr/share/icons/hicolor/24x24/apps/com.gitlab.bitseater.meteo.svg \
-    path=usr/share/icons/hicolor/24x24/apps/com.gitlab.bitseater.meteo.svg
-file usr/share/icons/hicolor/24x24@2/apps/com.gitlab.bitseater.meteo.svg \
-    path=usr/share/icons/hicolor/24x24@2/apps/com.gitlab.bitseater.meteo.svg
-file usr/share/icons/hicolor/256x256/apps/com.gitlab.bitseater.meteo.svg \
-    path=usr/share/icons/hicolor/256x256/apps/com.gitlab.bitseater.meteo.svg
-file usr/share/icons/hicolor/256x256@2/apps/com.gitlab.bitseater.meteo.svg \
-    path=usr/share/icons/hicolor/256x256@2/apps/com.gitlab.bitseater.meteo.svg
-file usr/share/icons/hicolor/32x32/apps/com.gitlab.bitseater.meteo.svg \
-    path=usr/share/icons/hicolor/32x32/apps/com.gitlab.bitseater.meteo.svg
-file usr/share/icons/hicolor/32x32@2/apps/com.gitlab.bitseater.meteo.svg \
-    path=usr/share/icons/hicolor/32x32@2/apps/com.gitlab.bitseater.meteo.svg
-file usr/share/icons/hicolor/48x48/apps/com.gitlab.bitseater.meteo.svg \
-    path=usr/share/icons/hicolor/48x48/apps/com.gitlab.bitseater.meteo.svg
-file usr/share/icons/hicolor/48x48@2/apps/com.gitlab.bitseater.meteo.svg \
-    path=usr/share/icons/hicolor/48x48@2/apps/com.gitlab.bitseater.meteo.svg
-file usr/share/icons/hicolor/64x64/apps/com.gitlab.bitseater.meteo.svg \
-    path=usr/share/icons/hicolor/64x64/apps/com.gitlab.bitseater.meteo.svg
-file usr/share/icons/hicolor/64x64@2/apps/com.gitlab.bitseater.meteo.svg \
-    path=usr/share/icons/hicolor/64x64@2/apps/com.gitlab.bitseater.meteo.svg
-file usr/share/icons/hicolor/scalable/apps/com.gitlab.bitseater.meteo.svg \
-    path=usr/share/icons/hicolor/scalable/apps/com.gitlab.bitseater.meteo.svg
-file usr/share/locale/ca/LC_MESSAGES/com.gitlab.bitseater.meteo.mo \
-    path=usr/share/locale/ca/LC_MESSAGES/com.gitlab.bitseater.meteo.mo
-file usr/share/locale/de/LC_MESSAGES/com.gitlab.bitseater.meteo.mo \
-    path=usr/share/locale/de/LC_MESSAGES/com.gitlab.bitseater.meteo.mo
-file usr/share/locale/en/LC_MESSAGES/com.gitlab.bitseater.meteo.mo \
-    path=usr/share/locale/en/LC_MESSAGES/com.gitlab.bitseater.meteo.mo
-file usr/share/locale/es/LC_MESSAGES/com.gitlab.bitseater.meteo.mo \
-    path=usr/share/locale/es/LC_MESSAGES/com.gitlab.bitseater.meteo.mo
-file usr/share/locale/es_ES/LC_MESSAGES/com.gitlab.bitseater.meteo.mo \
-    path=usr/share/locale/es_ES/LC_MESSAGES/com.gitlab.bitseater.meteo.mo
-file usr/share/locale/fr/LC_MESSAGES/com.gitlab.bitseater.meteo.mo \
-    path=usr/share/locale/fr/LC_MESSAGES/com.gitlab.bitseater.meteo.mo
-file usr/share/locale/lt/LC_MESSAGES/com.gitlab.bitseater.meteo.mo \
-    path=usr/share/locale/lt/LC_MESSAGES/com.gitlab.bitseater.meteo.mo
-file usr/share/locale/nb/LC_MESSAGES/com.gitlab.bitseater.meteo.mo \
-    path=usr/share/locale/nb/LC_MESSAGES/com.gitlab.bitseater.meteo.mo
-file usr/share/locale/pt/LC_MESSAGES/com.gitlab.bitseater.meteo.mo \
-    path=usr/share/locale/pt/LC_MESSAGES/com.gitlab.bitseater.meteo.mo
-file usr/share/locale/pt_BR/LC_MESSAGES/com.gitlab.bitseater.meteo.mo \
-    path=usr/share/locale/pt_BR/LC_MESSAGES/com.gitlab.bitseater.meteo.mo
-file usr/share/locale/pt_PT/LC_MESSAGES/com.gitlab.bitseater.meteo.mo \
-    path=usr/share/locale/pt_PT/LC_MESSAGES/com.gitlab.bitseater.meteo.mo
-file usr/share/locale/ru/LC_MESSAGES/com.gitlab.bitseater.meteo.mo \
-    path=usr/share/locale/ru/LC_MESSAGES/com.gitlab.bitseater.meteo.mo
-file usr/share/locale/sr/LC_MESSAGES/com.gitlab.bitseater.meteo.mo \
-    path=usr/share/locale/sr/LC_MESSAGES/com.gitlab.bitseater.meteo.mo
-file usr/share/metainfo/com.gitlab.bitseater.meteo.appdata.xml \
-    path=usr/share/metainfo/com.gitlab.bitseater.meteo.appdata.xml
+file path=usr/share/applications/com.gitlab.bitseater.meteo.desktop
+file path=usr/share/glib-2.0/schemas/com.gitlab.bitseater.meteo.gschema.xml
+file path=usr/share/icons/hicolor/128x128/apps/com.gitlab.bitseater.meteo.svg
+file path=usr/share/icons/hicolor/128x128@2/apps/com.gitlab.bitseater.meteo.svg
+file path=usr/share/icons/hicolor/16x16/apps/com.gitlab.bitseater.meteo.svg
+file path=usr/share/icons/hicolor/16x16@2/apps/com.gitlab.bitseater.meteo.svg
+file path=usr/share/icons/hicolor/192x192/apps/com.gitlab.bitseater.meteo.svg
+file path=usr/share/icons/hicolor/192x192@2/apps/com.gitlab.bitseater.meteo.svg
+file path=usr/share/icons/hicolor/24x24/apps/com.gitlab.bitseater.meteo.svg
+file path=usr/share/icons/hicolor/24x24@2/apps/com.gitlab.bitseater.meteo.svg
+file path=usr/share/icons/hicolor/256x256/apps/com.gitlab.bitseater.meteo.svg
+file path=usr/share/icons/hicolor/256x256@2/apps/com.gitlab.bitseater.meteo.svg
+file path=usr/share/icons/hicolor/32x32/apps/com.gitlab.bitseater.meteo.svg
+file path=usr/share/icons/hicolor/32x32@2/apps/com.gitlab.bitseater.meteo.svg
+file path=usr/share/icons/hicolor/48x48/apps/com.gitlab.bitseater.meteo.svg
+file path=usr/share/icons/hicolor/48x48@2/apps/com.gitlab.bitseater.meteo.svg
+file path=usr/share/icons/hicolor/64x64/apps/com.gitlab.bitseater.meteo.svg
+file path=usr/share/icons/hicolor/64x64@2/apps/com.gitlab.bitseater.meteo.svg
+file path=usr/share/icons/hicolor/scalable/apps/com.gitlab.bitseater.meteo.svg
+file path=usr/share/locale/ca/LC_MESSAGES/com.gitlab.bitseater.meteo.mo
+file path=usr/share/locale/de/LC_MESSAGES/com.gitlab.bitseater.meteo.mo
+file path=usr/share/locale/en/LC_MESSAGES/com.gitlab.bitseater.meteo.mo
+file path=usr/share/locale/es/LC_MESSAGES/com.gitlab.bitseater.meteo.mo
+file path=usr/share/locale/es_ES/LC_MESSAGES/com.gitlab.bitseater.meteo.mo
+file path=usr/share/locale/fr/LC_MESSAGES/com.gitlab.bitseater.meteo.mo
+file path=usr/share/locale/lt/LC_MESSAGES/com.gitlab.bitseater.meteo.mo
+file path=usr/share/locale/nb/LC_MESSAGES/com.gitlab.bitseater.meteo.mo
+file path=usr/share/locale/nl/LC_MESSAGES/com.gitlab.bitseater.meteo.mo
+file path=usr/share/locale/pt/LC_MESSAGES/com.gitlab.bitseater.meteo.mo
+file path=usr/share/locale/pt_BR/LC_MESSAGES/com.gitlab.bitseater.meteo.mo
+file path=usr/share/locale/pt_PT/LC_MESSAGES/com.gitlab.bitseater.meteo.mo
+file path=usr/share/locale/ru/LC_MESSAGES/com.gitlab.bitseater.meteo.mo
+file path=usr/share/locale/sr/LC_MESSAGES/com.gitlab.bitseater.meteo.mo
+file path=usr/share/metainfo/com.gitlab.bitseater.meteo.appdata.xml
 license COPYING license=GPLv3
