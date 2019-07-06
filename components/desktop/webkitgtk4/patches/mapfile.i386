@@ -29,11 +29,13 @@ file upstream bug after resolving issues documented above
  # Temporary workaround to allow the build to succeed.
 --- a/Source/WebKit/webkitglib-symbols.map	2018-10-02 08:00:13.000000000 +0000
 +++ b/Source/WebKit/webkitglib-symbols.map	2018-11-06 11:12:58.437927095 +0000
-@@ -1,25 +1,2045 @@
+@@ -1,25 +1,2050 @@
  {
  global:
 -  jsc_*;
 -  webkit_*;
++  webkit_accessible_get_type;
++  webkit_accessible_hyperlink_get_type;
 +  webkit_application_info_get_name;
 +  webkit_application_info_get_type;
 +  webkit_application_info_get_version;
@@ -1552,6 +1554,7 @@ file upstream bug after resolving issues documented above
 +  webkit_javascript_result_ref;
 +  webkit_javascript_result_unref;
 +  webkit_load_event_get_type;
++  webkit_media_player_debug;
 +  webkit_media_src_get_type;
 +  webkit_mime_info_get_description;
 +  webkit_mime_info_get_extensions;
@@ -1559,6 +1562,7 @@ file upstream bug after resolving issues documented above
 +  webkit_mime_info_get_type;
 +  webkit_mime_info_ref;
 +  webkit_mime_info_unref;
++  webkit_mse_debug;
 +  webkit_navigation_action_copy;
 +  webkit_navigation_action_free;
 +  webkit_navigation_action_get_modifiers;
@@ -1934,6 +1938,7 @@ file upstream bug after resolving issues documented above
 +  webkit_web_inspector_get_web_view;
 +  webkit_web_inspector_is_attached;
 +  webkit_web_inspector_show;
++  webkit_web_page_accessibility_object_get_type;
 +  webkit_web_page_get_dom_document;
 +  webkit_web_page_get_editor;
 +  webkit_web_page_get_id;
