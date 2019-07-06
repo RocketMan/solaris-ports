@@ -36,6 +36,8 @@ COMPONENT_ARCHIVE_HASH=	\
     sha256:82596ed558478d28248c7bc3828eb09e6948c099bbd76bb7ee745a0e3275b548
 COMPONENT_ANITYA_ID=	9765
 
+PATH=$(GNUBIN):$(USRBINDIR)
+
 # Move bundled ffmpeg out of the way so the build will use the
 # headers from the external ffmpeg delivered in package media/ffmpeg
 COMPONENT_PRE_CONFIGURE_ACTION += ( \
