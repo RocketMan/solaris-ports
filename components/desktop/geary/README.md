@@ -11,7 +11,7 @@ You will need the WebKitGTK+ from this repo (2.22.3 or later), rather than
 the one from the userland gate.
 
 As well, you will need to update your vala with the latest vapi files
-for WebKit.  You can get the current vala files from the GNOME vala repo.
+for WebKit.  You can get the current vala from this repo.
 
 ## Screenshot
 ![screenshot](https://raw.githubusercontent.com/RocketMan/solaris-ports/master/components/desktop/geary/screenshot.png "Geary")

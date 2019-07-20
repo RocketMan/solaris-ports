@@ -28,27 +28,31 @@
    gck,
    gcr,
    gee,
---- a/src/client/application/geary-controller.vala	2019-03-17 13:36:30.000000000 +0000
-+++ b/src/client/application/geary-controller.vala	2019-03-26 19:49:50.485643603 +0000
-@@ -260,16 +260,11 @@
+--- a/src/client/application/geary-controller.vala	2019-07-20 18:51:38.354201721 +0000
++++ b/src/client/application/geary-controller.vala	2019-07-20 18:52:54.991428416 +0000
+@@ -260,21 +260,10 @@
              error("Error loading web resources: %s", err.message);
          }
  
 -        Folks.IndividualAggregator individuals =
 -            Folks.IndividualAggregator.dup();
 -        if (!individuals.is_prepared) {
--            try {
--                yield individuals.prepare();
--            } catch (GLib.Error err) {
--                error("Error preparing Folks: %s", err.message);
--            }
+-            // Do this in the background since it can take a long time
+-            // on some systems and the GUI shouldn't be blocked by it
+-            individuals.prepare.begin((obj, res) => {
+-                    try {
+-                        individuals.prepare.end(res);
+-                    } catch (GLib.Error err) {
+-                        warning("Error preparing Folks: %s", err.message);
+-                    }
+-                });
+-
 -        }
 -        this.avatar_store = new Application.AvatarStore(individuals);
 +        this.avatar_store = new Application.AvatarStore(
 +            this.application.config,
 +            this.application.get_user_cache_directory()
 +        );
-+
  
          // Create the main window (must be done after creating actions.)
          main_window = new MainWindow(this.application);
