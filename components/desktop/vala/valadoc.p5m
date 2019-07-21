@@ -39,29 +39,37 @@ set name=info.classification \
 set name=info.source-url value=$(COMPONENT_ARCHIVE_URL)
 set name=info.upstream-url value=$(COMPONENT_PROJECT_URL)
 set name=org.opensolaris.consolidation value=$(CONSOLIDATION)
-link path=usr/bin/$(MACH64)/valadoc target=valadoc-0.42
-file path=usr/bin/$(MACH64)/valadoc-0.42
-link path=usr/bin/valadoc target=valadoc-0.42
-file path=usr/bin/valadoc-0.42
-file path=usr/include/valadoc-0.42/valadoc.h
-link path=usr/lib/$(MACH64)/libvaladoc-0.42.so target=libvaladoc-0.42.so.0.0.0
-link path=usr/lib/$(MACH64)/libvaladoc-0.42.so.0 target=libvaladoc-0.42.so.0.0.0
-file path=usr/lib/$(MACH64)/libvaladoc-0.42.so.0.0.0
-file path=usr/lib/$(MACH64)/pkgconfig/valadoc-0.42.pc
+link path=usr/bin/$(MACH64)/valadoc target=valadoc-0.44
+file path=usr/bin/$(MACH64)/valadoc-0.44
+link path=usr/bin/valadoc target=valadoc-0.44
+file path=usr/bin/valadoc-0.44
+file path=usr/include/valadoc-0.44/valadoc.h
+file path=usr/lib/$(MACH64)/libvaladoc-0.44.la
+link path=usr/lib/$(MACH64)/libvaladoc-0.44.so target=libvaladoc-0.44.so.0.0.0
+link path=usr/lib/$(MACH64)/libvaladoc-0.44.so.0 target=libvaladoc-0.44.so.0.0.0
+file path=usr/lib/$(MACH64)/libvaladoc-0.44.so.0.0.0
+file path=usr/lib/$(MACH64)/pkgconfig/valadoc-0.44.pc
+file path=usr/lib/$(MACH64)/valadoc/doclets/devhelp/libdoclet.la
 file path=usr/lib/$(MACH64)/valadoc/doclets/devhelp/libdoclet.so
+file path=usr/lib/$(MACH64)/valadoc/doclets/gtkdoc/libdoclet.la
 file path=usr/lib/$(MACH64)/valadoc/doclets/gtkdoc/libdoclet.so
+file path=usr/lib/$(MACH64)/valadoc/doclets/html/libdoclet.la
 file path=usr/lib/$(MACH64)/valadoc/doclets/html/libdoclet.so
-link path=usr/lib/libvaladoc-0.42.so target=libvaladoc-0.42.so.0.0.0
-link path=usr/lib/libvaladoc-0.42.so.0 target=libvaladoc-0.42.so.0.0.0
-file path=usr/lib/libvaladoc-0.42.so.0.0.0
-file path=usr/lib/pkgconfig/valadoc-0.42.pc
+file path=usr/lib/libvaladoc-0.44.la
+link path=usr/lib/libvaladoc-0.44.so target=libvaladoc-0.44.so.0.0.0
+link path=usr/lib/libvaladoc-0.44.so.0 target=libvaladoc-0.44.so.0.0.0
+file path=usr/lib/libvaladoc-0.44.so.0.0.0
+file path=usr/lib/pkgconfig/valadoc-0.44.pc
+file path=usr/lib/valadoc/doclets/devhelp/libdoclet.la
 file path=usr/lib/valadoc/doclets/devhelp/libdoclet.so
+file path=usr/lib/valadoc/doclets/gtkdoc/libdoclet.la
 file path=usr/lib/valadoc/doclets/gtkdoc/libdoclet.so
+file path=usr/lib/valadoc/doclets/html/libdoclet.la
 file path=usr/lib/valadoc/doclets/html/libdoclet.so
-file path=usr/share/man/man1/valadoc-0.42.1
-link path=usr/share/man/man1/valadoc.1 target=valadoc-0.42.1
-file path=usr/share/vala/vapi/valadoc-0.42.deps
-file path=usr/share/vala/vapi/valadoc-0.42.vapi
+file path=usr/share/man/man1/valadoc-0.44.1
+link path=usr/share/man/man1/valadoc.1 target=valadoc-0.44.1
+file path=usr/share/vala/vapi/valadoc-0.44.deps
+file path=usr/share/vala/vapi/valadoc-0.44.vapi
 file path=usr/share/valadoc/icons/abstractclass.png
 file path=usr/share/valadoc/icons/abstractmethod.png
 file path=usr/share/valadoc/icons/abstractproperty.png
