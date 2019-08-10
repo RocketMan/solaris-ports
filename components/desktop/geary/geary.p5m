@@ -34,473 +34,275 @@ set name=info.classification \
 set name=info.repository-url value=$(GIT_REPO)
 set name=info.upstream-url value=$(COMPONENT_PROJECT_URL)
 set name=org.opensolaris.consolidation value=$(CONSOLIDATION)
-file usr/bin/geary path=usr/bin/geary
-file usr/lib/$(MACH64)/geary/web-extensions/libgeary-web-process.so \
-    path=usr/lib/$(MACH64)/geary/web-extensions/libgeary-web-process.so
-file usr/share/applications/geary-autostart.desktop \
-    path=usr/share/applications/geary-autostart.desktop
-file usr/share/applications/org.gnome.Geary.desktop \
-    path=usr/share/applications/org.gnome.Geary.desktop
-file usr/share/geary/sql/version-001.sql \
-    path=usr/share/geary/sql/version-001.sql
-file usr/share/geary/sql/version-002.sql \
-    path=usr/share/geary/sql/version-002.sql
-file usr/share/geary/sql/version-003.sql \
-    path=usr/share/geary/sql/version-003.sql
-file usr/share/geary/sql/version-004.sql \
-    path=usr/share/geary/sql/version-004.sql
-file usr/share/geary/sql/version-005.sql \
-    path=usr/share/geary/sql/version-005.sql
-file usr/share/geary/sql/version-006.sql \
-    path=usr/share/geary/sql/version-006.sql
-file usr/share/geary/sql/version-007.sql \
-    path=usr/share/geary/sql/version-007.sql
-file usr/share/geary/sql/version-008.sql \
-    path=usr/share/geary/sql/version-008.sql
-file usr/share/geary/sql/version-009.sql \
-    path=usr/share/geary/sql/version-009.sql
-file usr/share/geary/sql/version-010.sql \
-    path=usr/share/geary/sql/version-010.sql
-file usr/share/geary/sql/version-011.sql \
-    path=usr/share/geary/sql/version-011.sql
-file usr/share/geary/sql/version-012.sql \
-    path=usr/share/geary/sql/version-012.sql
-file usr/share/geary/sql/version-013.sql \
-    path=usr/share/geary/sql/version-013.sql
-file usr/share/geary/sql/version-014.sql \
-    path=usr/share/geary/sql/version-014.sql
-file usr/share/geary/sql/version-015.sql \
-    path=usr/share/geary/sql/version-015.sql
-file usr/share/geary/sql/version-016.sql \
-    path=usr/share/geary/sql/version-016.sql
-file usr/share/geary/sql/version-017.sql \
-    path=usr/share/geary/sql/version-017.sql
-file usr/share/geary/sql/version-018.sql \
-    path=usr/share/geary/sql/version-018.sql
-file usr/share/geary/sql/version-019.sql \
-    path=usr/share/geary/sql/version-019.sql
-file usr/share/geary/sql/version-020.sql \
-    path=usr/share/geary/sql/version-020.sql
-file usr/share/geary/sql/version-021.sql \
-    path=usr/share/geary/sql/version-021.sql
-file usr/share/geary/sql/version-022.sql \
-    path=usr/share/geary/sql/version-022.sql
-file usr/share/geary/sql/version-023.sql \
-    path=usr/share/geary/sql/version-023.sql
-file usr/share/geary/sql/version-024.sql \
-    path=usr/share/geary/sql/version-024.sql
-file usr/share/geary/sql/version-025.sql \
-    path=usr/share/geary/sql/version-025.sql
-file usr/share/glib-2.0/schemas/org.gnome.Geary.gschema.xml \
-    path=usr/share/glib-2.0/schemas/org.gnome.Geary.gschema.xml
-file usr/share/help/C/geary/accounts.page \
-    path=usr/share/help/C/geary/accounts.page
-file usr/share/help/C/geary/archive.page \
-    path=usr/share/help/C/geary/archive.page
-file usr/share/help/C/geary/bugs.page path=usr/share/help/C/geary/bugs.page
-file usr/share/help/C/geary/contributing.page \
-    path=usr/share/help/C/geary/contributing.page
-file usr/share/help/C/geary/figures/geary.svg \
-    path=usr/share/help/C/geary/figures/geary.svg
-file usr/share/help/C/geary/index.page path=usr/share/help/C/geary/index.page
-file usr/share/help/C/geary/label.page path=usr/share/help/C/geary/label.page
-file usr/share/help/C/geary/limits.page path=usr/share/help/C/geary/limits.page
-file usr/share/help/C/geary/overview.page \
-    path=usr/share/help/C/geary/overview.page
-file usr/share/help/C/geary/preferences.page \
-    path=usr/share/help/C/geary/preferences.page
-file usr/share/help/C/geary/search.page path=usr/share/help/C/geary/search.page
-file usr/share/help/C/geary/shortcuts.page \
-    path=usr/share/help/C/geary/shortcuts.page
-file usr/share/help/C/geary/star.page path=usr/share/help/C/geary/star.page
-file usr/share/help/C/geary/write.page path=usr/share/help/C/geary/write.page
-file usr/share/help/cs/geary/accounts.page \
-    path=usr/share/help/cs/geary/accounts.page
-file usr/share/help/cs/geary/archive.page \
-    path=usr/share/help/cs/geary/archive.page
-file usr/share/help/cs/geary/bugs.page path=usr/share/help/cs/geary/bugs.page
-file usr/share/help/cs/geary/contributing.page \
-    path=usr/share/help/cs/geary/contributing.page
+file path=usr/bin/geary
+file path=usr/lib/$(MACH64)/geary/web-extensions/libgeary-web-process.so
+file path=usr/share/applications/geary-autostart.desktop
+file path=usr/share/applications/org.gnome.Geary.desktop
+file path=usr/share/geary/sql/version-001.sql
+file path=usr/share/geary/sql/version-002.sql
+file path=usr/share/geary/sql/version-003.sql
+file path=usr/share/geary/sql/version-004.sql
+file path=usr/share/geary/sql/version-005.sql
+file path=usr/share/geary/sql/version-006.sql
+file path=usr/share/geary/sql/version-007.sql
+file path=usr/share/geary/sql/version-008.sql
+file path=usr/share/geary/sql/version-009.sql
+file path=usr/share/geary/sql/version-010.sql
+file path=usr/share/geary/sql/version-011.sql
+file path=usr/share/geary/sql/version-012.sql
+file path=usr/share/geary/sql/version-013.sql
+file path=usr/share/geary/sql/version-014.sql
+file path=usr/share/geary/sql/version-015.sql
+file path=usr/share/geary/sql/version-016.sql
+file path=usr/share/geary/sql/version-017.sql
+file path=usr/share/geary/sql/version-018.sql
+file path=usr/share/geary/sql/version-019.sql
+file path=usr/share/geary/sql/version-020.sql
+file path=usr/share/geary/sql/version-021.sql
+file path=usr/share/geary/sql/version-022.sql
+file path=usr/share/geary/sql/version-023.sql
+file path=usr/share/geary/sql/version-024.sql
+file path=usr/share/geary/sql/version-025.sql
+file path=usr/share/glib-2.0/schemas/org.gnome.Geary.gschema.xml
+file path=usr/share/help/C/geary/accounts.page
+file path=usr/share/help/C/geary/archive.page
+file path=usr/share/help/C/geary/bugs.page
+file path=usr/share/help/C/geary/contributing.page
+file path=usr/share/help/C/geary/figures/geary.svg
+file path=usr/share/help/C/geary/index.page
+file path=usr/share/help/C/geary/label.page
+file path=usr/share/help/C/geary/limits.page
+file path=usr/share/help/C/geary/overview.page
+file path=usr/share/help/C/geary/preferences.page
+file path=usr/share/help/C/geary/search.page
+file path=usr/share/help/C/geary/shortcuts.page
+file path=usr/share/help/C/geary/star.page
+file path=usr/share/help/C/geary/write.page
+file path=usr/share/help/cs/geary/accounts.page
+file path=usr/share/help/cs/geary/archive.page
+file path=usr/share/help/cs/geary/bugs.page
+file path=usr/share/help/cs/geary/contributing.page
 link path=usr/share/help/cs/geary/figures/geary.svg \
     target=../../../C/geary/figures/geary.svg
-file usr/share/help/cs/geary/index.page path=usr/share/help/cs/geary/index.page
-file usr/share/help/cs/geary/label.page path=usr/share/help/cs/geary/label.page
-file usr/share/help/cs/geary/limits.page \
-    path=usr/share/help/cs/geary/limits.page
-file usr/share/help/cs/geary/overview.page \
-    path=usr/share/help/cs/geary/overview.page
-file usr/share/help/cs/geary/preferences.page \
-    path=usr/share/help/cs/geary/preferences.page
-file usr/share/help/cs/geary/search.page \
-    path=usr/share/help/cs/geary/search.page
-file usr/share/help/cs/geary/shortcuts.page \
-    path=usr/share/help/cs/geary/shortcuts.page
-file usr/share/help/cs/geary/star.page path=usr/share/help/cs/geary/star.page
-file usr/share/help/cs/geary/write.page path=usr/share/help/cs/geary/write.page
-file usr/share/help/de/geary/accounts.page \
-    path=usr/share/help/de/geary/accounts.page
-file usr/share/help/de/geary/archive.page \
-    path=usr/share/help/de/geary/archive.page
-file usr/share/help/de/geary/bugs.page path=usr/share/help/de/geary/bugs.page
-file usr/share/help/de/geary/contributing.page \
-    path=usr/share/help/de/geary/contributing.page
+file path=usr/share/help/cs/geary/index.page
+file path=usr/share/help/cs/geary/label.page
+file path=usr/share/help/cs/geary/limits.page
+file path=usr/share/help/cs/geary/overview.page
+file path=usr/share/help/cs/geary/preferences.page
+file path=usr/share/help/cs/geary/search.page
+file path=usr/share/help/cs/geary/shortcuts.page
+file path=usr/share/help/cs/geary/star.page
+file path=usr/share/help/cs/geary/write.page
+file path=usr/share/help/de/geary/accounts.page
+file path=usr/share/help/de/geary/archive.page
+file path=usr/share/help/de/geary/bugs.page
+file path=usr/share/help/de/geary/contributing.page
 link path=usr/share/help/de/geary/figures/geary.svg \
     target=../../../C/geary/figures/geary.svg
-file usr/share/help/de/geary/index.page path=usr/share/help/de/geary/index.page
-file usr/share/help/de/geary/label.page path=usr/share/help/de/geary/label.page
-file usr/share/help/de/geary/limits.page \
-    path=usr/share/help/de/geary/limits.page
-file usr/share/help/de/geary/overview.page \
-    path=usr/share/help/de/geary/overview.page
-file usr/share/help/de/geary/preferences.page \
-    path=usr/share/help/de/geary/preferences.page
-file usr/share/help/de/geary/search.page \
-    path=usr/share/help/de/geary/search.page
-file usr/share/help/de/geary/shortcuts.page \
-    path=usr/share/help/de/geary/shortcuts.page
-file usr/share/help/de/geary/star.page path=usr/share/help/de/geary/star.page
-file usr/share/help/de/geary/write.page path=usr/share/help/de/geary/write.page
-file usr/share/help/el/geary/accounts.page \
-    path=usr/share/help/el/geary/accounts.page
-file usr/share/help/el/geary/archive.page \
-    path=usr/share/help/el/geary/archive.page
-file usr/share/help/el/geary/bugs.page path=usr/share/help/el/geary/bugs.page
-file usr/share/help/el/geary/contributing.page \
-    path=usr/share/help/el/geary/contributing.page
+file path=usr/share/help/de/geary/index.page
+file path=usr/share/help/de/geary/label.page
+file path=usr/share/help/de/geary/limits.page
+file path=usr/share/help/de/geary/overview.page
+file path=usr/share/help/de/geary/preferences.page
+file path=usr/share/help/de/geary/search.page
+file path=usr/share/help/de/geary/shortcuts.page
+file path=usr/share/help/de/geary/star.page
+file path=usr/share/help/de/geary/write.page
+file path=usr/share/help/el/geary/accounts.page
+file path=usr/share/help/el/geary/archive.page
+file path=usr/share/help/el/geary/bugs.page
+file path=usr/share/help/el/geary/contributing.page
 link path=usr/share/help/el/geary/figures/geary.svg \
     target=../../../C/geary/figures/geary.svg
-file usr/share/help/el/geary/index.page path=usr/share/help/el/geary/index.page
-file usr/share/help/el/geary/label.page path=usr/share/help/el/geary/label.page
-file usr/share/help/el/geary/limits.page \
-    path=usr/share/help/el/geary/limits.page
-file usr/share/help/el/geary/overview.page \
-    path=usr/share/help/el/geary/overview.page
-file usr/share/help/el/geary/preferences.page \
-    path=usr/share/help/el/geary/preferences.page
-file usr/share/help/el/geary/search.page \
-    path=usr/share/help/el/geary/search.page
-file usr/share/help/el/geary/shortcuts.page \
-    path=usr/share/help/el/geary/shortcuts.page
-file usr/share/help/el/geary/star.page path=usr/share/help/el/geary/star.page
-file usr/share/help/el/geary/write.page path=usr/share/help/el/geary/write.page
-file usr/share/help/es/geary/accounts.page \
-    path=usr/share/help/es/geary/accounts.page
-file usr/share/help/es/geary/archive.page \
-    path=usr/share/help/es/geary/archive.page
-file usr/share/help/es/geary/bugs.page path=usr/share/help/es/geary/bugs.page
-file usr/share/help/es/geary/contributing.page \
-    path=usr/share/help/es/geary/contributing.page
+file path=usr/share/help/el/geary/index.page
+file path=usr/share/help/el/geary/label.page
+file path=usr/share/help/el/geary/limits.page
+file path=usr/share/help/el/geary/overview.page
+file path=usr/share/help/el/geary/preferences.page
+file path=usr/share/help/el/geary/search.page
+file path=usr/share/help/el/geary/shortcuts.page
+file path=usr/share/help/el/geary/star.page
+file path=usr/share/help/el/geary/write.page
+file path=usr/share/help/es/geary/accounts.page
+file path=usr/share/help/es/geary/archive.page
+file path=usr/share/help/es/geary/bugs.page
+file path=usr/share/help/es/geary/contributing.page
 link path=usr/share/help/es/geary/figures/geary.svg \
     target=../../../C/geary/figures/geary.svg
-file usr/share/help/es/geary/index.page path=usr/share/help/es/geary/index.page
-file usr/share/help/es/geary/label.page path=usr/share/help/es/geary/label.page
-file usr/share/help/es/geary/limits.page \
-    path=usr/share/help/es/geary/limits.page
-file usr/share/help/es/geary/overview.page \
-    path=usr/share/help/es/geary/overview.page
-file usr/share/help/es/geary/preferences.page \
-    path=usr/share/help/es/geary/preferences.page
-file usr/share/help/es/geary/search.page \
-    path=usr/share/help/es/geary/search.page
-file usr/share/help/es/geary/shortcuts.page \
-    path=usr/share/help/es/geary/shortcuts.page
-file usr/share/help/es/geary/star.page path=usr/share/help/es/geary/star.page
-file usr/share/help/es/geary/write.page path=usr/share/help/es/geary/write.page
-file usr/share/help/fr/geary/accounts.page \
-    path=usr/share/help/fr/geary/accounts.page
-file usr/share/help/fr/geary/archive.page \
-    path=usr/share/help/fr/geary/archive.page
-file usr/share/help/fr/geary/bugs.page path=usr/share/help/fr/geary/bugs.page
-file usr/share/help/fr/geary/contributing.page \
-    path=usr/share/help/fr/geary/contributing.page
+file path=usr/share/help/es/geary/index.page
+file path=usr/share/help/es/geary/label.page
+file path=usr/share/help/es/geary/limits.page
+file path=usr/share/help/es/geary/overview.page
+file path=usr/share/help/es/geary/preferences.page
+file path=usr/share/help/es/geary/search.page
+file path=usr/share/help/es/geary/shortcuts.page
+file path=usr/share/help/es/geary/star.page
+file path=usr/share/help/es/geary/write.page
+file path=usr/share/help/fr/geary/accounts.page
+file path=usr/share/help/fr/geary/archive.page
+file path=usr/share/help/fr/geary/bugs.page
+file path=usr/share/help/fr/geary/contributing.page
 link path=usr/share/help/fr/geary/figures/geary.svg \
     target=../../../C/geary/figures/geary.svg
-file usr/share/help/fr/geary/index.page path=usr/share/help/fr/geary/index.page
-file usr/share/help/fr/geary/label.page path=usr/share/help/fr/geary/label.page
-file usr/share/help/fr/geary/limits.page \
-    path=usr/share/help/fr/geary/limits.page
-file usr/share/help/fr/geary/overview.page \
-    path=usr/share/help/fr/geary/overview.page
-file usr/share/help/fr/geary/preferences.page \
-    path=usr/share/help/fr/geary/preferences.page
-file usr/share/help/fr/geary/search.page \
-    path=usr/share/help/fr/geary/search.page
-file usr/share/help/fr/geary/shortcuts.page \
-    path=usr/share/help/fr/geary/shortcuts.page
-file usr/share/help/fr/geary/star.page path=usr/share/help/fr/geary/star.page
-file usr/share/help/fr/geary/write.page path=usr/share/help/fr/geary/write.page
-file usr/share/help/it/geary/accounts.page \
-    path=usr/share/help/it/geary/accounts.page
-file usr/share/help/it/geary/archive.page \
-    path=usr/share/help/it/geary/archive.page
-file usr/share/help/it/geary/bugs.page path=usr/share/help/it/geary/bugs.page
-file usr/share/help/it/geary/contributing.page \
-    path=usr/share/help/it/geary/contributing.page
+file path=usr/share/help/fr/geary/index.page
+file path=usr/share/help/fr/geary/label.page
+file path=usr/share/help/fr/geary/limits.page
+file path=usr/share/help/fr/geary/overview.page
+file path=usr/share/help/fr/geary/preferences.page
+file path=usr/share/help/fr/geary/search.page
+file path=usr/share/help/fr/geary/shortcuts.page
+file path=usr/share/help/fr/geary/star.page
+file path=usr/share/help/fr/geary/write.page
+file path=usr/share/help/it/geary/accounts.page
+file path=usr/share/help/it/geary/archive.page
+file path=usr/share/help/it/geary/bugs.page
+file path=usr/share/help/it/geary/contributing.page
 link path=usr/share/help/it/geary/figures/geary.svg \
     target=../../../C/geary/figures/geary.svg
-file usr/share/help/it/geary/index.page path=usr/share/help/it/geary/index.page
-file usr/share/help/it/geary/label.page path=usr/share/help/it/geary/label.page
-file usr/share/help/it/geary/limits.page \
-    path=usr/share/help/it/geary/limits.page
-file usr/share/help/it/geary/overview.page \
-    path=usr/share/help/it/geary/overview.page
-file usr/share/help/it/geary/preferences.page \
-    path=usr/share/help/it/geary/preferences.page
-file usr/share/help/it/geary/search.page \
-    path=usr/share/help/it/geary/search.page
-file usr/share/help/it/geary/shortcuts.page \
-    path=usr/share/help/it/geary/shortcuts.page
-file usr/share/help/it/geary/star.page path=usr/share/help/it/geary/star.page
-file usr/share/help/it/geary/write.page path=usr/share/help/it/geary/write.page
-file usr/share/help/pl/geary/accounts.page \
-    path=usr/share/help/pl/geary/accounts.page
-file usr/share/help/pl/geary/archive.page \
-    path=usr/share/help/pl/geary/archive.page
-file usr/share/help/pl/geary/bugs.page path=usr/share/help/pl/geary/bugs.page
-file usr/share/help/pl/geary/contributing.page \
-    path=usr/share/help/pl/geary/contributing.page
+file path=usr/share/help/it/geary/index.page
+file path=usr/share/help/it/geary/label.page
+file path=usr/share/help/it/geary/limits.page
+file path=usr/share/help/it/geary/overview.page
+file path=usr/share/help/it/geary/preferences.page
+file path=usr/share/help/it/geary/search.page
+file path=usr/share/help/it/geary/shortcuts.page
+file path=usr/share/help/it/geary/star.page
+file path=usr/share/help/it/geary/write.page
+file path=usr/share/help/pl/geary/accounts.page
+file path=usr/share/help/pl/geary/archive.page
+file path=usr/share/help/pl/geary/bugs.page
+file path=usr/share/help/pl/geary/contributing.page
 link path=usr/share/help/pl/geary/figures/geary.svg \
     target=../../../C/geary/figures/geary.svg
-file usr/share/help/pl/geary/index.page path=usr/share/help/pl/geary/index.page
-file usr/share/help/pl/geary/label.page path=usr/share/help/pl/geary/label.page
-file usr/share/help/pl/geary/limits.page \
-    path=usr/share/help/pl/geary/limits.page
-file usr/share/help/pl/geary/overview.page \
-    path=usr/share/help/pl/geary/overview.page
-file usr/share/help/pl/geary/preferences.page \
-    path=usr/share/help/pl/geary/preferences.page
-file usr/share/help/pl/geary/search.page \
-    path=usr/share/help/pl/geary/search.page
-file usr/share/help/pl/geary/shortcuts.page \
-    path=usr/share/help/pl/geary/shortcuts.page
-file usr/share/help/pl/geary/star.page path=usr/share/help/pl/geary/star.page
-file usr/share/help/pl/geary/write.page path=usr/share/help/pl/geary/write.page
-file usr/share/help/pt_BR/geary/accounts.page \
-    path=usr/share/help/pt_BR/geary/accounts.page
-file usr/share/help/pt_BR/geary/archive.page \
-    path=usr/share/help/pt_BR/geary/archive.page
-file usr/share/help/pt_BR/geary/bugs.page \
-    path=usr/share/help/pt_BR/geary/bugs.page
-file usr/share/help/pt_BR/geary/contributing.page \
-    path=usr/share/help/pt_BR/geary/contributing.page
+file path=usr/share/help/pl/geary/index.page
+file path=usr/share/help/pl/geary/label.page
+file path=usr/share/help/pl/geary/limits.page
+file path=usr/share/help/pl/geary/overview.page
+file path=usr/share/help/pl/geary/preferences.page
+file path=usr/share/help/pl/geary/search.page
+file path=usr/share/help/pl/geary/shortcuts.page
+file path=usr/share/help/pl/geary/star.page
+file path=usr/share/help/pl/geary/write.page
+file path=usr/share/help/pt_BR/geary/accounts.page
+file path=usr/share/help/pt_BR/geary/archive.page
+file path=usr/share/help/pt_BR/geary/bugs.page
+file path=usr/share/help/pt_BR/geary/contributing.page
 link path=usr/share/help/pt_BR/geary/figures/geary.svg \
     target=../../../C/geary/figures/geary.svg
-file usr/share/help/pt_BR/geary/index.page \
-    path=usr/share/help/pt_BR/geary/index.page
-file usr/share/help/pt_BR/geary/label.page \
-    path=usr/share/help/pt_BR/geary/label.page
-file usr/share/help/pt_BR/geary/limits.page \
-    path=usr/share/help/pt_BR/geary/limits.page
-file usr/share/help/pt_BR/geary/overview.page \
-    path=usr/share/help/pt_BR/geary/overview.page
-file usr/share/help/pt_BR/geary/preferences.page \
-    path=usr/share/help/pt_BR/geary/preferences.page
-file usr/share/help/pt_BR/geary/search.page \
-    path=usr/share/help/pt_BR/geary/search.page
-file usr/share/help/pt_BR/geary/shortcuts.page \
-    path=usr/share/help/pt_BR/geary/shortcuts.page
-file usr/share/help/pt_BR/geary/star.page \
-    path=usr/share/help/pt_BR/geary/star.page
-file usr/share/help/pt_BR/geary/write.page \
-    path=usr/share/help/pt_BR/geary/write.page
-file usr/share/help/sv/geary/accounts.page \
-    path=usr/share/help/sv/geary/accounts.page
-file usr/share/help/sv/geary/archive.page \
-    path=usr/share/help/sv/geary/archive.page
-file usr/share/help/sv/geary/bugs.page path=usr/share/help/sv/geary/bugs.page
-file usr/share/help/sv/geary/contributing.page \
-    path=usr/share/help/sv/geary/contributing.page
+file path=usr/share/help/pt_BR/geary/index.page
+file path=usr/share/help/pt_BR/geary/label.page
+file path=usr/share/help/pt_BR/geary/limits.page
+file path=usr/share/help/pt_BR/geary/overview.page
+file path=usr/share/help/pt_BR/geary/preferences.page
+file path=usr/share/help/pt_BR/geary/search.page
+file path=usr/share/help/pt_BR/geary/shortcuts.page
+file path=usr/share/help/pt_BR/geary/star.page
+file path=usr/share/help/pt_BR/geary/write.page
+file path=usr/share/help/sv/geary/accounts.page
+file path=usr/share/help/sv/geary/archive.page
+file path=usr/share/help/sv/geary/bugs.page
+file path=usr/share/help/sv/geary/contributing.page
 link path=usr/share/help/sv/geary/figures/geary.svg \
     target=../../../C/geary/figures/geary.svg
-file usr/share/help/sv/geary/index.page path=usr/share/help/sv/geary/index.page
-file usr/share/help/sv/geary/label.page path=usr/share/help/sv/geary/label.page
-file usr/share/help/sv/geary/limits.page \
-    path=usr/share/help/sv/geary/limits.page
-file usr/share/help/sv/geary/overview.page \
-    path=usr/share/help/sv/geary/overview.page
-file usr/share/help/sv/geary/preferences.page \
-    path=usr/share/help/sv/geary/preferences.page
-file usr/share/help/sv/geary/search.page \
-    path=usr/share/help/sv/geary/search.page
-file usr/share/help/sv/geary/shortcuts.page \
-    path=usr/share/help/sv/geary/shortcuts.page
-file usr/share/help/sv/geary/star.page path=usr/share/help/sv/geary/star.page
-file usr/share/help/sv/geary/write.page path=usr/share/help/sv/geary/write.page
-file usr/share/help/tr/geary/accounts.page \
-    path=usr/share/help/tr/geary/accounts.page
-file usr/share/help/tr/geary/archive.page \
-    path=usr/share/help/tr/geary/archive.page
-file usr/share/help/tr/geary/bugs.page path=usr/share/help/tr/geary/bugs.page
-file usr/share/help/tr/geary/contributing.page \
-    path=usr/share/help/tr/geary/contributing.page
+file path=usr/share/help/sv/geary/index.page
+file path=usr/share/help/sv/geary/label.page
+file path=usr/share/help/sv/geary/limits.page
+file path=usr/share/help/sv/geary/overview.page
+file path=usr/share/help/sv/geary/preferences.page
+file path=usr/share/help/sv/geary/search.page
+file path=usr/share/help/sv/geary/shortcuts.page
+file path=usr/share/help/sv/geary/star.page
+file path=usr/share/help/sv/geary/write.page
+file path=usr/share/help/tr/geary/accounts.page
+file path=usr/share/help/tr/geary/archive.page
+file path=usr/share/help/tr/geary/bugs.page
+file path=usr/share/help/tr/geary/contributing.page
 link path=usr/share/help/tr/geary/figures/geary.svg \
     target=../../../C/geary/figures/geary.svg
-file usr/share/help/tr/geary/index.page path=usr/share/help/tr/geary/index.page
-file usr/share/help/tr/geary/label.page path=usr/share/help/tr/geary/label.page
-file usr/share/help/tr/geary/limits.page \
-    path=usr/share/help/tr/geary/limits.page
-file usr/share/help/tr/geary/overview.page \
-    path=usr/share/help/tr/geary/overview.page
-file usr/share/help/tr/geary/preferences.page \
-    path=usr/share/help/tr/geary/preferences.page
-file usr/share/help/tr/geary/search.page \
-    path=usr/share/help/tr/geary/search.page
-file usr/share/help/tr/geary/shortcuts.page \
-    path=usr/share/help/tr/geary/shortcuts.page
-file usr/share/help/tr/geary/star.page path=usr/share/help/tr/geary/star.page
-file usr/share/help/tr/geary/write.page path=usr/share/help/tr/geary/write.page
-file usr/share/icons/hicolor/scalable/actions/close-symbolic.svg \
-    path=usr/share/icons/hicolor/scalable/actions/close-symbolic.svg
-file usr/share/icons/hicolor/scalable/actions/detach-symbolic.svg \
-    path=usr/share/icons/hicolor/scalable/actions/detach-symbolic.svg
-file usr/share/icons/hicolor/scalable/actions/edit-symbolic.svg \
-    path=usr/share/icons/hicolor/scalable/actions/edit-symbolic.svg
-file usr/share/icons/hicolor/scalable/actions/format-ordered-list-symbolic-rtl.svg \
-    path=usr/share/icons/hicolor/scalable/actions/format-ordered-list-symbolic-rtl.svg
-file usr/share/icons/hicolor/scalable/actions/format-ordered-list-symbolic.svg \
-    path=usr/share/icons/hicolor/scalable/actions/format-ordered-list-symbolic.svg
-file usr/share/icons/hicolor/scalable/actions/format-text-remove-symbolic.svg \
-    path=usr/share/icons/hicolor/scalable/actions/format-text-remove-symbolic.svg
-file usr/share/icons/hicolor/scalable/actions/format-unordered-list-symbolic-rtl.svg \
-    path=usr/share/icons/hicolor/scalable/actions/format-unordered-list-symbolic-rtl.svg
-file usr/share/icons/hicolor/scalable/actions/format-unordered-list-symbolic.svg \
-    path=usr/share/icons/hicolor/scalable/actions/format-unordered-list-symbolic.svg
-file usr/share/icons/hicolor/scalable/actions/mail-archive-symbolic.svg \
-    path=usr/share/icons/hicolor/scalable/actions/mail-archive-symbolic.svg
-file usr/share/icons/hicolor/scalable/actions/mail-drafts-symbolic-rtl.svg \
-    path=usr/share/icons/hicolor/scalable/actions/mail-drafts-symbolic-rtl.svg
-file usr/share/icons/hicolor/scalable/actions/mail-drafts-symbolic.svg \
-    path=usr/share/icons/hicolor/scalable/actions/mail-drafts-symbolic.svg
-file usr/share/icons/hicolor/scalable/actions/mail-forward-symbolic-rtl.svg \
-    path=usr/share/icons/hicolor/scalable/actions/mail-forward-symbolic-rtl.svg
-file usr/share/icons/hicolor/scalable/actions/mail-forward-symbolic.svg \
-    path=usr/share/icons/hicolor/scalable/actions/mail-forward-symbolic.svg
-file usr/share/icons/hicolor/scalable/actions/mail-inbox-symbolic.svg \
-    path=usr/share/icons/hicolor/scalable/actions/mail-inbox-symbolic.svg
-file usr/share/icons/hicolor/scalable/actions/mail-outbox-symbolic.svg \
-    path=usr/share/icons/hicolor/scalable/actions/mail-outbox-symbolic.svg
-file usr/share/icons/hicolor/scalable/actions/mail-reply-all-symbolic-rtl.svg \
-    path=usr/share/icons/hicolor/scalable/actions/mail-reply-all-symbolic-rtl.svg
-file usr/share/icons/hicolor/scalable/actions/mail-reply-all-symbolic.svg \
-    path=usr/share/icons/hicolor/scalable/actions/mail-reply-all-symbolic.svg
-file usr/share/icons/hicolor/scalable/actions/mail-reply-sender-symbolic-rtl.svg \
-    path=usr/share/icons/hicolor/scalable/actions/mail-reply-sender-symbolic-rtl.svg
-file usr/share/icons/hicolor/scalable/actions/mail-reply-sender-symbolic.svg \
-    path=usr/share/icons/hicolor/scalable/actions/mail-reply-sender-symbolic.svg
-file usr/share/icons/hicolor/scalable/actions/mail-sent-symbolic-rtl.svg \
-    path=usr/share/icons/hicolor/scalable/actions/mail-sent-symbolic-rtl.svg
-file usr/share/icons/hicolor/scalable/actions/mail-sent-symbolic.svg \
-    path=usr/share/icons/hicolor/scalable/actions/mail-sent-symbolic.svg
-file usr/share/icons/hicolor/scalable/actions/marker-symbolic.svg \
-    path=usr/share/icons/hicolor/scalable/actions/marker-symbolic.svg
-file usr/share/icons/hicolor/scalable/actions/tag-symbolic-rtl.svg \
-    path=usr/share/icons/hicolor/scalable/actions/tag-symbolic-rtl.svg
-file usr/share/icons/hicolor/scalable/actions/tag-symbolic.svg \
-    path=usr/share/icons/hicolor/scalable/actions/tag-symbolic.svg
-file usr/share/icons/hicolor/scalable/actions/text-x-generic-symbolic.svg \
-    path=usr/share/icons/hicolor/scalable/actions/text-x-generic-symbolic.svg
-file usr/share/icons/hicolor/scalable/apps/org.gnome.Geary.svg \
-    path=usr/share/icons/hicolor/scalable/apps/org.gnome.Geary.svg
-file usr/share/icons/hicolor/symbolic/apps/org.gnome.Geary-symbolic.svg \
-    path=usr/share/icons/hicolor/symbolic/apps/org.gnome.Geary-symbolic.svg
-file usr/share/locale/ar/LC_MESSAGES/geary.mo \
-    path=usr/share/locale/ar/LC_MESSAGES/geary.mo
-file usr/share/locale/be/LC_MESSAGES/geary.mo \
-    path=usr/share/locale/be/LC_MESSAGES/geary.mo
-file usr/share/locale/bs/LC_MESSAGES/geary.mo \
-    path=usr/share/locale/bs/LC_MESSAGES/geary.mo
-file usr/share/locale/ca/LC_MESSAGES/geary.mo \
-    path=usr/share/locale/ca/LC_MESSAGES/geary.mo
-file usr/share/locale/cs/LC_MESSAGES/geary.mo \
-    path=usr/share/locale/cs/LC_MESSAGES/geary.mo
-file usr/share/locale/da/LC_MESSAGES/geary.mo \
-    path=usr/share/locale/da/LC_MESSAGES/geary.mo
-file usr/share/locale/de/LC_MESSAGES/geary.mo \
-    path=usr/share/locale/de/LC_MESSAGES/geary.mo
-file usr/share/locale/el/LC_MESSAGES/geary.mo \
-    path=usr/share/locale/el/LC_MESSAGES/geary.mo
-file usr/share/locale/en_CA/LC_MESSAGES/geary.mo \
-    path=usr/share/locale/en_CA/LC_MESSAGES/geary.mo
-file usr/share/locale/en_GB/LC_MESSAGES/geary.mo \
-    path=usr/share/locale/en_GB/LC_MESSAGES/geary.mo
-file usr/share/locale/eo/LC_MESSAGES/geary.mo \
-    path=usr/share/locale/eo/LC_MESSAGES/geary.mo
-file usr/share/locale/es/LC_MESSAGES/geary.mo \
-    path=usr/share/locale/es/LC_MESSAGES/geary.mo
-file usr/share/locale/et/LC_MESSAGES/geary.mo \
-    path=usr/share/locale/et/LC_MESSAGES/geary.mo
-file usr/share/locale/eu/LC_MESSAGES/geary.mo \
-    path=usr/share/locale/eu/LC_MESSAGES/geary.mo
-file usr/share/locale/fa/LC_MESSAGES/geary.mo \
-    path=usr/share/locale/fa/LC_MESSAGES/geary.mo
-file usr/share/locale/fi/LC_MESSAGES/geary.mo \
-    path=usr/share/locale/fi/LC_MESSAGES/geary.mo
-file usr/share/locale/fr/LC_MESSAGES/geary.mo \
-    path=usr/share/locale/fr/LC_MESSAGES/geary.mo
-file usr/share/locale/fur/LC_MESSAGES/geary.mo \
-    path=usr/share/locale/fur/LC_MESSAGES/geary.mo
-file usr/share/locale/gl/LC_MESSAGES/geary.mo \
-    path=usr/share/locale/gl/LC_MESSAGES/geary.mo
-file usr/share/locale/he/LC_MESSAGES/geary.mo \
-    path=usr/share/locale/he/LC_MESSAGES/geary.mo
-file usr/share/locale/hi/LC_MESSAGES/geary.mo \
-    path=usr/share/locale/hi/LC_MESSAGES/geary.mo
-file usr/share/locale/hr/LC_MESSAGES/geary.mo \
-    path=usr/share/locale/hr/LC_MESSAGES/geary.mo
-file usr/share/locale/hu/LC_MESSAGES/geary.mo \
-    path=usr/share/locale/hu/LC_MESSAGES/geary.mo
-file usr/share/locale/id/LC_MESSAGES/geary.mo \
-    path=usr/share/locale/id/LC_MESSAGES/geary.mo
-file usr/share/locale/it/LC_MESSAGES/geary.mo \
-    path=usr/share/locale/it/LC_MESSAGES/geary.mo
-file usr/share/locale/ja/LC_MESSAGES/geary.mo \
-    path=usr/share/locale/ja/LC_MESSAGES/geary.mo
-file usr/share/locale/kk/LC_MESSAGES/geary.mo \
-    path=usr/share/locale/kk/LC_MESSAGES/geary.mo
-file usr/share/locale/km/LC_MESSAGES/geary.mo \
-    path=usr/share/locale/km/LC_MESSAGES/geary.mo
-file usr/share/locale/lt/LC_MESSAGES/geary.mo \
-    path=usr/share/locale/lt/LC_MESSAGES/geary.mo
-file usr/share/locale/ms/LC_MESSAGES/geary.mo \
-    path=usr/share/locale/ms/LC_MESSAGES/geary.mo
-file usr/share/locale/nb/LC_MESSAGES/geary.mo \
-    path=usr/share/locale/nb/LC_MESSAGES/geary.mo
-file usr/share/locale/nl/LC_MESSAGES/geary.mo \
-    path=usr/share/locale/nl/LC_MESSAGES/geary.mo
-file usr/share/locale/oc/LC_MESSAGES/geary.mo \
-    path=usr/share/locale/oc/LC_MESSAGES/geary.mo
-file usr/share/locale/pl/LC_MESSAGES/geary.mo \
-    path=usr/share/locale/pl/LC_MESSAGES/geary.mo
-file usr/share/locale/pt/LC_MESSAGES/geary.mo \
-    path=usr/share/locale/pt/LC_MESSAGES/geary.mo
-file usr/share/locale/pt_BR/LC_MESSAGES/geary.mo \
-    path=usr/share/locale/pt_BR/LC_MESSAGES/geary.mo
-file usr/share/locale/ro/LC_MESSAGES/geary.mo \
-    path=usr/share/locale/ro/LC_MESSAGES/geary.mo
-file usr/share/locale/ru/LC_MESSAGES/geary.mo \
-    path=usr/share/locale/ru/LC_MESSAGES/geary.mo
-file usr/share/locale/sk/LC_MESSAGES/geary.mo \
-    path=usr/share/locale/sk/LC_MESSAGES/geary.mo
-file usr/share/locale/sl/LC_MESSAGES/geary.mo \
-    path=usr/share/locale/sl/LC_MESSAGES/geary.mo
-file usr/share/locale/sr/LC_MESSAGES/geary.mo \
-    path=usr/share/locale/sr/LC_MESSAGES/geary.mo
-file usr/share/locale/sr@latin/LC_MESSAGES/geary.mo \
-    path=usr/share/locale/sr@latin/LC_MESSAGES/geary.mo
-file usr/share/locale/sv/LC_MESSAGES/geary.mo \
-    path=usr/share/locale/sv/LC_MESSAGES/geary.mo
-file usr/share/locale/te/LC_MESSAGES/geary.mo \
-    path=usr/share/locale/te/LC_MESSAGES/geary.mo
-file usr/share/locale/tr/LC_MESSAGES/geary.mo \
-    path=usr/share/locale/tr/LC_MESSAGES/geary.mo
-file usr/share/locale/uk/LC_MESSAGES/geary.mo \
-    path=usr/share/locale/uk/LC_MESSAGES/geary.mo
-file usr/share/locale/vi/LC_MESSAGES/geary.mo \
-    path=usr/share/locale/vi/LC_MESSAGES/geary.mo
-file usr/share/locale/zh_CN/LC_MESSAGES/geary.mo \
-    path=usr/share/locale/zh_CN/LC_MESSAGES/geary.mo
-file usr/share/locale/zh_TW/LC_MESSAGES/geary.mo \
-    path=usr/share/locale/zh_TW/LC_MESSAGES/geary.mo
-file usr/share/metainfo/org.gnome.Geary.appdata.xml \
-    path=usr/share/metainfo/org.gnome.Geary.appdata.xml
+file path=usr/share/help/tr/geary/index.page
+file path=usr/share/help/tr/geary/label.page
+file path=usr/share/help/tr/geary/limits.page
+file path=usr/share/help/tr/geary/overview.page
+file path=usr/share/help/tr/geary/preferences.page
+file path=usr/share/help/tr/geary/search.page
+file path=usr/share/help/tr/geary/shortcuts.page
+file path=usr/share/help/tr/geary/star.page
+file path=usr/share/help/tr/geary/write.page
+file path=usr/share/icons/hicolor/scalable/actions/close-symbolic.svg
+file path=usr/share/icons/hicolor/scalable/actions/detach-symbolic.svg
+file path=usr/share/icons/hicolor/scalable/actions/edit-symbolic.svg
+file path=usr/share/icons/hicolor/scalable/actions/format-ordered-list-symbolic-rtl.svg
+file path=usr/share/icons/hicolor/scalable/actions/format-ordered-list-symbolic.svg
+file path=usr/share/icons/hicolor/scalable/actions/format-text-remove-symbolic.svg
+file path=usr/share/icons/hicolor/scalable/actions/format-unordered-list-symbolic-rtl.svg
+file path=usr/share/icons/hicolor/scalable/actions/format-unordered-list-symbolic.svg
+file path=usr/share/icons/hicolor/scalable/actions/mail-archive-symbolic.svg
+file path=usr/share/icons/hicolor/scalable/actions/mail-drafts-symbolic-rtl.svg
+file path=usr/share/icons/hicolor/scalable/actions/mail-drafts-symbolic.svg
+file path=usr/share/icons/hicolor/scalable/actions/mail-forward-symbolic-rtl.svg
+file path=usr/share/icons/hicolor/scalable/actions/mail-forward-symbolic.svg
+file path=usr/share/icons/hicolor/scalable/actions/mail-inbox-symbolic.svg
+file path=usr/share/icons/hicolor/scalable/actions/mail-outbox-symbolic.svg
+file path=usr/share/icons/hicolor/scalable/actions/mail-reply-all-symbolic-rtl.svg
+file path=usr/share/icons/hicolor/scalable/actions/mail-reply-all-symbolic.svg
+file path=usr/share/icons/hicolor/scalable/actions/mail-reply-sender-symbolic-rtl.svg
+file path=usr/share/icons/hicolor/scalable/actions/mail-reply-sender-symbolic.svg
+file path=usr/share/icons/hicolor/scalable/actions/mail-sent-symbolic-rtl.svg
+file path=usr/share/icons/hicolor/scalable/actions/mail-sent-symbolic.svg
+file path=usr/share/icons/hicolor/scalable/actions/marker-symbolic.svg
+file path=usr/share/icons/hicolor/scalable/actions/tag-symbolic-rtl.svg
+file path=usr/share/icons/hicolor/scalable/actions/tag-symbolic.svg
+file path=usr/share/icons/hicolor/scalable/actions/text-x-generic-symbolic.svg
+file path=usr/share/icons/hicolor/scalable/apps/org.gnome.Geary.svg
+file path=usr/share/icons/hicolor/symbolic/apps/org.gnome.Geary-symbolic.svg
+file path=usr/share/locale/ar/LC_MESSAGES/geary.mo
+file path=usr/share/locale/be/LC_MESSAGES/geary.mo
+file path=usr/share/locale/bs/LC_MESSAGES/geary.mo
+file path=usr/share/locale/ca/LC_MESSAGES/geary.mo
+file path=usr/share/locale/cs/LC_MESSAGES/geary.mo
+file path=usr/share/locale/da/LC_MESSAGES/geary.mo
+file path=usr/share/locale/de/LC_MESSAGES/geary.mo
+file path=usr/share/locale/el/LC_MESSAGES/geary.mo
+file path=usr/share/locale/en_CA/LC_MESSAGES/geary.mo
+file path=usr/share/locale/en_GB/LC_MESSAGES/geary.mo
+file path=usr/share/locale/eo/LC_MESSAGES/geary.mo
+file path=usr/share/locale/es/LC_MESSAGES/geary.mo
+file path=usr/share/locale/et/LC_MESSAGES/geary.mo
+file path=usr/share/locale/eu/LC_MESSAGES/geary.mo
+file path=usr/share/locale/fa/LC_MESSAGES/geary.mo
+file path=usr/share/locale/fi/LC_MESSAGES/geary.mo
+file path=usr/share/locale/fr/LC_MESSAGES/geary.mo
+file path=usr/share/locale/fur/LC_MESSAGES/geary.mo
+file path=usr/share/locale/gl/LC_MESSAGES/geary.mo
+file path=usr/share/locale/he/LC_MESSAGES/geary.mo
+file path=usr/share/locale/hi/LC_MESSAGES/geary.mo
+file path=usr/share/locale/hr/LC_MESSAGES/geary.mo
+file path=usr/share/locale/hu/LC_MESSAGES/geary.mo
+file path=usr/share/locale/id/LC_MESSAGES/geary.mo
+file path=usr/share/locale/it/LC_MESSAGES/geary.mo
+file path=usr/share/locale/ja/LC_MESSAGES/geary.mo
+file path=usr/share/locale/kk/LC_MESSAGES/geary.mo
+file path=usr/share/locale/km/LC_MESSAGES/geary.mo
+file path=usr/share/locale/lt/LC_MESSAGES/geary.mo
+file path=usr/share/locale/ms/LC_MESSAGES/geary.mo
+file path=usr/share/locale/nb/LC_MESSAGES/geary.mo
+file path=usr/share/locale/nl/LC_MESSAGES/geary.mo
+file path=usr/share/locale/oc/LC_MESSAGES/geary.mo
+file path=usr/share/locale/pl/LC_MESSAGES/geary.mo
+file path=usr/share/locale/pt/LC_MESSAGES/geary.mo
+file path=usr/share/locale/pt_BR/LC_MESSAGES/geary.mo
+file path=usr/share/locale/ro/LC_MESSAGES/geary.mo
+file path=usr/share/locale/ru/LC_MESSAGES/geary.mo
+file path=usr/share/locale/sk/LC_MESSAGES/geary.mo
+file path=usr/share/locale/sl/LC_MESSAGES/geary.mo
+file path=usr/share/locale/sr/LC_MESSAGES/geary.mo
+file path=usr/share/locale/sr@latin/LC_MESSAGES/geary.mo
+file path=usr/share/locale/sv/LC_MESSAGES/geary.mo
+file path=usr/share/locale/te/LC_MESSAGES/geary.mo
+file path=usr/share/locale/tr/LC_MESSAGES/geary.mo
+file path=usr/share/locale/uk/LC_MESSAGES/geary.mo
+file path=usr/share/locale/vi/LC_MESSAGES/geary.mo
+file path=usr/share/locale/zh_CN/LC_MESSAGES/geary.mo
+file path=usr/share/locale/zh_TW/LC_MESSAGES/geary.mo
+file path=usr/share/metainfo/org.gnome.Geary.appdata.xml
 license COPYING license=GPLv2
