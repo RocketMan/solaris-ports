@@ -20,7 +20,7 @@
 #
 
 #
-# Copyright (c) 2018 Jim Mason <jmason at ibinx dot com>.  All rights reserved.
+# Copyright (c) 2019 Jim Mason <jmason at ibinx dot com>.  All rights reserved.
 #
 
 BUILD_BITS =            64_and_32
@@ -30,10 +30,10 @@ COMPILER =              gcc
 include ../../../make-rules/shared-macros.mk
 
 COMPONENT_NAME=		gupnp-av
-COMPONENT_VERSION=	0.12.10
+COMPONENT_VERSION=	0.12.11
 COMPONENT_PROJECT_URL=	https://wiki.gnome.org/Projects/GUPnP
 COMPONENT_ARCHIVE_HASH= \
-	sha256:8038ef84dddbe7ad91c205bf91dddf684f072df8623f39b6555a6bb72837b85a
+	sha256:689dcf1492ab8991daea291365a32548a77d1a2294d85b33622b55cca9ce6fdc
 COMPONENT_BUGDB=        gnome/libraries
 COMPONENT_ANITYA_ID=	1282
 
