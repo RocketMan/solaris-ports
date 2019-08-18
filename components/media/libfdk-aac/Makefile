@@ -20,7 +20,7 @@
 #
 
 #
-# Copyright (c) 2018 Jim Mason <jmason at ibinx dot com>.  All rights reserved.
+# Copyright (c) 2019 Jim Mason <jmason at ibinx dot com>.  All rights reserved.
 #
 
 BUILD_BITS =            64_and_32
@@ -28,10 +28,10 @@ COMPILER =		gcc
 include ../../../make-rules/shared-macros.mk
 
 COMPONENT_NAME=		fdk-aac
-COMPONENT_VERSION=	0.1.6
+COMPONENT_VERSION=	2.0.0
 COMPONENT_ARCHIVE =	$(COMPONENT_SRC).tar.gz
 COMPONENT_ARCHIVE_HASH=	\
-	sha256:aab61b42ac6b5953e94924c73c194f08a86172d63d39c5717f526ca016bed3ad
+	sha256:f7d6e60f978ff1db952f7d5c3e96751816f5aef238ecf1d876972697b85fd96c
 SOURCEFORGE_URL =	https://datapacket.dl.sourceforge.net/project
 COMPONENT_ARCHIVE_URL = $(SOURCEFORGE_URL)/opencore-amr/$(COMPONENT_NAME)/$(COMPONENT_ARCHIVE)
 COMPONENT_PROJECT_URL=	https://sourceforge.net/projects/opencore-amr/
