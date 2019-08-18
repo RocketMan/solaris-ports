@@ -20,7 +20,7 @@
 #
 
 #
-# Copyright (c) 2018 Jim Mason <jmason at ibinx dot com>.  All rights reserved.
+# Copyright (c) 2019 Jim Mason <jmason at ibinx dot com>.  All rights reserved.
 #
 
 BUILD_BITS =            64_and_32
@@ -28,10 +28,10 @@ COMPILER =		gcc
 include ../../../make-rules/shared-macros.mk
 
 COMPONENT_NAME=		libdvdread
-COMPONENT_VERSION=	6.0.0
+COMPONENT_VERSION=	6.0.1
 COMPONENT_ARCHIVE =	$(COMPONENT_SRC).tar.bz2
 COMPONENT_ARCHIVE_HASH=	\
-	sha256:b33b1953b4860545b75f6efc06e01d9849e2ea4f797652263b0b4af6dd10f935
+	sha256:28ce4f0063883ca4d37dfd40a2f6685503d679bca7d88d58e04ee8112382d5bd
 COMPONENT_ARCHIVE_URL = http://www.videolan.org/pub/videolan/$(COMPONENT_NAME)/$(COMPONENT_VERSION)/$(COMPONENT_ARCHIVE)
 COMPONENT_PROJECT_URL=	http://dvdnav.mplayerhq.hu/
 COMPONENT_ANITYA_ID=	5614
