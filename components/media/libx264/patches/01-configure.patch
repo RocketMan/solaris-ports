@@ -1,6 +1,6 @@
 --- a/configure	2018-01-18 20:03:22.000000000 +0000
 +++ b/configure	2018-07-12 15:06:23.198837478 +0000
-@@ -669,11 +669,13 @@
+@@ -671,11 +671,13 @@
          SYS="SunOS"
          define HAVE_MALLOC_H
          libm="-lm"
@@ -19,3 +19,12 @@
          if test -x /usr/ucb/install ; then
              INSTALL=/usr/ucb/install
          elif test -x /usr/bin/ginstall ; then
+@@ -685,7 +687,7 @@
+             # OpenSolaris
+             INSTALL=/usr/gnu/bin/install
+         fi
+-        HAVE_GETOPT_LONG=0
++        HAVE_GETOPT_LONG=1
+         ;;
+     *qnx*)
+         SYS="QNX"

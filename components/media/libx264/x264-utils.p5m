@@ -8,5 +8,5 @@ set name=info.repository-url value=$(GIT_REPO)
 set name=info.upstream-url value=$(COMPONENT_PROJECT_URL)
 set name=org.opensolaris.consolidation value=$(CONSOLIDATION)
 file usr/bin/x264 path=usr/bin/x264
-file usr/share/man/man1/x264.1 path=usr/share/man/man1/x264.1
+file path=usr/share/man/man1/x264.1
 license COPYING license=GPLv2

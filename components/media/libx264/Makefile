@@ -20,19 +20,21 @@
 #
 
 #
-# Copyright (c) 2018 Jim Mason <jmason at ibinx dot com>.  All rights reserved.
+# Copyright (c) 2019 Jim Mason <jmason at ibinx dot com>.  All rights reserved.
 #
 
-BUILD_BITS =            64_and_32
+BUILD_BITS =		64_and_32
 COMPILER =		gcc
 include ../../../make-rules/shared-macros.mk
 
 COMPONENT_NAME=		libx264
-COMPONENT_VERSION=	0.155.2901
-GIT_REPO=		http://git.videolan.org/git/x264.git
-GIT_COMMIT_ID=		7d0ff22
+COMPONENT_VERSION=	0.158.2984
+GIT_REPO=		http://code.videolan.org/videolan/x264.git
+GIT_COMMIT_ID=		3759fcb7
 COMPONENT_PROJECT_URL=	https://www.videolan.org/developers/x264.html
 
+# configure accepts only --bindir and --libdir; we set those explicitly below
+CONFIGURE_DEFAULT_DIRS = no
 
 include $(WS_MAKE_RULES)/common.mk
 
@@ -48,6 +50,8 @@ CONFIGURE_OPTIONS.32 += --host=i86-pc-solaris2.11
 CONFIGURE_OPTIONS.32 += --enable-pic
 
 CONFIGURE_OPTIONS += --enable-shared
+CONFIGURE_OPTIONS += --bindir=$(CONFIGURE_BINDIR.$(BITS))
+CONFIGURE_OPTIONS += --libdir=$(CONFIGURE_LIBDIR.$(BITS))
 
 COMPONENT_POST_INSTALL_ACTION += ( \
 	if [ -f $(PROTOUSRBINDIR)/x264 ]; then \

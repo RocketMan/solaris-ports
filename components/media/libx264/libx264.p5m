@@ -9,12 +9,12 @@ set name=info.classification \
 set name=info.repository-url value=$(GIT_REPO)
 set name=info.upstream-url value=$(COMPONENT_PROJECT_URL)
 set name=org.opensolaris.consolidation value=$(CONSOLIDATION)
-file usr/include/x264.h path=usr/include/x264.h
-file usr/include/x264_config.h path=usr/include/x264_config.h
-link path=usr/lib/amd64/libx264.so target=libx264.so.155
-file usr/lib/amd64/libx264.so.155 path=usr/lib/amd64/libx264.so.155
-file usr/lib/amd64/pkgconfig/x264.pc path=usr/lib/amd64/pkgconfig/x264.pc
-link path=usr/lib/libx264.so target=libx264.so.155
-file usr/lib/libx264.so.155 path=usr/lib/libx264.so.155
-file usr/lib/pkgconfig/x264.pc path=usr/lib/pkgconfig/x264.pc
+file path=usr/include/x264.h
+file path=usr/include/x264_config.h
+link path=usr/lib/$(MACH64)/libx264.so target=libx264.so.158
+file path=usr/lib/$(MACH64)/libx264.so.158
+file path=usr/lib/$(MACH64)/pkgconfig/x264.pc
+link path=usr/lib/libx264.so target=libx264.so.158
+file path=usr/lib/libx264.so.158
+file path=usr/lib/pkgconfig/x264.pc
 license COPYING license=GPLv2
