@@ -1,0 +1,37 @@
+--- a/gthumb/gth-main.c	2019-05-27 17:42:25.000000000 +0000
++++ b/gthumb/gth-main.c	2019-08-26 22:47:39.133980828 +0000
+@@ -84,10 +84,23 @@
+ {
+ 	GObject *object;
+ 
++#if GLIB_CHECK_VERSION(2, 53, 1)
+ 	object = g_object_new_with_properties (spec->object_type,
+ 					       spec->n_params,
+ 					       spec->names,
+ 					       spec->values);
++#else
++	GParameter *params = g_new0(GParameter, spec->n_params);
++	for(int i=0; i<spec->n_params; i++) {
++		params[i].name = spec->names[i];
++		params[i].value = spec->values[i];
++	}
++	object = g_object_newv(spec->object_type,
++			       spec->n_params,
++			       params);
++	g_free(params);
++#endif
++
+ 	if (g_object_class_find_property (G_OBJECT_GET_CLASS (object), "id"))
+ 		g_object_set (object, "id", object_id, NULL);
+ 
+--- a/gthumb/make-authors-tab.py	2019-05-27 17:42:25.000000000 +0000
++++ b/gthumb/make-authors-tab.py	2019-08-26 19:13:15.849480006 +0000
+@@ -10,7 +10,7 @@
+ infile = sys.argv[1]
+ outfile = sys.argv[2]
+ 
+-with open(outfile, 'w') as to_file, open(infile) as from_file:
++with open(outfile, 'w', encoding='utf-8') as to_file, open(infile, 'r+', encoding='utf-8') as from_file:
+     for line in iter(from_file.readline, ''):
+         # wrap the line inside double quotes, and adds a trailing comma
+         new_line = re.sub(r'^(.*)$', r'"\1",', line)
