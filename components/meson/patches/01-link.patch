@@ -21,7 +21,7 @@
  
      def thread_flags(self, env):
 --- a/mesonbuild/compilers/c.py	2018-11-08 22:43:05.000000000 +0000
-+++ b/mesonbuild/compilers/c.py	2019-02-27 16:21:01.139018987 +0000
++++ b/mesonbuild/compilers/c.py	2019-08-26 19:34:50.067148142 +0000
 @@ -169,7 +169,7 @@
                  return ['-Wl,-undefined,dynamic_lookup']
              else:
@@ -31,3 +31,12 @@
          elif self.id == 'msvc':
              # link.exe
              return ['/FORCE:UNRESOLVED']
+@@ -267,7 +267,7 @@
+         elif for_darwin(env.is_cross_build(), env):
+             return []
+         else:
+-            return ['-Wl,-export-dynamic']
++            return ['-rdynamic']
+ 
+     def gen_import_library_args(self, implibname):
+         """
