@@ -1,0 +1,55 @@
+--- a/Source/WebCore/page/NavigatorBase.cpp	2019-08-26 15:55:45.000000000 +0000
++++ b/Source/WebCore/page/NavigatorBase.cpp	2019-08-31 10:21:59.414583028 +0000
+@@ -53,6 +53,8 @@
+ #define WEBCORE_NAVIGATOR_PLATFORM "MacIntel"_s
+ #elif OS(WINDOWS)
+ #define WEBCORE_NAVIGATOR_PLATFORM "Win32"_s
++#elif OS(SOLARIS)
++#define WEBCORE_NAVIGATOR_PLATFORM "SunOS"_s
+ #else
+ #define WEBCORE_NAVIGATOR_PLATFORM emptyString()
+ #endif
+@@ -109,6 +111,20 @@
+     struct utsname osname;
+     static NeverDestroyed<String> platformName(uname(&osname) >= 0 ? String(osname.sysname) + " "_str + String(osname.machine) : emptyString());
+     return platformName;
++#elif OS(SOLARIS)
++    // If the user agent is being masqueraded, then change the platform
++    // also, as some sites rely on this (e.g., dslreports speed test)
++    static String platform;
++    const String& agent = userAgent();
++    if(agent.find("Linux", 0) != notFound)
++        platform = "Linux"_s;
++    else if(agent.find("Windows", 0) != notFound)
++        platform = "Win32"_s;
++    else if(agent.find("Intel Mac", 0) != notFound)
++        platform = "MacIntel"_s;
++    else
++        platform = WEBCORE_NAVIGATOR_PLATFORM;
++    return platform;
+ #else
+     return defaultPlatform;
+ #endif
+--- a/Source/WebCore/platform/UserAgentQuirks.cpp	2019-08-26 15:55:45.000000000 +0000
++++ b/Source/WebCore/platform/UserAgentQuirks.cpp	2019-08-31 10:12:05.829789845 +0000
+@@ -112,8 +112,18 @@
+ 
+ static bool urlRequiresLinuxDesktopPlatform(const URL& url)
+ {
+-    // docs.google.com requires the macOS platform quirk.
+-    return isGoogle(url) && url.host() != "docs.google.com";
++#if OS(SOLARIS)
++    // The speed test at dslreports does not recognize the SunOS platform,
++    // so we masquerade as Linux.
++    String domain = url.host().toString();
++    String baseDomain = topPrivatelyControlledDomain(domain);
++
++    return baseDomain == "dslreports.com" || baseDomain == "dslr.com" ||
++#else
++    return
++#endif
++        // docs.google.com requires the macOS platform quirk.
++        isGoogle(url) && url.host() != "docs.google.com";
+ }
+ 
+ UserAgentQuirks UserAgentQuirks::quirksForURL(const URL& url)
