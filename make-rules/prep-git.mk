@@ -95,16 +95,16 @@ $$(USERLAND_ARCHIVES)$$(COMPONENT_ARCHIVE$(1)):	$(MAKEFILE_PREREQ)
 	$$(FETCH) --file $$@ \
 		$$(COMPONENT_ARCHIVE_URL$(1):%=--url %) || \
 	(TMP_REPO=$$$$(mktemp --directory) && \
-	$(GIT) clone $$(GIT_REPO$(1)) $$(GIT_BRANCH_ARG$(1)) $$$${TMP_REPO} && \
+	$(GIT) clone --recurse-submodules $$(GIT_REPO$(1)) $$(GIT_BRANCH_ARG$(1)) $$$${TMP_REPO} && \
 	(cd $$$${TMP_REPO} ; $(GIT) checkout \
 	$$(GIT_COMMIT_ID$(1))) && \
 	(cd $$$${TMP_REPO} ; \
 		$(GIT) config tar.tar.bz2.command "bzip2 -c"; \
 		$(GIT) config tar.tar.xz.command "xz -c"; \
-		$(GIT) archive \
+		$(WS_TOOLS)/git-archive-all \
 		--format $(subst $(COMPONENT_SRC$(1)).,,$(COMPONENT_ARCHIVE$(1))) \
 		--prefix $$(COMPONENT_SRC$(1))/ \
-		$$(or $$(GIT_COMMIT_ID$(1)),$$(GIT_BRANCH$(1)))) > $$@ && \
+		-t $$(or $$(GIT_COMMIT_ID$(1)),$$(GIT_BRANCH$(1))) -- -) > $$@ && \
 	$(RM) -r $$$${TMP_REPO} ) && \
 	( GIT_HASH=$$$$(digest -a sha256 $$@) && \
 	$(GSED) -i \
