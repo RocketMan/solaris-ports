@@ -119,8 +119,8 @@ PKG_MACROS +=		IPS_COMPONENT_RE_VERSION=$(subst .,\\.,$(IPS_COMPONENT_VERSION))
 PKG_MACROS +=		COMPONENT_RE_VERSION=$(subst .,\\.,$(COMPONENT_VERSION))
 
 PKG_MACROS +=		PYTHON_2.7_ONLY=\#
-PKG_MACROS +=		PYTHON_3.4_ONLY=\#
 PKG_MACROS +=		PYTHON_3.5_ONLY=\#
+PKG_MACROS +=		PYTHON_3.7_ONLY=\#
 
 # Convenience macros for quoting in manifests; necessary because pkgfmt will
 # drop literal quotes in attribute values if they do not contain whitespace
