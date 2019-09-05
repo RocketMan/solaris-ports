@@ -48,6 +48,10 @@ else
   GIT_BRANCH_ARG$(1) = -b master
 endif
 
+ifeq ($(strip $(GIT_CLONE_SUBMODULES$(1))),yes)
+  GIT_CLONE_ARG$(1) += --recurse-submodules
+endif
+
 # If the label is not already defined (including to empty), set it to the version.
 COMPONENT_LABEL$(1) ?= $$(COMPONENT_VERSION$(1))
 # The source directory is <name>-(<label>|<version>)[-(<tag>|<branch>)][-<commit].
@@ -95,7 +99,7 @@ $$(USERLAND_ARCHIVES)$$(COMPONENT_ARCHIVE$(1)):	$(MAKEFILE_PREREQ)
 	$$(FETCH) --file $$@ \
 		$$(COMPONENT_ARCHIVE_URL$(1):%=--url %) || \
 	(TMP_REPO=$$$$(mktemp --directory) && \
-	$(GIT) clone --recurse-submodules $$(GIT_REPO$(1)) $$(GIT_BRANCH_ARG$(1)) $$$${TMP_REPO} && \
+	$(GIT) clone $$(GIT_CLONE_ARG$(1)) $$(GIT_REPO$(1)) $$(GIT_BRANCH_ARG$(1)) $$$${TMP_REPO} && \
 	(cd $$$${TMP_REPO} ; $(GIT) checkout \
 	$$(GIT_COMMIT_ID$(1))) && \
 	(cd $$$${TMP_REPO} ; \
