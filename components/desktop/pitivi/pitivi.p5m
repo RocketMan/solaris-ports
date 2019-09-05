@@ -34,14 +34,7 @@ set name=info.classification \
 set name=info.repository-url value=$(GIT_REPO)
 set name=info.upstream-url value=$(COMPONENT_PROJECT_URL)
 set name=org.opensolaris.consolidation value=$(CONSOLIDATION)
-file path=usr/bin/gst-transcoder-1.0
 file path=usr/bin/pitivi
-file path=usr/include/gstreamer-1.0/gst/transcoder/gsttranscoder.h
-file path=usr/lib/$(MACH64)/girepository-1.0/GstTranscoder-1.0.typelib
-file path=usr/lib/$(MACH64)/gstreamer-1.0/libgsttranscode.so
-link path=usr/lib/$(MACH64)/libgsttranscoder-1.0.so \
-    target=libgsttranscoder-1.0.so.0
-file path=usr/lib/$(MACH64)/libgsttranscoder-1.0.so.0
 file path=usr/lib/$(MACH64)/pitivi/python/pitivi/__init__.py
 file path=usr/lib/$(MACH64)/pitivi/python/pitivi/__pycache__/__init__.cpython-35.pyc
 file path=usr/lib/$(MACH64)/pitivi/python/pitivi/__pycache__/application.cpython-35.pyc
@@ -150,20 +143,8 @@ file path=usr/lib/$(MACH64)/pitivi/python/pitivi/viewer/overlay.py
 file path=usr/lib/$(MACH64)/pitivi/python/pitivi/viewer/overlay_stack.py
 file path=usr/lib/$(MACH64)/pitivi/python/pitivi/viewer/title_overlay.py
 file path=usr/lib/$(MACH64)/pitivi/python/pitivi/viewer/viewer.py
-file path=usr/lib/$(MACH64)/pkgconfig/gst-transcoder-1.0.pc
 file path=usr/share/appdata/org.pitivi.Pitivi.appdata.xml
 file path=usr/share/applications/org.pitivi.Pitivi.desktop
-file path=usr/share/gir-1.0/GstTranscoder-1.0.gir
-file path=usr/share/gstreamer-1.0/encoding-profiles/device/dvd.gep
-file path=usr/share/gstreamer-1.0/encoding-profiles/file-extension/avi.gep
-file path=usr/share/gstreamer-1.0/encoding-profiles/file-extension/flv.gep
-file path=usr/share/gstreamer-1.0/encoding-profiles/file-extension/mkv.gep
-file path=usr/share/gstreamer-1.0/encoding-profiles/file-extension/mp3.gep
-file path=usr/share/gstreamer-1.0/encoding-profiles/file-extension/mp4.gep
-file path=usr/share/gstreamer-1.0/encoding-profiles/file-extension/oga.gep
-file path=usr/share/gstreamer-1.0/encoding-profiles/file-extension/ogv.gep
-file path=usr/share/gstreamer-1.0/encoding-profiles/file-extension/webm.gep
-file path=usr/share/gstreamer-1.0/encoding-profiles/online-services/youtube.gep
 file path=usr/share/help/C/pitivi/about.page
 file path=usr/share/help/C/pitivi/cheatsheet.page
 file path=usr/share/help/C/pitivi/codecscontainers.page
@@ -958,3 +939,10 @@ file path=usr/share/pitivi/videopresets/1080p30.json
 file path=usr/share/pitivi/videopresets/720p24.json
 file path=usr/share/pitivi/videopresets/720p30.json
 license COPYING license=LGPLv2.1
+
+# force a dependency on gst-transcoder
+depend type=require \
+    fmri=pkg:/library/desktop/gstreamer-1/gst-transcoder@1.16.0-2018.0.0.0
+
+# force a dependency on matplotlib
+depend type=require fmri=pkg:/library/python/matplotlib@3.0.3-2018.0.0.0

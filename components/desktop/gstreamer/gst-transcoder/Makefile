@@ -23,43 +23,41 @@
 # Copyright (c) 2019 Jim Mason <jmason at ibinx dot com>.  All rights reserved.
 #
 
-BUILD_BITS =            64
-COMPILER =		gcc
-include ../../../make-rules/shared-macros.mk
+BUILD_BITS =            64_and_32
+COMPILER =              gcc
+include ../../../../make-rules/shared-macros.mk
 
-COMPONENT_NAME=		pitivi
-COMPONENT_VERSION=	0.999
-COMPONENT_SRC=		$(COMPONENT_NAME)-$(GIT_COMMIT_ID)
-COMPONENT_ARCHIVE_URL=	$(GIT_BASE)/-/archive/$(GIT_COMMIT_ID)/$(COMPONENT_SRC).tar.gz
-GIT_BASE=		https://gitlab.gnome.org/GNOME/pitivi
-GIT_REPO=		$(GIT_BASE).git
-GIT_COMMIT_ID=		0.999.0
-COMPONENT_PROJECT_URL=	http://www.pitivi.org/
-COMPONENT_ANITYA_ID=	3647
+COMPONENT_NAME=		gst-transcoder
+COMPONENT_VERSION=	1.16.0
+COMPONENT_PROJECT_URL=	$(GIT_REPO)
+COMPONENT_SRC=		$(COMPONENT_NAME)-$(COMPONENT_VERSION)
+COMPONENT_ARCHIVE=	$(COMPONENT_SRC).tar.gz
+GIT_REPO=		https://github.com/pitivi/gst-transcoder
+GIT_COMMIT_ID=		1.16.0
+COMPONENT_ARCHIVE_HASH= \
+	sha256:b5e65c70f2827aee42810120ca9637fd1f56e7cccf825b1b2f20e575cebdcd62
+COMPONENT_ARCHIVE_URL=	$(GIT_REPO)/archive/$(GIT_COMMIT_ID).tar.gz
 
-BUILD_STYLE = meson
+TEST_TARGET= $(SKIP_TEST)
+
+BUILD_STYLE=		meson
+
 include $(WS_MAKE_RULES)/common.mk
 
-PATH=/usr/lib/amd64/gstreamer-1.0:$(GNUBIN):$(USRBINDIR)
-
-COMPONENT_BUILD_ENV += VERBOSE=1
-
-PYTHON_VERSION=3.5
-CONFIGURE_ENV += PYTHON="$(PYTHON)"
+CFLAGS += -I/usr/include/glib-2.0
+LDFLAGS += -m$(BITS)
 
 # Ensure Python modules are installed into vendor package directories.
 CONFIGURE_ENV += am_cv_python_pythondir=$(PYTHON_VENDOR_PACKAGES)
 CONFIGURE_ENV += am_cv_python_pyexecdir=$(PYTHON_VENDOR_PACKAGES)
 
-# Use GNU grep during configure and build
-CONFIGURE_ENV += PATH="$(PATH)"
-COMPONENT_BUILD_ENV += PATH=$(PATH)
-COMPONENT_INSTALL_ENV += PATH=$(PATH)
+CONFIGURE_OPTIONS += -Ddisable_doc=true
 
-REQUIRED_PACKAGES += library/desktop/cairo
+# Use GNU grep during configure and build
+CONFIGURE_ENV += PATH=$(GNUBIN):$(PATH)
+COMPONENT_BUILD_ENV += PATH=$(GNUBIN):$(PATH)
+
+REQUIRED_PACKAGES += library/desktop/gobject/gobject-introspection
 REQUIRED_PACKAGES += library/desktop/gstreamer-1
 REQUIRED_PACKAGES += library/desktop/gstreamer-1/gst-plugins-base
-REQUIRED_PACKAGES += library/desktop/gstreamer-1/gst-transcoder
 REQUIRED_PACKAGES += library/glib2
-REQUIRED_PACKAGES += runtime/python-35
-
