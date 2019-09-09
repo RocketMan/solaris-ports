@@ -29,7 +29,7 @@ include ../../../make-rules/shared-macros.mk
 
 COMPONENT_NAME=		gst-python
 COMPONENT_VERSION=	1.16.0
-COMPONENT_PROJECT_URL=	https://gstreamer.freedesktop.org/
+COMPONENT_PROJECT_URL=	https://gstreamer.freedesktop.org/modules/gst-python.html
 COMPONENT_ARCHIVE=	$(COMPONENT_SRC).tar.xz
 COMPONENT_ARCHIVE_HASH= \
 	sha256:55dc7aaed1855565f9b9ef842d93e93bfc5cb2b376faef6af5b463e1774e2d38
@@ -110,9 +110,6 @@ REQUIRED_PACKAGES += library/python/setuptools-37
 endif
 
 LDFLAGS += -m$(BITS)
-
-COMPONENT_BUILD_ENV += LD_LIBRARY_PATH_32="$(BUILD_DIR_32)/gst/validate/.libs"
-COMPONENT_BUILD_ENV += LD_LIBRARY_PATH_64="$(BUILD_DIR_64)/gst/validate/.libs"
 
 COMPONENT_BUILD_ENV += V=1
 
