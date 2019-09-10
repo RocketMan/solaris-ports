@@ -12,10 +12,11 @@ the upstream release!
 
 ## Requirements
 
-To build WebKitGTK+, you will need [GStreamer 1.14.4](../gstreamer/),
-available in this repo.  Specifically, version 1.14.4 of `gstreamer`,
-`gst-plugins-base`, and `gst-plugins-good` are required.  (It is no
-longer necessary to have `gst-plugins-bad` for GL support in WebKit.)
+To build WebKitGTK+, you will need [GStreamer 1.14.4](../gstreamer/)
+or later, available in this repo.  Specifically, the packages
+`gstreamer`, `gst-plugins-base`, and `gst-plugins-good` are required.
+(It is no longer necessary to have `gst-plugins-bad` for GL support in
+WebKit.)
 
 By default, this package depends on the icu from the userland gate.
 If you are running under 11.3 and have dependencies on the existing

@@ -1,23 +1,21 @@
---- a/Source/WebCore/page/NavigatorBase.cpp	2019-09-10 13:41:15.543721909 +0000
-+++ b/Source/WebCore/page/NavigatorBase.cpp	2019-09-10 13:44:45.255400525 +0000
-@@ -98,6 +98,20 @@
+--- a/Source/WebCore/page/NavigatorBase.cpp	2019-08-28 12:46:31.000000000 +0000
++++ b/Source/WebCore/page/NavigatorBase.cpp	2019-09-10 15:24:15.399520597 +0000
+@@ -98,6 +98,18 @@
      return "MacIntel"_s;
  #elif OS(WINDOWS)
      return "Win32"_s;
 +#elif OS(SOLARIS)
 +    // If the user agent is being masqueraded, then change the platform
 +    // also, as some sites rely on this (e.g., dslreports speed test)
-+    static String platform;
 +    const String& agent = userAgent();
 +    if(agent.find("Linux", 0) != notFound)
-+        platform = "Linux"_s;
++        return "Linux"_s;
 +    else if(agent.find("Windows", 0) != notFound)
-+        platform = "Win32"_s;
++        return "Win32"_s;
 +    else if(agent.find("Intel Mac", 0) != notFound)
-+        platform = "MacIntel"_s;
++        return "MacIntel"_s;
 +    else
-+        platform = "SunOS"_s;
-+    return platform;
++        return "SunOS"_s;
  #else
      return ""_s;
  #endif
