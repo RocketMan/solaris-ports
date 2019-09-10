@@ -2,14 +2,19 @@ Solaris doesn't have MAP_FILE
 
 Not suitable for upstream
 
---- a/Source/WTF/wtf/FileSystem.cpp	2019-02-15 12:32:52.000000000 +0000
-+++ b/Source/WTF/wtf/FileSystem.cpp	2019-02-15 12:51:12.458160543 +0000
-@@ -316,7 +316,7 @@
-         return;
+--- a/Source/WTF/wtf/FileSystem.cpp	2019-08-12 11:01:21.125388685 +0000
++++ b/Source/WTF/wtf/FileSystem.cpp	2019-08-12 11:03:14.489142966 +0000
+@@ -323,8 +323,12 @@
+         return true;
      }
  
--    void* data = mmap(0, size, PROT_READ, MAP_FILE | MAP_SHARED, fd, 0);
-+    void* data = mmap(0, size, PROT_READ, MAP_SHARED, fd, 0);
-     close(fd);
- 
++#ifdef __sun__
++    void* data = mmap(0, size, PROT_READ, mode == MappedFileMode::Shared ? MAP_SHARED : MAP_PRIVATE, fd, 0);
++#else
+     void* data = mmap(0, size, PROT_READ, MAP_FILE | (mode == MappedFileMode::Shared ? MAP_SHARED : MAP_PRIVATE), fd, 0);
+-
++#endif
++    
      if (data == MAP_FAILED) {
+         return false;
+     }

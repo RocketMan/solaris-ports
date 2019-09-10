@@ -27,13 +27,25 @@ file upstream bug after resolving issues documented above
  endif ()
  
  # Temporary workaround to allow the build to succeed.
---- a/Source/WebKit/webkitglib-symbols.map	2018-10-02 08:00:13.000000000 +0000
-+++ b/Source/WebKit/webkitglib-symbols.map	2018-11-06 11:12:58.437927095 +0000
-@@ -1,25 +1,2050 @@
+--- a/Source/WebKit/webkitglib-symbols.map	2019-08-28 12:46:33.000000000 +0000
++++ b/Source/WebKit/webkitglib-symbols.map	2019-09-10 12:48:01.828429807 +0000
+@@ -1,19 +1,2065 @@
  {
  global:
 -  jsc_*;
 -  webkit_*;
+   WebProcessMainUnix;
+   NetworkProcessMainUnix;
+   PluginProcessMainUnix;
+-  extern "C++" {
+-    "bmalloc::PerProcess<bmalloc::IsoTLSDeallocatorEntry<bmalloc::IsoConfig<40u> > >::s_data";
+-    "bmalloc::PerProcess<bmalloc::IsoTLSDeallocatorEntry<bmalloc::IsoConfig<40u> > >::s_object";
+-    "bmalloc::PerThreadStorage<bmalloc::PerHeapKind<bmalloc::Cache> >::s_didInitialize";
+-    "bmalloc::PerThreadStorage<bmalloc::PerHeapKind<bmalloc::Cache> >::s_key";
+-    "bmalloc::vmPageSize()::cached";
+-    "WebKit::WebKitExtensionManager::singleton()";
+-    "WebKit::WebKitExtensionManager::initialize(WebKit::InjectedBundle*, API::Object*)";
+-  };
 +  webkit_accessible_get_type;
 +  webkit_accessible_hyperlink_get_type;
 +  webkit_application_info_get_name;
@@ -76,6 +88,7 @@ file upstream bug after resolving issues documented above
 +  webkit_back_forward_list_item_get_type;
 +  webkit_back_forward_list_item_get_uri;
 +  webkit_cache_model_get_type;
++  webkit_cached_resolver_get_type;
 +  webkit_color_chooser_request_cancel;
 +  webkit_color_chooser_request_finish;
 +  webkit_color_chooser_request_get_element_rectangle;
@@ -1513,6 +1526,7 @@ file upstream bug after resolving issues documented above
 +  webkit_form_submission_request_list_text_fields;
 +  webkit_form_submission_request_submit;
 +  webkit_form_submission_step_get_type;
++  webkit_frame_get_id;
 +  webkit_frame_get_javascript_context_for_script_world;
 +  webkit_frame_get_javascript_global_context;
 +  webkit_frame_get_js_context;
@@ -1522,7 +1536,20 @@ file upstream bug after resolving issues documented above
 +  webkit_frame_get_type;
 +  webkit_frame_get_uri;
 +  webkit_frame_is_main_frame;
++  webkit_geolocation_manager_failed;
++  webkit_geolocation_manager_get_enable_high_accuracy;
++  webkit_geolocation_manager_get_type;
++  webkit_geolocation_manager_update_position;
 +  webkit_geolocation_permission_request_get_type;
++  webkit_geolocation_position_copy;
++  webkit_geolocation_position_free;
++  webkit_geolocation_position_get_type;
++  webkit_geolocation_position_new;
++  webkit_geolocation_position_set_altitude;
++  webkit_geolocation_position_set_altitude_accuracy;
++  webkit_geolocation_position_set_heading;
++  webkit_geolocation_position_set_speed;
++  webkit_geolocation_position_set_timestamp;
 +  webkit_get_major_version;
 +  webkit_get_micro_version;
 +  webkit_get_minor_version;
@@ -1554,7 +1581,6 @@ file upstream bug after resolving issues documented above
 +  webkit_javascript_result_ref;
 +  webkit_javascript_result_unref;
 +  webkit_load_event_get_type;
-+  webkit_media_player_debug;
 +  webkit_media_src_get_type;
 +  webkit_mime_info_get_description;
 +  webkit_mime_info_get_extensions;
@@ -1562,7 +1588,6 @@ file upstream bug after resolving issues documented above
 +  webkit_mime_info_get_type;
 +  webkit_mime_info_ref;
 +  webkit_mime_info_unref;
-+  webkit_mse_debug;
 +  webkit_navigation_action_copy;
 +  webkit_navigation_action_free;
 +  webkit_navigation_action_get_modifiers;
@@ -1714,6 +1739,7 @@ file upstream bug after resolving issues documented above
 +  webkit_settings_get_enable_java;
 +  webkit_settings_get_enable_javascript;
 +  webkit_settings_get_enable_javascript_markup;
++  webkit_settings_get_enable_media;
 +  webkit_settings_get_enable_media_capabilities;
 +  webkit_settings_get_enable_media_stream;
 +  webkit_settings_get_enable_mediasource;
@@ -1773,6 +1799,7 @@ file upstream bug after resolving issues documented above
 +  webkit_settings_set_enable_java;
 +  webkit_settings_set_enable_javascript;
 +  webkit_settings_set_enable_javascript_markup;
++  webkit_settings_set_enable_media;
 +  webkit_settings_set_enable_media_capabilities;
 +  webkit_settings_set_enable_media_stream;
 +  webkit_settings_set_enable_mediasource;
@@ -1865,6 +1892,7 @@ file upstream bug after resolving issues documented above
 +  webkit_user_content_manager_remove_all_scripts;
 +  webkit_user_content_manager_remove_all_style_sheets;
 +  webkit_user_content_manager_remove_filter;
++  webkit_user_content_manager_remove_filter_by_id;
 +  webkit_user_content_manager_unregister_script_message_handler;
 +  webkit_user_content_manager_unregister_script_message_handler_in_world;
 +  webkit_user_media_permission_is_for_audio_device;
@@ -1882,6 +1910,7 @@ file upstream bug after resolving issues documented above
 +  webkit_user_style_sheet_new_for_world;
 +  webkit_user_style_sheet_ref;
 +  webkit_user_style_sheet_unref;
++  webkit_web_context_add_path_to_sandbox;
 +  webkit_web_context_allow_tls_certificate_for_host;
 +  webkit_web_context_clear_cache;
 +  webkit_web_context_download_uri;
@@ -1890,9 +1919,11 @@ file upstream bug after resolving issues documented above
 +  webkit_web_context_get_default;
 +  webkit_web_context_get_favicon_database;
 +  webkit_web_context_get_favicon_database_directory;
++  webkit_web_context_get_geolocation_manager;
 +  webkit_web_context_get_plugins;
 +  webkit_web_context_get_plugins_finish;
 +  webkit_web_context_get_process_model;
++  webkit_web_context_get_sandbox_enabled;
 +  webkit_web_context_get_security_manager;
 +  webkit_web_context_get_spell_checking_enabled;
 +  webkit_web_context_get_spell_checking_languages;
@@ -1916,6 +1947,7 @@ file upstream bug after resolving issues documented above
 +  webkit_web_context_set_network_proxy_settings;
 +  webkit_web_context_set_preferred_languages;
 +  webkit_web_context_set_process_model;
++  webkit_web_context_set_sandbox_enabled;
 +  webkit_web_context_set_spell_checking_enabled;
 +  webkit_web_context_set_spell_checking_languages;
 +  webkit_web_context_set_tls_errors_policy;
@@ -1952,7 +1984,7 @@ file upstream bug after resolving issues documented above
 +  webkit_web_resource_get_type;
 +  webkit_web_resource_get_uri;
 +  webkit_web_src_get_type;
-+  webkit_web_view_base_accessible_get_type;
++  webkit_web_view_accessible_get_type;
 +  webkit_web_view_base_get_type;
 +  webkit_web_view_can_execute_editing_command;
 +  webkit_web_view_can_execute_editing_command_finish;
@@ -2043,6 +2075,7 @@ file upstream bug after resolving issues documented above
 +  webkit_website_data_manager_get_base_data_directory;
 +  webkit_website_data_manager_get_cookie_manager;
 +  webkit_website_data_manager_get_disk_cache_directory;
++  webkit_website_data_manager_get_hsts_cache_directory;
 +  webkit_website_data_manager_get_indexeddb_directory;
 +  webkit_website_data_manager_get_local_storage_directory;
 +  webkit_website_data_manager_get_offline_application_cache_directory;
@@ -2065,32 +2098,8 @@ file upstream bug after resolving issues documented above
 +  webkit_window_properties_get_statusbar_visible;
 +  webkit_window_properties_get_toolbar_visible;
 +  webkit_window_properties_get_type;
-   WebProcessMainUnix;
-   NetworkProcessMainUnix;
-   PluginProcessMainUnix;
--  extern "C++" {
--    "bmalloc::PerProcess<bmalloc::IsoTLSDeallocatorEntry<bmalloc::IsoConfig<40u> > >::s_data";
--    "bmalloc::PerProcess<bmalloc::IsoTLSDeallocatorEntry<bmalloc::IsoConfig<40u> > >::s_object";
--    "bmalloc::PerProcess<bmalloc::IsoTLSLayout>::s_data";
--    "bmalloc::PerProcess<bmalloc::IsoTLSLayout>::s_object";
--    "bmalloc::PerProcess<bmalloc::Scavenger>::s_data";
--    "bmalloc::PerProcess<bmalloc::Scavenger>::s_object";
--    "bmalloc::PerProcess<bmalloc::VMHeap>::s_data";
--    "bmalloc::PerProcess<bmalloc::VMHeap>::s_object";
--    "bmalloc::PerThreadStorage<bmalloc::PerHeapKind<bmalloc::Cache> >::s_didInitialize";
--    "bmalloc::PerThreadStorage<bmalloc::PerHeapKind<bmalloc::Cache> >::s_key";
--    "bmalloc::vmPageSize()::cached";
--    "WebKit::WebKitExtensionManager::singleton()";
--    "WebKit::WebKitExtensionManager::initialize(WebKit::InjectedBundle*, API::Object*)";
--  };
 +  _ZN7bmalloc10PerProcessINS_22IsoTLSDeallocatorEntryINS_9IsoConfigILj40EEEEEE6s_dataE;
 +  _ZN7bmalloc10PerProcessINS_22IsoTLSDeallocatorEntryINS_9IsoConfigILj40EEEEEE8s_objectE;
-+  _ZN7bmalloc10PerProcessINS_12IsoTLSLayoutEE6s_dataE;
-+  _ZN7bmalloc10PerProcessINS_12IsoTLSLayoutEE8s_objectE;
-+  _ZN7bmalloc10PerProcessINS_9ScavengerEE6s_dataE;
-+  _ZN7bmalloc10PerProcessINS_9ScavengerEE8s_objectE;
-+  _ZN7bmalloc10PerProcessINS_6VMHeapEE6s_dataE;
-+  _ZN7bmalloc10PerProcessINS_6VMHeapEE8s_objectE;
 +  _ZZN7bmalloc10vmPageSizeEvE6cached;
 +  _ZN6WebKit22WebKitExtensionManager9singletonEv;
 +  _ZN6WebKit22WebKitExtensionManager10initializeEPNS_14InjectedBundleEPN3API6ObjectE;

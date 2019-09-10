@@ -20,7 +20,7 @@
 #
 
 #
-# Copyright (c) 2018 Jim Mason <jmason at ibinx dot com>.  All rights reserved.
+# Copyright (c) 2019 Jim Mason <jmason at ibinx dot com>.  All rights reserved.
 #
 # Adapted from original code Copyright (c) 2016, 2018, Oracle and/or its
 # affiliates. All rights reserved.
@@ -89,6 +89,7 @@ file path=usr/include/webkitgtk-4.0/webkit2/WebKitFindController.h
 file path=usr/include/webkitgtk-4.0/webkit2/WebKitFormSubmissionRequest.h
 file path=usr/include/webkitgtk-4.0/webkit2/WebKitForwardDeclarations.h
 file path=usr/include/webkitgtk-4.0/webkit2/WebKitFrame.h
+file path=usr/include/webkitgtk-4.0/webkit2/WebKitGeolocationManager.h
 file path=usr/include/webkitgtk-4.0/webkit2/WebKitGeolocationPermissionRequest.h
 file path=usr/include/webkitgtk-4.0/webkit2/WebKitHitTestResult.h
 file path=usr/include/webkitgtk-4.0/webkit2/WebKitInstallMissingMediaPluginsPermissionRequest.h
@@ -262,12 +263,12 @@ file path=usr/lib/$(MACH64)/jsc mode=0555
 link path=usr/lib/$(MACH64)/libjavascriptcoregtk-4.0.so \
     target=libjavascriptcoregtk-4.0.so.18
 link path=usr/lib/$(MACH64)/libjavascriptcoregtk-4.0.so.18 \
-    target=libjavascriptcoregtk-4.0.so.18.13.7
-file path=usr/lib/$(MACH64)/libjavascriptcoregtk-4.0.so.18.13.7
+    target=libjavascriptcoregtk-4.0.so.18.14.5
+file path=usr/lib/$(MACH64)/libjavascriptcoregtk-4.0.so.18.14.5
 link path=usr/lib/$(MACH64)/libwebkit2gtk-4.0.so target=libwebkit2gtk-4.0.so.37
 link path=usr/lib/$(MACH64)/libwebkit2gtk-4.0.so.37 \
-    target=libwebkit2gtk-4.0.so.37.37.6
-file path=usr/lib/$(MACH64)/libwebkit2gtk-4.0.so.37.37.6
+    target=libwebkit2gtk-4.0.so.37.39.1
+file path=usr/lib/$(MACH64)/libwebkit2gtk-4.0.so.37.39.1
 file path=usr/lib/$(MACH64)/pkgconfig/javascriptcoregtk-4.0.pc
 file path=usr/lib/$(MACH64)/pkgconfig/webkit2gtk-4.0.pc
 file path=usr/lib/$(MACH64)/pkgconfig/webkit2gtk-web-extension-4.0.pc

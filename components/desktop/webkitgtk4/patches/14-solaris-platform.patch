@@ -1,18 +1,9 @@
---- a/Source/WebCore/page/NavigatorBase.cpp	2019-08-26 15:55:45.000000000 +0000
-+++ b/Source/WebCore/page/NavigatorBase.cpp	2019-08-31 10:21:59.414583028 +0000
-@@ -53,6 +53,8 @@
- #define WEBCORE_NAVIGATOR_PLATFORM "MacIntel"_s
+--- a/Source/WebCore/page/NavigatorBase.cpp	2019-09-10 13:41:15.543721909 +0000
++++ b/Source/WebCore/page/NavigatorBase.cpp	2019-09-10 13:44:45.255400525 +0000
+@@ -98,6 +98,20 @@
+     return "MacIntel"_s;
  #elif OS(WINDOWS)
- #define WEBCORE_NAVIGATOR_PLATFORM "Win32"_s
-+#elif OS(SOLARIS)
-+#define WEBCORE_NAVIGATOR_PLATFORM "SunOS"_s
- #else
- #define WEBCORE_NAVIGATOR_PLATFORM emptyString()
- #endif
-@@ -109,6 +111,20 @@
-     struct utsname osname;
-     static NeverDestroyed<String> platformName(uname(&osname) >= 0 ? String(osname.sysname) + " "_str + String(osname.machine) : emptyString());
-     return platformName;
+     return "Win32"_s;
 +#elif OS(SOLARIS)
 +    // If the user agent is being masqueraded, then change the platform
 +    // also, as some sites rely on this (e.g., dslreports speed test)
@@ -25,19 +16,21 @@
 +    else if(agent.find("Intel Mac", 0) != notFound)
 +        platform = "MacIntel"_s;
 +    else
-+        platform = WEBCORE_NAVIGATOR_PLATFORM;
++        platform = "SunOS"_s;
 +    return platform;
  #else
-     return defaultPlatform;
+     return ""_s;
  #endif
---- a/Source/WebCore/platform/UserAgentQuirks.cpp	2019-08-26 15:55:45.000000000 +0000
-+++ b/Source/WebCore/platform/UserAgentQuirks.cpp	2019-08-31 10:12:05.829789845 +0000
-@@ -112,8 +112,18 @@
+--- a/Source/WebCore/platform/UserAgentQuirks.cpp	2019-09-10 13:46:35.169229789 +0000
++++ b/Source/WebCore/platform/UserAgentQuirks.cpp	2019-09-10 13:48:53.969416868 +0000
+@@ -120,10 +120,20 @@
  
  static bool urlRequiresLinuxDesktopPlatform(const URL& url)
  {
--    // docs.google.com requires the macOS platform quirk.
--    return isGoogle(url) && url.host() != "docs.google.com";
+-    // docs.google.com and drive.google.com require the macOS platform quirk.
+-    return isGoogle(url)
+-        && url.host() != "docs.google.com"
+-        && url.host() != "drive.google.com";
 +#if OS(SOLARIS)
 +    // The speed test at dslreports does not recognize the SunOS platform,
 +    // so we masquerade as Linux.
@@ -49,7 +42,9 @@
 +    return
 +#endif
 +        // docs.google.com requires the macOS platform quirk.
-+        isGoogle(url) && url.host() != "docs.google.com";
++        isGoogle(url)
++            && url.host() != "docs.google.com"
++            && url.host() != "drive.google.com";
  }
  
  UserAgentQuirks UserAgentQuirks::quirksForURL(const URL& url)

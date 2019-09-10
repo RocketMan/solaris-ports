@@ -1,0 +1,23 @@
+--- a/Source/WTF/wtf/Packed.h	2019-08-11 12:17:10.000000000 +0000
++++ b/Source/WTF/wtf/Packed.h	2019-08-16 14:45:51.830630845 +0000
+@@ -138,6 +138,20 @@
+ #endif
+         if (isAlignmentShiftProfitable)
+             value <<= alignmentShiftSize;
++
++#if OS(SOLARIS)
++#if CPU(SPARC)
++        // Solaris SPARC memory map is:
++        // 0x00000000.01000000 - 0xffffffff.80000000 - user text, data, stack
++        // TBD
++#else
++        // Solaris x86_64 memory map is:
++        // 0x00000000.04000000 - 0x00008000.00000000 - user text, heap, data
++        // 0xffff8000.00000000 - 0xfffffd80.00000000 - user stack, shared objs
++        if(value & 0x1ULL << 47)
++            value |= 0xffffULL << 48;
++#endif
++#endif
+         return bitwise_cast<T*>(value);
+     }
+ 
