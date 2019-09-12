@@ -28,7 +28,7 @@ COMPILER =		gcc
 include ../../../make-rules/shared-macros.mk
 
 COMPONENT_NAME=		gthumb
-COMPONENT_VERSION=	3.8.0
+COMPONENT_VERSION=	3.8.1
 COMPONENT_SRC=		$(COMPONENT_NAME)-$(GIT_COMMIT_ID)
 COMPONENT_ARCHIVE_URL=	$(GIT_REPO)/archive/$(GIT_COMMIT_ID).tar.gz
 GIT_REPO=		https://github.com/GNOME/gthumb
@@ -44,19 +44,22 @@ BUILD_STYLE = meson
 include $(WS_MAKE_RULES)/common.mk
 
 COMPONENT_BUILD_ENV += VERBOSE=1
+CONFIGURE_OPTIONS += -Dlibchamplain=true
 
+REQUIRED_PACKAGES += image/library/exiv2
 REQUIRED_PACKAGES += image/library/libjpeg
 REQUIRED_PACKAGES += image/library/libpng
 REQUIRED_PACKAGES += image/library/librsvg
 REQUIRED_PACKAGES += image/library/libtiff
 REQUIRED_PACKAGES += image/library/libwebp
+REQUIRED_PACKAGES += library/desktop/cairo
 REQUIRED_PACKAGES += library/desktop/clutter
 REQUIRED_PACKAGES += library/desktop/clutter/clutter-gtk
 REQUIRED_PACKAGES += library/desktop/gdk-pixbuf
 REQUIRED_PACKAGES += library/desktop/gstreamer-1
 REQUIRED_PACKAGES += library/desktop/gstreamer-1/gst-plugins-base
 REQUIRED_PACKAGES += library/desktop/gtk3
-REQUIRED_PACKAGES += library/desktop/cairo
+REQUIRED_PACKAGES += library/desktop/libchamplain
 REQUIRED_PACKAGES += library/desktop/pango
 REQUIRED_PACKAGES += library/desktop/webkitgtk4
 REQUIRED_PACKAGES += library/glib2
@@ -64,4 +67,6 @@ REQUIRED_PACKAGES += library/gnome/libsecret
 REQUIRED_PACKAGES += library/json-glib
 REQUIRED_PACKAGES += library/libsoup
 REQUIRED_PACKAGES += library/zlib
+REQUIRED_PACKAGES += system/library/gcc/gcc-c-runtime
+REQUIRED_PACKAGES += system/library/gcc/gcc-c++-runtime
 REQUIRED_PACKAGES += system/library/math
