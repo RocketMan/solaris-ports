@@ -1,0 +1,48 @@
+--- a/src/checkIn.js	2017-10-30 20:43:05.000000000 +0000
++++ b/src/checkIn.js	2019-09-13 14:05:30.521224234 +0000
+@@ -25,7 +25,6 @@
+ const Lang = imports.lang;
+ 
+ const CheckInDialog = imports.checkInDialog;
+-const FacebookBackend = imports.facebookBackend;
+ const FoursquareBackend = imports.foursquareBackend;
+ 
+ var CheckInManager = new Lang.Class({
+@@ -69,9 +68,6 @@
+     },
+ 
+     _initBackends: function() {
+-        let facebookBackend = new FacebookBackend.FacebookBackend();
+-        this._backends[facebookBackend.name] = facebookBackend;
+-
+         let foursquareBackend = new FoursquareBackend.FoursquareBackend();
+         this._backends[foursquareBackend.name] = foursquareBackend;
+     },
+@@ -177,7 +173,6 @@
+         this.message = null;
+         this.place = null;
+         this.privacy = null;
+-        this.broadcastFacebook = false;
+         this.broadcastTwitter = false;
+     }
+ });
+--- a/src/org.gnome.Maps.src.gresource.xml	2017-10-30 20:43:05.000000000 +0000
++++ b/src/org.gnome.Maps.src.gresource.xml	2019-09-13 14:05:39.374377228 +0000
+@@ -11,7 +11,6 @@
+     <file>contextMenu.js</file>
+     <file>epaf.js</file>
+     <file>exportViewDialog.js</file>
+-    <file>facebookBackend.js</file>
+     <file>favoritesPopover.js</file>
+     <file>foursquareBackend.js</file>
+     <file>foursquareGoaAuthorizer.js</file>
+--- a/src/main.js	2017-10-30 20:43:05.000000000 +0000
++++ b/src/main.js	2019-09-13 14:00:55.464950167 +0000
+@@ -29,7 +29,6 @@
+               'GeocodeGlib': '1.0',
+               'Gdk': '3.0',
+               'GdkPixbuf': '2.0',
+-              'GFBGraph': '0.2',
+               'Gio': '2.0',
+               'GLib': '2.0',
+               'Goa': '1.0',
