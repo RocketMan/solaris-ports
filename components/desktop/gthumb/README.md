@@ -15,3 +15,6 @@ saved in the formats JPEG, PNG, TIFF and TGA.
 
 ### gThumb in EDIT mode
 ![screenshot](https://raw.githubusercontent.com/RocketMan/solaris-ports/master/components/desktop/gthumb/screenshot-gthumb-edit.png "gThumb EDIT mode")
+
+### gThumb showing exif data and map
+![screenshot](https://raw.githubusercontent.com/RocketMan/solaris-ports/master/components/desktop/gthumb/screenshot-gthumb-map.png "gThumb exif data")
