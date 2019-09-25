@@ -1,1 +1,1 @@
-media/libdvdread
+media/libdvdnav: media/libdvdread

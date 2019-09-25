@@ -1,1 +1,1 @@
-media/libdvdcss
+media/libdvdread: media/libdvdcss

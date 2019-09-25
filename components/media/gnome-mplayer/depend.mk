@@ -1,1 +1,1 @@
-media/mplayer
+media/gnome-mplayer: media/mplayer

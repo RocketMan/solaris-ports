@@ -1,1 +1,1 @@
-media/fribidi
+media/libass: media/fribidi
