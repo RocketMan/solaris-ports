@@ -28,17 +28,22 @@ COMPILER =              gcc
 include ../../../../make-rules/shared-macros.mk
 
 COMPONENT_NAME=		gst-libav
-COMPONENT_VERSION=	1.16.0
+COMPONENT_VERSION=	1.16.1
 COMPONENT_PROJECT_URL=	https://gstreamer.freedesktop.org/
 COMPONENT_ARCHIVE=	$(COMPONENT_SRC).tar.xz
 COMPONENT_ARCHIVE_HASH= \
-	sha256:dfac119043a9cfdcacd7acde77f674ab172cf2537b5812be52f49e9cddc53d9a
+	sha256:e8a5748ae9a4a7be9696512182ea9ffa6efe0be9b7976916548e9d4381ca61c4
 COMPONENT_ARCHIVE_URL=	https://gstreamer.freedesktop.org/src/$(COMPONENT_NAME)/$(COMPONENT_ARCHIVE)
 COMPONENT_BUGDB=	gnome/multimedia
 
 PATH=/usr/gnu/bin:/usr/bin
 
 include $(WS_MAKE_RULES)/common.mk
+
+# Use the build area of gstreamer and gst-plugins-base
+GST_BASE = $(WS_COMPONENTS)/desktop/gstreamer/gstreamer/build/prototype/$(MACH)
+GST_PL_BASE = $(WS_COMPONENTS)/desktop/gstreamer/gst-plugins-base/build/prototype/$(MACH)
+PKG_CONFIG_PATHS += $(GST_BASE)$(USRLIB)/pkgconfig:$(GST_PL_BASE)$(USRLIB)/pkgconfig
 
 CXXFLAGS += -std=c++11
 LDFLAGS += -m$(BITS)

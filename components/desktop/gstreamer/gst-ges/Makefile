@@ -28,16 +28,23 @@ COMPILER =              gcc
 include ../../../../make-rules/shared-macros.mk
 
 COMPONENT_NAME=		gstreamer-editing-services
-COMPONENT_VERSION=	1.16.0
+COMPONENT_VERSION=	1.16.1
 COMPONENT_PROJECT_URL=	https://gstreamer.freedesktop.org/
 COMPONENT_ARCHIVE=	$(COMPONENT_SRC).tar.xz
 COMPONENT_ARCHIVE_HASH= \
-	sha256:82a3faefb2b0d91e134fd02cddeee718b7846a07cbf0127fed7aa03e25495ad1
+	sha256:c884878f9e6ddac96e4f174654d12fe52e3d48eaaec27a80767c0d56cb2f6780
 COMPONENT_ARCHIVE_URL=	https://gstreamer.freedesktop.org/src/$(COMPONENT_NAME)/$(COMPONENT_ARCHIVE)
 
 TEST_TARGET= $(SKIP_TEST)
 
 include $(WS_MAKE_RULES)/common.mk
+
+# Use the build area of gstreamer and gst-plugins-base
+GST_BASE = $(WS_COMPONENTS)/desktop/gstreamer/gstreamer/build/prototype/$(MACH)
+GST_PL_BASE = $(WS_COMPONENTS)/desktop/gstreamer/gst-plugins-base/build/prototype/$(MACH)
+GST_PL_BAD = $(WS_COMPONENTS)/desktop/gstreamer/gst-plugins-bad/build/prototype/$(MACH)
+GST_VALIDATE = $(WS_COMPONENTS)/desktop/gstreamer/gst-validate/build/prototype/$(MACH)
+PKG_CONFIG_PATHS += $(GST_BASE)$(USRLIB)/pkgconfig:$(GST_PL_BASE)$(USRLIB)/pkgconfig:$(GST_PL_BAD)$(USRLIB)/pkgconfig:$(GST_VALIDATE)$(USRLIB)/pkgconfig
 
 LDFLAGS += -m$(BITS)
 
@@ -47,6 +54,11 @@ COMPONENT_BUILD_ENV += LD_LIBRARY_PATH_64="$(BUILD_DIR_64)/ges/.libs"
 COMPONENT_BUILD_ENV += V=1
 
 CONFIGURE_ENV += PYTHON="$(PYTHON.3.5)"
+
+GST_PL_GOOD = $(WS_COMPONENTS)/desktop/gstreamer/gst-plugins-good/build/prototype/$(MACH)
+CONFIGURE_ENV += GST_PLUGINS_GOOD_CFLAGS=-I.
+CONFIGURE_ENV += GST_PLUGINS_GOOD_LIBS=-L$(GST_PL_GOOD)$(USRLIB)
+CONFIGURE_ENV += GST_PLUGINS_GOOD_DIR=$(USRLIB)/gstreamer-1.0
 
 # Ensure Python modules are installed into vendor package directories.
 CONFIGURE_ENV += am_cv_python_pythondir=$(PYTHON_VENDOR_PACKAGES)

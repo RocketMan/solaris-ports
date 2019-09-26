@@ -36,12 +36,12 @@ include ../../../../make-rules/shared-macros.mk
 # newest version which has no backwards API compatibility and we likely need to
 # ship both, hence the odd name.
 COMPONENT_NAME=		gstreamer
-COMPONENT_VERSION=	1.16.0
+COMPONENT_VERSION=	1.16.1
 COMPONENT_PROJECT_URL=	https://gstreamer.freedesktop.org/
 COMPONENT_SRC=		$(COMPONENT_NAME)-$(COMPONENT_VERSION)
 COMPONENT_ARCHIVE=	$(COMPONENT_SRC).tar.xz
 COMPONENT_ARCHIVE_HASH= \
-	sha256:0e8e2f7118be437cba879353970cf83c2acced825ecb9275ba05d9186ef07c00
+	sha256:02211c3447c4daa55919c5c0f43a82a6fbb51740d57fc3af0639d46f1cf4377d
 COMPONENT_ARCHIVE_URL=	https://gstreamer.freedesktop.org/src/$(COMPONENT_NAME)/$(COMPONENT_ARCHIVE)
 COMPONENT_ANITYA_ID=	1263
 

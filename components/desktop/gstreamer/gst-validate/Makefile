@@ -28,16 +28,21 @@ COMPILER =              gcc
 include ../../../../make-rules/shared-macros.mk
 
 COMPONENT_NAME=		gst-validate
-COMPONENT_VERSION=	1.16.0
+COMPONENT_VERSION=	1.16.1
 COMPONENT_PROJECT_URL=	https://gstreamer.freedesktop.org/
 COMPONENT_ARCHIVE=	$(COMPONENT_SRC).tar.xz
 COMPONENT_ARCHIVE_HASH= \
-	sha256:9331ae48a173a048243539730cc7a88607777762dea4aebbc3ab55981e68d6c9
+	sha256:7f079b9b2a127604b98e297037dc8847ef50f4ce2b508aa2df0cac5b77562899
 COMPONENT_ARCHIVE_URL=	https://gstreamer.freedesktop.org/src/$(COMPONENT_NAME)/$(COMPONENT_ARCHIVE)
 
 TEST_TARGET= $(SKIP_TEST)
 
 include $(WS_MAKE_RULES)/common.mk
+
+# Use the build area of gstreamer and gst-plugins-base
+GST_BASE = $(WS_COMPONENTS)/desktop/gstreamer/gstreamer/build/prototype/$(MACH)
+GST_PL_BASE = $(WS_COMPONENTS)/desktop/gstreamer/gst-plugins-base/build/prototype/$(MACH)
+PKG_CONFIG_PATHS += $(GST_BASE)$(USRLIB)/pkgconfig:$(GST_PL_BASE)$(USRLIB)/pkgconfig
 
 LDFLAGS += -m$(BITS)
 

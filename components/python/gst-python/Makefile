@@ -28,11 +28,11 @@ COMPILER =              gcc
 include ../../../make-rules/shared-macros.mk
 
 COMPONENT_NAME=		gst-python
-COMPONENT_VERSION=	1.16.0
+COMPONENT_VERSION=	1.16.1
 COMPONENT_PROJECT_URL=	https://gstreamer.freedesktop.org/modules/gst-python.html
 COMPONENT_ARCHIVE=	$(COMPONENT_SRC).tar.xz
 COMPONENT_ARCHIVE_HASH= \
-	sha256:55dc7aaed1855565f9b9ef842d93e93bfc5cb2b376faef6af5b463e1774e2d38
+	sha256:b469c8955126f41b8ce0bf689b7029f182cd305f422b3a8df35b780bd8347489
 COMPONENT_ARCHIVE_URL=	https://gstreamer.freedesktop.org/src/$(COMPONENT_NAME)/$(COMPONENT_ARCHIVE)
 
 TEST_TARGET= $(SKIP_TEST)
@@ -49,6 +49,11 @@ INSTALL_32 = $(PYTHON2_VERSIONS:%=$(BUILD_DIR)/$(MACH32)-%/.installed)
 INSTALL_64 = $(PYTHON_VERSIONS:%=$(BUILD_DIR)/$(MACH64)-%/.installed)
 
 include $(WS_MAKE_RULES)/common.mk
+
+# Use the build area of gstreamer and gst-plugins-base
+GST_BASE = $(WS_COMPONENTS)/desktop/gstreamer/gstreamer/build/prototype/$(MACH)
+GST_PL_BASE = $(WS_COMPONENTS)/desktop/gstreamer/gst-plugins-base/build/prototype/$(MACH)
+PKG_CONFIG_PATHS += $(GST_BASE)$(USRLIB)/pkgconfig:$(GST_PL_BASE)$(USRLIB)/pkgconfig
 
 $(BUILD_DIR)/%-2.7/.configured:		PYTHON_VERSION=2.7
 $(BUILD_DIR)/%-3.5/.configured:		PYTHON_VERSION=3.5

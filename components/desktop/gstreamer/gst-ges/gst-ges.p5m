@@ -104,9 +104,9 @@ file path=usr/lib/$(MACH64)/gstreamer-1.0/libgstges.so
 file path=usr/lib/$(MACH64)/gstreamer-1.0/libgstnle.la
 file path=usr/lib/$(MACH64)/gstreamer-1.0/libgstnle.so
 file path=usr/lib/$(MACH64)/libges-1.0.la
-link path=usr/lib/$(MACH64)/libges-1.0.so target=libges-1.0.so.0.1600.0
-link path=usr/lib/$(MACH64)/libges-1.0.so.0 target=libges-1.0.so.0.1600.0
-file path=usr/lib/$(MACH64)/libges-1.0.so.0.1600.0
+link path=usr/lib/$(MACH64)/libges-1.0.so target=libges-1.0.so.0.1601.0
+link path=usr/lib/$(MACH64)/libges-1.0.so.0 target=libges-1.0.so.0.1601.0
+file path=usr/lib/$(MACH64)/libges-1.0.so.0.1601.0
 file path=usr/lib/$(MACH64)/pkgconfig/gst-editing-services-1.0.pc
 file path=usr/lib/girepository-1.0/GES-1.0.typelib
 file path=usr/lib/gst-validate-launcher/python/launcher/apps/geslaunch.py
@@ -115,9 +115,9 @@ file path=usr/lib/gstreamer-1.0/libgstges.so
 file path=usr/lib/gstreamer-1.0/libgstnle.la
 file path=usr/lib/gstreamer-1.0/libgstnle.so
 file path=usr/lib/libges-1.0.la
-link path=usr/lib/libges-1.0.so target=libges-1.0.so.0.1600.0
-link path=usr/lib/libges-1.0.so.0 target=libges-1.0.so.0.1600.0
-file path=usr/lib/libges-1.0.so.0.1600.0
+link path=usr/lib/libges-1.0.so target=libges-1.0.so.0.1601.0
+link path=usr/lib/libges-1.0.so.0 target=libges-1.0.so.0.1601.0
+file path=usr/lib/libges-1.0.so.0.1601.0
 file path=usr/lib/pkgconfig/gst-editing-services-1.0.pc
 file path=usr/lib/python2.7/vendor-packages/64/gstreamer-editing-services/GES.py
 file path=usr/lib/python2.7/vendor-packages/64/gstreamer-editing-services/GES.pyc

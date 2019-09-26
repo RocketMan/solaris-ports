@@ -6,6 +6,10 @@ newbies and professionals alike.
 
 See the [Pitivi homepage](http://www.pitivi.org/) for more information.
 
+**Note:** Pitivi has not yet been updated for GStreamer 1.16.1; as
+such, there may be some irregularities.  If in doubt, use GStreamer
+1.16.0 plugins and components (tagged in this repo: gstreamer-1.16.0).
+
 ### Dependencies
 Dependencies include:
 * GStreamer GES ([gstreamer/gst-ges](../gstreamer/gst-ges))
