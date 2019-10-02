@@ -1111,6 +1111,6 @@ file path=usr/share/locale/xh/LC_MESSAGES/gthumb.mo
 file path=usr/share/locale/zh_CN/LC_MESSAGES/gthumb.mo
 file path=usr/share/locale/zh_HK/LC_MESSAGES/gthumb.mo
 file path=usr/share/locale/zh_TW/LC_MESSAGES/gthumb.mo
-file path=usr/share/man/man1/gthumb.1.gz
+file data/gthumb.1 path=usr/share/man/man1/gthumb.1
 file path=usr/share/metainfo/org.gnome.gThumb.appdata.xml
 license COPYING license=GPLv2
