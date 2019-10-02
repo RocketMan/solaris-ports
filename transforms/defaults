@@ -90,3 +90,6 @@ set name=com.oracle.info.consolidation.repository-url \
     default facet.version-lock.%<1> true >
 <transform depend tmp.fmri=.*-> delete tmp.fmri .* >
 
+#
+# Preserve .conf files under /etc
+<transform file path=etc/.*\.conf$ -> default preserve renamenew>
