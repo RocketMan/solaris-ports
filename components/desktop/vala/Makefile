@@ -31,10 +31,10 @@ COMPILER=gcc
 include ../../../make-rules/shared-macros.mk
 
 COMPONENT_NAME=		vala
-COMPONENT_VERSION=	0.44.7
+COMPONENT_VERSION=	0.44.8
 COMPONENT_PROJECT_URL=	https://wiki.gnome.org/Projects/Vala
 COMPONENT_ARCHIVE_HASH= \
-	sha256:bf1ff4f59d5de2d626e98e98ef81cb75dc1e6a27610a7de4133597c430f1bd7c
+	sha256:347754fbfae52f00ade6a290fd6a29ce6825a7ef5ea107e782aeef6f1261f738
 COMPONENT_ANITYA_ID=	5065
 
 
