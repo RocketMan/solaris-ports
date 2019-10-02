@@ -68,5 +68,8 @@ file path=usr/share/locale/pt_BR/LC_MESSAGES/com.gitlab.bitseater.meteo.mo
 file path=usr/share/locale/pt_PT/LC_MESSAGES/com.gitlab.bitseater.meteo.mo
 file path=usr/share/locale/ru/LC_MESSAGES/com.gitlab.bitseater.meteo.mo
 file path=usr/share/locale/sr/LC_MESSAGES/com.gitlab.bitseater.meteo.mo
+file data/com.gitlab.bitseater.meteo.1 \
+    path=usr/share/man/man1/com.gitlab.bitseater.meteo.1
+link path=usr/share/man/man1/gnome-meteo.1 target=com.gitlab.bitseater.meteo.1
 file path=usr/share/metainfo/com.gitlab.bitseater.meteo.appdata.xml
 license COPYING license=GPLv3
