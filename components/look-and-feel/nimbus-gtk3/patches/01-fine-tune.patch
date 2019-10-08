@@ -1,5 +1,14 @@
 --- a/gtk-3.0/gtk-widgets.css	2018-05-21 14:57:27.000000000 +0000
 +++ b/gtk-3.0/gtk-widgets.css	2018-09-14 20:08:16.954380064 +0000
+@@ -491,7 +491,7 @@
+  * entry *
+  *********/
+ entry {
+-    padding: 7px 4px;
++    padding: 3px 4px;
+     border-width: 1px;
+     border-style: solid;
+     border-top-color: shade(@theme_bg_color, 0.7);
 @@ -567,7 +567,8 @@
  }
  
@@ -10,6 +19,24 @@
  }
  
  expander:hover {
+@@ -598,7 +599,7 @@
+ /*********
+  * frame *
+  *********/
+-frame > border {
++.frame, frame > border {
+     border-width: 1px;
+     border-style: solid;
+     border-color: shade(@theme_bg_color, 0.85);
+@@ -607,7 +608,7 @@
+ }
+ 
+ frame.flat > border,
+-frame > border.flat,
++frame > border.flat, .frame.flat,
+ statusbar frame > border {
+     border: none;
+ }
 @@ -977,7 +978,8 @@
  headerbar .primary-toolbar menu,
  menu {
@@ -64,7 +91,7 @@
  }
  
  tooltip * {
-@@ -2731,6 +2731,7 @@
+@@ -2728,6 +2731,7 @@
  tooltip decoration {
      border-radius: 4px;
      box-shadow: 0 1px 3px 1px rgba(0, 0, 0, 0.1);
@@ -72,7 +99,7 @@
  }
  
  /************
-@@ -3082,10 +3085,15 @@
+@@ -3082,10 +3086,15 @@
  
  .osd progressbar progress,
  progressbar.osd progress {
@@ -91,7 +118,7 @@
  }
  
  .osd view,
-@@ -3376,11 +3384,6 @@
+@@ -3376,11 +3385,6 @@
      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(0, 0, 0, 0.13);
  }
  
@@ -103,7 +130,7 @@
  messagedialog.csd decoration {
      border-radius: 0;
      background-color: @theme_bg_color;
-@@ -3389,10 +3392,11 @@
+@@ -3389,10 +3393,11 @@
  
  .solid-csd decoration {
      margin: 0;
@@ -118,7 +145,7 @@
      box-shadow: inset 0 0 0 3px rgba(0,0,0,0.3), inset 0 1px rgba(20, 20, 20, 0.8);
  }
  
-@@ -3402,7 +3406,7 @@
+@@ -3402,7 +3407,7 @@
  
  /* titlebutton */
  .titlebar .titlebutton:not(separator) {
@@ -138,7 +165,7 @@
                                        #e3e5e8,
                                        #aaafb9);
      color: mix(@titlebar_fg_color, @titlebar_bg_color, 0.1);
-@@ -3490,7 +3493,6 @@
+@@ -3490,7 +3494,6 @@
      background-image: linear-gradient(to bottom,
                                        #abafb8,
                                        #c0c4cb);

@@ -1,5 +1,14 @@
 --- a/gtk-3.0/gtk-widgets.css	2018-05-21 14:57:35.000000000 +0000
 +++ b/gtk-3.0/gtk-widgets.css	2018-09-14 20:09:26.764313169 +0000
+@@ -491,7 +491,7 @@
+  * entry *
+  *********/
+ entry {
+-    padding: 7px 4px;
++    padding: 3px 4px;
+     border-width: 1px;
+     border-style: solid;
+     border-top-color: shade(@theme_bg_color, 0.7);
 @@ -567,7 +567,8 @@
  }
  
@@ -10,6 +19,24 @@
  }
  
  expander:hover {
+@@ -598,7 +599,7 @@
+ /*********
+  * frame *
+  *********/
+-frame > border {
++.frame, frame > border {
+     border-width: 1px;
+     border-style: solid;
+     border-color: shade(@theme_bg_color, 0.85);
+@@ -607,7 +608,7 @@
+ }
+ 
+ frame.flat > border,
+-frame > border.flat,
++frame > border.flat, .frame.flat,
+ statusbar frame > border {
+     border: none;
+ }
 @@ -978,6 +979,7 @@
  menu {
      margin: 4px;    /* avoid minify of menu */
