@@ -1,0 +1,16 @@
+--- a/meson.build	2019-08-08 07:56:18.000000000 +0000
++++ b/meson.build	2019-10-09 18:47:39.146312138 +0000
+@@ -23,7 +23,7 @@
+ 
+ # FIXME: workaround for missing path method
+ #        https://github.com/mesonbuild/meson/pull/4616
+-python_path = find_program('python3').path()
++python_path = get_option('python-path')
+ 
+ source_root = meson.current_source_dir()
+ 
+--- a/meson_options.txt	2019-08-08 07:56:18.000000000 +0000
++++ b/meson_options.txt	2019-10-09 18:58:02.300348493 +0000
+@@ -1 +1,2 @@
+ option('tests', type: 'boolean', value: true, description: 'build tests')
++option('python-path', type: 'string', value: '/usr/bin/python3')
