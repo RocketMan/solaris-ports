@@ -28,7 +28,7 @@
      border-width: 1px;
      border-style: solid;
      border-color: shade(@theme_bg_color, 0.85);
-@@ -607,7 +608,7 @@
+@@ -607,13 +608,17 @@
  }
  
  frame.flat > border,
@@ -37,7 +37,18 @@
  statusbar frame > border {
      border: none;
  }
-@@ -978,6 +979,7 @@
+ 
+ .frame {
+-	background: none;
++    background: none;
++}
++
++scrolledwindow viewport.frame {
++    border-style:none;
+ }
+ 
+ /*******************
+@@ -978,6 +983,7 @@
  menu {
      margin: 4px;    /* avoid minify of menu */
      padding: 0;
@@ -45,7 +56,7 @@
      border-radius: 0;
      background-color: @menu_bg_color;
      color: @menu_fg_color;
-@@ -1253,8 +1255,8 @@
+@@ -1253,8 +1259,8 @@
  
  popover.background,
  .csd popover.background {
@@ -56,7 +67,16 @@
  }
  
  /************
-@@ -1948,8 +1950,9 @@
+@@ -1604,7 +1610,7 @@
+ 
+ progressbar.vertical trough,
+ progressbar.vertical progress {
+-	min-width: 21px;
++    min-width: 21px;
+ }
+ 
+ progressbar.horizontal trough,
+@@ -1948,8 +1954,9 @@
      -gtk-icon-source: none;
      border-style: none;
      background-color: transparent;
@@ -67,7 +87,7 @@
  }
  
  button > separator,
-@@ -2706,18 +2709,18 @@
+@@ -2706,18 +2713,18 @@
   * tooltip *
   ***********/
  tooltip {

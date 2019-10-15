@@ -28,7 +28,7 @@
      border-width: 1px;
      border-style: solid;
      border-color: shade(@theme_bg_color, 0.85);
-@@ -607,7 +608,7 @@
+@@ -607,13 +608,17 @@
  }
  
  frame.flat > border,
@@ -37,7 +37,18 @@
  statusbar frame > border {
      border: none;
  }
-@@ -977,7 +978,8 @@
+ 
+ .frame {
+-	background: none;
++    background: none;
++}
++
++scrolledwindow viewport.frame {
++    border-style:none;
+ }
+ 
+ /*******************
+@@ -977,7 +982,8 @@
  headerbar .primary-toolbar menu,
  menu {
      margin: 4px;    /* avoid minify of menu */
@@ -47,7 +58,7 @@
      border-radius: 0;
      background-color: @menu_bg_color;
      color: @menu_fg_color;
-@@ -1253,8 +1255,8 @@
+@@ -1253,8 +1259,8 @@
  
  popover.background,
  .csd popover.background {
@@ -58,7 +69,16 @@
  }
  
  /************
-@@ -1948,8 +1950,9 @@
+@@ -1604,7 +1610,7 @@
+ 
+ progressbar.vertical trough,
+ progressbar.vertical progress {
+-	min-width: 21px;
++    min-width: 21px;
+ }
+ 
+ progressbar.horizontal trough,
+@@ -1948,8 +1954,9 @@
      -gtk-icon-source: none;
      border-style: none;
      background-color: transparent;
@@ -69,7 +89,7 @@
  }
  
  button > separator,
-@@ -2706,18 +2709,18 @@
+@@ -2706,18 +2713,18 @@
   * tooltip *
   ***********/
  tooltip {
@@ -91,7 +111,7 @@
  }
  
  tooltip * {
-@@ -2728,6 +2731,7 @@
+@@ -2728,6 +2735,7 @@
  tooltip decoration {
      border-radius: 4px;
      box-shadow: 0 1px 3px 1px rgba(0, 0, 0, 0.1);
@@ -99,7 +119,7 @@
  }
  
  /************
-@@ -3082,10 +3086,15 @@
+@@ -3082,10 +3090,15 @@
  
  .osd progressbar progress,
  progressbar.osd progress {
@@ -118,7 +138,7 @@
  }
  
  .osd view,
-@@ -3376,11 +3385,6 @@
+@@ -3376,11 +3389,6 @@
      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(0, 0, 0, 0.13);
  }
  
@@ -130,7 +150,7 @@
  messagedialog.csd decoration {
      border-radius: 0;
      background-color: @theme_bg_color;
-@@ -3389,10 +3393,11 @@
+@@ -3389,10 +3397,11 @@
  
  .solid-csd decoration {
      margin: 0;
@@ -145,7 +165,7 @@
      box-shadow: inset 0 0 0 3px rgba(0,0,0,0.3), inset 0 1px rgba(20, 20, 20, 0.8);
  }
  
-@@ -3402,7 +3407,7 @@
+@@ -3402,7 +3411,7 @@
  
  /* titlebutton */
  .titlebar .titlebutton:not(separator) {
@@ -154,7 +174,7 @@
      margin: 0;
      border-radius: 4px;
      background-color: @theme_selected_bg_color;
-@@ -3474,9 +3478,8 @@
+@@ -3474,9 +3482,8 @@
  /* decoration for windows */
  .titlebar,
  .titlebar:not(headerbar) {
@@ -165,7 +185,7 @@
                                        #e3e5e8,
                                        #aaafb9);
      color: mix(@titlebar_fg_color, @titlebar_bg_color, 0.1);
-@@ -3490,7 +3494,6 @@
+@@ -3490,7 +3498,6 @@
      background-image: linear-gradient(to bottom,
                                        #abafb8,
                                        #c0c4cb);
@@ -173,7 +193,7 @@
      color: @theme_fg_color;
      text-shadow: none;
  }
-@@ -3518,3 +3520,8 @@
+@@ -3518,3 +3524,8 @@
                                        #abafb8,
                                        #c0c4cb);
  }

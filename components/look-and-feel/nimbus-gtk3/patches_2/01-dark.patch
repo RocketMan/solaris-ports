@@ -28,7 +28,7 @@
      border-width: 1px;
      border-style: solid;
      border-color: shade(@theme_bg_color, 0.85);
-@@ -607,7 +608,7 @@
+@@ -607,13 +608,17 @@
  }
  
  frame.flat > border,
@@ -37,6 +37,17 @@
  statusbar frame > border {
      border: none;
  }
+ 
+ .frame {
+-	background: none;
++    background: none;
++}
++
++scrolledwindow viewport.frame {
++    border-style:none;
+ }
+ 
+ /*******************
 @@ -978,6 +979,7 @@
  menu {
      margin: 4px;    /* avoid minify of menu */
@@ -56,6 +67,15 @@
  }
  
  /************
+@@ -1602,7 +1610,7 @@
+ 
+ progressbar.vertical trough,
+ progressbar.vertical progress {
+-	min-width: 21px;
++    min-width: 21px;
+ }
+ 
+ progressbar.horizontal trough,
 @@ -1950,8 +1952,9 @@
      -gtk-icon-source: none;
      border-style: none;
