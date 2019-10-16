@@ -20,7 +20,10 @@
 #
 
 #
-# Copyright (c) 2010, 2018, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2019 Jim Mason <jmason at ibinx dot com>.  All rights reserved.
+#
+# Adapted from original code Copyright (c) 2010, 2019, Oracle and/or its
+# affiliates. All rights reserved.
 #
 
 .PHONY: void
@@ -92,10 +95,8 @@ export HOME=$(WS_HOME)
 
 SHELL=	/bin/bash
 ID=	/usr/bin/id
-# We want "nightly" as our publisher, to match other consolidations and
-# facilitate migrations. G11N wants $(CONSOLIDATION)-localizable for the
-# localizable publisher.
-CONSOLIDATION =	userland
+
+CONSOLIDATION =	solaris-ports
 PUBLISHER ?=	rtutils
 PUBLISHER_LOCALIZABLE ?=	$(CONSOLIDATION)-localizable
 
@@ -108,7 +109,7 @@ space := $(empty) $(empty)
 ROOT =			/
 
 # The changset and external source repo used in building the packages.
-CONSOLIDATION_CHANGESET=$(shell hg identify -i)
+CONSOLIDATION_CHANGESET=
 CONSOLIDATION_REPOSITORY_URL=https://github.com/RocketMan/solaris-ports.git
 
 # Native OS version
@@ -120,16 +121,35 @@ OS_SUB_VERS_MINOR =	$(word 1, $(OS_SUB_VERS_2))
 OS_SUB_VERS_MICRO =	$(word 2, $(OS_SUB_VERS_2))
 OS_VERSION ?=		$(OS_SUB_VERS_MINOR).$(OS_SUB_VERS_MICRO)
 
-ifeq ($(OS_VERSION),11.4)
-SOLARIS_11_4_ONLY =
+# Define limiting variables. These allow you to write single makefile or p5m
+# manifest which can be used on multiple solaris releases even though their
+# contents differs
+ifeq ($(OS_VERSION),11.5)
 SOLARIS_11_3_ONLY =\#
-else
-ifeq ($(OS_VERSION),11.3)
 SOLARIS_11_4_ONLY =\#
-SOLARIS_11_3_ONLY =
-else
-$(error Unknown OS version "$(OS_VERSION)"; set OS_VERSION to "11.3" or "11.4")
+SOLARIS_11_5_ONLY =
+SOLARIS_11_3_4_ONLY =\#
+SOLARIS_11_4_5_ONLY =
 endif
+
+ifeq ($(OS_VERSION),11.4)
+SOLARIS_11_3_ONLY =\#
+SOLARIS_11_4_ONLY =
+SOLARIS_11_5_ONLY =\#
+SOLARIS_11_3_4_ONLY =
+SOLARIS_11_4_5_ONLY =
+endif
+
+ifeq ($(OS_VERSION),11.3)
+SOLARIS_11_3_ONLY =
+SOLARIS_11_4_ONLY =\#
+SOLARIS_11_5_ONLY =\#
+SOLARIS_11_3_4_ONLY =
+SOLARIS_11_4_5_ONLY =\#
+endif
+
+ifeq ($(strip $(SOLARIS_11_3_ONLY)$(SOLARIS_11_4_ONLY)$(SOLARIS_11_5_ONLY)),)
+$(error Unknown OS version "$(OS_VERSION)"; set OS_VERSION to "11.3" or "11.4" or "11.5")
 endif
 
 include $(WS_MAKE_RULES)/ips-buildinfo.mk
@@ -301,6 +321,61 @@ BUILD_32_and_64 =	$(BUILD_32) $(BUILD_64)
 $(BUILD_DIR_NO_ARCH)/.built:	BITS=32
 $(BUILD_DIR_32)/.built:		BITS=32
 $(BUILD_DIR_64)/.built:		BITS=64
+
+# COMPONENT_MAKE_JOBS contains the maximal number of build
+# jobs per component. The default value is equal to half the
+# number of physical cores. The maximal system load is
+# limited by the number of virtual processors.
+ifneq ($(wildcard /usr/sbin/psrinfo),)
+
+PSRINFO=/usr/sbin/psrinfo
+$(SOLARIS_11_4_5_ONLY)PROC_COUNT = $(shell $(PSRINFO) -pv | grep -c "The core")
+$(SOLARIS_11_3_ONLY)PROC_COUNT = $(shell $(PSRINFO) -t | grep -c core)
+# use 50% of the available processors
+COMPONENT_MAKE_JOBS ?= $(shell expr $(PROC_COUNT) / 2)
+SYSTEM_MAX_LOAD := $(shell $(PSRINFO) | wc -l)
+
+# If the number of physical cores cannot be determined from
+# 'psrinfo -t' output, we use the number of virtual processors
+# (hardware threads) as a workaround.
+ifeq ($(COMPONENT_MAKE_JOBS),0)
+COMPONENT_MAKE_JOBS := $(SYSTEM_MAX_LOAD)
+endif
+
+endif
+
+# If the memory is almost exhausted, then refuse to execute parallel build jobs.
+ifneq ($(wildcard /usr/bin/kstat2),)
+ifneq ($(wildcard /usr/bin/pagesize),)
+
+KSTAT2 := /usr/bin/kstat2
+PAGE_SIZE := $(shell /usr/bin/pagesize)
+
+TOTAL_MEMORY_PAGES := $(shell $(KSTAT2) -p kstat:/vm/usage/memory:mem_total | cut -f 2)
+FREE_MEMORY_PAGES := $(shell $(KSTAT2) -p kstat:/pages/unix/system_pages:freemem | cut -f 2)
+ZFS_MEMORY_PAGES := $(shell $(KSTAT2) -p kstat:/vm/usage/memory:mem_zfs | cut -f 2)
+AVAILABLE_MEMORY_PAGES := $(shell echo $$(($(FREE_MEMORY_PAGES)+$(ZFS_MEMORY_PAGES))))
+AVAILABLE_MEMORY_PERCENTAGE := $(shell echo $$((100*$(AVAILABLE_MEMORY_PAGES)/$(TOTAL_MEMORY_PAGES))))
+
+# If there is less than 20 % of available memory, then we set COMPONENT_MAKE_JOBS to 1.
+ifeq ($(shell expr $(AVAILABLE_MEMORY_PERCENTAGE) \<= 20),1)
+COMPONENT_MAKE_JOBS := 1
+endif
+
+endif
+endif
+
+# If the number of jobs is greater than 1, then we need to set
+# GNU make parameters. If GMAKE variable is used for other
+# command (e.g., build.sh), COMPONENT_MAKE_JOBS must be empty or set to 1.
+ifneq ($(filter-out 1,$(COMPONENT_MAKE_JOBS)),)
+
+ifeq ($(SYSTEM_MAX_LOAD),)
+SYSTEM_MAX_LOAD := $(COMPONENT_MAKE_JOBS)
+endif
+
+COMPONENT_BUILD_ARGS += -j $(COMPONENT_MAKE_JOBS) -l $(SYSTEM_MAX_LOAD)
+endif
 
 INSTALL_NO_ARCH =	$(BUILD_DIR_NO_ARCH)/.installed
 INSTALL_32 =		$(BUILD_DIR_32)/.installed
