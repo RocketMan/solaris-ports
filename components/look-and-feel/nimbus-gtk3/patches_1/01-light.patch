@@ -112,7 +112,7 @@
  /***********
   * toolbar *
   ***********/
-@@ -2706,18 +2713,18 @@
+@@ -2706,18 +2722,18 @@
   * tooltip *
   ***********/
  tooltip {
@@ -134,7 +134,7 @@
  }
  
  tooltip * {
-@@ -2731,6 +2731,7 @@
+@@ -2728,6 +2744,7 @@
  tooltip decoration {
      border-radius: 4px;
      box-shadow: 0 1px 3px 1px rgba(0, 0, 0, 0.1);
@@ -142,7 +142,7 @@
  }
  
  /************
-@@ -3082,10 +3085,15 @@
+@@ -3082,10 +3099,15 @@
  
  .osd progressbar progress,
  progressbar.osd progress {
@@ -161,7 +161,7 @@
  }
  
  .osd view,
-@@ -3389,10 +3397,11 @@
+@@ -3389,10 +3411,11 @@
  
  .solid-csd decoration {
      margin: 0;
@@ -176,7 +176,7 @@
      box-shadow: inset 0 0 0 3px rgba(0,0,0,0.3), inset 0 1px rgba(20, 20, 20, 0.8);
  }
  
-@@ -3402,7 +3411,7 @@
+@@ -3402,7 +3425,7 @@
  
  /* titlebutton */
  .titlebar .titlebutton:not(separator) {
@@ -185,7 +185,7 @@
      margin: 0;
      border-radius: 4px;
      background-color: @theme_selected_bg_color;
-@@ -3474,9 +3483,8 @@
+@@ -3474,9 +3497,8 @@
  /* decoration for windows */
  .titlebar,
  .titlebar:not(headerbar) {
@@ -196,7 +196,7 @@
                                        #fff,
                                        #e3e5e8);
      color: mix(@titlebar_fg_color, @titlebar_bg_color, 0.1);
-@@ -3490,7 +3498,6 @@
+@@ -3490,7 +3512,6 @@
      background-image: linear-gradient(to bottom,
                                        #d2d1d7,
                                        #dfe0e4);
@@ -204,7 +204,19 @@
      color: @theme_fg_color;
      text-shadow: none;
  }
-@@ -3515,6 +3522,11 @@
+@@ -3501,9 +3522,9 @@
+ .default-decoration.titlebar:not(headerbar),
+ .csd .default-decoration.titlebar:not(headerbar) {
+     min-height: 28px;
+-    padding: 0 3px;
++    padding: 0 6px 2px 6px;
+     background-color: @toolbar_bg_color;
+-    background-image: linear-gradient(to bottom,
++    background-image: linear-gradient(to top,
+                                       #fff,
+                                       #e3e5e8);
+     border-bottom-width: 0;
+@@ -3515,6 +3536,11 @@
  .csd .default-decoration.titlebar:backdrop:not(headerbar) {
      background-color: @theme_bg_color;
      background-image: linear-gradient(to bottom,
