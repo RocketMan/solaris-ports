@@ -87,3 +87,11 @@
   background-position: center;
   background-repeat: no-repeat;
 }
+
+.csd .titlebutton.close {
+  margin: -1px 0px -1px -1px;
+}
+
+.csd .titlebutton.minimize {
+  margin: -1px -1px -1px 0px;
+}
