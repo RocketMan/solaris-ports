@@ -1,5 +1,5 @@
 --- a/gtk-3.0/gtk-widgets.css	2018-05-21 14:57:27.000000000 +0000
-+++ b/gtk-3.0/gtk-widgets.css	2018-09-14 20:08:16.954380064 +0000
++++ b/gtk-3.0/gtk-widgets.css	2019-11-14 18:44:44.226916550 +0000
 @@ -491,7 +491,7 @@
   * entry *
   *********/
@@ -163,7 +163,29 @@
  }
  
  .osd view,
-@@ -3376,11 +3398,6 @@
+@@ -3343,14 +3365,20 @@
+  * CSD *
+  *******/
+ decoration {
++    border: 4px solid #abafb8;
++    border-top: 0px;
++    background: #abafb8;
+     border-radius: 2px 2px 0 0;
++    /*
+     border-width: 0px;
+     box-shadow: 0 0 0 2px rgba(0,0,0,0.3), 0 0 0 1px rgba(0, 0, 0, 0.65);
+     margin: 10px;
++    */
++    transition: 200ms ease-out;
+ }
+ 
+ decoration:backdrop {
+-    box-shadow: 0 0 0 1px #888d97;
++    /* box-shadow: 0 0 0 1px #888d97; */
+     transition: 200ms ease-out;
+ }
+ 
+@@ -3376,11 +3404,6 @@
      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(0, 0, 0, 0.13);
  }
  
@@ -175,7 +197,7 @@
  messagedialog.csd decoration {
      border-radius: 0;
      background-color: @theme_bg_color;
-@@ -3389,10 +3406,11 @@
+@@ -3389,10 +3412,11 @@
  
  .solid-csd decoration {
      margin: 0;
@@ -190,7 +212,7 @@
      box-shadow: inset 0 0 0 3px rgba(0,0,0,0.3), inset 0 1px rgba(20, 20, 20, 0.8);
  }
  
-@@ -3402,7 +3420,7 @@
+@@ -3402,7 +3426,7 @@
  
  /* titlebutton */
  .titlebar .titlebutton:not(separator) {
@@ -199,7 +221,7 @@
      margin: 0;
      border-radius: 4px;
      background-color: @theme_selected_bg_color;
-@@ -3474,9 +3492,8 @@
+@@ -3474,9 +3498,8 @@
  /* decoration for windows */
  .titlebar,
  .titlebar:not(headerbar) {
@@ -210,7 +232,7 @@
                                        #e3e5e8,
                                        #aaafb9);
      color: mix(@titlebar_fg_color, @titlebar_bg_color, 0.1);
-@@ -3490,7 +3507,6 @@
+@@ -3490,7 +3513,6 @@
      background-image: linear-gradient(to bottom,
                                        #abafb8,
                                        #c0c4cb);
@@ -218,27 +240,18 @@
      color: @theme_fg_color;
      text-shadow: none;
  }
-@@ -3501,9 +3517,9 @@
+@@ -3501,9 +3523,9 @@
  .default-decoration.titlebar:not(headerbar),
  .csd .default-decoration.titlebar:not(headerbar) {
      min-height: 28px;
 -    padding: 0 3px;
-+    padding: 0px 6px 2px 6px;
++    padding: 0px;
      background-color: @toolbar_bg_color;
 -    background-image: linear-gradient(to bottom,
 +    background-image: linear-gradient(to top,
                                        #e3e5e8,
                                        #aaafb9);
      border-bottom-width: 0;
-@@ -3518,3 +3534,8 @@
-                                       #abafb8,
-                                       #c0c4cb);
- }
-+
-+decoration {
-+    border: 4px solid #abafb8;
-+    background: #abafb8;
-+}
 --- a/gtk-3.0/gtk.css	2018-05-21 14:57:27.000000000 +0000
 +++ a/gtk-3.0/gtk.css	2018-09-06 15:04:23.186131255 +0000
 @@ -5,7 +5,7 @@
