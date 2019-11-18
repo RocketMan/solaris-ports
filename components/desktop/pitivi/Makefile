@@ -47,14 +47,24 @@ COMPONENT_BUILD_ENV += VERBOSE=1
 PYTHON_VERSION=3.5
 CONFIGURE_ENV += PYTHON="$(PYTHON)"
 
+SCRATCH_DIR = $(COMPONENT_DIR)/tmp
+CLEAN_PATHS += $(SCRATCH_DIR)
+
 # Ensure Python modules are installed into vendor package directories.
 CONFIGURE_ENV += am_cv_python_pythondir=$(PYTHON_VENDOR_PACKAGES)
 CONFIGURE_ENV += am_cv_python_pyexecdir=$(PYTHON_VENDOR_PACKAGES)
+CONFIGURE_ENV += PKG_CONFIG_PATH=$(PKG_CONFIG_PATH):$(SCRATCH_DIR)
 
 # Use GNU grep during configure and build
 CONFIGURE_ENV += PATH="$(PATH)"
 COMPONENT_BUILD_ENV += PATH=$(PATH)
 COMPONENT_INSTALL_ENV += PATH=$(PATH)
+
+COMPONENT_PREP_ACTION += ( \
+	mkdir -p $(SCRATCH_DIR); \
+	cp $(PYTHON_VENDOR_PACKAGES)/lib/pkgconfig/py3cairo.pc $(SCRATCH_DIR); \
+	sed -i 's|prefix=/usr|prefix=$(PYTHON_VENDOR_PACKAGES)|' $(SCRATCH_DIR)/py3cairo.pc; \
+	);
 
 REQUIRED_PACKAGES += library/desktop/cairo
 REQUIRED_PACKAGES += library/desktop/gstreamer-1
