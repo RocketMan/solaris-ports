@@ -100,6 +100,10 @@ CONSOLIDATION =	solaris-ports
 PUBLISHER ?=	rtutils
 PUBLISHER_LOCALIZABLE ?=	$(CONSOLIDATION)-localizable
 
+# This is where you have checked out the upstream userland repo
+USERLAND_TOP ?= /build/userland
+USERLAND_COMPONENTS = $(USERLAND_TOP)/components
+
 # Defines $(space) as a single blank space, so we can use it to convert
 # space-separated paths to colon-separated paths in variables with
 # $(subst $(space),:,$(strip $(SPATHS)))

@@ -28,11 +28,11 @@ COMPILER =              gcc
 include ../../../../make-rules/shared-macros.mk
 
 COMPONENT_NAME=		gstreamer-editing-services
-COMPONENT_VERSION=	1.16.1
+COMPONENT_VERSION=	1.16.2
 COMPONENT_PROJECT_URL=	https://gstreamer.freedesktop.org/
 COMPONENT_ARCHIVE=	$(COMPONENT_SRC).tar.xz
 COMPONENT_ARCHIVE_HASH= \
-	sha256:c884878f9e6ddac96e4f174654d12fe52e3d48eaaec27a80767c0d56cb2f6780
+	sha256:0e06a6191a0c6c16e16272bf2573cecaeb245f10629486ad940a299bef700c16
 COMPONENT_ARCHIVE_URL=	https://gstreamer.freedesktop.org/src/$(COMPONENT_NAME)/$(COMPONENT_ARCHIVE)
 
 TEST_TARGET= $(SKIP_TEST)

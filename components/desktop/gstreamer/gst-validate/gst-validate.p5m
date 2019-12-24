@@ -129,16 +129,16 @@ file path=usr/lib/$(MACH64)/gstreamer-1.0/validate/libgstvalidatessim.la
 file path=usr/lib/$(MACH64)/gstreamer-1.0/validate/libgstvalidatessim.so
 file path=usr/lib/$(MACH64)/libgstvalidate-1.0.la
 link path=usr/lib/$(MACH64)/libgstvalidate-1.0.so \
-    target=libgstvalidate-1.0.so.0.1601.0
+    target=libgstvalidate-1.0.so.0.1602.0
 link path=usr/lib/$(MACH64)/libgstvalidate-1.0.so.0 \
-    target=libgstvalidate-1.0.so.0.1601.0
-file path=usr/lib/$(MACH64)/libgstvalidate-1.0.so.0.1601.0
+    target=libgstvalidate-1.0.so.0.1602.0
+file path=usr/lib/$(MACH64)/libgstvalidate-1.0.so.0.1602.0
 file path=usr/lib/$(MACH64)/libgstvalidate-default-overrides-1.0.la
 link path=usr/lib/$(MACH64)/libgstvalidate-default-overrides-1.0.so \
-    target=libgstvalidate-default-overrides-1.0.so.0.1601.0
+    target=libgstvalidate-default-overrides-1.0.so.0.1602.0
 link path=usr/lib/$(MACH64)/libgstvalidate-default-overrides-1.0.so.0 \
-    target=libgstvalidate-default-overrides-1.0.so.0.1601.0
-file path=usr/lib/$(MACH64)/libgstvalidate-default-overrides-1.0.so.0.1601.0
+    target=libgstvalidate-default-overrides-1.0.so.0.1602.0
+file path=usr/lib/$(MACH64)/libgstvalidate-default-overrides-1.0.so.0.1602.0
 file path=usr/lib/$(MACH64)/libgstvalidatevideo-1.0.la
 link path=usr/lib/$(MACH64)/libgstvalidatevideo-1.0.so \
     target=libgstvalidatevideo-1.0.so.0.0.0
@@ -208,15 +208,15 @@ file path=usr/lib/gstreamer-1.0/validate/libgstvalidategtk.so
 file path=usr/lib/gstreamer-1.0/validate/libgstvalidatessim.la
 file path=usr/lib/gstreamer-1.0/validate/libgstvalidatessim.so
 file path=usr/lib/libgstvalidate-1.0.la
-link path=usr/lib/libgstvalidate-1.0.so target=libgstvalidate-1.0.so.0.1601.0
-link path=usr/lib/libgstvalidate-1.0.so.0 target=libgstvalidate-1.0.so.0.1601.0
-file path=usr/lib/libgstvalidate-1.0.so.0.1601.0
+link path=usr/lib/libgstvalidate-1.0.so target=libgstvalidate-1.0.so.0.1602.0
+link path=usr/lib/libgstvalidate-1.0.so.0 target=libgstvalidate-1.0.so.0.1602.0
+file path=usr/lib/libgstvalidate-1.0.so.0.1602.0
 file path=usr/lib/libgstvalidate-default-overrides-1.0.la
 link path=usr/lib/libgstvalidate-default-overrides-1.0.so \
-    target=libgstvalidate-default-overrides-1.0.so.0.1601.0
+    target=libgstvalidate-default-overrides-1.0.so.0.1602.0
 link path=usr/lib/libgstvalidate-default-overrides-1.0.so.0 \
-    target=libgstvalidate-default-overrides-1.0.so.0.1601.0
-file path=usr/lib/libgstvalidate-default-overrides-1.0.so.0.1601.0
+    target=libgstvalidate-default-overrides-1.0.so.0.1602.0
+file path=usr/lib/libgstvalidate-default-overrides-1.0.so.0.1602.0
 file path=usr/lib/libgstvalidatevideo-1.0.la
 link path=usr/lib/libgstvalidatevideo-1.0.so \
     target=libgstvalidatevideo-1.0.so.0.0.0
