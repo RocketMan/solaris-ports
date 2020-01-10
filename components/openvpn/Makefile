@@ -30,13 +30,17 @@ COMPILER=gcc
 include ../../make-rules/shared-macros.mk
 
 COMPONENT_NAME=		openvpn
-COMPONENT_VERSION=	2.4.3
-COMPONENT_ARCHIVE=	$(COMPONENT_NAME)-$(COMPONENT_VERSION).tar.xz
-COMPONENT_ARCHIVE_URL=	http://swupdate.openvpn.org/community/releases/$(COMPONENT_ARCHIVE)
-COMPONENT_PROJECT_URL=	http://openvpn.net/
+COMPONENT_VERSION=	2.4.8
+COMPONENT_ARCHIVE=	v$(COMPONENT_VERSION).tar.gz
+COMPONENT_ARCHIVE_URL=	https://github.com/OpenVPN/$(COMPONENT_NAME)/archive/$(COMPONENT_ARCHIVE)
+COMPONENT_PROJECT_URL=	https://openvpn.net/
 COMPONENT_ARCHIVE_HASH=	\
-    sha256:15e15fc97f189b52aee7c90ec8355aa77469c773125110b4c2f089abecde36fb
+    sha256:9770dcf39381482a835f1d8683a1389f005378c555135cac1419f654473a477e
 COMPONENT_ANITYA_ID=	2567
+
+COMPONENT_PREP_ACTION = \
+        (cd $(@D) ; \
+        autoreconf -f -i ; )
 
 include $(WS_MAKE_RULES)/common.mk
 
