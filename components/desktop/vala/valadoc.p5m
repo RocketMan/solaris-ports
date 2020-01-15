@@ -39,66 +39,66 @@ set name=info.classification \
 set name=info.source-url value=$(COMPONENT_ARCHIVE_URL)
 set name=info.upstream-url value=$(COMPONENT_PROJECT_URL)
 set name=org.opensolaris.consolidation value=$(CONSOLIDATION)
-link path=usr/bin/$(MACH64)/valadoc target=valadoc-0.44
-file path=usr/bin/$(MACH64)/valadoc-0.44
-link path=usr/bin/valadoc target=valadoc-0.44
-file path=usr/bin/valadoc-0.44
-file path=usr/include/valadoc-0.44/valadoc.h
-file path=usr/lib/$(MACH64)/libvaladoc-0.44.la
-link path=usr/lib/$(MACH64)/libvaladoc-0.44.so target=libvaladoc-0.44.so.0.0.0
-link path=usr/lib/$(MACH64)/libvaladoc-0.44.so.0 target=libvaladoc-0.44.so.0.0.0
-file path=usr/lib/$(MACH64)/libvaladoc-0.44.so.0.0.0
-file path=usr/lib/$(MACH64)/pkgconfig/valadoc-0.44.pc
-file path=usr/lib/$(MACH64)/valadoc/doclets/devhelp/libdoclet.la
-file path=usr/lib/$(MACH64)/valadoc/doclets/devhelp/libdoclet.so
-file path=usr/lib/$(MACH64)/valadoc/doclets/gtkdoc/libdoclet.la
-file path=usr/lib/$(MACH64)/valadoc/doclets/gtkdoc/libdoclet.so
-file path=usr/lib/$(MACH64)/valadoc/doclets/html/libdoclet.la
-file path=usr/lib/$(MACH64)/valadoc/doclets/html/libdoclet.so
-file path=usr/lib/libvaladoc-0.44.la
-link path=usr/lib/libvaladoc-0.44.so target=libvaladoc-0.44.so.0.0.0
-link path=usr/lib/libvaladoc-0.44.so.0 target=libvaladoc-0.44.so.0.0.0
-file path=usr/lib/libvaladoc-0.44.so.0.0.0
-file path=usr/lib/pkgconfig/valadoc-0.44.pc
-file path=usr/lib/valadoc/doclets/devhelp/libdoclet.la
-file path=usr/lib/valadoc/doclets/devhelp/libdoclet.so
-file path=usr/lib/valadoc/doclets/gtkdoc/libdoclet.la
-file path=usr/lib/valadoc/doclets/gtkdoc/libdoclet.so
-file path=usr/lib/valadoc/doclets/html/libdoclet.la
-file path=usr/lib/valadoc/doclets/html/libdoclet.so
-file path=usr/share/man/man1/valadoc-0.44.1
-link path=usr/share/man/man1/valadoc.1 target=valadoc-0.44.1
-file path=usr/share/vala/vapi/valadoc-0.44.deps
-file path=usr/share/vala/vapi/valadoc-0.44.vapi
-file path=usr/share/valadoc/icons/abstractclass.png
-file path=usr/share/valadoc/icons/abstractmethod.png
-file path=usr/share/valadoc/icons/abstractproperty.png
-file path=usr/share/valadoc/icons/class.png
-file path=usr/share/valadoc/icons/coll_close.png
-file path=usr/share/valadoc/icons/coll_open.png
-file path=usr/share/valadoc/icons/constant.png
-file path=usr/share/valadoc/icons/constructor.png
-file path=usr/share/valadoc/icons/delegate.png
-file path=usr/share/valadoc/icons/devhelpstyle.css
-file path=usr/share/valadoc/icons/enum.png
-file path=usr/share/valadoc/icons/enumvalue.png
-file path=usr/share/valadoc/icons/errorcode.png
-file path=usr/share/valadoc/icons/errordomain.png
-file path=usr/share/valadoc/icons/field.png
-file path=usr/share/valadoc/icons/interface.png
-file path=usr/share/valadoc/icons/method.png
-file path=usr/share/valadoc/icons/namespace.png
-file path=usr/share/valadoc/icons/package.png
-file path=usr/share/valadoc/icons/packages.png
-file path=usr/share/valadoc/icons/property.png
-file path=usr/share/valadoc/icons/scripts.js
-file path=usr/share/valadoc/icons/signal.png
-file path=usr/share/valadoc/icons/staticmethod.png
-file path=usr/share/valadoc/icons/struct.png
-file path=usr/share/valadoc/icons/style.css
-file path=usr/share/valadoc/icons/tip.png
-file path=usr/share/valadoc/icons/virtualmethod.png
-file path=usr/share/valadoc/icons/virtualproperty.png
-file path=usr/share/valadoc/icons/warning.png
-file path=usr/share/valadoc/icons/wikistyle.css
+link path=usr/bin/$(MACH64)/valadoc target=valadoc-0.46
+file path=usr/bin/$(MACH64)/valadoc-0.46
+link path=usr/bin/valadoc target=valadoc-0.46
+file path=usr/bin/valadoc-0.46
+file path=usr/include/valadoc-0.46/valadoc.h
+file path=usr/lib/$(MACH64)/libvaladoc-0.46.la
+link path=usr/lib/$(MACH64)/libvaladoc-0.46.so target=libvaladoc-0.46.so.0.0.0
+link path=usr/lib/$(MACH64)/libvaladoc-0.46.so.0 target=libvaladoc-0.46.so.0.0.0
+file path=usr/lib/$(MACH64)/libvaladoc-0.46.so.0.0.0
+file path=usr/lib/$(MACH64)/pkgconfig/valadoc-0.46.pc
+file path=usr/lib/$(MACH64)/valadoc-0.46/doclets/devhelp/libdoclet.la
+file path=usr/lib/$(MACH64)/valadoc-0.46/doclets/devhelp/libdoclet.so
+file path=usr/lib/$(MACH64)/valadoc-0.46/doclets/gtkdoc/libdoclet.la
+file path=usr/lib/$(MACH64)/valadoc-0.46/doclets/gtkdoc/libdoclet.so
+file path=usr/lib/$(MACH64)/valadoc-0.46/doclets/html/libdoclet.la
+file path=usr/lib/$(MACH64)/valadoc-0.46/doclets/html/libdoclet.so
+file path=usr/lib/libvaladoc-0.46.la
+link path=usr/lib/libvaladoc-0.46.so target=libvaladoc-0.46.so.0.0.0
+link path=usr/lib/libvaladoc-0.46.so.0 target=libvaladoc-0.46.so.0.0.0
+file path=usr/lib/libvaladoc-0.46.so.0.0.0
+file path=usr/lib/pkgconfig/valadoc-0.46.pc
+file path=usr/lib/valadoc-0.46/doclets/devhelp/libdoclet.la
+file path=usr/lib/valadoc-0.46/doclets/devhelp/libdoclet.so
+file path=usr/lib/valadoc-0.46/doclets/gtkdoc/libdoclet.la
+file path=usr/lib/valadoc-0.46/doclets/gtkdoc/libdoclet.so
+file path=usr/lib/valadoc-0.46/doclets/html/libdoclet.la
+file path=usr/lib/valadoc-0.46/doclets/html/libdoclet.so
+file path=usr/share/man/man1/valadoc-0.46.1
+link path=usr/share/man/man1/valadoc.1 target=valadoc-0.46.1
+file path=usr/share/vala/vapi/valadoc-0.46.deps
+file path=usr/share/vala/vapi/valadoc-0.46.vapi
+file path=usr/share/valadoc-0.46/icons/abstractclass.png
+file path=usr/share/valadoc-0.46/icons/abstractmethod.png
+file path=usr/share/valadoc-0.46/icons/abstractproperty.png
+file path=usr/share/valadoc-0.46/icons/class.png
+file path=usr/share/valadoc-0.46/icons/coll_close.png
+file path=usr/share/valadoc-0.46/icons/coll_open.png
+file path=usr/share/valadoc-0.46/icons/constant.png
+file path=usr/share/valadoc-0.46/icons/constructor.png
+file path=usr/share/valadoc-0.46/icons/delegate.png
+file path=usr/share/valadoc-0.46/icons/devhelpstyle.css
+file path=usr/share/valadoc-0.46/icons/enum.png
+file path=usr/share/valadoc-0.46/icons/enumvalue.png
+file path=usr/share/valadoc-0.46/icons/errorcode.png
+file path=usr/share/valadoc-0.46/icons/errordomain.png
+file path=usr/share/valadoc-0.46/icons/field.png
+file path=usr/share/valadoc-0.46/icons/interface.png
+file path=usr/share/valadoc-0.46/icons/method.png
+file path=usr/share/valadoc-0.46/icons/namespace.png
+file path=usr/share/valadoc-0.46/icons/package.png
+file path=usr/share/valadoc-0.46/icons/packages.png
+file path=usr/share/valadoc-0.46/icons/property.png
+file path=usr/share/valadoc-0.46/icons/scripts.js
+file path=usr/share/valadoc-0.46/icons/signal.png
+file path=usr/share/valadoc-0.46/icons/staticmethod.png
+file path=usr/share/valadoc-0.46/icons/struct.png
+file path=usr/share/valadoc-0.46/icons/style.css
+file path=usr/share/valadoc-0.46/icons/tip.png
+file path=usr/share/valadoc-0.46/icons/virtualmethod.png
+file path=usr/share/valadoc-0.46/icons/virtualproperty.png
+file path=usr/share/valadoc-0.46/icons/warning.png
+file path=usr/share/valadoc-0.46/icons/wikistyle.css
 license COPYING license=LGPLv2.1
