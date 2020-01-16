@@ -39,7 +39,7 @@ link path=usr/lib/$(MACH64)/font-manager/libfontmanager.so \
 link path=usr/lib/$(MACH64)/font-manager/libfontmanager.so.0 \
     target=libfontmanager.so.0.7.7
 file path=usr/lib/$(MACH64)/font-manager/libfontmanager.so.0.7.7
-file path=usr/libexec/font-manager/font-viewer
+file path=usr/libexec/font-manager/font-viewer mode=0555
 file path=usr/share/applications/org.gnome.FontManager.desktop
 file path=usr/share/applications/org.gnome.FontViewer.desktop
 file path=usr/share/dbus-1/services/org.gnome.FontManager.service
