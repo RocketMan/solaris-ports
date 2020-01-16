@@ -1,0 +1,37 @@
+--- a/lib/common/font-manager-freetype.c	2019-12-17 23:11:40.000000000 +0000
++++ b/lib/common/font-manager-freetype.c	2020-01-16 19:21:41.401336793 +0000
+@@ -156,7 +156,7 @@
+ 
+     /* Fontconfig modifies invalid PostScript names by replacing illegal characters with - */
+     json_object_set_string_member(json_obj, "psname", FT_Get_Postscript_Name(face));
+-    json_object_set_string_member(json_obj, "filetype", FT_Get_Font_Format(face));
++    json_object_set_string_member(json_obj, "filetype", FT_Get_X11_Font_Format(face));
+     json_object_set_int_member(json_obj, "n-glyphs", face->num_glyphs);
+ 
+     /* Order matters */
+@@ -356,9 +356,6 @@
+             case TT_MS_ID_SJIS:
+                 val = SNAME_2_UTF8(sname, "SJIS-WIN");
+                 break;
+-            case TT_MS_ID_PRC:
+-                val = SNAME_2_UTF8(sname, "GB2312");
+-                break;
+             case TT_MS_ID_BIG_5:
+                 val = SNAME_2_UTF8(sname, "BIG-5");
+                 break;
+@@ -382,7 +379,6 @@
+         switch (sname.name_id) {
+             case TT_NAME_ID_FONT_FAMILY:
+             case TT_NAME_ID_WWS_FAMILY:
+-            case TT_NAME_ID_TYPOGRAPHIC_FAMILY:
+                 if (json_object_has_member(json_obj, "family")
+                     && sname.language_id != TT_MS_LANGID_ENGLISH_UNITED_STATES)
+                     break;
+@@ -390,7 +386,6 @@
+                 break;
+             case TT_NAME_ID_FONT_SUBFAMILY:
+             case TT_NAME_ID_WWS_SUBFAMILY:
+-            case TT_NAME_ID_TYPOGRAPHIC_SUBFAMILY:
+                 if (json_object_has_member(json_obj, "style")
+                     && sname.language_id != TT_MS_LANGID_ENGLISH_UNITED_STATES)
+                     break;
