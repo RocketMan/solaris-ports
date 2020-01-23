@@ -26,12 +26,13 @@
 BUILD_BITS =            64
 COMPILER =		gcc
 include ../../../make-rules/shared-macros.mk
+GCC_ROOT =		/usr/gcc/9
 
 COMPONENT_NAME=		gthumb
-COMPONENT_VERSION=	3.8.1
+COMPONENT_VERSION=	3.8.3
 COMPONENT_SRC=		$(COMPONENT_NAME)-$(GIT_COMMIT_ID)
-COMPONENT_ARCHIVE_URL=	$(GIT_REPO)/archive/$(GIT_COMMIT_ID).tar.gz
-GIT_REPO=		https://github.com/GNOME/gthumb
+COMPONENT_ARCHIVE_URL=	$(GIT_REPO)/-/archive/$(COMPONENT_VERSION)/$(COMPONENT_SRC).tar.gz
+GIT_REPO=		https://gitlab.gnome.org/GNOME/gthumb
 GIT_COMMIT_ID=		$(COMPONENT_VERSION)
 COMPONENT_PROJECT_URL=	https://wiki.gnome.org/Apps/Gthumb
 COMPONENT_ANITYA_ID=	1270
