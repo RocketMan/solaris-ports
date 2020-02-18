@@ -3,8 +3,9 @@
 This is the GNOME Web browser, formerly known as 'epiphany'.
 
 To build and run, you need the [webkitgtk4](../webkitgtk4/) package
-from this repo, in place of webkitgtk4 from the Solaris userland gate.
-In addition, you will need `libdazzle`, also found in this repo.
+from this repo, in place of webkitgtk4 from the Solaris userland gate,
+as the webkitgtk4 in the userland gate has JIT disabled, while the
+one here does not.  You need JIT for a reasonable browser experience.
 
 By default, this package depends on the icu from the userland gate.
 If you are running under 11.3 and have dependencies on the existing
