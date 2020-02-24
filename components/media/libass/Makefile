@@ -48,7 +48,7 @@ CONFIGURE_OPTIONS += --disable-internal-docs
 CONFIGURE_OPTIONS += --disable-asm
 
 REQUIRED_PACKAGES += library/desktop/harfbuzz
-REQUIRED_PACKAGES += library/fribidi
+REQUIRED_PACKAGES += library/desktop/fribidi
 REQUIRED_PACKAGES += system/library/fontconfig
 REQUIRED_PACKAGES += system/library/freetype-2
 REQUIRED_PACKAGES += system/library/math
