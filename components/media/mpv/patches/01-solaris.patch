@@ -1,0 +1,75 @@
+diff --git a/stream/stream_libarchive.h b/stream/stream_libarchive.h
+index f9e05fcbee..c300d4dc1a 100644
+--- a/stream/stream_libarchive.h
++++ b/stream/stream_libarchive.h
+@@ -6,6 +6,25 @@
+ # include <xlocale.h>
+ #endif
+ 
++#ifdef SOLARIS_11_3
++#define locale_t const char *
++#define LC_CTYPE_MASK 0
++inline void freelocale(locale_t locale) {}
++inline locale_t uselocale(locale_t locale) {
++  locale_t old = setlocale(LC_CTYPE, NULL);
++  return setlocale(LC_CTYPE, locale)?old:NULL;
++}
++inline int query_locale(const char* locale) {
++  locale_t old = uselocale(locale);
++  if(old)
++    uselocale(old);
++  return old != NULL;
++}
++inline locale_t newlocale(int mask, const char* locale, locale_t base) {
++  return query_locale(locale)?locale:NULL;
++}
++#endif
++
+ struct mp_log;
+ 
+ struct mp_archive {
+diff --git a/video/out/dither.c b/video/out/dither.c
+index 33c2e92db7..96fab01615 100644
+--- a/video/out/dither.c
++++ b/video/out/dither.c
+@@ -37,6 +37,10 @@
+ #define MAX_SIZE (1 << MAX_SIZEB)
+ #define MAX_SIZE2 (MAX_SIZE * MAX_SIZE)
+ 
++#ifdef __sun__
++#define index_t indexx_t
++#endif
++
+ typedef uint_fast32_t index_t;
+ 
+ #define WRAP_SIZE2(k, x) ((index_t)((index_t)(x) & ((k)->size2 - 1)))
+diff --git a/video/out/vo_tct.c b/video/out/vo_tct.c
+index 8018a6ba72..756547a362 100644
+--- a/video/out/vo_tct.c
++++ b/video/out/vo_tct.c
+@@ -18,6 +18,7 @@
+ #include <stdio.h>
+ #include <unistd.h>
+ #include <config.h>
++#include <termios.h>
+ 
+ #if HAVE_POSIX
+ #include <sys/ioctl.h>
+diff --git a/waftools/syms.py b/waftools/syms.py
+index 3ae69c6640..0468794f17 100644
+--- a/waftools/syms.py
++++ b/waftools/syms.py
+@@ -44,9 +44,9 @@ def do_the_symbol_stuff(self):
+         self.link_task.env.append_value('LINKFLAGS', ['/def:' + tsk.outputs[0].bldpath()])
+     elif self.env.DEST_BINFMT == 'pe': #gcc on windows takes *.def as an additional input
+         self.link_task.inputs.append(tsk.outputs[0])
+-    elif self.env.DEST_BINFMT == 'elf':
+-        self.link_task.env.append_value('LINKFLAGS', ['-Wl,-version-script', '-Wl,' + tsk.outputs[0].bldpath()])
++#    elif self.env.DEST_BINFMT == 'elf':
++#        self.link_task.env.append_value('LINKFLAGS', ['-Wl,-version-script', '-Wl,' + tsk.outputs[0].bldpath()])
+     elif self.env.DEST_BINFMT == 'mac-o':
+         self.link_task.env.append_value('LINKFLAGS', ['-exported_symbols_list', tsk.outputs[0].bldpath()])
+-    else:
+-        raise WafError('NotImplemented')
++#    else:
++#        raise WafError('NotImplemented')
