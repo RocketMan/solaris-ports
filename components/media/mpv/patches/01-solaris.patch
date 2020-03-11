@@ -44,14 +44,16 @@ index 33c2e92db7..96fab01615 100644
  
  #define WRAP_SIZE2(k, x) ((index_t)((index_t)(x) & ((k)->size2 - 1)))
 diff --git a/video/out/vo_tct.c b/video/out/vo_tct.c
-index 8018a6ba72..756547a362 100644
+index 8018a6ba72..3f3fd4edc6 100644
 --- a/video/out/vo_tct.c
 +++ b/video/out/vo_tct.c
-@@ -18,6 +18,7 @@
+@@ -18,6 +18,9 @@
  #include <stdio.h>
  #include <unistd.h>
  #include <config.h>
++#ifdef __sun__
 +#include <termios.h>
++#endif
  
  #if HAVE_POSIX
  #include <sys/ioctl.h>

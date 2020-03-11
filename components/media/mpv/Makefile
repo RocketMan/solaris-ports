@@ -22,7 +22,7 @@
 #
 # Copyright (c) 2020 Jim Mason <jmason at ibinx dot com>.  All rights reserved.
 #
-BUILD_BITS=	64
+BUILD_BITS=	64_and_32
 COMPILER=	gcc
 
 include ../../../make-rules/shared-macros.mk
@@ -69,6 +69,7 @@ CONFIGURE_OPTIONS += --mandir=$(CONFIGURE_MANDIR)
 CONFIGURE_OPTIONS += --confdir=/etc
 CONFIGURE_OPTIONS += --enable-cdda
 CONFIGURE_OPTIONS += --enable-dvdnav
+CONFIGURE_OPTIONS += --enable-libmpv-shared
 
 CFLAGS +=	-D__EXTENSIONS__
 $(SOLARIS_11_3_ONLY)CFLAGS += -DSOLARIS_11_3
