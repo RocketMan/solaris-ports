@@ -7,12 +7,12 @@ that, probably doesn't matter for now.
 
 https://bugs.webkit.org/show_bug.cgi?id=124941
 
---- a/Source/WTF/wtf/Platform.h	2018-02-14 10:35:01.420174241 -0800
-+++ b/Source/WTF/wtf/Platform.h	2018-02-14 10:36:12.276175097 -0800
-@@ -114,6 +114,23 @@
+--- a/Source/WTF/wtf/PlatformCPU.h	2020-01-20 16:38:04.000000000 +0000
++++ b/Source/WTF/wtf/PlatformCPU.h	2020-01-20 17:54:31.642071523 +0000
+@@ -89,6 +89,23 @@
  #define WTF_CPU_KNOWN 1
  #endif
-
+ 
 +/* CPU(SPARC32) - SPARC 32-bit */
 +#if defined(__sparc) && !defined(__arch64__) || defined(__sparcv8)
 +#define WTF_CPU_SPARC32 1
@@ -33,15 +33,15 @@ https://bugs.webkit.org/show_bug.cgi?id=124941
  /* CPU(X86) - i386 / x86 32-bit */
  #if   defined(__i386__) \
      || defined(i386)     \
-@@ -322,7 +339,7 @@
+@@ -281,7 +298,7 @@
  #define WTF_CPU_UNKNOWN 1
  #endif
-
+ 
 -#if CPU(ARM) || CPU(MIPS) || CPU(UNKNOWN)
 +#if CPU(ARM) || CPU(MIPS) || CPU(UNKNOWN) || CPU(SPARC)
  #define WTF_CPU_NEEDS_ALIGNED_ACCESS 1
  #endif
-
+ 
 --- a/CMakeLists.txt	2018-02-14 11:02:33.132887067 -0800
 +++ b/CMakeLists.txt	2018-02-14 11:05:52.644576425 -0800
 @@ -102,6 +102,8 @@

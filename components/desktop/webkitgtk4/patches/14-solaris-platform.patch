@@ -21,14 +21,11 @@
  #endif
 --- a/Source/WebCore/platform/UserAgentQuirks.cpp	2019-09-10 13:46:35.169229789 +0000
 +++ b/Source/WebCore/platform/UserAgentQuirks.cpp	2019-09-10 13:48:53.969416868 +0000
-@@ -120,10 +120,20 @@
+@@ -140,7 +140,17 @@
  
  static bool urlRequiresLinuxDesktopPlatform(const URL& url)
  {
--    // docs.google.com and drive.google.com require the macOS platform quirk.
--    return isGoogle(url)
--        && url.host() != "docs.google.com"
--        && url.host() != "drive.google.com";
+-    return isGoogle(url);
 +#if OS(SOLARIS)
 +    // The speed test at dslreports does not recognize the SunOS platform,
 +    // so we masquerade as Linux.
@@ -39,10 +36,7 @@
 +#else
 +    return
 +#endif
-+        // docs.google.com requires the macOS platform quirk.
-+        isGoogle(url)
-+            && url.host() != "docs.google.com"
-+            && url.host() != "drive.google.com";
++           isGoogle(url);
  }
  
  UserAgentQuirks UserAgentQuirks::quirksForURL(const URL& url)

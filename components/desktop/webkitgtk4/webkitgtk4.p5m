@@ -20,7 +20,7 @@
 #
 
 #
-# Copyright (c) 2019 Jim Mason <jmason at ibinx dot com>.  All rights reserved.
+# Copyright (c) 2020 Jim Mason <jmason at ibinx dot com>.  All rights reserved.
 #
 # Adapted from original code Copyright (c) 2016, 2018, Oracle and/or its
 # affiliates. All rights reserved.
@@ -37,7 +37,6 @@ set name=pkg.depend.bypass-generate value=libEGL\.so\.1 value=libGL\.so\.1
 # pkgdepend needs help to follow the runtime generated symlinks to libGL
 set name=pkg.depend.runpath \
     value=$PKGDEPEND_RUNPATH:usr/lib/mesa:usr/lib/mesa/$(MACH64)
-set name=com.oracle.info.description value=$(COMPONENT_NAME)
 set name=info.classification \
     value="org.opensolaris.category.2008:Desktop (GNOME)/Libraries"
 set name=info.source-url value=$(COMPONENT_ARCHIVE_URL)
@@ -92,6 +91,7 @@ file path=usr/include/webkitgtk-4.0/webkit2/WebKitFrame.h
 file path=usr/include/webkitgtk-4.0/webkit2/WebKitGeolocationManager.h
 file path=usr/include/webkitgtk-4.0/webkit2/WebKitGeolocationPermissionRequest.h
 file path=usr/include/webkitgtk-4.0/webkit2/WebKitHitTestResult.h
+file path=usr/include/webkitgtk-4.0/webkit2/WebKitInputMethodContext.h
 file path=usr/include/webkitgtk-4.0/webkit2/WebKitInstallMissingMediaPluginsPermissionRequest.h
 file path=usr/include/webkitgtk-4.0/webkit2/WebKitJavascriptResult.h
 file path=usr/include/webkitgtk-4.0/webkit2/WebKitMimeInfo.h
@@ -104,6 +104,7 @@ file path=usr/include/webkitgtk-4.0/webkit2/WebKitOptionMenu.h
 file path=usr/include/webkitgtk-4.0/webkit2/WebKitOptionMenuItem.h
 file path=usr/include/webkitgtk-4.0/webkit2/WebKitPermissionRequest.h
 file path=usr/include/webkitgtk-4.0/webkit2/WebKitPlugin.h
+file path=usr/include/webkitgtk-4.0/webkit2/WebKitPointerLockPermissionRequest.h
 file path=usr/include/webkitgtk-4.0/webkit2/WebKitPolicyDecision.h
 file path=usr/include/webkitgtk-4.0/webkit2/WebKitPrintCustomWidget.h
 file path=usr/include/webkitgtk-4.0/webkit2/WebKitPrintOperation.h
@@ -121,6 +122,7 @@ file path=usr/include/webkitgtk-4.0/webkit2/WebKitUserContent.h
 file path=usr/include/webkitgtk-4.0/webkit2/WebKitUserContentFilterStore.h
 file path=usr/include/webkitgtk-4.0/webkit2/WebKitUserContentManager.h
 file path=usr/include/webkitgtk-4.0/webkit2/WebKitUserMediaPermissionRequest.h
+file path=usr/include/webkitgtk-4.0/webkit2/WebKitUserMessage.h
 file path=usr/include/webkitgtk-4.0/webkit2/WebKitVersion.h
 file path=usr/include/webkitgtk-4.0/webkit2/WebKitWebContext.h
 file path=usr/include/webkitgtk-4.0/webkit2/WebKitWebEditor.h
@@ -263,12 +265,12 @@ file path=usr/lib/$(MACH64)/jsc mode=0555
 link path=usr/lib/$(MACH64)/libjavascriptcoregtk-4.0.so \
     target=libjavascriptcoregtk-4.0.so.18
 link path=usr/lib/$(MACH64)/libjavascriptcoregtk-4.0.so.18 \
-    target=libjavascriptcoregtk-4.0.so.18.14.8
-file path=usr/lib/$(MACH64)/libjavascriptcoregtk-4.0.so.18.14.8
+    target=libjavascriptcoregtk-4.0.so.18.16.3
+file path=usr/lib/$(MACH64)/libjavascriptcoregtk-4.0.so.18.16.3
 link path=usr/lib/$(MACH64)/libwebkit2gtk-4.0.so target=libwebkit2gtk-4.0.so.37
 link path=usr/lib/$(MACH64)/libwebkit2gtk-4.0.so.37 \
-    target=libwebkit2gtk-4.0.so.37.39.4
-file path=usr/lib/$(MACH64)/libwebkit2gtk-4.0.so.37.39.4
+    target=libwebkit2gtk-4.0.so.37.44.2
+file path=usr/lib/$(MACH64)/libwebkit2gtk-4.0.so.37.44.2
 file path=usr/lib/$(MACH64)/pkgconfig/javascriptcoregtk-4.0.pc
 file path=usr/lib/$(MACH64)/pkgconfig/webkit2gtk-4.0.pc
 file path=usr/lib/$(MACH64)/pkgconfig/webkit2gtk-web-extension-4.0.pc

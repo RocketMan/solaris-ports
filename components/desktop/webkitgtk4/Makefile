@@ -20,7 +20,7 @@
 #
 
 #
-# Copyright (c) 2018 Jim Mason <jmason at ibinx dot com>.  All rights reserved.
+# Copyright (c) 2020 Jim Mason <jmason at ibinx dot com>.  All rights reserved.
 #
 # Adapted from original code Copyright (c) 2016, 2018, Oracle and/or its
 # affiliates. All rights reserved.
@@ -34,13 +34,14 @@ BUILD_BITS= 64
 # project already specify the required -std.
 COMPILER= gcc
 include ../../../make-rules/shared-macros.mk
+GCC_ROOT= /usr/gcc/9
 
 COMPONENT_NAME=		webkitgtk
-COMPONENT_VERSION=	2.26.3
+COMPONENT_VERSION=	2.28.0
 COMPONENT_PROJECT_URL=	https://webkitgtk.org
 COMPONENT_ARCHIVE=	$(COMPONENT_SRC).tar.xz
 COMPONENT_ARCHIVE_HASH= \
-	sha256:add51153943cc11d90a7038d0ea5f6332281e6c0be0640f802a211b035f0e611
+	sha256:361f3d178f62a9c112cbadfedd46106c34455c26d57a12a28fb3b09178d20e8b
 COMPONENT_ARCHIVE_URL=	https://webkitgtk.org/releases/$(COMPONENT_ARCHIVE)
 COMPONENT_ANITYA_ID=	5355
 
@@ -90,6 +91,7 @@ CMAKE_OPTIONS += -DENABLE_INTROSPECTION=ON
 CMAKE_OPTIONS += -DPORT=GTK
 CMAKE_OPTIONS += -DENABLE_GLES2=OFF
 CMAKE_OPTIONS += -DUSE_GSTREAMER_GL=ON
+CMAKE_OPTIONS += -DENABLE_ENCRYPTED_MEDIA=ON
 CMAKE_OPTIONS += -DUSE_LIBHYPHEN=OFF
 CMAKE_OPTIONS += -DUSE_WOFF2=OFF
 CMAKE_OPTIONS += -DENABLE_SAMPLING_PROFILER=OFF
@@ -162,6 +164,7 @@ REQUIRED_PACKAGES += library/libsoup
 REQUIRED_PACKAGES += library/libtasn1
 REQUIRED_PACKAGES += library/libxml2
 REQUIRED_PACKAGES += library/libxslt
+REQUIRED_PACKAGES += library/security/libgpg-error
 REQUIRED_PACKAGES += library/spell-checking/enchant
 REQUIRED_PACKAGES += library/zlib
 REQUIRED_PACKAGES += $(PERL_PKG)
