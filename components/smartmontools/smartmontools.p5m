@@ -42,46 +42,34 @@ set name=info.upstream-url value=$(COMPONENT_PROJECT_URL)
 set name=org.opensolaris.consolidation value=$(CONSOLIDATION)
 file files/exec_attr path=etc/security/exec_attr.d/system:storage:smartmontools
 file files/prof_attr path=etc/security/prof_attr.d/system:storage:smartmontools
-file etc/smartd.conf path=etc/smartd.conf mode=0644 preserve=renamenew
-file etc/smartd_warning.sh path=etc/smartd_warning.sh mode=0555
+file path=etc/smartd.conf mode=0644 preserve=renamenew
+file path=etc/smartd_warning.sh mode=0555
 file files/smartd.xml path=lib/svc/manifest/system/smartd.xml
-file usr/sbin/smartctl path=usr/sbin/smartctl
-file usr/sbin/smartd path=usr/sbin/smartd
-file usr/sbin/update-smart-drivedb path=usr/sbin/update-smart-drivedb
-file usr/share/doc/smartmontools/AUTHORS \
-    path=usr/share/doc/smartmontools/AUTHORS
-file usr/share/doc/smartmontools/COPYING \
-    path=usr/share/doc/smartmontools/COPYING
-file usr/share/doc/smartmontools/ChangeLog \
-    path=usr/share/doc/smartmontools/ChangeLog
-file usr/share/doc/smartmontools/ChangeLog-5.0-6.0 \
-    path=usr/share/doc/smartmontools/ChangeLog-5.0-6.0
-file usr/share/doc/smartmontools/INSTALL \
-    path=usr/share/doc/smartmontools/INSTALL
-file usr/share/doc/smartmontools/NEWS path=usr/share/doc/smartmontools/NEWS
-file usr/share/doc/smartmontools/README path=usr/share/doc/smartmontools/README
-file usr/share/doc/smartmontools/TODO path=usr/share/doc/smartmontools/TODO
-file usr/share/doc/smartmontools/examplescripts/Example1 \
-    path=usr/share/doc/smartmontools/examplescripts/Example1
-file usr/share/doc/smartmontools/examplescripts/Example2 \
-    path=usr/share/doc/smartmontools/examplescripts/Example2
-file usr/share/doc/smartmontools/examplescripts/Example3 \
-    path=usr/share/doc/smartmontools/examplescripts/Example3
-file usr/share/doc/smartmontools/examplescripts/Example4 \
-    path=usr/share/doc/smartmontools/examplescripts/Example4
-file usr/share/doc/smartmontools/examplescripts/Example5 \
-    path=usr/share/doc/smartmontools/examplescripts/Example5
-file usr/share/doc/smartmontools/examplescripts/Example6 \
-    path=usr/share/doc/smartmontools/examplescripts/Example6
-file usr/share/doc/smartmontools/examplescripts/README \
-    path=usr/share/doc/smartmontools/examplescripts/README
-file usr/share/doc/smartmontools/smartd.conf \
-    path=usr/share/doc/smartmontools/smartd.conf
-file usr/share/man/man5/smartd.conf.5 path=usr/share/man/man5/smartd.conf.5
-file usr/share/man/man8/smartctl.8 path=usr/share/man/man8/smartctl.8
-file usr/share/man/man8/smartd.8 path=usr/share/man/man8/smartd.8
-file usr/share/man/man8/update-smart-drivedb.8 \
-    path=usr/share/man/man8/update-smart-drivedb.8
-file usr/share/smartmontools/drivedb.h path=usr/share/smartmontools/drivedb.h \
-    mode=0644 preserve=renameold
+file path=usr/sbin/smartctl
+file path=usr/sbin/smartd
+file path=usr/sbin/update-smart-drivedb
+file path=usr/share/doc/smartmontools/AUTHORS
+file path=usr/share/doc/smartmontools/COPYING
+file path=usr/share/doc/smartmontools/ChangeLog
+file path=usr/share/doc/smartmontools/ChangeLog-5.0-6.0
+file path=usr/share/doc/smartmontools/ChangeLog-6.0-7.0
+file path=usr/share/doc/smartmontools/INSTALL
+file path=usr/share/doc/smartmontools/NEWS
+file path=usr/share/doc/smartmontools/README
+file path=usr/share/doc/smartmontools/TODO
+file path=usr/share/doc/smartmontools/examplescripts/Example1
+file path=usr/share/doc/smartmontools/examplescripts/Example2
+file path=usr/share/doc/smartmontools/examplescripts/Example3
+file path=usr/share/doc/smartmontools/examplescripts/Example4
+file path=usr/share/doc/smartmontools/examplescripts/Example5
+file path=usr/share/doc/smartmontools/examplescripts/Example6
+file path=usr/share/doc/smartmontools/examplescripts/Example7
+file path=usr/share/doc/smartmontools/examplescripts/Example8
+file path=usr/share/doc/smartmontools/examplescripts/README
+file path=usr/share/doc/smartmontools/smartd.conf
+file path=usr/share/man/man5/smartd.conf.5
+file path=usr/share/man/man8/smartctl.8
+file path=usr/share/man/man8/smartd.8
+file path=usr/share/man/man8/update-smart-drivedb.8
+file path=usr/share/smartmontools/drivedb.h mode=0644 preserve=renameold
 license COPYING license=GPLv2
