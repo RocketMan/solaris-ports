@@ -23,18 +23,18 @@
 # Copyright (c) 2018 Jim Mason <jmason at ibinx dot com>.  All rights reserved.
 #
 
-BUILD_BITS = 32_and_64
+BUILD_BITS = 64_and_32
 COMPILER=gcc
 include ../../../make-rules/shared-macros.mk
 
 COMPONENT_NAME=		graphviz
-COMPONENT_VERSION=	2.40.1
+COMPONENT_VERSION=	2.42.0
 COMPONENT_SRC=		$(COMPONENT_NAME)-$(GIT_COMMIT_ID)
 COMPONENT_ARCHIVE_URL=	$(GIT_REPO)/-/archive/$(GIT_COMMIT_ID)/$(COMPONENT_SRC).tar.gz
 COMPONENT_ARCHIVE_HASH= \
-	sha256:e6c3f8dbfde1c4523055403927bef29f97f9fc12715c1042b5dcf648a2c1c62a
+	sha256:b199c4ae95159123528eeb6379b47cdaf87b3a20d94035a6ba7301bbf92b7c31
 GIT_REPO=		https://gitlab.com/graphviz/$(COMPONENT_NAME)
-GIT_COMMIT_ID=		stable_release_2.40.1
+GIT_COMMIT_ID=		stable_release_2.42.0
 COMPONENT_PROJECT_URL=	https://graphviz.gitlab.io/
 COMPONENT_ANITYA_ID=	1249
 
@@ -43,12 +43,17 @@ COMPONENT_PREP_ACTION = \
 	(cd $(@D) ; \
 	./autogen.sh NOCONFIG; )
 
+CONFIGURE_ENV.64 += LIBPOSTFIX=/$(MACH64)
+CONFIGURE_OPTIONS += MAKE=$(GMAKE)
+CONFIGURE_OPTIONS += --with-qt=no
+
 TEST_TARGET= $(SKIP_TEST)
 
 include $(WS_MAKE_RULES)/common.mk
 
 REQUIRED_PACKAGES += desktop/pdf-viewer/poppler
 REQUIRED_PACKAGES += image/library/librsvg
+REQUIRED_PACKAGES += image/library/libwebp
 REQUIRED_PACKAGES += library/desktop/atk
 REQUIRED_PACKAGES += library/desktop/cairo
 REQUIRED_PACKAGES += library/desktop/gdk-pixbuf
@@ -61,6 +66,8 @@ REQUIRED_PACKAGES += library/zlib
 REQUIRED_PACKAGES += print/filter/ghostscript
 REQUIRED_PACKAGES += shell/ksh93
 REQUIRED_PACKAGES += system/library
+REQUIRED_PACKAGES += system/library/gcc/gcc-c-runtime
+REQUIRED_PACKAGES += system/library/gcc/gcc-c++-runtime
 REQUIRED_PACKAGES += system/library/math
 REQUIRED_PACKAGES += x11/library/libx11
 REQUIRED_PACKAGES += x11/library/libxmu

@@ -24,6 +24,8 @@
 #
 
 <transform file path=usr.*/man/.+ -> default mangler.man.stability uncommitted>
+<transform file link path=usr/share/graphviz/demo/.+ -> drop>
+<transform file link path=usr/share/graphviz/doc/.+ -> drop>
 set name=pkg.fmri \
     value=pkg:/developer/graphviz@$(IPS_COMPONENT_VERSION),$(BUILD_VERSION)
 set name=pkg.summary \
@@ -35,45 +37,6 @@ set name=info.classification \
 set name=info.repository-url value=$(GIT_REPO)
 set name=info.upstream-url value=$(COMPONENT_PROJECT_URL)
 set name=org.opensolaris.consolidation value=$(CONSOLIDATION)
-file path=usr/bin/$(MACH64)/acyclic
-file path=usr/bin/$(MACH64)/bcomps
-file path=usr/bin/$(MACH64)/ccomps
-link path=usr/bin/$(MACH64)/circo target=dot
-file path=usr/bin/$(MACH64)/cluster
-file path=usr/bin/$(MACH64)/dijkstra
-file path=usr/bin/$(MACH64)/dot
-link path=usr/bin/$(MACH64)/dot2gxl target=gxl2gv
-file path=usr/bin/$(MACH64)/dot_builtins
-file path=usr/bin/$(MACH64)/dotty
-file path=usr/bin/$(MACH64)/edgepaint
-link path=usr/bin/$(MACH64)/fdp target=dot
-file path=usr/bin/$(MACH64)/gc
-file path=usr/bin/$(MACH64)/gml2gv
-file path=usr/bin/$(MACH64)/graphml2gv
-file path=usr/bin/$(MACH64)/gv2gml
-link path=usr/bin/$(MACH64)/gv2gxl target=gxl2gv
-file path=usr/bin/$(MACH64)/gvcolor
-file path=usr/bin/$(MACH64)/gvgen
-file path=usr/bin/$(MACH64)/gvmap
-file path=usr/bin/$(MACH64)/gvmap.sh
-file path=usr/bin/$(MACH64)/gvpack
-file path=usr/bin/$(MACH64)/gvpr
-link path=usr/bin/$(MACH64)/gxl2dot target=gxl2gv
-file path=usr/bin/$(MACH64)/gxl2gv
-file path=usr/bin/$(MACH64)/lefty
-file path=usr/bin/$(MACH64)/lneato
-file path=usr/bin/$(MACH64)/mm2gv
-link path=usr/bin/$(MACH64)/neato target=dot
-file path=usr/bin/$(MACH64)/nop
-link path=usr/bin/$(MACH64)/osage target=dot
-link path=usr/bin/$(MACH64)/patchwork target=dot
-file path=usr/bin/$(MACH64)/prune
-file path=usr/bin/$(MACH64)/sccmap
-link path=usr/bin/$(MACH64)/sfdp target=dot
-file path=usr/bin/$(MACH64)/tred
-link path=usr/bin/$(MACH64)/twopi target=dot
-file path=usr/bin/$(MACH64)/unflatten
-file path=usr/bin/$(MACH64)/vimdot
 file path=usr/bin/acyclic
 file path=usr/bin/bcomps
 file path=usr/bin/ccomps
@@ -140,89 +103,121 @@ file path=usr/include/graphviz/textspan.h
 file path=usr/include/graphviz/types.h
 file path=usr/include/graphviz/usershape.h
 file path=usr/include/graphviz/xdot.h
+file path=usr/lib/$(MACH64)/graphviz/libgvplugin_core.la
 link path=usr/lib/$(MACH64)/graphviz/libgvplugin_core.so \
     target=libgvplugin_core.so.6.0.0
 link path=usr/lib/$(MACH64)/graphviz/libgvplugin_core.so.6 \
     target=libgvplugin_core.so.6.0.0
 file path=usr/lib/$(MACH64)/graphviz/libgvplugin_core.so.6.0.0
+file path=usr/lib/$(MACH64)/graphviz/libgvplugin_dot_layout.la
 link path=usr/lib/$(MACH64)/graphviz/libgvplugin_dot_layout.so \
     target=libgvplugin_dot_layout.so.6.0.0
 link path=usr/lib/$(MACH64)/graphviz/libgvplugin_dot_layout.so.6 \
     target=libgvplugin_dot_layout.so.6.0.0
 file path=usr/lib/$(MACH64)/graphviz/libgvplugin_dot_layout.so.6.0.0
+file path=usr/lib/$(MACH64)/graphviz/libgvplugin_gdk.la
 link path=usr/lib/$(MACH64)/graphviz/libgvplugin_gdk.so \
     target=libgvplugin_gdk.so.6.0.0
 link path=usr/lib/$(MACH64)/graphviz/libgvplugin_gdk.so.6 \
     target=libgvplugin_gdk.so.6.0.0
 file path=usr/lib/$(MACH64)/graphviz/libgvplugin_gdk.so.6.0.0
+file path=usr/lib/$(MACH64)/graphviz/libgvplugin_gs.la
 link path=usr/lib/$(MACH64)/graphviz/libgvplugin_gs.so \
     target=libgvplugin_gs.so.6.0.0
 link path=usr/lib/$(MACH64)/graphviz/libgvplugin_gs.so.6 \
     target=libgvplugin_gs.so.6.0.0
 file path=usr/lib/$(MACH64)/graphviz/libgvplugin_gs.so.6.0.0
+file path=usr/lib/$(MACH64)/graphviz/libgvplugin_gtk.la
 link path=usr/lib/$(MACH64)/graphviz/libgvplugin_gtk.so \
     target=libgvplugin_gtk.so.6.0.0
 link path=usr/lib/$(MACH64)/graphviz/libgvplugin_gtk.so.6 \
     target=libgvplugin_gtk.so.6.0.0
 file path=usr/lib/$(MACH64)/graphviz/libgvplugin_gtk.so.6.0.0
+file path=usr/lib/$(MACH64)/graphviz/libgvplugin_neato_layout.la
 link path=usr/lib/$(MACH64)/graphviz/libgvplugin_neato_layout.so \
     target=libgvplugin_neato_layout.so.6.0.0
 link path=usr/lib/$(MACH64)/graphviz/libgvplugin_neato_layout.so.6 \
     target=libgvplugin_neato_layout.so.6.0.0
 file path=usr/lib/$(MACH64)/graphviz/libgvplugin_neato_layout.so.6.0.0
+file path=usr/lib/$(MACH64)/graphviz/libgvplugin_pango.la
 link path=usr/lib/$(MACH64)/graphviz/libgvplugin_pango.so \
     target=libgvplugin_pango.so.6.0.0
 link path=usr/lib/$(MACH64)/graphviz/libgvplugin_pango.so.6 \
     target=libgvplugin_pango.so.6.0.0
 file path=usr/lib/$(MACH64)/graphviz/libgvplugin_pango.so.6.0.0
+file path=usr/lib/$(MACH64)/graphviz/libgvplugin_poppler.la
 link path=usr/lib/$(MACH64)/graphviz/libgvplugin_poppler.so \
     target=libgvplugin_poppler.so.6.0.0
 link path=usr/lib/$(MACH64)/graphviz/libgvplugin_poppler.so.6 \
     target=libgvplugin_poppler.so.6.0.0
 file path=usr/lib/$(MACH64)/graphviz/libgvplugin_poppler.so.6.0.0
+file path=usr/lib/$(MACH64)/graphviz/libgvplugin_rsvg.la
 link path=usr/lib/$(MACH64)/graphviz/libgvplugin_rsvg.so \
     target=libgvplugin_rsvg.so.6.0.0
 link path=usr/lib/$(MACH64)/graphviz/libgvplugin_rsvg.so.6 \
     target=libgvplugin_rsvg.so.6.0.0
 file path=usr/lib/$(MACH64)/graphviz/libgvplugin_rsvg.so.6.0.0
+file path=usr/lib/$(MACH64)/graphviz/libgvplugin_visio.la
+link path=usr/lib/$(MACH64)/graphviz/libgvplugin_visio.so \
+    target=libgvplugin_visio.so.6.0.0
+link path=usr/lib/$(MACH64)/graphviz/libgvplugin_visio.so.6 \
+    target=libgvplugin_visio.so.6.0.0
+file path=usr/lib/$(MACH64)/graphviz/libgvplugin_visio.so.6.0.0
+file path=usr/lib/$(MACH64)/graphviz/libgvplugin_webp.la
+link path=usr/lib/$(MACH64)/graphviz/libgvplugin_webp.so \
+    target=libgvplugin_webp.so.6.0.0
+link path=usr/lib/$(MACH64)/graphviz/libgvplugin_webp.so.6 \
+    target=libgvplugin_webp.so.6.0.0
+file path=usr/lib/$(MACH64)/graphviz/libgvplugin_webp.so.6.0.0
+file path=usr/lib/$(MACH64)/graphviz/libgvplugin_xlib.la
 link path=usr/lib/$(MACH64)/graphviz/libgvplugin_xlib.so \
     target=libgvplugin_xlib.so.6.0.0
 link path=usr/lib/$(MACH64)/graphviz/libgvplugin_xlib.so.6 \
     target=libgvplugin_xlib.so.6.0.0
 file path=usr/lib/$(MACH64)/graphviz/libgvplugin_xlib.so.6.0.0
+file path=usr/lib/$(MACH64)/graphviz/tcl/libtcldot.la
 link path=usr/lib/$(MACH64)/graphviz/tcl/libtcldot.so target=libtcldot.so.0.0.0
 link path=usr/lib/$(MACH64)/graphviz/tcl/libtcldot.so.0 \
     target=libtcldot.so.0.0.0
 file path=usr/lib/$(MACH64)/graphviz/tcl/libtcldot.so.0.0.0
+file path=usr/lib/$(MACH64)/graphviz/tcl/libtcldot_builtin.la
 link path=usr/lib/$(MACH64)/graphviz/tcl/libtcldot_builtin.so \
     target=libtcldot_builtin.so.0.0.0
 link path=usr/lib/$(MACH64)/graphviz/tcl/libtcldot_builtin.so.0 \
     target=libtcldot_builtin.so.0.0.0
 file path=usr/lib/$(MACH64)/graphviz/tcl/libtcldot_builtin.so.0.0.0
+file path=usr/lib/$(MACH64)/graphviz/tcl/libtclplan.la
 link path=usr/lib/$(MACH64)/graphviz/tcl/libtclplan.so \
     target=libtclplan.so.0.0.0
 link path=usr/lib/$(MACH64)/graphviz/tcl/libtclplan.so.0 \
     target=libtclplan.so.0.0.0
 file path=usr/lib/$(MACH64)/graphviz/tcl/libtclplan.so.0.0.0
 file path=usr/lib/$(MACH64)/graphviz/tcl/pkgIndex.tcl
+file path=usr/lib/$(MACH64)/libcdt.la
 link path=usr/lib/$(MACH64)/libcdt.so target=libcdt.so.5.0.0
 link path=usr/lib/$(MACH64)/libcdt.so.5 target=libcdt.so.5.0.0
 file path=usr/lib/$(MACH64)/libcdt.so.5.0.0
+file path=usr/lib/$(MACH64)/libcgraph.la
 link path=usr/lib/$(MACH64)/libcgraph.so target=libcgraph.so.6.0.0
 link path=usr/lib/$(MACH64)/libcgraph.so.6 target=libcgraph.so.6.0.0
 file path=usr/lib/$(MACH64)/libcgraph.so.6.0.0
+file path=usr/lib/$(MACH64)/libgvc.la
 link path=usr/lib/$(MACH64)/libgvc.so target=libgvc.so.6.0.0
 link path=usr/lib/$(MACH64)/libgvc.so.6 target=libgvc.so.6.0.0
 file path=usr/lib/$(MACH64)/libgvc.so.6.0.0
+file path=usr/lib/$(MACH64)/libgvpr.la
 link path=usr/lib/$(MACH64)/libgvpr.so target=libgvpr.so.2.0.0
 link path=usr/lib/$(MACH64)/libgvpr.so.2 target=libgvpr.so.2.0.0
 file path=usr/lib/$(MACH64)/libgvpr.so.2.0.0
+file path=usr/lib/$(MACH64)/liblab_gamut.la
 link path=usr/lib/$(MACH64)/liblab_gamut.so target=liblab_gamut.so.1.0.0
 link path=usr/lib/$(MACH64)/liblab_gamut.so.1 target=liblab_gamut.so.1.0.0
 file path=usr/lib/$(MACH64)/liblab_gamut.so.1.0.0
+file path=usr/lib/$(MACH64)/libpathplan.la
 link path=usr/lib/$(MACH64)/libpathplan.so target=libpathplan.so.4.0.0
 link path=usr/lib/$(MACH64)/libpathplan.so.4 target=libpathplan.so.4.0.0
 file path=usr/lib/$(MACH64)/libpathplan.so.4.0.0
+file path=usr/lib/$(MACH64)/libxdot.la
 link path=usr/lib/$(MACH64)/libxdot.so target=libxdot.so.4.0.0
 link path=usr/lib/$(MACH64)/libxdot.so.4 target=libxdot.so.4.0.0
 file path=usr/lib/$(MACH64)/libxdot.so.4.0.0
@@ -233,97 +228,121 @@ file path=usr/lib/$(MACH64)/pkgconfig/libgvpr.pc
 file path=usr/lib/$(MACH64)/pkgconfig/liblab_gamut.pc
 file path=usr/lib/$(MACH64)/pkgconfig/libpathplan.pc
 file path=usr/lib/$(MACH64)/pkgconfig/libxdot.pc
-file usr/lib/64/tcl8.5/graphviz/libtcldot.so \
-    path=usr/lib/$(MACH64)/tcl8.5/graphviz/libtcldot.so
-file usr/lib/64/tcl8.5/graphviz/libtcldot.so.0 \
-    path=usr/lib/$(MACH64)/tcl8.5/graphviz/libtcldot.so.0
-file usr/lib/64/tcl8.5/graphviz/libtcldot.so.0.0.0 \
-    path=usr/lib/$(MACH64)/tcl8.5/graphviz/libtcldot.so.0.0.0
-file usr/lib/64/tcl8.5/graphviz/libtcldot_builtin.so \
-    path=usr/lib/$(MACH64)/tcl8.5/graphviz/libtcldot_builtin.so
-file usr/lib/64/tcl8.5/graphviz/libtcldot_builtin.so.0 \
-    path=usr/lib/$(MACH64)/tcl8.5/graphviz/libtcldot_builtin.so.0
-file usr/lib/64/tcl8.5/graphviz/libtcldot_builtin.so.0.0.0 \
-    path=usr/lib/$(MACH64)/tcl8.5/graphviz/libtcldot_builtin.so.0.0.0
-file usr/lib/64/tcl8.5/graphviz/libtclplan.so \
-    path=usr/lib/$(MACH64)/tcl8.5/graphviz/libtclplan.so
-file usr/lib/64/tcl8.5/graphviz/libtclplan.so.0 \
-    path=usr/lib/$(MACH64)/tcl8.5/graphviz/libtclplan.so.0
-file usr/lib/64/tcl8.5/graphviz/libtclplan.so.0.0.0 \
-    path=usr/lib/$(MACH64)/tcl8.5/graphviz/libtclplan.so.0.0.0
-file usr/lib/64/tcl8.5/graphviz/pkgIndex.tcl \
-    path=usr/lib/$(MACH64)/tcl8.5/graphviz/pkgIndex.tcl
+file path=usr/lib/$(MACH64)/tcl8.5/graphviz/libtcldot.la
+file path=usr/lib/$(MACH64)/tcl8.5/graphviz/libtcldot.so
+file path=usr/lib/$(MACH64)/tcl8.5/graphviz/libtcldot.so.0
+file path=usr/lib/$(MACH64)/tcl8.5/graphviz/libtcldot.so.0.0.0
+file path=usr/lib/$(MACH64)/tcl8.5/graphviz/libtcldot_builtin.la
+file path=usr/lib/$(MACH64)/tcl8.5/graphviz/libtcldot_builtin.so
+file path=usr/lib/$(MACH64)/tcl8.5/graphviz/libtcldot_builtin.so.0
+file path=usr/lib/$(MACH64)/tcl8.5/graphviz/libtcldot_builtin.so.0.0.0
+file path=usr/lib/$(MACH64)/tcl8.5/graphviz/libtclplan.la
+file path=usr/lib/$(MACH64)/tcl8.5/graphviz/libtclplan.so
+file path=usr/lib/$(MACH64)/tcl8.5/graphviz/libtclplan.so.0
+file path=usr/lib/$(MACH64)/tcl8.5/graphviz/libtclplan.so.0.0.0
+file path=usr/lib/$(MACH64)/tcl8.5/graphviz/pkgIndex.tcl
+file path=usr/lib/graphviz/libgvplugin_core.la
 link path=usr/lib/graphviz/libgvplugin_core.so target=libgvplugin_core.so.6.0.0
 link path=usr/lib/graphviz/libgvplugin_core.so.6 \
     target=libgvplugin_core.so.6.0.0
 file path=usr/lib/graphviz/libgvplugin_core.so.6.0.0
+file path=usr/lib/graphviz/libgvplugin_dot_layout.la
 link path=usr/lib/graphviz/libgvplugin_dot_layout.so \
     target=libgvplugin_dot_layout.so.6.0.0
 link path=usr/lib/graphviz/libgvplugin_dot_layout.so.6 \
     target=libgvplugin_dot_layout.so.6.0.0
 file path=usr/lib/graphviz/libgvplugin_dot_layout.so.6.0.0
+file path=usr/lib/graphviz/libgvplugin_gdk.la
 link path=usr/lib/graphviz/libgvplugin_gdk.so target=libgvplugin_gdk.so.6.0.0
 link path=usr/lib/graphviz/libgvplugin_gdk.so.6 target=libgvplugin_gdk.so.6.0.0
 file path=usr/lib/graphviz/libgvplugin_gdk.so.6.0.0
+file path=usr/lib/graphviz/libgvplugin_gs.la
 link path=usr/lib/graphviz/libgvplugin_gs.so target=libgvplugin_gs.so.6.0.0
 link path=usr/lib/graphviz/libgvplugin_gs.so.6 target=libgvplugin_gs.so.6.0.0
 file path=usr/lib/graphviz/libgvplugin_gs.so.6.0.0
+file path=usr/lib/graphviz/libgvplugin_gtk.la
 link path=usr/lib/graphviz/libgvplugin_gtk.so target=libgvplugin_gtk.so.6.0.0
 link path=usr/lib/graphviz/libgvplugin_gtk.so.6 target=libgvplugin_gtk.so.6.0.0
 file path=usr/lib/graphviz/libgvplugin_gtk.so.6.0.0
+file path=usr/lib/graphviz/libgvplugin_neato_layout.la
 link path=usr/lib/graphviz/libgvplugin_neato_layout.so \
     target=libgvplugin_neato_layout.so.6.0.0
 link path=usr/lib/graphviz/libgvplugin_neato_layout.so.6 \
     target=libgvplugin_neato_layout.so.6.0.0
 file path=usr/lib/graphviz/libgvplugin_neato_layout.so.6.0.0
+file path=usr/lib/graphviz/libgvplugin_pango.la
 link path=usr/lib/graphviz/libgvplugin_pango.so \
     target=libgvplugin_pango.so.6.0.0
 link path=usr/lib/graphviz/libgvplugin_pango.so.6 \
     target=libgvplugin_pango.so.6.0.0
 file path=usr/lib/graphviz/libgvplugin_pango.so.6.0.0
+file path=usr/lib/graphviz/libgvplugin_poppler.la
 link path=usr/lib/graphviz/libgvplugin_poppler.so \
     target=libgvplugin_poppler.so.6.0.0
 link path=usr/lib/graphviz/libgvplugin_poppler.so.6 \
     target=libgvplugin_poppler.so.6.0.0
 file path=usr/lib/graphviz/libgvplugin_poppler.so.6.0.0
+file path=usr/lib/graphviz/libgvplugin_rsvg.la
 link path=usr/lib/graphviz/libgvplugin_rsvg.so target=libgvplugin_rsvg.so.6.0.0
 link path=usr/lib/graphviz/libgvplugin_rsvg.so.6 \
     target=libgvplugin_rsvg.so.6.0.0
 file path=usr/lib/graphviz/libgvplugin_rsvg.so.6.0.0
+file path=usr/lib/graphviz/libgvplugin_visio.la
+link path=usr/lib/graphviz/libgvplugin_visio.so \
+    target=libgvplugin_visio.so.6.0.0
+link path=usr/lib/graphviz/libgvplugin_visio.so.6 \
+    target=libgvplugin_visio.so.6.0.0
+file path=usr/lib/graphviz/libgvplugin_visio.so.6.0.0
+file path=usr/lib/graphviz/libgvplugin_webp.la
+link path=usr/lib/graphviz/libgvplugin_webp.so target=libgvplugin_webp.so.6.0.0
+link path=usr/lib/graphviz/libgvplugin_webp.so.6 \
+    target=libgvplugin_webp.so.6.0.0
+file path=usr/lib/graphviz/libgvplugin_webp.so.6.0.0
+file path=usr/lib/graphviz/libgvplugin_xlib.la
 link path=usr/lib/graphviz/libgvplugin_xlib.so target=libgvplugin_xlib.so.6.0.0
 link path=usr/lib/graphviz/libgvplugin_xlib.so.6 \
     target=libgvplugin_xlib.so.6.0.0
 file path=usr/lib/graphviz/libgvplugin_xlib.so.6.0.0
+file path=usr/lib/graphviz/tcl/libtcldot.la
 link path=usr/lib/graphviz/tcl/libtcldot.so target=libtcldot.so.0.0.0
 link path=usr/lib/graphviz/tcl/libtcldot.so.0 target=libtcldot.so.0.0.0
 file path=usr/lib/graphviz/tcl/libtcldot.so.0.0.0
+file path=usr/lib/graphviz/tcl/libtcldot_builtin.la
 link path=usr/lib/graphviz/tcl/libtcldot_builtin.so \
     target=libtcldot_builtin.so.0.0.0
 link path=usr/lib/graphviz/tcl/libtcldot_builtin.so.0 \
     target=libtcldot_builtin.so.0.0.0
 file path=usr/lib/graphviz/tcl/libtcldot_builtin.so.0.0.0
+file path=usr/lib/graphviz/tcl/libtclplan.la
 link path=usr/lib/graphviz/tcl/libtclplan.so target=libtclplan.so.0.0.0
 link path=usr/lib/graphviz/tcl/libtclplan.so.0 target=libtclplan.so.0.0.0
 file path=usr/lib/graphviz/tcl/libtclplan.so.0.0.0
 file path=usr/lib/graphviz/tcl/pkgIndex.tcl
+file path=usr/lib/libcdt.la
 link path=usr/lib/libcdt.so target=libcdt.so.5.0.0
 link path=usr/lib/libcdt.so.5 target=libcdt.so.5.0.0
 file path=usr/lib/libcdt.so.5.0.0
+file path=usr/lib/libcgraph.la
 link path=usr/lib/libcgraph.so target=libcgraph.so.6.0.0
 link path=usr/lib/libcgraph.so.6 target=libcgraph.so.6.0.0
 file path=usr/lib/libcgraph.so.6.0.0
+file path=usr/lib/libgvc.la
 link path=usr/lib/libgvc.so target=libgvc.so.6.0.0
 link path=usr/lib/libgvc.so.6 target=libgvc.so.6.0.0
 file path=usr/lib/libgvc.so.6.0.0
+file path=usr/lib/libgvpr.la
 link path=usr/lib/libgvpr.so target=libgvpr.so.2.0.0
 link path=usr/lib/libgvpr.so.2 target=libgvpr.so.2.0.0
 file path=usr/lib/libgvpr.so.2.0.0
+file path=usr/lib/liblab_gamut.la
 link path=usr/lib/liblab_gamut.so target=liblab_gamut.so.1.0.0
 link path=usr/lib/liblab_gamut.so.1 target=liblab_gamut.so.1.0.0
 file path=usr/lib/liblab_gamut.so.1.0.0
+file path=usr/lib/libpathplan.la
 link path=usr/lib/libpathplan.so target=libpathplan.so.4.0.0
 link path=usr/lib/libpathplan.so.4 target=libpathplan.so.4.0.0
 file path=usr/lib/libpathplan.so.4.0.0
+file path=usr/lib/libxdot.la
 link path=usr/lib/libxdot.so target=libxdot.so.4.0.0
 link path=usr/lib/libxdot.so.4 target=libxdot.so.4.0.0
 file path=usr/lib/libxdot.so.4.0.0
@@ -334,16 +353,290 @@ file path=usr/lib/pkgconfig/libgvpr.pc
 file path=usr/lib/pkgconfig/liblab_gamut.pc
 file path=usr/lib/pkgconfig/libpathplan.pc
 file path=usr/lib/pkgconfig/libxdot.pc
+file path=usr/lib/tcl8.5/graphviz/libtcldot.la
 file path=usr/lib/tcl8.5/graphviz/libtcldot.so
 file path=usr/lib/tcl8.5/graphviz/libtcldot.so.0
 file path=usr/lib/tcl8.5/graphviz/libtcldot.so.0.0.0
+file path=usr/lib/tcl8.5/graphviz/libtcldot_builtin.la
 file path=usr/lib/tcl8.5/graphviz/libtcldot_builtin.so
 file path=usr/lib/tcl8.5/graphviz/libtcldot_builtin.so.0
 file path=usr/lib/tcl8.5/graphviz/libtcldot_builtin.so.0.0.0
+file path=usr/lib/tcl8.5/graphviz/libtclplan.la
 file path=usr/lib/tcl8.5/graphviz/libtclplan.so
 file path=usr/lib/tcl8.5/graphviz/libtclplan.so.0
 file path=usr/lib/tcl8.5/graphviz/libtclplan.so.0.0.0
 file path=usr/lib/tcl8.5/graphviz/pkgIndex.tcl
+file path=usr/share/graphviz/demo/doted.tcl
+file path=usr/share/graphviz/demo/doted.tcl.README
+file path=usr/share/graphviz/demo/entities.html
+file path=usr/share/graphviz/demo/entities.tcl
+file path=usr/share/graphviz/demo/entities.tcl.README
+file path=usr/share/graphviz/demo/gcat.tcl
+file path=usr/share/graphviz/demo/gcat.tcl.README
+file path=usr/share/graphviz/demo/modgraph.tcl
+file path=usr/share/graphviz/demo/pathplan.tcl
+file path=usr/share/graphviz/demo/pathplan.tcl.README
+file path=usr/share/graphviz/demo/pathplan_data/boxes.dat
+file path=usr/share/graphviz/demo/pathplan_data/dpd.dat
+file path=usr/share/graphviz/demo/pathplan_data/funny.dat
+file path=usr/share/graphviz/demo/pathplan_data/maze.dat
+file path=usr/share/graphviz/demo/pathplan_data/nested.dat
+file path=usr/share/graphviz/demo/pathplan_data/northo.dat
+file path=usr/share/graphviz/demo/pathplan_data/obs.dat
+file path=usr/share/graphviz/demo/pathplan_data/other.dat
+file path=usr/share/graphviz/demo/pathplan_data/paths.dat
+file path=usr/share/graphviz/demo/pathplan_data/rotor.dat
+file path=usr/share/graphviz/demo/pathplan_data/u.dat
+file path=usr/share/graphviz/demo/pathplan_data/unknown.dat
+file path=usr/share/graphviz/doc/AUTHORS
+file path=usr/share/graphviz/doc/COPYING
+file path=usr/share/graphviz/doc/ChangeLog
+file path=usr/share/graphviz/doc/Dot.ref
+file path=usr/share/graphviz/doc/NEWS
+file path=usr/share/graphviz/doc/addingLayout.txt
+file path=usr/share/graphviz/doc/cpl1.0.txt
+file path=usr/share/graphviz/doc/fontfaq.txt
+file path=usr/share/graphviz/doc/html/FAQ.html
+file path=usr/share/graphviz/doc/html/build.html
+file path=usr/share/graphviz/doc/html/char.html
+file path=usr/share/graphviz/doc/html/gdtclft.entities.example.png
+file path=usr/share/graphviz/doc/html/index.html
+file path=usr/share/graphviz/doc/html/info/Mcircle.gif
+file path=usr/share/graphviz/doc/html/info/Mdiamond.gif
+file path=usr/share/graphviz/doc/html/info/Msquare.gif
+file path=usr/share/graphviz/doc/html/info/a_box.gif
+file path=usr/share/graphviz/doc/html/info/a_crow.gif
+file path=usr/share/graphviz/doc/html/info/a_diamond.gif
+file path=usr/share/graphviz/doc/html/info/a_dot.gif
+file path=usr/share/graphviz/doc/html/info/a_ediamond.gif
+file path=usr/share/graphviz/doc/html/info/a_empty.gif
+file path=usr/share/graphviz/doc/html/info/a_forward.gif
+file path=usr/share/graphviz/doc/html/info/a_halfopen.gif
+file path=usr/share/graphviz/doc/html/info/a_inv.gif
+file path=usr/share/graphviz/doc/html/info/a_invdot.gif
+file path=usr/share/graphviz/doc/html/info/a_invempty.gif
+file path=usr/share/graphviz/doc/html/info/a_invodot.gif
+file path=usr/share/graphviz/doc/html/info/a_lteeoldiamond.gif
+file path=usr/share/graphviz/doc/html/info/a_nohead.gif
+file path=usr/share/graphviz/doc/html/info/a_none.gif
+file path=usr/share/graphviz/doc/html/info/a_normal.gif
+file path=usr/share/graphviz/doc/html/info/a_obox.gif
+file path=usr/share/graphviz/doc/html/info/a_odiamond.gif
+file path=usr/share/graphviz/doc/html/info/a_odot.gif
+file path=usr/share/graphviz/doc/html/info/a_open.gif
+file path=usr/share/graphviz/doc/html/info/a_tee.gif
+file path=usr/share/graphviz/doc/html/info/aa_box.gif
+file path=usr/share/graphviz/doc/html/info/aa_crow.gif
+file path=usr/share/graphviz/doc/html/info/aa_diamond.gif
+file path=usr/share/graphviz/doc/html/info/aa_dot.gif
+file path=usr/share/graphviz/doc/html/info/aa_inv.gif
+file path=usr/share/graphviz/doc/html/info/aa_lbox.gif
+file path=usr/share/graphviz/doc/html/info/aa_lcrow.gif
+file path=usr/share/graphviz/doc/html/info/aa_ldiamond.gif
+file path=usr/share/graphviz/doc/html/info/aa_linv.gif
+file path=usr/share/graphviz/doc/html/info/aa_lnormal.gif
+file path=usr/share/graphviz/doc/html/info/aa_ltee.gif
+file path=usr/share/graphviz/doc/html/info/aa_lvee.gif
+file path=usr/share/graphviz/doc/html/info/aa_none.gif
+file path=usr/share/graphviz/doc/html/info/aa_normal.gif
+file path=usr/share/graphviz/doc/html/info/aa_obox.gif
+file path=usr/share/graphviz/doc/html/info/aa_odiamond.gif
+file path=usr/share/graphviz/doc/html/info/aa_odot.gif
+file path=usr/share/graphviz/doc/html/info/aa_oinv.gif
+file path=usr/share/graphviz/doc/html/info/aa_olbox.gif
+file path=usr/share/graphviz/doc/html/info/aa_oldiamond.gif
+file path=usr/share/graphviz/doc/html/info/aa_olinv.gif
+file path=usr/share/graphviz/doc/html/info/aa_olnormal.gif
+file path=usr/share/graphviz/doc/html/info/aa_onormal.gif
+file path=usr/share/graphviz/doc/html/info/aa_orbox.gif
+file path=usr/share/graphviz/doc/html/info/aa_ordiamond.gif
+file path=usr/share/graphviz/doc/html/info/aa_orinv.gif
+file path=usr/share/graphviz/doc/html/info/aa_ornormal.gif
+file path=usr/share/graphviz/doc/html/info/aa_rbox.gif
+file path=usr/share/graphviz/doc/html/info/aa_rcrow.gif
+file path=usr/share/graphviz/doc/html/info/aa_rdiamond.gif
+file path=usr/share/graphviz/doc/html/info/aa_rinv.gif
+file path=usr/share/graphviz/doc/html/info/aa_rnormal.gif
+file path=usr/share/graphviz/doc/html/info/aa_rtee.gif
+file path=usr/share/graphviz/doc/html/info/aa_rvee.gif
+file path=usr/share/graphviz/doc/html/info/aa_tee.gif
+file path=usr/share/graphviz/doc/html/info/aa_vee.gif
+file path=usr/share/graphviz/doc/html/info/arrows.html
+file path=usr/share/graphviz/doc/html/info/attrs.html
+file path=usr/share/graphviz/doc/html/info/back.gif
+file path=usr/share/graphviz/doc/html/info/both.gif
+file path=usr/share/graphviz/doc/html/info/box.gif
+file path=usr/share/graphviz/doc/html/info/box3d.gif
+file path=usr/share/graphviz/doc/html/info/c_bold.png
+file path=usr/share/graphviz/doc/html/info/c_dashed.png
+file path=usr/share/graphviz/doc/html/info/c_dotted.png
+file path=usr/share/graphviz/doc/html/info/c_filled.png
+file path=usr/share/graphviz/doc/html/info/c_rounded.png
+file path=usr/share/graphviz/doc/html/info/c_solid.png
+file path=usr/share/graphviz/doc/html/info/c_striped.png
+file path=usr/share/graphviz/doc/html/info/circle.gif
+file path=usr/share/graphviz/doc/html/info/colorlist.gif
+file path=usr/share/graphviz/doc/html/info/colors.html
+file path=usr/share/graphviz/doc/html/info/command.html
+file path=usr/share/graphviz/doc/html/info/component.gif
+file path=usr/share/graphviz/doc/html/info/constraint.gif
+file path=usr/share/graphviz/doc/html/info/cylinder.gif
+file path=usr/share/graphviz/doc/html/info/diamond.gif
+file path=usr/share/graphviz/doc/html/info/doublecircle.gif
+file path=usr/share/graphviz/doc/html/info/doubleoctagon.gif
+file path=usr/share/graphviz/doc/html/info/e_bold.png
+file path=usr/share/graphviz/doc/html/info/e_dashed.png
+file path=usr/share/graphviz/doc/html/info/e_dotted.png
+file path=usr/share/graphviz/doc/html/info/e_solid.png
+file path=usr/share/graphviz/doc/html/info/egg.gif
+file path=usr/share/graphviz/doc/html/info/ellipse.gif
+file path=usr/share/graphviz/doc/html/info/fill.gif
+file path=usr/share/graphviz/doc/html/info/folder.gif
+file path=usr/share/graphviz/doc/html/info/forward.gif
+file path=usr/share/graphviz/doc/html/info/g_lin0.png
+file path=usr/share/graphviz/doc/html/info/g_lin180.png
+file path=usr/share/graphviz/doc/html/info/g_lin270.png
+file path=usr/share/graphviz/doc/html/info/g_lin360.png
+file path=usr/share/graphviz/doc/html/info/g_lin45.png
+file path=usr/share/graphviz/doc/html/info/g_lin90.png
+file path=usr/share/graphviz/doc/html/info/g_rad0.png
+file path=usr/share/graphviz/doc/html/info/g_rad180.png
+file path=usr/share/graphviz/doc/html/info/g_rad270.png
+file path=usr/share/graphviz/doc/html/info/g_rad360.png
+file path=usr/share/graphviz/doc/html/info/g_rad45.png
+file path=usr/share/graphviz/doc/html/info/g_rad90.png
+file path=usr/share/graphviz/doc/html/info/hexagon.gif
+file path=usr/share/graphviz/doc/html/info/house.gif
+file path=usr/share/graphviz/doc/html/info/html1.gif
+file path=usr/share/graphviz/doc/html/info/html2.gif
+file path=usr/share/graphviz/doc/html/info/html2.gv
+file path=usr/share/graphviz/doc/html/info/html3.gif
+file path=usr/share/graphviz/doc/html/info/html3.gv
+file path=usr/share/graphviz/doc/html/info/html4.gif
+file path=usr/share/graphviz/doc/html/info/html4.gv
+file path=usr/share/graphviz/doc/html/info/index.html
+file path=usr/share/graphviz/doc/html/info/invhouse.gif
+file path=usr/share/graphviz/doc/html/info/invtrapezium.gif
+file path=usr/share/graphviz/doc/html/info/invtriangle.gif
+file path=usr/share/graphviz/doc/html/info/lang.html
+file path=usr/share/graphviz/doc/html/info/mrecord.gif
+file path=usr/share/graphviz/doc/html/info/n_bold.png
+file path=usr/share/graphviz/doc/html/info/n_dashed.png
+file path=usr/share/graphviz/doc/html/info/n_diagonals.png
+file path=usr/share/graphviz/doc/html/info/n_dotted.png
+file path=usr/share/graphviz/doc/html/info/n_filled.png
+file path=usr/share/graphviz/doc/html/info/n_rounded.png
+file path=usr/share/graphviz/doc/html/info/n_solid.png
+file path=usr/share/graphviz/doc/html/info/n_striped.png
+file path=usr/share/graphviz/doc/html/info/n_wedged.png
+file path=usr/share/graphviz/doc/html/info/nohead.gif
+file path=usr/share/graphviz/doc/html/info/none.gif
+file path=usr/share/graphviz/doc/html/info/none_back.png
+file path=usr/share/graphviz/doc/html/info/none_both.png
+file path=usr/share/graphviz/doc/html/info/none_forward.png
+file path=usr/share/graphviz/doc/html/info/none_none.png
+file path=usr/share/graphviz/doc/html/info/normal_back.png
+file path=usr/share/graphviz/doc/html/info/normal_both.png
+file path=usr/share/graphviz/doc/html/info/normal_forward.png
+file path=usr/share/graphviz/doc/html/info/normal_none.png
+file path=usr/share/graphviz/doc/html/info/note.gif
+file path=usr/share/graphviz/doc/html/info/octagon.gif
+file path=usr/share/graphviz/doc/html/info/output.html
+file path=usr/share/graphviz/doc/html/info/oval.gif
+file path=usr/share/graphviz/doc/html/info/parallelogram.gif
+file path=usr/share/graphviz/doc/html/info/pentagon.gif
+file path=usr/share/graphviz/doc/html/info/plain.gif
+file path=usr/share/graphviz/doc/html/info/plaintext.gif
+file path=usr/share/graphviz/doc/html/info/plugins.png
+file path=usr/share/graphviz/doc/html/info/point.gif
+file path=usr/share/graphviz/doc/html/info/polygon.gif
+file path=usr/share/graphviz/doc/html/info/record.gif
+file path=usr/share/graphviz/doc/html/info/record2.gif
+file path=usr/share/graphviz/doc/html/info/rect.gif
+file path=usr/share/graphviz/doc/html/info/rectangle.gif
+file path=usr/share/graphviz/doc/html/info/round.gif
+file path=usr/share/graphviz/doc/html/info/sdlshapes.jpg
+file path=usr/share/graphviz/doc/html/info/sdlshapes.png
+file path=usr/share/graphviz/doc/html/info/septagon.gif
+file path=usr/share/graphviz/doc/html/info/shapes.html
+file path=usr/share/graphviz/doc/html/info/spline_curved.png
+file path=usr/share/graphviz/doc/html/info/spline_line.png
+file path=usr/share/graphviz/doc/html/info/spline_none.png
+file path=usr/share/graphviz/doc/html/info/spline_ortho.png
+file path=usr/share/graphviz/doc/html/info/spline_polyline.png
+file path=usr/share/graphviz/doc/html/info/spline_spline.png
+file path=usr/share/graphviz/doc/html/info/square.gif
+file path=usr/share/graphviz/doc/html/info/tab.gif
+file path=usr/share/graphviz/doc/html/info/trapezium.gif
+file path=usr/share/graphviz/doc/html/info/triangle.gif
+file path=usr/share/graphviz/doc/html/info/tripleoctagon.gif
+file path=usr/share/graphviz/doc/html/info/underline.gif
+file path=usr/share/graphviz/doc/html/internal_todo.html
+file path=usr/share/graphviz/doc/html/pspdf.png
+file path=usr/share/graphviz/doc/html/schema/arguments.xml
+file path=usr/share/graphviz/doc/html/schema/attributes.xml
+file path=usr/share/graphviz/doc/html/schema/attributes.xslt
+file path=usr/share/graphviz/doc/html/tcldot.html
+file path=usr/share/graphviz/doc/html/todo.html
+file path=usr/share/graphviz/doc/html/winbuild.html
+file path=usr/share/graphviz/doc/latex_suggestions.txt
+file path=usr/share/graphviz/doc/pdf/Agraph.pdf
+file path=usr/share/graphviz/doc/pdf/acyclic.1.pdf
+file path=usr/share/graphviz/doc/pdf/bcomps.1.pdf
+file path=usr/share/graphviz/doc/pdf/ccomps.1.pdf
+file path=usr/share/graphviz/doc/pdf/cdt.3.pdf
+file path=usr/share/graphviz/doc/pdf/cgraph.3.pdf
+link path=usr/share/graphviz/doc/pdf/circo.1.pdf target=dot.1.pdf
+file path=usr/share/graphviz/doc/pdf/cluster.1.pdf
+file path=usr/share/graphviz/doc/pdf/diffimg.1.pdf
+file path=usr/share/graphviz/doc/pdf/dijkstra.1.pdf
+file path=usr/share/graphviz/doc/pdf/dot.1.pdf
+link path=usr/share/graphviz/doc/pdf/dot2gxl.1.pdf target=gv2gxl.1.pdf
+file path=usr/share/graphviz/doc/pdf/dotguide.pdf
+file path=usr/share/graphviz/doc/pdf/dotty.1.pdf
+file path=usr/share/graphviz/doc/pdf/dottyguide.pdf
+file path=usr/share/graphviz/doc/pdf/edgepaint.1.pdf
+file path=usr/share/graphviz/doc/pdf/expr.3.pdf
+link path=usr/share/graphviz/doc/pdf/fdp.1.pdf target=dot.1.pdf
+file path=usr/share/graphviz/doc/pdf/gc.1.pdf
+file path=usr/share/graphviz/doc/pdf/gml2gv.1.pdf
+file path=usr/share/graphviz/doc/pdf/graphml2gv.1.pdf
+link path=usr/share/graphviz/doc/pdf/gv2gml.1.pdf target=gml2gv.1.pdf
+link path=usr/share/graphviz/doc/pdf/gv2gxl.1.pdf target=gxl2gv.1.pdf
+file path=usr/share/graphviz/doc/pdf/gvc.3.pdf
+file path=usr/share/graphviz/doc/pdf/gvcolor.1.pdf
+file path=usr/share/graphviz/doc/pdf/gvgen.1.pdf
+file path=usr/share/graphviz/doc/pdf/gvmap.1.pdf
+file path=usr/share/graphviz/doc/pdf/gvmap.sh.1.pdf
+file path=usr/share/graphviz/doc/pdf/gvpack.1.pdf
+file path=usr/share/graphviz/doc/pdf/gvpr.1.pdf
+file path=usr/share/graphviz/doc/pdf/gvpr.3.pdf
+link path=usr/share/graphviz/doc/pdf/gxl2dot.1.pdf target=gxl2gv.1.pdf
+file path=usr/share/graphviz/doc/pdf/gxl2gv.1.pdf
+file path=usr/share/graphviz/doc/pdf/lab_gamut.3.pdf
+file path=usr/share/graphviz/doc/pdf/lefty.1.pdf
+file path=usr/share/graphviz/doc/pdf/leftyguide.pdf
+file path=usr/share/graphviz/doc/pdf/libguide.pdf
+file path=usr/share/graphviz/doc/pdf/lneato.1.pdf
+file path=usr/share/graphviz/doc/pdf/mingle.1.pdf
+file path=usr/share/graphviz/doc/pdf/mm2gv.1.pdf
+link path=usr/share/graphviz/doc/pdf/neato.1.pdf target=dot.1.pdf
+file path=usr/share/graphviz/doc/pdf/neatoguide.pdf
+file path=usr/share/graphviz/doc/pdf/nop.1.pdf
+file path=usr/share/graphviz/doc/pdf/osage.1.pdf
+file path=usr/share/graphviz/doc/pdf/pack.3.pdf
+file path=usr/share/graphviz/doc/pdf/patchwork.1.pdf
+file path=usr/share/graphviz/doc/pdf/pathplan.3.pdf
+file path=usr/share/graphviz/doc/pdf/prune.pdf
+file path=usr/share/graphviz/doc/pdf/sccmap.1.pdf
+link path=usr/share/graphviz/doc/pdf/sfdp.1.pdf target=dot.1.pdf
+file path=usr/share/graphviz/doc/pdf/smyrna.pdf
+file path=usr/share/graphviz/doc/pdf/tcldot.3tcl.pdf
+file path=usr/share/graphviz/doc/pdf/tred.1.pdf
+link path=usr/share/graphviz/doc/pdf/twopi.1.pdf target=dot.1.pdf
+file path=usr/share/graphviz/doc/pdf/unflatten.1.pdf
+file path=usr/share/graphviz/doc/pdf/vimdot.1.pdf
+file path=usr/share/graphviz/doc/pdf/xdot.3.pdf
 file path=usr/share/graphviz/graphs/directed/KW91.gv
 file path=usr/share/graphviz/graphs/directed/Latin1.gv
 file path=usr/share/graphviz/graphs/directed/NaN.gv
@@ -461,6 +754,7 @@ file path=usr/share/man/man1/cluster.1
 file path=usr/share/man/man1/diffimg.1
 file path=usr/share/man/man1/dijkstra.1
 file path=usr/share/man/man1/dot.1
+link path=usr/share/man/man1/dot2gxl.1 target=gv2gxl.1
 file path=usr/share/man/man1/dotty.1
 file path=usr/share/man/man1/edgepaint.1
 link path=usr/share/man/man1/fdp.1 target=dot.1
@@ -475,6 +769,7 @@ file path=usr/share/man/man1/gvmap.1
 file path=usr/share/man/man1/gvmap.sh.1
 file path=usr/share/man/man1/gvpack.1
 file path=usr/share/man/man1/gvpr.1
+link path=usr/share/man/man1/gxl2dot.1 target=gxl2gv.1
 file path=usr/share/man/man1/gxl2gv.1
 file path=usr/share/man/man1/lefty.1
 file path=usr/share/man/man1/lneato.1
@@ -487,7 +782,6 @@ file path=usr/share/man/man1/patchwork.1
 file path=usr/share/man/man1/prune.1
 file path=usr/share/man/man1/sccmap.1
 link path=usr/share/man/man1/sfdp.1 target=dot.1
-file path=usr/share/man/man1/smyrna.1
 file path=usr/share/man/man1/tred.1
 link path=usr/share/man/man1/twopi.1 target=dot.1
 file path=usr/share/man/man1/unflatten.1
