@@ -1,0 +1,53 @@
+#
+# CDDL HEADER START
+#
+# The contents of this file are subject to the terms of the
+# Common Development and Distribution License (the "License").
+# You may not use this file except in compliance with the License.
+#
+# You can obtain a copy of the license at usr/src/OPENSOLARIS.LICENSE
+# or http://www.opensolaris.org/os/licensing.
+# See the License for the specific language governing permissions
+# and limitations under the License.
+#
+# When distributing Covered Code, include this CDDL HEADER in each
+# file and include the License file at usr/src/OPENSOLARIS.LICENSE.
+# If applicable, add the following below this CDDL HEADER, with the
+# fields enclosed by brackets "[]" replaced with your own identifying
+# information: Portions Copyright [yyyy] [name of copyright owner]
+#
+# CDDL HEADER END
+#
+
+#
+# Copyright (c) 2020 Jim Mason <jmason at ibinx dot com>.  All rights reserved.
+#
+
+set name=pkg.fmri \
+    value=pkg:/web/php/extension/php-apcu-$(PHV)@$(IPS_COMPONENT_VERSION),$(BUILD_VERSION)
+set name=pkg.summary value="APCu - APC User Cache for PHP"
+set name=info.classification value=org.opensolaris.category.2008:Development/PHP
+set name=info.source-url value=$(COMPONENT_ARCHIVE_URL)
+set name=info.upstream-url value=$(COMPONENT_PROJECT_URL)
+set name=org.opensolaris.consolidation value=$(CONSOLIDATION)
+file path=$(PHP_EXT_DIR)/apcu.so pkg.linted.pkglint.dupaction001.1=true \
+    pkg.linted.userland.action001.2=true
+file path=usr/php/$(PHPVER)/include/php/ext/apcu/apc.h
+file path=usr/php/$(PHPVER)/include/php/ext/apcu/apc_api.h
+file path=usr/php/$(PHPVER)/include/php/ext/apcu/apc_arginfo.h
+file path=usr/php/$(PHPVER)/include/php/ext/apcu/apc_cache.h
+file path=usr/php/$(PHPVER)/include/php/ext/apcu/apc_cache_api.h
+file path=usr/php/$(PHPVER)/include/php/ext/apcu/apc_globals.h
+file path=usr/php/$(PHPVER)/include/php/ext/apcu/apc_iterator.h
+file path=usr/php/$(PHPVER)/include/php/ext/apcu/apc_lock.h
+file path=usr/php/$(PHPVER)/include/php/ext/apcu/apc_lock_api.h
+file path=usr/php/$(PHPVER)/include/php/ext/apcu/apc_mutex.h
+file path=usr/php/$(PHPVER)/include/php/ext/apcu/apc_serializer.h
+file path=usr/php/$(PHPVER)/include/php/ext/apcu/apc_sma.h
+file path=usr/php/$(PHPVER)/include/php/ext/apcu/apc_sma_api.h
+file path=usr/php/$(PHPVER)/include/php/ext/apcu/apc_stack.h
+file path=usr/php/$(PHPVER)/include/php/ext/apcu/php_apc.h
+license LICENSE license="PHP license"
+depend type=require fmri=web/php-$(PHV)
+depend type=require \
+    fmri=web/php/extension/php-apcu@$(IPS_COMPONENT_VERSION),$(BUILD_VERSION)

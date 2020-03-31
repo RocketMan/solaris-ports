@@ -375,7 +375,7 @@ $(MANIFEST_BASE)-%.p5m: %-RUBYVER.p5m $(BUILD_DIR)/mkgeneric-ruby
 # for building extensions then use the function below.
 # You'll also need to adjust phpize.mk
 #PHP_EXTENSION_DIR_FUNC= $(shell $(PHP_TOP_DIR)/php$(subst .,,$(1))/build/prototype/$(MACH)/usr/php/$(1)/bin/php-config --extension-dir | cut -c2- )
-#PHP_EXTENSION_DIR_FUNC= $(shell $(shell dirname $(PHP.$(1)))/php-config --extension-dir | cut -c2- )
+PHP_EXTENSION_DIR_FUNC= $(shell $(shell dirname $(PHP.$(1)))/php-config --extension-dir | cut -c2- )
 # Define and execute a macro that generates a rule to create a manifest for a
 # PHP module specific to a particular version of the PHP runtime.
 define php-manifest-rule
@@ -383,8 +383,8 @@ $(MANIFEST_BASE)-%-$(shell echo $(1) | tr -d .).p5m: %-PHPVER.p5m
 	$(PKGFMT) $(PKGFMT_CHECK_ARGS) $$<
 	$(PKGMOGRIFY) -D PHPVER=$(1) -D MAYBE_PHPVER_SPACE="$(1) " \
 		-D MAYBE_SPACE_PHPVER=" $(1)" \
-		-D PHV=$(shell echo $(1) | tr -d .)
-#		-D PHP_EXT_DIR=$(call PHP_EXTENSION_DIR_FUNC,$(1)) $$< > $$@
+		-D PHV=$(shell echo $(1) | tr -d .) \
+		-D PHP_EXT_DIR=$(call PHP_EXTENSION_DIR_FUNC,$(1)) $$< > $$@
 endef
 $(foreach ver,$(PHP_VERSIONS),$(eval $(call php-manifest-rule,$(ver))))
 
