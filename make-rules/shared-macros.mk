@@ -774,7 +774,6 @@ PHP_TOP_DIR = $(WS_COMPONENTS)/php
 # All versions of PHP for building extension packages.
 PHP_VERSIONS = 7.1 7.4
 
-PHP.5.6 = /usr/php/5.6/bin/php
 PHP.7.1 = /usr/php/7.1/bin/php
 PHP.7.3 = /usr/php/7.3/bin/php
 PHP.7.4 = /usr/php/7.4/bin/php

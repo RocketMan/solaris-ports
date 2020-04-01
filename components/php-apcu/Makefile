@@ -36,30 +36,7 @@ COMPONENT_ARCHIVE_HASH=	\
     sha256:d46debe7acad6073b663ba1710c5cac671a60bf666966cf199bf6d07499bde2b
 COMPONENT_ANITYA_ID=	11010
 
-BUILD_TARGET = $(PHP_VERSIONS:%=$(BUILD_DIR)/php-%/.built)
-INSTALL_TARGET = $(PHP_VERSIONS:%=$(BUILD_DIR)/php-%/.installed)
-TEST_TARGET = $(NO_TESTS)
-
+BUILD_STYLE=phpize
 include $(WS_MAKE_RULES)/common.mk
 
-$(BUILD_DIR)/%-5.6/.built:	PHP_VERSION=5.6
-$(BUILD_DIR)/%-7.1/.built:	PHP_VERSION=7.1
-$(BUILD_DIR)/%-7.3/.built:	PHP_VERSION=7.3
-$(BUILD_DIR)/%-7.4/.built:	PHP_VERSION=7.4
-
-$(BUILD_DIR)/%-5.6/.installed:	PHP_VERSION=5.6
-$(BUILD_DIR)/%-7.1/.installed:	PHP_VERSION=7.1
-$(BUILD_DIR)/%-7.3/.installed:	PHP_VERSION=7.3
-$(BUILD_DIR)/%-7.4/.installed:	PHP_VERSION=7.4
-
 CFLAGS += -I/usr/include/pcre
-
-PHP_BINDIR = /usr/php/$(PHP_VERSION)/bin
-
-COMPONENT_PRE_CONFIGURE_ACTION = ($(CLONEY) $(SOURCE_DIR) $(@D) ; \
-		cd $(@D) ; \
-		$(PHP_BINDIR)/phpize)
-CONFIGURE_SCRIPT = ./configure
-CONFIGURE_OPTIONS += --with-php-config=$(PHP_BINDIR)/php-config
-
-COMPONENT_INSTALL_ENV += INSTALL_ROOT=$(PROTO_DIR)
