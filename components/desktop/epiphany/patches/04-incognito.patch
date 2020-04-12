@@ -6,7 +6,7 @@
  
 -.incognito-mode.titlebar { background-image: -gtk-icontheme("user-not-tracked-symbolic"); background-repeat: no-repeat; background-position: 157px 0; background-size: 64px 64px; color: rgba(0, 0, 0, 0.35); }
 +.incognito-mode.titlebar {
-+  background: transparent -gtk-icontheme("user-not-tracked-symbolic") 160px 0/64px 64px no-repeat, linear-gradient(to top, #a5b1bd, #c5cdd5 2px, #cbd2d9 3px);
++  background: transparent -gtk-icontheme("user-not-tracked-symbolic") 120px 0/64px 64px no-repeat, linear-gradient(to top, #a5b1bd, #c5cdd5 2px, #cbd2d9 3px);
 +  box-shadow: none;
 +  border-color: #909fae;
 +  color: rgba(46, 52, 54, 0.2); }

@@ -1,0 +1,212 @@
+This patch consolidates all menu items to the hamburger menu.
+
+--- a/src/resources/gtk/page-menu-popover.ui	2019-04-18 22:01:55.000000000 +0000
++++ b/src/resources/gtk/page-menu-popover.ui	2020-04-13 12:50:00.627485388 +0000
+@@ -7,6 +7,31 @@
+         <property name="border_width">12</property>
+         <property name="orientation">vertical</property>
+         <property name="visible">True</property>
++        <!-- FRAGILE: These buttons are manually removed for app mode in ephy-header-bar.c. -->
++        <child>
++          <object class="GtkModelButton" id="new-window-button">
++            <property name="can_focus">True</property>
++            <property name="text" translatable="yes">_New Window</property>
++            <property name="action-name">app.new-window</property>
++            <property name="visible">True</property>
++          </object>
++        </child>
++        <child>
++          <object class="GtkModelButton" id="new-incognito-window-button">
++            <property name="can_focus">True</property>
++            <property name="text" translatable="yes">New _Incognito Window</property>
++            <property name="action-name">app.new-incognito</property>
++            <property name="visible">True</property>
++          </object>
++        </child>
++        <child>
++          <object class="GtkSeparator" id="new-window-separator">
++            <property name="orientation">horizontal</property>
++            <property name="margin-top">6</property>
++            <property name="margin-bottom">6</property>
++            <property name="visible">True</property>
++          </object>
++        </child>
+         <child>
+           <object class="GtkBox" id="zoom-box">
+             <property name="visible">True</property>
+@@ -128,16 +153,26 @@
+             <property name="visible">True</property>
+           </object>
+         </child>
++        <!-- FRAGILE: This button is manually removed for app mode in ephy-header-bar.c. -->
++        <child>
++          <object class="GtkModelButton" id="reopen-closed-tab-button">
++            <property name="can_focus">True</property>
++            <property name="text" translatable="yes">Reopen Closed _Tab</property>
++            <property name="action-name">app.reopen-closed-tab</property>
++            <property name="visible">True</property>
++          </object>
++        </child>
+         <child>
+           <object class="GtkModelButton">
+             <property name="can_focus">True</property>
+-            <property name="text" translatable="yes">_New Tab</property>
+-            <property name="action-name">win.new-tab</property>
++            <property name="text" translatable="yes">_History</property>
++            <property name="action-name">app.history</property>
+             <property name="visible">True</property>
+           </object>
+         </child>
++        <!-- FRAGILE: These buttons are manually removed for app mode in ephy-header-bar.c. -->
+         <child>
+-          <object class="GtkSeparator">
++          <object class="GtkSeparator" id="bookmarks-separator">
+             <property name="orientation">horizontal</property>
+             <property name="margin-top">6</property>
+             <property name="margin-bottom">6</property>
+@@ -145,13 +180,22 @@
+           </object>
+         </child>
+         <child>
+-          <object class="GtkModelButton">
++          <object class="GtkModelButton" id="import-bookmarks-button">
+             <property name="can_focus">True</property>
+-            <property name="text" translatable="yes">Text _Encoding</property>
+-            <property name="action-name">win.encoding</property>
++            <property name="text" translatable="yes">I_mport Bookmarks</property>
++            <property name="action-name">app.import-bookmarks</property>
++            <property name="visible">True</property>
++          </object>
++        </child>
++        <child>
++          <object class="GtkModelButton" id="export-bookmarks-button">
++            <property name="can_focus">True</property>
++            <property name="text" translatable="yes">E_xport Bookmarks</property>
++            <property name="action-name">app.export-bookmarks</property>
+             <property name="visible">True</property>
+           </object>
+         </child>
++        <!-- FRAGILE: These buttons are manually removed for app mode in ephy-header-bar.c. -->
+         <child>
+           <object class="GtkSeparator" id="save-as-application-separator">
+             <property name="orientation">horizontal</property>
+@@ -168,6 +212,65 @@
+             <property name="visible">True</property>
+           </object>
+         </child>
++        <!-- FRAGILE: These buttons are manually removed for app mode in ephy-header-bar.c. -->
++        <child>
++          <object class="GtkSeparator" id="override-text-encoding-separator">
++            <property name="orientation">horizontal</property>
++            <property name="margin-top">6</property>
++            <property name="margin-bottom">6</property>
++            <property name="visible">True</property>
++          </object>
++        </child>
++        <child>
++          <object class="GtkModelButton" id="override-text-encoding-button">
++            <property name="can_focus">True</property>
++            <property name="text" translatable="yes">Text _Encoding</property>
++            <property name="action-name">win.encoding</property>
++            <property name="visible">True</property>
++          </object>
++        </child>
++        <child>
++          <object class="GtkSeparator">
++            <property name="orientation">horizontal</property>
++            <property name="margin-top">6</property>
++            <property name="margin-bottom">6</property>
++            <property name="visible">True</property>
++          </object>
++        </child>
++        <child>
++          <object class="GtkModelButton">
++            <property name="can_focus">True</property>
++            <property name="text" translatable="yes">Pr_eferences</property>
++            <property name="action-name">app.preferences</property>
++            <property name="visible">True</property>
++          </object>
++        </child>
++        <!-- FRAGILE: This button is manually removed for app mode in ephy-header-bar.c. -->
++        <child>
++          <object class="GtkModelButton" id="keyboard-shortcuts-button">
++            <property name="can_focus">True</property>
++            <property name="text" translatable="yes">_Keyboard Shortcuts</property>
++            <property name="action-name">app.shortcuts</property>
++            <property name="visible">True</property>
++          </object>
++        </child>
++        <!-- FRAGILE: This button is manually removed for app mode/Pantheon in ephy-header-bar.c. -->
++        <child>
++          <object class="GtkModelButton" id="help-button">
++            <property name="can_focus">True</property>
++            <property name="text" translatable="yes">_Help</property>
++            <property name="action-name">app.help</property>
++            <property name="visible">True</property>
++          </object>
++        </child>
++        <child>
++          <object class="GtkModelButton">
++            <property name="can_focus">True</property>
++            <property name="text" translatable="yes">_About</property>
++            <property name="action-name">app.about</property>
++            <property name="visible">True</property>
++          </object>
++        </child>
+       </object>
+     </child>
+   </object>
+--- a/src/ephy-shell.c	2019-04-18 22:01:55.000000000 +0000
++++ b/src/ephy-shell.c	2020-04-12 19:07:03.778747878 +0000
+@@ -419,15 +419,10 @@
+         ephy_shell_get_sync_service (shell);
+       }
+     }
+-
+-    gtk_application_set_app_menu (GTK_APPLICATION (application),
+-                                  G_MENU_MODEL (gtk_builder_get_object (builder, "app-menu")));
+   } else {
+     g_action_map_add_action_entries (G_ACTION_MAP (application),
+                                      app_mode_app_entries, G_N_ELEMENTS (app_mode_app_entries),
+                                      application);
+-    gtk_application_set_app_menu (GTK_APPLICATION (application),
+-                                  G_MENU_MODEL (gtk_builder_get_object (builder, "app-mode-app-menu")));
+   }
+ 
+   g_object_unref (builder);
+--- a/src/ephy-header-bar.c	2019-04-18 22:01:55.000000000 +0000
++++ b/src/ephy-header-bar.c	2020-04-12 19:01:50.399153072 +0000
+@@ -210,7 +210,22 @@
+   builder = gtk_builder_new_from_resource ("/org/gnome/epiphany/gtk/page-menu-popover.ui");
+   page_menu_popover = GTK_WIDGET (gtk_builder_get_object (builder, "page-menu-popover"));
+   header_bar->zoom_level_button = GTK_WIDGET (gtk_builder_get_object (builder, "zoom-level"));
+-  if (ephy_is_running_inside_flatpak ()) {
++  if (ephy_embed_shell_get_mode (embed_shell) == EPHY_EMBED_SHELL_MODE_APPLICATION) {
++    gtk_widget_destroy (GTK_WIDGET (gtk_builder_get_object (builder, "new-window-separator")));
++    gtk_widget_destroy (GTK_WIDGET (gtk_builder_get_object (builder, "new-window-button")));
++    gtk_widget_destroy (GTK_WIDGET (gtk_builder_get_object (builder, "new-incognito-window-button")));
++    gtk_widget_destroy (GTK_WIDGET (gtk_builder_get_object (builder, "reopen-closed-tab-button")));
++    gtk_widget_destroy (GTK_WIDGET (gtk_builder_get_object (builder, "bookmarks-separator")));
++    gtk_widget_destroy (GTK_WIDGET (gtk_builder_get_object (builder, "import-bookmarks-button")));
++    gtk_widget_destroy (GTK_WIDGET (gtk_builder_get_object (builder, "export-bookmarks-button")));
++    gtk_widget_destroy (GTK_WIDGET (gtk_builder_get_object (builder, "save-as-application-separator")));
++    gtk_widget_destroy (GTK_WIDGET (gtk_builder_get_object (builder, "save-as-application-button")));
++    gtk_widget_destroy (GTK_WIDGET (gtk_builder_get_object (builder, "application-manager-button")));
++    gtk_widget_destroy (GTK_WIDGET (gtk_builder_get_object (builder, "override-text-encoding-separator")));
++    gtk_widget_destroy (GTK_WIDGET (gtk_builder_get_object (builder, "override-text-encoding-button")));
++    gtk_widget_destroy (GTK_WIDGET (gtk_builder_get_object (builder, "keyboard-shortcuts-button")));
++    gtk_widget_destroy (GTK_WIDGET (gtk_builder_get_object (builder, "help-button")));
++  } else if (ephy_is_running_inside_flatpak ()) {
+     gtk_widget_destroy (GTK_WIDGET (gtk_builder_get_object (builder, "save-as-application-separator")));
+     gtk_widget_destroy (GTK_WIDGET (gtk_builder_get_object (builder, "save-as-application-button")));
+   }
+--- a/meson.build	2020-04-13 10:21:48.889218757 +0000
++++ b/meson.build	2020-04-13 11:35:58.593533043 +0000
+@@ -1,6 +1,6 @@
+ project('epiphany', 'c',
+   license: 'GPL3+',
+-  version: '3.30.4',
++  version: '3.30.4.1',
+   meson_version: '>= 0.42.0',
+   default_options: ['c_std=gnu11']
+ )

@@ -26,9 +26,11 @@
 BUILD_BITS =            64
 COMPILER =		gcc
 include ../../../make-rules/shared-macros.mk
+GCC_ROOT = 		/usr/gcc/9
 
 COMPONENT_NAME=		epiphany
 COMPONENT_VERSION=	3.30.4
+IPS_COMPONENT_VERSION=	3.30.4.1
 COMPONENT_SRC=		$(COMPONENT_NAME)-$(COMPONENT_VERSION)
 COMPONENT_ARCHIVE_URL=	$(GIT_REPO)/archive/$(COMPONENT_VERSION).tar.gz
 GIT_REPO=		https://github.com/GNOME/epiphany
