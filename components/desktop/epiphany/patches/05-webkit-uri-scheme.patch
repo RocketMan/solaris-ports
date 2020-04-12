@@ -1,0 +1,52 @@
+https://gitlab.gnome.org/GNOME/epiphany/merge_requests/458/commits
+
+by Adrián Pérez de Castro
+
+Allow usage of webkit:// URIs
+
+Add support for considering URIs with the webkit:// scheme as directly
+loadable. Starting with WebKitGTK 2.27.1 there is support for one such
+URI, webkit://gpu, which provides information the accelerated graphics
+system in use.
+
+Fixes #981
+
+
+diff --git a/embed/ephy-embed-utils.c b/embed/ephy-embed-utils.c
+index 963569a962cd2dd1292fd74b4df895b6f80b7f9a..433f70ede1353da422cbe6d6a1c40596216a5209 100644
+--- a/embed/ephy-embed-utils.c
++++ b/embed/ephy-embed-utils.c
+@@ -133,7 +133,8 @@ ephy_embed_utils_address_has_web_scheme (const char *address)
+                      g_ascii_strncasecmp (address, "ephy-about", colonpos) &&
+                      g_ascii_strncasecmp (address, "ephy-source", colonpos) &&
+                      g_ascii_strncasecmp (address, "gopher", colonpos) &&
+-                     g_ascii_strncasecmp (address, "inspector", colonpos));
++                     g_ascii_strncasecmp (address, "inspector", colonpos) &&
++                     g_ascii_strncasecmp (address, "webkit", colonpos));
+ 
+   return has_web_scheme;
+ }
+@@ -248,6 +249,9 @@ ephy_embed_utils_normalize_address (const char *address)
+   if (ephy_embed_utils_address_is_existing_absolute_filename (address))
+     return g_strconcat ("file://", address, NULL);
+ 
++  if (strcmp (address, "about:gpu") == 0)
++    return g_strdup ("webkit://gpu");
++
+   if (g_str_has_prefix (address, "about:") && strcmp (address, "about:blank"))
+     return g_strconcat (EPHY_ABOUT_SCHEME, address + strlen ("about"), NULL);
+ 
+diff --git a/embed/ephy-web-view.h b/embed/ephy-web-view.h
+index 751166547342685dd9f91552de9e0945fec0b95f..acb03273881161668e8633cbb072ad8cdfe14c45 100644
+--- a/embed/ephy-web-view.h
++++ b/embed/ephy-web-view.h
+@@ -42,7 +42,8 @@ G_DECLARE_FINAL_TYPE (EphyWebView, ephy_web_view, EPHY, WEB_VIEW, WebKitWebView)
+                                         "^about:.*$|" \
+                                         "^data:.*$|" \
+                                         "^file:.*$|" \
+-                                        "^inspector://.*$" \
++                                        "^inspector://.*$|" \
++                                        "^webkit://.*$" \
+                                         ")"
+ 
+ #define EPHY_WEB_VIEW_DOMAIN_REGEX "^localhost(\\.[^[:space:]]+)?(:\\d+)?(:[0-9]+)?(/.*)?$|" \
