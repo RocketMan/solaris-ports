@@ -15,7 +15,7 @@ the relevant lines in the Makefile to use it.
 Performance is decent relative to Firefox.  Compare the results of the
 JetStream test:
 
-### GNOME Web 3.30.2 powered by WebKitGTK+ 2.22.3 (64-bits)
+### GNOME Web 3.30.4 powered by WebKitGTK+ 2.29.0 (SVN) (64-bits)
 ![screenshot](https://raw.githubusercontent.com/RocketMan/solaris-ports/master/components/desktop/epiphany/screenshot-epiphany.png "Epiphany/WebKitGTK+")
 (Shown using the [nimbus-gtk3](../../look-and-feel/nimbus-gtk3/)
 theme, available in this repo.)
