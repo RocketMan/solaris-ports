@@ -26,7 +26,7 @@
 include ../../../make-rules/shared-macros.mk
 
 COMPONENT_NAME=		Solaris-11
-IPS_COMPONENT_VERSION=	0.1.1
+IPS_COMPONENT_VERSION=	0.1.2
 COMPONENT_VERSION=	0.1.0
 GIT_REPO=		https://github.com/B00merang-Project/$(COMPONENT_NAME)
 GIT_COMMIT_ID=		f19be9c
