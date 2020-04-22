@@ -20,7 +20,7 @@
 #
 
 #
-# Copyright (c) 2018 Jim Mason <jmason at ibinx dot com>.  All rights reserved.
+# Copyright (c) 2020 Jim Mason <jmason at ibinx dot com>.  All rights reserved.
 #
 # Adapted from original code Copyright (c) 2016, 2018, Oracle and/or its
 # affiliates. All rights reserved.
@@ -31,10 +31,10 @@ COMPILER=gcc
 include ../../../make-rules/shared-macros.mk
 
 COMPONENT_NAME=		vala
-COMPONENT_VERSION=	0.46.1
+COMPONENT_VERSION=	0.48.4
 COMPONENT_PROJECT_URL=	https://wiki.gnome.org/Projects/Vala
 COMPONENT_ARCHIVE_HASH= \
-	sha256:14e579ab85739097849570b642cf09a91ed27765313a5ca6f94d474b199c9f81
+	sha256:2f28765d1cb1de29de56e6160d8ce0718c49f29294a527abc71556fd4a1d0d73
 COMPONENT_ANITYA_ID=	5065
 
 
