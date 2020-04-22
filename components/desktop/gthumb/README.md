@@ -10,8 +10,8 @@ also crop, scale and rotate images by 90° or custom angles, and it
 features a red-eye effect removal function. Manipulated images can be
 saved in the formats JPEG, PNG, TIFF and TGA.
 
-### gThumb v3.8.0
-![screenshot](https://raw.githubusercontent.com/RocketMan/solaris-ports/master/components/desktop/gthumb/screenshot-gthumb.png "gThumb v3.8.0")
+### gThumb v3.10.0
+![screenshot](https://raw.githubusercontent.com/RocketMan/solaris-ports/master/components/desktop/gthumb/screenshot-gthumb.png "gThumb v3.10.0")
 
 ### gThumb in EDIT mode
 ![screenshot](https://raw.githubusercontent.com/RocketMan/solaris-ports/master/components/desktop/gthumb/screenshot-gthumb-edit.png "gThumb EDIT mode")
