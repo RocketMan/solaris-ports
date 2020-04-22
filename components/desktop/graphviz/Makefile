@@ -20,7 +20,7 @@
 #
 
 #
-# Copyright (c) 2018 Jim Mason <jmason at ibinx dot com>.  All rights reserved.
+# Copyright (c) 2020 Jim Mason <jmason at ibinx dot com>.  All rights reserved.
 #
 
 BUILD_BITS = 64_and_32
@@ -28,13 +28,13 @@ COMPILER=gcc
 include ../../../make-rules/shared-macros.mk
 
 COMPONENT_NAME=		graphviz
-COMPONENT_VERSION=	2.42.0
-COMPONENT_SRC=		$(COMPONENT_NAME)-$(GIT_COMMIT_ID)
-COMPONENT_ARCHIVE_URL=	$(GIT_REPO)/-/archive/$(GIT_COMMIT_ID)/$(COMPONENT_SRC).tar.gz
+COMPONENT_VERSION=	2.44.0
+COMPONENT_SRC=		$(COMPONENT_NAME)-$(COMPONENT_VERSION)
+COMPONENT_ARCHIVE_URL=	https://www2.graphviz.org/Packages/stable/portable_source/$(COMPONENT_SRC).tar.gz
 COMPONENT_ARCHIVE_HASH= \
-	sha256:b199c4ae95159123528eeb6379b47cdaf87b3a20d94035a6ba7301bbf92b7c31
+	sha256:9aabd13a8018b708ab3c822de2326c19d0a52ed59f50a6b0f9318c07e2a6d93b
 GIT_REPO=		https://gitlab.com/graphviz/$(COMPONENT_NAME)
-GIT_COMMIT_ID=		stable_release_2.42.0
+GIT_COMMIT_ID=		stable_release_2.44.0
 COMPONENT_PROJECT_URL=	https://graphviz.gitlab.io/
 COMPONENT_ANITYA_ID=	1249
 
