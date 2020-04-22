@@ -20,19 +20,19 @@
 #
 
 #
-# Copyright (c) 2018 Jim Mason <jmason at ibinx dot com>.  All rights reserved.
+# Copyright (c) 2020 Jim Mason <jmason at ibinx dot com>.  All rights reserved.
 #
 BUILD_BITS=64
 COMPILER=gcc
 include ../../make-rules/shared-macros.mk
 
 COMPONENT_NAME=		lzip
-COMPONENT_VERSION=	1.20
+COMPONENT_VERSION=	1.21
 COMPONENT_ARCHIVE=	$(COMPONENT_NAME)-$(COMPONENT_VERSION).tar.gz
 COMPONENT_ARCHIVE_URL=	http://download.savannah.gnu.org/releases/$(COMPONENT_NAME)/$(COMPONENT_ARCHIVE)
 COMPONENT_PROJECT_URL=	http://lzip.nongnu.org/lzip.html
 COMPONENT_ARCHIVE_HASH=	\
-    sha256:c93b81a5a7788ef5812423d311345ba5d3bd4f5ebf1f693911e3a13553c1290c
+    sha256:e48b5039d3164d670791f9c5dbaa832bf2df080cb1fbb4f33aa7b3300b670d8b
 COMPONENT_ANITYA_ID=	1866
 
 include $(WS_MAKE_RULES)/common.mk
