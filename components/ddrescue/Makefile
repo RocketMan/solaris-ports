@@ -20,7 +20,7 @@
 #
 
 #
-# Copyright (c) 2018 Jim Mason <jmason at ibinx dot com>.  All rights reserved.
+# Copyright (c) 2020 Jim Mason <jmason at ibinx dot com>.  All rights reserved.
 #
 
 BUILD_BITS =            64
@@ -28,12 +28,12 @@ COMPILER =		gcc
 include ../../make-rules/shared-macros.mk
 
 COMPONENT_NAME=		ddrescue
-COMPONENT_VERSION=	1.23
+COMPONENT_VERSION=	1.25
 COMPONENT_ARCHIVE=	$(COMPONENT_NAME)-$(COMPONENT_VERSION).tar.lz
 COMPONENT_PROJECT_URL=	https://www.gnu.org/software/ddrescue
 COMPONENT_ARCHIVE_URL = http://ftpmirror.gnu.org/$(COMPONENT_NAME)/$(COMPONENT_ARCHIVE)
 COMPONENT_ARCHIVE_HASH=	\
-    sha256:a9ae2dd44592bf386c9c156a5dacaeeb901573c9867ada3608f887d401338d8d
+    sha256:ce538ebd26a09f45da67d3ad3f7431932428231ceec7a2d255f716fa231a1063
 COMPONENT_ANITYA_ID=	410
 
 include $(WS_MAKE_RULES)/common.mk
