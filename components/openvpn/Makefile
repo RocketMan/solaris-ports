@@ -22,7 +22,7 @@
 #
 # Copyright 2013 Adam Stevko. All rights reserved.
 # Copyright 2016 Jim Klimov
-# Copyright 2018 Jim Mason <jmason at ibinx dot com>.  All rights reserved.
+# Copyright 2020 Jim Mason <jmason at ibinx dot com>.  All rights reserved.
 #
 
 BUILD_BITS=64
@@ -30,12 +30,12 @@ COMPILER=gcc
 include ../../make-rules/shared-macros.mk
 
 COMPONENT_NAME=		openvpn
-COMPONENT_VERSION=	2.4.8
+COMPONENT_VERSION=	2.4.9
 COMPONENT_ARCHIVE=	v$(COMPONENT_VERSION).tar.gz
 COMPONENT_ARCHIVE_URL=	https://github.com/OpenVPN/$(COMPONENT_NAME)/archive/$(COMPONENT_ARCHIVE)
 COMPONENT_PROJECT_URL=	https://openvpn.net/
 COMPONENT_ARCHIVE_HASH=	\
-    sha256:9770dcf39381482a835f1d8683a1389f005378c555135cac1419f654473a477e
+    sha256:cccadc1b4849107df3ba34f5d9d64284676ba99aa88415f1bcd481e08a3bc548
 COMPONENT_ANITYA_ID=	2567
 
 COMPONENT_PREP_ACTION = \
@@ -55,5 +55,6 @@ CONFIGURE_OPTIONS += --enable-shared
 REQUIRED_PACKAGES += driver/network/tuntap
 REQUIRED_PACKAGES += library/lzo
 REQUIRED_PACKAGES += library/security/openssl
+REQUIRED_PACKAGES += library/security/openssl-11
 REQUIRED_PACKAGES += system/core-os
 REQUIRED_PACKAGES += system/network
