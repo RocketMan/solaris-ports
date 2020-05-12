@@ -200,13 +200,3 @@ This patch consolidates all menu items to the hamburger menu.
      gtk_widget_destroy (GTK_WIDGET (gtk_builder_get_object (builder, "save-as-application-separator")));
      gtk_widget_destroy (GTK_WIDGET (gtk_builder_get_object (builder, "save-as-application-button")));
    }
---- a/meson.build	2020-04-13 10:21:48.889218757 +0000
-+++ b/meson.build	2020-04-13 11:35:58.593533043 +0000
-@@ -1,6 +1,6 @@
- project('epiphany', 'c',
-   license: 'GPL3+',
--  version: '3.30.5',
-+  version: '3.30.5.1',
-   meson_version: '>= 0.42.0',
-   default_options: ['c_std=gnu11']
- )

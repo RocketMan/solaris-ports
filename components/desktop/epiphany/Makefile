@@ -20,7 +20,7 @@
 #
 
 #
-# Copyright (c) 2018 Jim Mason <jmason at ibinx dot com>.  All rights reserved.
+# Copyright (c) 2018-2020 Jim Mason <jmason at ibinx dot com>.  All rights reserved.
 #
 
 BUILD_BITS =            64
@@ -30,21 +30,44 @@ GCC_ROOT = 		/usr/gcc/9
 
 COMPONENT_NAME=		epiphany
 COMPONENT_VERSION=	3.30.5
-IPS_COMPONENT_VERSION=	3.30.5.1
+IPS_COMPONENT_VERSION=	3.30.5.2
 COMPONENT_SRC=		$(COMPONENT_NAME)-$(COMPONENT_VERSION)
 COMPONENT_ARCHIVE_URL=	$(GIT_REPO)/archive/$(COMPONENT_VERSION).tar.gz
+COMPONENT_ARCHIVE_HASH= \
+	sha256:12d4d7f6bf1b320995d218126ac1021d064554f279be62df61fb19cc75dee1ed
 GIT_REPO=		https://github.com/GNOME/epiphany
 GIT_COMMIT_ID=		3.30.5
 COMPONENT_PROJECT_URL=	https://wiki.gnome.org/Apps/Web
 COMPONENT_ANITYA_ID=	10903
 
+COMPONENT_NAME_1=	pdfjs
+COMPONENT_VERSION_1=	2.3.200
+COMPONENT_ARCHIVE_1=	pdfjs-$(COMPONENT_VERSION_1)-dist.zip
+COMPONENT_ARCHIVE_URL_1= https://github.com/mozilla/pdf.js/releases/download/v$(COMPONENT_VERSION_1)/$(COMPONENT_ARCHIVE_1)
+COMPONENT_ARCHIVE_HASH_1= \
+	sha256:f1577e373efc8b9143744bc07caf7085ff27a1a496da8e2890db9de5917e4f3b
+
 
 BUILD_STYLE = meson
 include $(WS_MAKE_RULES)/common.mk
 
+CFLAGS += -Wdeprecated-declarations
 LDFLAGS += -lm -lsocket -lnsl
 #$(SOLARIS_11_3_ONLY)LDFLAGS += -licuuc_gcc
 
+PDFJS=$(SOURCE_DIR)/third-party/pdfjs
+
+COMPONENT_POST_UNPACK_ACTION += ( \
+	mkdir -p $(PDFJS); \
+	cd $(PDFJS); \
+	$(UNZIP) $(COMPONENT_DIR)/$(COMPONENT_ARCHIVE_1) )
+
+COMPONENT_PRE_CONFIGURE_ACTION += ( \
+	cd $(PDFJS); \
+	$(PYTHON) pdfjs_generate_resource.py; \
+	$(GPATCH) -p0 < epiphany-pdfjs-changes.patch )
+
+#CONFIGURE_OPTIONS += -Ddeveloper_mode=true
 
 REQUIRED_PACKAGES += database/sqlite-3
 REQUIRED_PACKAGES += gnome/gnome-shell
