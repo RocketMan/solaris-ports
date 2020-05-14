@@ -83,6 +83,7 @@ $(SOURCE_DIR)/.prep: $(COMPONENT_SRC_3)/.prep $(COMPONENT_SRC_2)/.prep $(PDFJS)/
 
 $(PDFJS)/.prep: download unpack patch
 	(cd $(@D) ; \
+	$(RM) build/*.map ; \
 	$(PYTHON) pdfjs_generate_resource.py ; \
 	$(GPATCH) -p0 < epiphany-pdfjs-changes.patch )
 	$(TOUCH) $@
