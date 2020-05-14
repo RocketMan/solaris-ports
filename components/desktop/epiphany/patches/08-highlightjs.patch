@@ -1,0 +1,253 @@
+https://gitlab.gnome.org/GNOME/epiphany/-/merge_requests/506
+https://gitlab.gnome.org/GNOME/epiphany/-/merge_requests/623
+
+Add javascript source code highlighter
+
+
+diff --git a/embed/ephy-view-source-handler.c b/embed/ephy-view-source-handler.c
+index d10867a076e6f68f196f75c292df3fd1e5c7b338..761cf95f0806eb2f40ecb23ab6ae3637c56416a1 100644
+--- a/embed/ephy-view-source-handler.c	2019-09-07 16:00:18.000000000 +0000
++++ b/embed/ephy-view-source-handler.c	2020-05-13 14:48:34.165904702 +0000
+@@ -108,37 +108,37 @@
+                       GAsyncResult          *result,
+                       EphyViewSourceRequest *request)
+ {
+-  guchar *data;
+-  char *data_str;
+-  char *escaped_str;
+-  char *html;
++  g_autofree guchar *data = NULL;
++  g_autofree char *data_str = NULL;
++  g_autofree char *escaped_str = NULL;
++  g_autoptr (GError) error = NULL;
++  g_autofree char *html = NULL;
+   gsize length;
+-  GError *error = NULL;
+ 
+   data = webkit_web_resource_get_data_finish (resource, result, &length, &error);
+   if (error) {
+     finish_uri_scheme_request (request, NULL, error);
+-    g_error_free (error);
+     return;
+   }
+ 
+   data_str = g_malloc (length + 1);
+   strncpy (data_str, (const char *)data, length);
+   data_str[length] = '\0';
+-  g_free (data);
+ 
+   escaped_str = g_markup_escape_text (data_str, -1);
+-  g_free (data_str);
+-
+-  html = g_strdup_printf ("<body>"
+-                            "<pre>"
+-                              "<code class=\"language-html\">%s</code>"
+-                            "</pre>"
++  html = g_strdup_printf ("<head>"
++                          "  <link rel='stylesheet' href='ephy-resource:///org/gnome/epiphany/highlightjs/default.css'>"
++                          "</head>"
++                          "<body class='hljs'>"
++                          "  <script src='ephy-resource:///org/gnome/epiphany/highlightjs/highlight.js'></script>"
++                          "  <script src='ephy-resource:///org/gnome/epiphany/highlightjs/highlightjs-line-numbers.js'></script>"
++                          "  <script>hljs.initHighlightingOnLoad();</script>"
++                          "  <script>hljs.initLineNumbersOnLoad();</script>"
++                          "  <pre><code class='html'>%s</code></pre>"
+                           "</body>",
+                           escaped_str);
+-  g_free (escaped_str);
+ 
+-  finish_uri_scheme_request (request, html, NULL);
++  finish_uri_scheme_request (request, g_steal_pointer (&html), NULL);
+ }
+ 
+ static void
+--- a/src/meson.build
++++ b/src/meson.build
+@@ -131,7 +131,8 @@ resources = gnome.compile_resources('epiphany-resources',
+ epiphany_sources = [
+   'ephy-main.c',
+   resources,
+-  pdfjs_resources
++  pdfjs_resources,
++  highlightjs_resources
+ ]
+ 
+ executable('epiphany',
+diff --git a/third-party/highlightjs/README.epiphany b/third-party/highlightjs/README.epiphany
+new file mode 100644
+index 0000000000000000000000000000000000000000..f8a32dd4b51dd05578953d6f9b21f5a03ce3773c
+--- /dev/null
++++ b/third-party/highlightjs/README.epiphany
+@@ -0,0 +1,16 @@
++# Embedded source code highlighter based on hightlight.js
++
++This directory contains an official highlight.js release version, distributed at: https://github.com/highlightjs/highlight.js
++
++## Update process
++
++git clone https://github.com/highlightjs/highlight.js.git
++cd highlight.js
++git checkout <version number>
++npm install
++node tools/build.js -n css javascript xml
++
++Copy build/highlight.js to <epiphany-source>/third-party/highlightjs/
++Copy src/styles/default.css to <epiphany-source>third-party/highlightjs/
++
++# Documentation created by Jan-Michael Brummer <jan.brummer@tabos.org>
+diff --git a/third-party/highlightjs/highlightjs.gresource.xml b/third-party/highlightjs/highlightjs.gresource.xml
+new file mode 100644
+index 0000000000000000000000000000000000000000..458aa66042e4c6aef5091cd6f1345b5f7eba0513
+--- /dev/null
++++ b/third-party/highlightjs/highlightjs.gresource.xml
+@@ -0,0 +1,8 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<gresources>
++  <gresource prefix="/org/gnome/epiphany/highlightjs">
++    <file compressed="true">highlight.js</file>
++    <file compressed="true">highlightjs-line-numbers.js</file>
++    <file compressed="true">default.css</file>
++  </gresource>
++</gresources>
+diff --git a/third-party/meson.build b/third-party/meson.build
+index c09000a47d0d51ae6c80ae4b86f7430ddda248b9..72027a07fcbc121f1878244da2ce46e744097242 100644
+--- a/third-party/meson.build
++++ b/third-party/meson.build
+@@ -4,3 +4,10 @@
+     c_name: 'pdfjs',
+     source_dir: 'pdfjs'
+ )
++
++highlightjs_resource_files = files('highlightjs/highlightjs.gresource.xml')
++highlightjs_resources = gnome.compile_resources('highlightjs-resources',
++    highlightjs_resource_files,
++    c_name: 'highlightjs',
++    source_dir: 'highlightjs'
++)
+--- /dev/null	2020-05-13 19:01:29.000000000 +0000
++++ b/third-party/highlightjs/default.css	2020-05-13 19:04:22.642280165 +0000
+@@ -0,0 +1,124 @@
++/* firefox view-source style */
++
++.hljs {
++  display: block;
++  padding: 0.5em;
++  background: #fff;
++  color: #000;
++}
++
++.xml .hljs-meta {
++  font-weight: bold;
++  font-style: italic;
++  color: #4682b4;
++}
++
++.hljs-comment,
++.hljs-quote {
++  font-style: italic;
++  color: #007400;
++}
++
++.hljs-name {
++  color: #800080;
++}
++
++.hljs-name,
++.hljs-attr {
++  font-weight: bold;
++}
++
++.hljs-string {
++  font-weight: normal;
++}
++
++.hljs-variable,
++.hljs-template-variable {
++  color: #3F6E74;
++}
++
++.hljs-code,
++.hljs-string,
++.hljs-meta-string {
++  color: #00f;
++}
++
++.hljs-regexp,
++.hljs-link {
++  color: #0E0EFF;
++}
++
++.hljs-title,
++.hljs-symbol,
++.hljs-bullet,
++.hljs-number {
++  color: #ff4501;
++}
++
++.hljs-section,
++.hljs-meta {
++  color: #643820;
++}
++
++.hljs-class .hljs-title,
++.hljs-type,
++.hljs-built_in,
++.hljs-builtin-name,
++.hljs-params {
++  color: #5c2699;
++}
++
++.hljs-attr {
++  color: #000;
++}
++
++.hljs-subst {
++  color: #000;
++}
++
++.hljs-formula {
++  background-color: #eee;
++  font-style: italic;
++}
++
++.hljs-addition {
++  background-color: #baeeba;
++}
++
++.hljs-deletion {
++  background-color: #ffc8bd;
++}
++
++.hljs-selector-id,
++.hljs-selector-class {
++  color: #9b703f;
++}
++
++.hljs-doctag,
++.hljs-strong {
++  font-weight: bold;
++}
++
++.hljs-emphasis {
++  font-style: italic;
++}
++
++.hljs-ln {
++  white-space: pre;
++}
++
++.hljs-ln-numbers {
++  -webkit-touch-callout: none;
++  -webkit-user-select: none;
++  user-select: none;
++
++  text-align: right;
++  color: #ccc;
++  vertical-align: top;
++  border-right: 1px solid;
++  padding-right: 5px !important;
++}
++
++.hljs-ln-code {
++  padding-left: 10px !important;
++}

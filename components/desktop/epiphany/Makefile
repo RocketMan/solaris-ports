@@ -30,7 +30,7 @@ GCC_ROOT = 		/usr/gcc/9
 
 COMPONENT_NAME=		epiphany
 COMPONENT_VERSION=	3.30.5
-IPS_COMPONENT_VERSION=	3.30.5.2
+IPS_COMPONENT_VERSION=	3.30.5.3
 COMPONENT_SRC=		$(COMPONENT_NAME)-$(COMPONENT_VERSION)
 COMPONENT_ARCHIVE_URL=	$(GIT_REPO)/archive/$(COMPONENT_VERSION).tar.gz
 COMPONENT_ARCHIVE_HASH= \
@@ -47,6 +47,21 @@ COMPONENT_ARCHIVE_URL_1= https://github.com/mozilla/pdf.js/releases/download/v$(
 COMPONENT_ARCHIVE_HASH_1= \
 	sha256:f1577e373efc8b9143744bc07caf7085ff27a1a496da8e2890db9de5917e4f3b
 
+COMPONENT_NAME_2=	highlightjs
+COMPONENT_VERSION_2=	10.0.3
+COMPONENT_SRC_2=	highlight.js-$(COMPONENT_VERSION_2)
+COMPONENT_ARCHIVE_2=	highlight.js-$(COMPONENT_VERSION_2).tar.gz
+COMPONENT_ARCHIVE_URL_2= https://github.com/highlightjs/highlight.js/archive/$(COMPONENT_ARCHIVE_2)
+COMPONENT_ARCHIVE_HASH_2= \
+	sha256:cb9b83c97d8f7fccdc819ea86ac9f03f28aca12a15ac11d15b8782414da1cd86
+
+COMPONENT_NAME_3=	highlightjs_line_numbers
+COMPONENT_VERSION_3=	2.7.0
+COMPONENT_SRC_3=	highlightjs-line-numbers.js-$(COMPONENT_VERSION_3)
+COMPONENT_ARCHIVE_3=	$(COMPONENT_SRC_3).tar.gz
+COMPONENT_ARCHIVE_URL_3= https://github.com/wcoder/highlightjs-line-numbers.js/archive/v$(COMPONENT_VERSION_3).tar.gz
+COMPONENT_ARCHIVE_HASH_3= \
+	sha256:d089a401490d1c1a5e0bb49bad00f6c970d260787960150c7bd5e8cf36f15ace
 
 BUILD_STYLE = meson
 include $(WS_MAKE_RULES)/common.mk
@@ -55,17 +70,35 @@ CFLAGS += -Wdeprecated-declarations
 LDFLAGS += -lm -lsocket -lnsl
 #$(SOLARIS_11_3_ONLY)LDFLAGS += -licuuc_gcc
 
+
 PDFJS=$(SOURCE_DIR)/third-party/pdfjs
+HIGHLIGHTJS=$(SOURCE_DIR)/third-party/highlightjs
 
 COMPONENT_POST_UNPACK_ACTION += ( \
-	mkdir -p $(PDFJS); \
-	cd $(PDFJS); \
+	$(MKDIR) -p $(PDFJS) ; \
+	cd $(PDFJS) ; \
 	$(UNZIP) $(COMPONENT_DIR)/$(COMPONENT_ARCHIVE_1) )
 
-COMPONENT_PRE_CONFIGURE_ACTION += ( \
-	cd $(PDFJS); \
-	$(PYTHON) pdfjs_generate_resource.py; \
+$(SOURCE_DIR)/.prep: $(COMPONENT_SRC_3)/.prep $(COMPONENT_SRC_2)/.prep $(PDFJS)/.prep
+
+$(PDFJS)/.prep: download unpack patch
+	(cd $(@D) ; \
+	$(PYTHON) pdfjs_generate_resource.py ; \
 	$(GPATCH) -p0 < epiphany-pdfjs-changes.patch )
+	$(TOUCH) $@
+
+$(COMPONENT_SRC_2)/.prep: download unpack patch
+	(cd $(@D) ; \
+	$(ENV) npm install ; \
+	$(ENV) node tools/build.js -n css javascript xml ; \
+	$(CP) build/highlight.js $(HIGHLIGHTJS) )
+	$(TOUCH) $@
+
+$(COMPONENT_SRC_3)/.prep: download unpack patch
+	(cd $(@D) ; \
+	$(CP) src/highlightjs-line-numbers.js $(HIGHLIGHTJS) )
+	$(TOUCH) $@
+
 
 #CONFIGURE_OPTIONS += -Ddeveloper_mode=true
 
