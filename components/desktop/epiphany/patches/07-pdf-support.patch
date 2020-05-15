@@ -460,7 +460,7 @@ diff -Naur epiphany-3.30.5/third-party/meson.build epiphany-3.30.5-patched/third
 diff -Naur epiphany-3.30.5/third-party/pdfjs/epiphany-pdfjs-changes.patch epiphany-3.30.5-patched/third-party/pdfjs/epiphany-pdfjs-changes.patch
 --- epiphany-3.30.5/third-party/pdfjs/epiphany-pdfjs-changes.patch	1970-01-01 01:00:00.000000000 +0000
 +++ epiphany-3.30.5-patched/third-party/pdfjs/epiphany-pdfjs-changes.patch	2020-05-12 18:37:58.000000000 +0000
-@@ -0,0 +1,124 @@
+@@ -0,0 +1,143 @@
 +diff -urN web2/locale/bn/viewer.properties web/locale/bn/viewer.properties
 +diff -urN web2/locale/bo/viewer.properties web/locale/bo/viewer.properties
 +diff -urN web2/locale/dsb/viewer.properties web/locale/dsb/viewer.properties
@@ -490,6 +490,16 @@ diff -Naur epiphany-3.30.5/third-party/pdfjs/epiphany-pdfjs-changes.patch epipha
 +   -moz-appearance: textfield; /* hides the spinner in moz */
 +   min-width: 16px;
 +   text-align: right;
++@@ -2401,3 +2401,9 @@
++     display: none;
++   }
++ }
+++
+++#scaleSelectContainer {
+++  min-width: 166px;
+++  max-width: 166px;
+++  padding: 2px 10px;
+++}
 +diff -urN web2/viewer.html web/viewer.html
 +--- web2/viewer.html	2019-10-03 23:09:02.000000000 +0200
 ++++ web/viewer.html	2020-01-03 10:26:10.089369058 +0100
@@ -529,6 +539,15 @@ diff -Naur epiphany-3.30.5/third-party/pdfjs/epiphany-pdfjs-changes.patch epipha
 +  *
 +  * Licensed under the Apache License, Version 2.0 (the "License");
 +  * you may not use this file except in compliance with the License.
++@@ -364,7 +364,7 @@
++   createL10n: function createL10n(options) {
++     throw new Error('Not implemented: createL10n');
++   },
++-  supportsIntegratedFind: false,
+++  supportsIntegratedFind: true,
++   supportsDocumentFonts: true,
++   supportsDocumentColors: true,
++   supportedMouseWheelZoomModifierKeys: {
 +@@ -1829,8 +1830,7 @@
 +   var file;
 +   var queryString = document.location.search.substring(1);
