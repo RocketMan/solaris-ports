@@ -66,7 +66,7 @@ COMPONENT_ARCHIVE_HASH_3= \
 BUILD_STYLE = meson
 include $(WS_MAKE_RULES)/common.mk
 
-CFLAGS += -Wdeprecated-declarations
+CFLAGS += -Wno-deprecated-declarations
 LDFLAGS += -lm -lsocket -lnsl
 #$(SOLARIS_11_3_ONLY)LDFLAGS += -licuuc_gcc
 

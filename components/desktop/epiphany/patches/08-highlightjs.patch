@@ -49,8 +49,8 @@ index d10867a076e6f68f196f75c292df3fd1e5c7b338..761cf95f0806eb2f40ecb23ab6ae3637
 +                          "<body class='hljs'>"
 +                          "  <script src='ephy-resource:///org/gnome/epiphany/highlightjs/highlight.js'></script>"
 +                          "  <script src='ephy-resource:///org/gnome/epiphany/highlightjs/highlightjs-line-numbers.js'></script>"
-+                          "  <script>hljs.initHighlightingOnLoad();</script>"
-+                          "  <script>hljs.initLineNumbersOnLoad();</script>"
++                          "  <script>hljs.initHighlightingOnLoad();"
++                          "          hljs.initLineNumbersOnLoad();</script>"
 +                          "  <pre><code class='html'>%s</code></pre>"
                            "</body>",
                            escaped_str);
@@ -78,7 +78,7 @@ new file mode 100644
 index 0000000000000000000000000000000000000000..f8a32dd4b51dd05578953d6f9b21f5a03ce3773c
 --- /dev/null
 +++ b/third-party/highlightjs/README.epiphany
-@@ -0,0 +1,16 @@
+@@ -0,0 +1,26 @@
 +# Embedded source code highlighter based on hightlight.js
 +
 +This directory contains an official highlight.js release version, distributed at: https://github.com/highlightjs/highlight.js
@@ -94,7 +94,59 @@ index 0000000000000000000000000000000000000000..f8a32dd4b51dd05578953d6f9b21f5a0
 +Copy build/highlight.js to <epiphany-source>/third-party/highlightjs/
 +Copy src/styles/default.css to <epiphany-source>third-party/highlightjs/
 +
++# Highlight.js line numbers plugin:
++
++git clone https://github.com/wcoder/highlightjs-line-numbers.js.git
++cd highlightjs-line-numbers.js
++
++Copy src/highlightjs-line-numbers.js to <epiphany-source>/third-party/highlightjs/
++
++Append <epiphany-source>/third-party/highlightjs/epiphany.css to
++	<epiphany-source>/third-party/highlightjs/default.css
++
 +# Documentation created by Jan-Michael Brummer <jan.brummer@tabos.org>
+--- /dev/null	2020-05-20 14:42:37.000000000 +0000
++++ b/third-party/highlightjs/epiphany.css	2020-05-20 14:35:13.660009597 +0000
+@@ -0,0 +1,39 @@
++/**
++  * Customizations for GNOME Web
++  *
++  * Append this file to the upstream default.css
++  */
++
++.hljs {
++  /*
++   * fix overflow handling
++   *
++   * let the browser window display overflow scrollbars, if any,
++   * instead of placing scrollbars inside the content
++   */
++  overflow-x: visible !important;
++}
++
++
++/**
++  * styling for the highlightjs-line-numbers plugin
++  */
++.hljs-ln {
++  white-space: pre;
++}
++
++.hljs-ln-numbers {
++  -webkit-touch-callout: none;
++  -webkit-user-select: none;
++  user-select: none;
++
++  text-align: right;
++  color: #ccc;
++  vertical-align: top;
++  border-right: 1px solid;
++  padding-right: 5px !important;
++}
++
++.hljs-ln-code {
++  padding-left: 10px !important;
++}
 diff --git a/third-party/highlightjs/highlightjs.gresource.xml b/third-party/highlightjs/highlightjs.gresource.xml
 new file mode 100644
 index 0000000000000000000000000000000000000000..458aa66042e4c6aef5091cd6f1345b5f7eba0513
@@ -126,11 +178,18 @@ index c09000a47d0d51ae6c80ae4b86f7430ddda248b9..72027a07fcbc121f1878244da2ce46e7
 +)
 --- /dev/null	2020-05-13 19:01:29.000000000 +0000
 +++ b/third-party/highlightjs/default.css	2020-05-13 19:04:22.642280165 +0000
-@@ -0,0 +1,124 @@
-+/* firefox view-source style */
+@@ -0,0 +1,147 @@
++/**
++ * nnfx - a theme inspired by Netscape Navigator/Firefox
++ *
++ * @version 1.0.0
++ * @author (c) 2020 Jim Mason <jmason@ibinx.com>
++ * @license https://creativecommons.org/licenses/by-sa/4.0  CC BY-SA 4.0
++ */
 +
 +.hljs {
 +  display: block;
++  overflow-x: auto;
 +  padding: 0.5em;
 +  background: #fff;
 +  color: #000;
@@ -139,17 +198,18 @@ index c09000a47d0d51ae6c80ae4b86f7430ddda248b9..72027a07fcbc121f1878244da2ce46e7
 +.xml .hljs-meta {
 +  font-weight: bold;
 +  font-style: italic;
-+  color: #4682b4;
++  color: #48b;
 +}
 +
 +.hljs-comment,
 +.hljs-quote {
 +  font-style: italic;
-+  color: #007400;
++  color: #070;
 +}
 +
-+.hljs-name {
-+  color: #800080;
++.hljs-name,
++.hljs-keyword {
++  color: #808;
 +}
 +
 +.hljs-name,
@@ -163,44 +223,38 @@ index c09000a47d0d51ae6c80ae4b86f7430ddda248b9..72027a07fcbc121f1878244da2ce46e7
 +
 +.hljs-variable,
 +.hljs-template-variable {
-+  color: #3F6E74;
++  color: #477;
 +}
 +
 +.hljs-code,
 +.hljs-string,
-+.hljs-meta-string {
-+  color: #00f;
-+}
-+
++.hljs-meta-string,
++.hljs-number,
 +.hljs-regexp,
 +.hljs-link {
-+  color: #0E0EFF;
++  color: #00f;
 +}
 +
 +.hljs-title,
 +.hljs-symbol,
 +.hljs-bullet,
-+.hljs-number {
-+  color: #ff4501;
++.hljs-built_in,
++.hljs-builtin-name {
++  color: #f40;
 +}
 +
 +.hljs-section,
 +.hljs-meta {
-+  color: #643820;
++  color: #642;
 +}
 +
 +.hljs-class .hljs-title,
-+.hljs-type,
-+.hljs-built_in,
-+.hljs-builtin-name,
-+.hljs-params {
-+  color: #5c2699;
++.hljs-type {
++  color: #639;
 +}
 +
-+.hljs-attr {
-+  color: #000;
-+}
-+
++.hljs-function .hljs-title,
++.hljs-attr,
 +.hljs-subst {
 +  color: #000;
 +}
@@ -211,16 +265,16 @@ index c09000a47d0d51ae6c80ae4b86f7430ddda248b9..72027a07fcbc121f1878244da2ce46e7
 +}
 +
 +.hljs-addition {
-+  background-color: #baeeba;
++  background-color: #beb;
 +}
 +
 +.hljs-deletion {
-+  background-color: #ffc8bd;
++  background-color: #fbb;
 +}
 +
 +.hljs-selector-id,
 +.hljs-selector-class {
-+  color: #9b703f;
++  color: #964;
 +}
 +
 +.hljs-doctag,
@@ -231,6 +285,27 @@ index c09000a47d0d51ae6c80ae4b86f7430ddda248b9..72027a07fcbc121f1878244da2ce46e7
 +.hljs-emphasis {
 +  font-style: italic;
 +}
++
++/**
++  * Customizations for GNOME Web
++  *
++  * Append this file to the upstream default.css
++  */
++
++.hljs {
++  /*
++   * fix overflow handling
++   *
++   * let the browser window display overflow scrollbars, if any,
++   * instead of placing scrollbars inside the content
++   */
++  overflow-x: visible !important;
++}
++
++
++/**
++ * styling for the highlightjs-line-numbers plugin
++ */
 +
 +.hljs-ln {
 +  white-space: pre;
