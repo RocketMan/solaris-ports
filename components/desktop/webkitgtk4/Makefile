@@ -57,7 +57,7 @@ LDFLAGS += -lsocket  -lnsl
 # We don't have JHbuild needed for tests
 TEST_TARGET= $(NO_TESTS)
 
-BUILD_STYLE= cmake
+BUILD_STYLE= cmake-ninja
 
 CMAKE_OPTIONS += -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON
 
