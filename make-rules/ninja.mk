@@ -20,26 +20,28 @@
 #
 
 #
-# Copyright (c) 2018-2020 Jim Mason <jmason at ibinx dot com>.  All rights reserved.
+# Copyright (c) 2020 Jim Mason <jmason at ibinx dot com>.  All rights reserved.
 #
 
+# use ninja instead of make
+GMAKE=$(NINJA)
 
-PATH=$(GNUBIN):$(USRBINDIR)
+ifeq ($(strip $(BUILD_STYLE)),ninja)
+include $(WS_MAKE_RULES)/justmake.mk
+endif
 
-# use meson instead of configure
-undefine CONFIG_SHELL
-CONFIGURE_SCRIPT=$(MESON)
+# change default build test target to 'test'
+undefine COMPONENT_INSTALL_ARGS
+COMPONENT_TEST_TARGETS = test
 
-BUILD_STYLE = configure
-include $(WS_MAKE_RULES)/configure.mk
-include $(WS_MAKE_RULES)/ninja.mk
+# setup ninja build and install environment
+COMPONENT_BUILD_ENV += CC=$(CC)
+COMPONENT_BUILD_ENV += CFLAGS="$(CFLAGS)"
+COMPONENT_INSTALL_ENV += DESTDIR=$(PROTO_DIR)
 
-# last component of the meson argument list must be the source directory
-CONFIGURE_OPTIONS += $(SOURCE_DIR)
+# ensure that ninja is present in the build environment
+$(SOURCE_DIR)/.prep: $(SOURCE_DIR)/.checked-ninja
 
-# ensure that meson is present in the build environment
-$(SOURCE_DIR)/.prep: $(SOURCE_DIR)/.checked-meson
-
-$(SOURCE_DIR)/.checked-meson:
-	test -f $(MESON) || { echo >&2 "\n\e[31mMeson is required to build.  Meson is available in this repo.\e[0m\n"; exit 1; }
+$(SOURCE_DIR)/.checked-ninja:
+	test -f $(NINJA) || { echo >&2 "\n\e[31mNinja is required to build.  Ninja is available in the Solaris userland gate.\e[0m\n"; exit 1; }
 	$(TOUCH) $@

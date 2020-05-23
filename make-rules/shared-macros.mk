@@ -839,6 +839,9 @@ MKFONTDIR =	/usr/bin/mkfontdir
 MKFONTSCALE =	/usr/bin/mkfontscale
 UNZIP =		/usr/bin/unzip
 
+NINJA =		/usr/bin/ninja
+MESON =		/usr/bin/meson
+
 #
 # To simplify adding directories to PKG_CONFIG_PATH, since += adds spaces, not :
 # use PKG_CONFIG_PATHS += ... and the following will convert to the : form

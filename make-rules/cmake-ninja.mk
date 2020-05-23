@@ -20,26 +20,10 @@
 #
 
 #
-# Copyright (c) 2018-2020 Jim Mason <jmason at ibinx dot com>.  All rights reserved.
+# Copyright (c) 2020 Jim Mason <jmason at ibinx dot com>.  All rights reserved.
 #
 
+CMAKE_OPTIONS += -G Ninja
 
-PATH=$(GNUBIN):$(USRBINDIR)
-
-# use meson instead of configure
-undefine CONFIG_SHELL
-CONFIGURE_SCRIPT=$(MESON)
-
-BUILD_STYLE = configure
-include $(WS_MAKE_RULES)/configure.mk
+include $(WS_MAKE_RULES)/cmake.mk
 include $(WS_MAKE_RULES)/ninja.mk
-
-# last component of the meson argument list must be the source directory
-CONFIGURE_OPTIONS += $(SOURCE_DIR)
-
-# ensure that meson is present in the build environment
-$(SOURCE_DIR)/.prep: $(SOURCE_DIR)/.checked-meson
-
-$(SOURCE_DIR)/.checked-meson:
-	test -f $(MESON) || { echo >&2 "\n\e[31mMeson is required to build.  Meson is available in this repo.\e[0m\n"; exit 1; }
-	$(TOUCH) $@
