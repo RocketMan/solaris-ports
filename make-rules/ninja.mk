@@ -30,14 +30,15 @@ ifeq ($(strip $(BUILD_STYLE)),ninja)
 include $(WS_MAKE_RULES)/justmake.mk
 endif
 
-# change default build test target to 'test'
-undefine COMPONENT_INSTALL_ARGS
-COMPONENT_TEST_TARGETS = test
-
 # setup ninja build and install environment
 COMPONENT_BUILD_ENV += CC=$(CC)
 COMPONENT_BUILD_ENV += CFLAGS="$(CFLAGS)"
+
+undefine COMPONENT_INSTALL_ARGS
 COMPONENT_INSTALL_ENV += DESTDIR=$(PROTO_DIR)
+
+# change default build test target to 'test'
+COMPONENT_TEST_TARGETS = test
 
 # ensure that ninja is present in the build environment
 $(SOURCE_DIR)/.prep: $(SOURCE_DIR)/.checked-ninja
