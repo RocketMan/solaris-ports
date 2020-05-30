@@ -41,5 +41,5 @@ CONFIGURE_OPTIONS += $(SOURCE_DIR)
 $(SOURCE_DIR)/.prep: $(SOURCE_DIR)/.checked-meson
 
 $(SOURCE_DIR)/.checked-meson:
-	test -f $(MESON) || { echo >&2 "\n\e[31mMeson is required to build.  Meson is available in this repo.\e[0m\n"; exit 1; }
+	test -f $(MESON) || { echo >&2 "\n\e[31mMeson is required to build.  Meson is available in the Solaris userland gate.\e[0m\n"; exit 1; }
 	$(TOUCH) $@
