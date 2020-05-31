@@ -107,7 +107,7 @@ index 0000000000000000000000000000000000000000..f8a32dd4b51dd05578953d6f9b21f5a0
 +# Documentation created by Jan-Michael Brummer <jan.brummer@tabos.org>
 --- /dev/null	2020-05-20 14:42:37.000000000 +0000
 +++ b/third-party/highlightjs/epiphany.css	2020-05-20 14:35:13.660009597 +0000
-@@ -0,0 +1,39 @@
+@@ -0,0 +1,37 @@
 +/**
 +  * Customizations for GNOME Web
 +  *
@@ -121,7 +121,7 @@ index 0000000000000000000000000000000000000000..f8a32dd4b51dd05578953d6f9b21f5a0
 +   * let the browser window display overflow scrollbars, if any,
 +   * instead of placing scrollbars inside the content
 +   */
-+  overflow-x: visible !important;
++  overflow-x: visible;
 +}
 +
 +
@@ -132,20 +132,18 @@ index 0000000000000000000000000000000000000000..f8a32dd4b51dd05578953d6f9b21f5a0
 +  white-space: pre;
 +}
 +
-+.hljs-ln-numbers {
-+  -webkit-touch-callout: none;
++.hljs-ln .hljs-ln-numbers {
 +  -webkit-user-select: none;
-+  user-select: none;
 +
 +  text-align: right;
 +  color: #ccc;
 +  vertical-align: top;
 +  border-right: 1px solid;
-+  padding-right: 5px !important;
++  padding-right: 5px;
 +}
 +
-+.hljs-ln-code {
-+  padding-left: 10px !important;
++.hljs-ln .hljs-ln-code {
++  padding-left: 10px;
 +}
 diff --git a/third-party/highlightjs/highlightjs.gresource.xml b/third-party/highlightjs/highlightjs.gresource.xml
 new file mode 100644
@@ -178,7 +176,7 @@ index c09000a47d0d51ae6c80ae4b86f7430ddda248b9..72027a07fcbc121f1878244da2ce46e7
 +)
 --- /dev/null	2020-05-13 19:01:29.000000000 +0000
 +++ b/third-party/highlightjs/default.css	2020-05-13 19:04:22.642280165 +0000
-@@ -0,0 +1,147 @@
+@@ -0,0 +1,145 @@
 +/**
 + * nnfx - a theme inspired by Netscape Navigator/Firefox
 + *
@@ -299,7 +297,7 @@ index c09000a47d0d51ae6c80ae4b86f7430ddda248b9..72027a07fcbc121f1878244da2ce46e7
 +   * let the browser window display overflow scrollbars, if any,
 +   * instead of placing scrollbars inside the content
 +   */
-+  overflow-x: visible !important;
++  overflow-x: visible;
 +}
 +
 +
@@ -311,18 +309,16 @@ index c09000a47d0d51ae6c80ae4b86f7430ddda248b9..72027a07fcbc121f1878244da2ce46e7
 +  white-space: pre;
 +}
 +
-+.hljs-ln-numbers {
-+  -webkit-touch-callout: none;
++.hljs-ln .hljs-ln-numbers {
 +  -webkit-user-select: none;
-+  user-select: none;
 +
 +  text-align: right;
 +  color: #ccc;
 +  vertical-align: top;
 +  border-right: 1px solid;
-+  padding-right: 5px !important;
++  padding-right: 5px;
 +}
 +
-+.hljs-ln-code {
-+  padding-left: 10px !important;
++.hljs-ln .hljs-ln-code {
++  padding-left: 10px;
 +}
