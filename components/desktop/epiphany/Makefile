@@ -48,20 +48,20 @@ COMPONENT_ARCHIVE_HASH_1= \
 	sha256:f1577e373efc8b9143744bc07caf7085ff27a1a496da8e2890db9de5917e4f3b
 
 COMPONENT_NAME_2=	highlightjs
-COMPONENT_VERSION_2=	10.0.3
+COMPONENT_VERSION_2=	10.1.0
 COMPONENT_SRC_2=	highlight.js-$(COMPONENT_VERSION_2)
-COMPONENT_ARCHIVE_2=	highlight.js-$(COMPONENT_VERSION_2).tar.gz
+COMPONENT_ARCHIVE_2=	$(COMPONENT_VERSION_2).tar.gz
 COMPONENT_ARCHIVE_URL_2= https://github.com/highlightjs/highlight.js/archive/$(COMPONENT_ARCHIVE_2)
 COMPONENT_ARCHIVE_HASH_2= \
-	sha256:cb9b83c97d8f7fccdc819ea86ac9f03f28aca12a15ac11d15b8782414da1cd86
+	sha256:4604c160dc987252226c7acd517659600f98d08a9437365ff60a3bedeb61b4a9
 
 COMPONENT_NAME_3=	highlightjs_line_numbers
-COMPONENT_VERSION_3=	2.7.0
+COMPONENT_VERSION_3=	2.8.0
 COMPONENT_SRC_3=	highlightjs-line-numbers.js-$(COMPONENT_VERSION_3)
 COMPONENT_ARCHIVE_3=	$(COMPONENT_SRC_3).tar.gz
 COMPONENT_ARCHIVE_URL_3= https://github.com/wcoder/highlightjs-line-numbers.js/archive/v$(COMPONENT_VERSION_3).tar.gz
 COMPONENT_ARCHIVE_HASH_3= \
-	sha256:d089a401490d1c1a5e0bb49bad00f6c970d260787960150c7bd5e8cf36f15ace
+	sha256:9dd4fd284d53b0ecd6b965bf44de6483099f38358abe19a3e2a3e95dae9c47c1
 
 BUILD_STYLE = meson
 include $(WS_MAKE_RULES)/common.mk
@@ -92,7 +92,9 @@ $(COMPONENT_SRC_2)/.prep: download unpack patch
 	(cd $(@D) ; \
 	$(ENV) npm install ; \
 	$(ENV) node tools/build.js -n css javascript xml ; \
-	$(CP) build/highlight.js $(HIGHLIGHTJS) )
+	$(CP) build/highlight.js $(HIGHLIGHTJS) ; \
+	$(CP) src/styles/nnfx.css $(HIGHLIGHTJS); \
+	$(CP) src/styles/nnfx-dark.css $(HIGHLIGHTJS) )
 	$(TOUCH) $@
 
 $(COMPONENT_SRC_3)/.prep: download unpack patch

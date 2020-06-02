@@ -8,7 +8,7 @@ diff --git a/embed/ephy-view-source-handler.c b/embed/ephy-view-source-handler.c
 index d10867a076e6f68f196f75c292df3fd1e5c7b338..761cf95f0806eb2f40ecb23ab6ae3637c56416a1 100644
 --- a/embed/ephy-view-source-handler.c	2019-09-07 16:00:18.000000000 +0000
 +++ b/embed/ephy-view-source-handler.c	2020-05-13 14:48:34.165904702 +0000
-@@ -108,37 +108,37 @@
+@@ -108,37 +108,39 @@
                        GAsyncResult          *result,
                        EphyViewSourceRequest *request)
  {
@@ -44,7 +44,9 @@ index d10867a076e6f68f196f75c292df3fd1e5c7b338..761cf95f0806eb2f40ecb23ab6ae3637
 -                              "<code class=\"language-html\">%s</code>"
 -                            "</pre>"
 +  html = g_strdup_printf ("<head>"
-+                          "  <link rel='stylesheet' href='ephy-resource:///org/gnome/epiphany/highlightjs/default.css'>"
++                          "  <link rel='stylesheet' href='ephy-resource:///org/gnome/epiphany/highlightjs/nnfx.css' media='(prefers-color-scheme: no-preference), (prefers-color-scheme: light)'>"
++                          "  <link rel='stylesheet' href='ephy-resource:///org/gnome/epiphany/highlightjs/nnfx-dark.css' media='(prefers-color-scheme: dark)'>"
++                          "  <link rel='stylesheet' href='ephy-resource:///org/gnome/epiphany/highlightjs/epiphany.css'>"
 +                          "</head>"
 +                          "<body class='hljs'>"
 +                          "  <script src='ephy-resource:///org/gnome/epiphany/highlightjs/highlight.js'></script>"
@@ -78,7 +80,7 @@ new file mode 100644
 index 0000000000000000000000000000000000000000..f8a32dd4b51dd05578953d6f9b21f5a03ce3773c
 --- /dev/null
 +++ b/third-party/highlightjs/README.epiphany
-@@ -0,0 +1,26 @@
+@@ -0,0 +1,25 @@
 +# Embedded source code highlighter based on hightlight.js
 +
 +This directory contains an official highlight.js release version, distributed at: https://github.com/highlightjs/highlight.js
@@ -92,17 +94,16 @@ index 0000000000000000000000000000000000000000..f8a32dd4b51dd05578953d6f9b21f5a0
 +node tools/build.js -n css javascript xml
 +
 +Copy build/highlight.js to <epiphany-source>/third-party/highlightjs/
-+Copy src/styles/default.css to <epiphany-source>third-party/highlightjs/
++Copy src/styles/nnfx.css to <epiphany-source>third-party/highlightjs/
++Copy src/styles/nnfx-dark.css to <epiphany-source>third-party/highlightjs/
 +
-+# Highlight.js line numbers plugin:
++## Highlight.js line numbers plugin:
 +
 +git clone https://github.com/wcoder/highlightjs-line-numbers.js.git
 +cd highlightjs-line-numbers.js
++git checkout <version number>
 +
 +Copy src/highlightjs-line-numbers.js to <epiphany-source>/third-party/highlightjs/
-+
-+Append <epiphany-source>/third-party/highlightjs/epiphany.css to
-+	<epiphany-source>/third-party/highlightjs/default.css
 +
 +# Documentation created by Jan-Michael Brummer <jan.brummer@tabos.org>
 --- /dev/null	2020-05-20 14:42:37.000000000 +0000
@@ -111,7 +112,7 @@ index 0000000000000000000000000000000000000000..f8a32dd4b51dd05578953d6f9b21f5a0
 +/**
 +  * Customizations for GNOME Web
 +  *
-+  * Append this file to the upstream default.css
++  * This file provides epiphany-specific customizations to the upstream css.
 +  */
 +
 +.hljs {
@@ -150,13 +151,15 @@ new file mode 100644
 index 0000000000000000000000000000000000000000..458aa66042e4c6aef5091cd6f1345b5f7eba0513
 --- /dev/null
 +++ b/third-party/highlightjs/highlightjs.gresource.xml
-@@ -0,0 +1,8 @@
+@@ -0,0 +1,10 @@
 +<?xml version="1.0" encoding="UTF-8"?>
 +<gresources>
 +  <gresource prefix="/org/gnome/epiphany/highlightjs">
 +    <file compressed="true">highlight.js</file>
 +    <file compressed="true">highlightjs-line-numbers.js</file>
-+    <file compressed="true">default.css</file>
++    <file compressed="true">epiphany.css</file>
++    <file compressed="true">nnfx.css</file>
++    <file compressed="true">nnfx-dark.css</file>
 +  </gresource>
 +</gresources>
 diff --git a/third-party/meson.build b/third-party/meson.build
@@ -174,151 +177,3 @@ index c09000a47d0d51ae6c80ae4b86f7430ddda248b9..72027a07fcbc121f1878244da2ce46e7
 +    c_name: 'highlightjs',
 +    source_dir: 'highlightjs'
 +)
---- /dev/null	2020-05-13 19:01:29.000000000 +0000
-+++ b/third-party/highlightjs/default.css	2020-05-13 19:04:22.642280165 +0000
-@@ -0,0 +1,145 @@
-+/**
-+ * nnfx - a theme inspired by Netscape Navigator/Firefox
-+ *
-+ * @version 1.0.0
-+ * @author (c) 2020 Jim Mason <jmason@ibinx.com>
-+ * @license https://creativecommons.org/licenses/by-sa/4.0  CC BY-SA 4.0
-+ */
-+
-+.hljs {
-+  display: block;
-+  overflow-x: auto;
-+  padding: 0.5em;
-+  background: #fff;
-+  color: #000;
-+}
-+
-+.xml .hljs-meta {
-+  font-weight: bold;
-+  font-style: italic;
-+  color: #48b;
-+}
-+
-+.hljs-comment,
-+.hljs-quote {
-+  font-style: italic;
-+  color: #070;
-+}
-+
-+.hljs-name,
-+.hljs-keyword {
-+  color: #808;
-+}
-+
-+.hljs-name,
-+.hljs-attr {
-+  font-weight: bold;
-+}
-+
-+.hljs-string {
-+  font-weight: normal;
-+}
-+
-+.hljs-variable,
-+.hljs-template-variable {
-+  color: #477;
-+}
-+
-+.hljs-code,
-+.hljs-string,
-+.hljs-meta-string,
-+.hljs-number,
-+.hljs-regexp,
-+.hljs-link {
-+  color: #00f;
-+}
-+
-+.hljs-title,
-+.hljs-symbol,
-+.hljs-bullet,
-+.hljs-built_in,
-+.hljs-builtin-name {
-+  color: #f40;
-+}
-+
-+.hljs-section,
-+.hljs-meta {
-+  color: #642;
-+}
-+
-+.hljs-class .hljs-title,
-+.hljs-type {
-+  color: #639;
-+}
-+
-+.hljs-function .hljs-title,
-+.hljs-attr,
-+.hljs-subst {
-+  color: #000;
-+}
-+
-+.hljs-formula {
-+  background-color: #eee;
-+  font-style: italic;
-+}
-+
-+.hljs-addition {
-+  background-color: #beb;
-+}
-+
-+.hljs-deletion {
-+  background-color: #fbb;
-+}
-+
-+.hljs-selector-id,
-+.hljs-selector-class {
-+  color: #964;
-+}
-+
-+.hljs-doctag,
-+.hljs-strong {
-+  font-weight: bold;
-+}
-+
-+.hljs-emphasis {
-+  font-style: italic;
-+}
-+
-+/**
-+  * Customizations for GNOME Web
-+  *
-+  * Append this file to the upstream default.css
-+  */
-+
-+.hljs {
-+  /*
-+   * fix overflow handling
-+   *
-+   * let the browser window display overflow scrollbars, if any,
-+   * instead of placing scrollbars inside the content
-+   */
-+  overflow-x: visible;
-+}
-+
-+
-+/**
-+ * styling for the highlightjs-line-numbers plugin
-+ */
-+
-+.hljs-ln {
-+  white-space: pre;
-+}
-+
-+.hljs-ln .hljs-ln-numbers {
-+  -webkit-user-select: none;
-+
-+  text-align: right;
-+  color: #ccc;
-+  vertical-align: top;
-+  border-right: 1px solid;
-+  padding-right: 5px;
-+}
-+
-+.hljs-ln .hljs-ln-code {
-+  padding-left: 10px;
-+}
