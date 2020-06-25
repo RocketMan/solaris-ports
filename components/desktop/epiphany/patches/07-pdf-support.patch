@@ -474,15 +474,15 @@ diff -Naur epiphany-3.30.5/third-party/pdfjs/epiphany-pdfjs-changes.patch epipha
 +  *
 +  * Licensed under the Apache License, Version 2.0 (the "License");
 +  * you may not use this file except in compliance with the License.
-+@@ -1189,6 +1190,7 @@
++@@ -1213,6 +1214,7 @@
 + }
 + 
 + .dropdownToolbarButton > select {
 ++  -webkit-appearance: none;
-+   min-width: 140px;
++   width: 162px;
++   height: 23px;
 +   font-size: 12px;
-+   color: hsl(0,0%,95%);
-+@@ -1523,6 +1525,7 @@
++@@ -1546,6 +1548,7 @@
 + }
 + 
 + .toolbarField.pageNumber {
@@ -490,7 +490,7 @@ diff -Naur epiphany-3.30.5/third-party/pdfjs/epiphany-pdfjs-changes.patch epipha
 +   -moz-appearance: textfield; /* hides the spinner in moz */
 +   min-width: 16px;
 +   text-align: right;
-+@@ -2401,3 +2401,9 @@
++@@ -2440,3 +2443,9 @@
 +     display: none;
 +   }
 + }
@@ -498,7 +498,7 @@ diff -Naur epiphany-3.30.5/third-party/pdfjs/epiphany-pdfjs-changes.patch epipha
 ++#scaleSelectContainer {
 ++  min-width: 166px;
 ++  max-width: 166px;
-++  padding: 2px 10px;
+++  padding: 0px 10px;
 ++}
 +diff -urN web2/viewer.html web/viewer.html
 +--- web2/viewer.html	2019-10-03 23:09:02.000000000 +0200
@@ -534,37 +534,37 @@ diff -Naur epiphany-3.30.5/third-party/pdfjs/epiphany-pdfjs-changes.patch epipha
 +@@ -3,6 +3,7 @@
 +  * Javascript code in this page
 +  *
-+  * Copyright 2019 Mozilla Foundation
++  * Copyright 2020 Mozilla Foundation
 ++ * Modifications made for Epiphany by Jan-Michael Brummer <jan.brummer@tabos.org>
 +  *
 +  * Licensed under the Apache License, Version 2.0 (the "License");
 +  * you may not use this file except in compliance with the License.
-+@@ -364,7 +364,7 @@
-+   createL10n: function createL10n(options) {
-+     throw new Error('Not implemented: createL10n');
-+   },
-+-  supportsIntegratedFind: false,
-++  supportsIntegratedFind: true,
-+   supportsDocumentFonts: true,
-+   supportsDocumentColors: true,
-+   supportedMouseWheelZoomModifierKeys: {
-+@@ -1829,8 +1830,7 @@
-+   var file;
-+   var queryString = document.location.search.substring(1);
-+   var params = (0, _ui_utils.parseQueryString)(queryString);
-+-  file = 'file' in params ? params.file : _app_options.AppOptions.get('defaultUrl');
++@@ -361,7 +362,7 @@
++   }
++ 
++   static get supportsIntegratedFind() {
++-    return (0, _pdfjsLib.shadow)(this, "supportsIntegratedFind", false);
+++    return (0, _pdfjsLib.shadow)(this, "supportsIntegratedFind", true);
++   }
++ 
++   static get supportsDocumentFonts() {
++@@ -1766,8 +1767,7 @@
++   let file;
++   const queryString = document.location.search.substring(1);
++   const params = (0, _ui_utils.parseQueryString)(queryString);
++-  file = "file" in params ? params.file : _app_options.AppOptions.get("defaultUrl");
 +-  validateFileURL(file);
 ++  file = ''
-+   var fileInput = document.createElement('input');
++   const fileInput = document.createElement("input");
 +   fileInput.id = appConfig.openFileInputName;
-+   fileInput.className = 'fileInput';
-+@@ -1838,12 +1838,10 @@
++   fileInput.className = "fileInput";
++@@ -1775,12 +1775,10 @@
 +   fileInput.oncontextmenu = _ui_utils.noContextMenuHandler;
 +   document.body.appendChild(fileInput);
 + 
 +-  if (!window.File || !window.FileReader || !window.FileList || !window.Blob) {
-+-    appConfig.toolbar.openFile.setAttribute('hidden', 'true');
-+-    appConfig.secondaryToolbar.openFileButton.setAttribute('hidden', 'true');
++-    appConfig.toolbar.openFile.setAttribute("hidden", "true");
++-    appConfig.secondaryToolbar.openFileButton.setAttribute("hidden", "true");
 +-  } else {
 +-    fileInput.value = null;
 +-  }
@@ -573,9 +573,9 @@ diff -Naur epiphany-3.30.5/third-party/pdfjs/epiphany-pdfjs-changes.patch epipha
 ++
 ++  appConfig.toolbar.viewBookmark.setAttribute('hidden', 'true');
 + 
-+   fileInput.addEventListener('change', function (evt) {
-+     var files = evt.target.files;
-+@@ -1897,8 +1895,18 @@
++   fileInput.addEventListener("change", function (evt) {
++     const files = evt.target.files;
++@@ -1842,8 +1840,18 @@
 +     }
 +   }, true);
 + 
@@ -593,18 +593,17 @@ diff -Naur epiphany-3.30.5/third-party/pdfjs/epiphany-pdfjs-changes.patch epipha
 ++      PDFViewerApplication.open(array);
 ++      PDFViewerApplication.setTitleUsingUrl(file_name);
 +   } catch (reason) {
-+     PDFViewerApplication.l10n.get('loading_error', null, 'An error occurred while loading the PDF.').then(function (msg) {
++     PDFViewerApplication.l10n.get("loading_error", null, "An error occurred while loading the PDF.").then(msg => {
 +       PDFViewerApplication.error(msg, reason);
-+@@ -7785,6 +7793,8 @@
-+         }
++@@ -6458,6 +6466,8 @@
 +       }
++     }
 + 
-++      // FIXME: This currently breaks Epiphany due to rewriting history with baseUrl
-++      return;
-+       if (shouldReplace) {
-+         if (newUrl) {
-+           window.history.replaceState(newState, '', newUrl);
-diff -Naur epiphany-3.30.5/third-party/pdfjs/pdfjs_generate_resource.py epiphany-3.30.5-patched/third-party/pdfjs/pdfjs_generate_resource.py
+++    // FIXME: This currently breaks Epiphany due to rewriting history with baseUrl
+++    return;
++     if (shouldReplace) {
++       window.history.replaceState(newState, "", newUrl);
++     } else {
 --- epiphany-3.30.5/third-party/pdfjs/pdfjs_generate_resource.py	1970-01-01 01:00:00.000000000 +0000
 +++ epiphany-3.30.5-patched/third-party/pdfjs/pdfjs_generate_resource.py	2020-05-12 18:37:58.000000000 +0000
 @@ -0,0 +1,26 @@
