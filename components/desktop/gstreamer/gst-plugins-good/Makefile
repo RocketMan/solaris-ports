@@ -20,7 +20,7 @@
 #
 
 #
-# Copyright (c) 2018 Jim Mason <jmason at ibinx dot com>.  All rights reserved.
+# Copyright (c) 2018-2020 Jim Mason <jmason at ibinx dot com>.  All rights reserved.
 #
 # Adapted from original code Copyright (c) 2015, 2018, Oracle and/or its
 # affiliates. All rights reserved.
@@ -92,6 +92,9 @@ CONFIGURE_OPTIONS += --enable-x
 CONFIGURE_OPTIONS += --enable-xshm
 CONFIGURE_OPTIONS += --enable-zlib
 CONFIGURE_OPTIONS += --with-x
+
+# Use GNU make during configure
+CONFIGURE_ENV += PATH=$(GNUBIN):$(PATH)
 
 # Ensure system-default python is not used.
 CONFIGURE_ENV += PYTHON="$(PYTHON.2.7)"
