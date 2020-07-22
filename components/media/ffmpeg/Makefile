@@ -68,6 +68,7 @@ CONFIGURE_OPTIONS += --enable-libmp3lame
 CONFIGURE_OPTIONS += --enable-libopus
 CONFIGURE_OPTIONS += --enable-libtheora
 CONFIGURE_OPTIONS += --enable-libvorbis
+CONFIGURE_OPTIONS += --enable-libvpx
 CONFIGURE_OPTIONS += --enable-libx264
 CONFIGURE_OPTIONS += --enable-openssl
 CONFIGURE_OPTIONS += --enable-vdpau
@@ -95,6 +96,7 @@ COMPONENT_TEST_MASTER = $(COMPONENT_TEST_RESULTS_DIR)/results-all.master
 
 REQUIRED_PACKAGES += codec/libtheora
 REQUIRED_PACKAGES += codec/libvorbis
+REQUIRED_PACKAGES += codec/libvpx
 REQUIRED_PACKAGES += codec/ogg-vorbis
 REQUIRED_PACKAGES += library/graphics/libvdpau
 REQUIRED_PACKAGES += library/media/libass
