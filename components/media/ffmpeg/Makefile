@@ -20,7 +20,7 @@
 #
 
 #
-# Copyright (c) 2018 Jim Mason <jmason at ibinx dot com>.  All rights reserved.
+# Copyright (c) 2018-2020 Jim Mason <jmason at ibinx dot com>.  All rights reserved.
 #
 
 BUILD_BITS =            64_and_32
@@ -28,12 +28,12 @@ COMPILER =		gcc
 include ../../../make-rules/shared-macros.mk
 
 COMPONENT_NAME=		ffmpeg
-COMPONENT_VERSION=	4.1.5
+COMPONENT_VERSION=	4.1.6
 COMPONENT_ARCHIVE=	$(COMPONENT_NAME)-$(COMPONENT_VERSION).tar.bz2
 COMPONENT_PROJECT_URL=	https://www.ffmpeg.org/
 COMPONENT_ARCHIVE_URL=	https://ffmpeg.org/releases/$(COMPONENT_ARCHIVE)
 COMPONENT_ARCHIVE_HASH=	\
-    sha256:494c4510e5958da6abd6d6d676cf4b21430b3f809ff10ef0546a458f1d632a97
+    sha256:9fa49ea887c0a735b82a357172d07e973f4dc221fd4eb489b69a21eda0440811
 
 CFLAGS += -I/usr/X11/include
 CFLAGS += $(CPP_LARGEFILES)
