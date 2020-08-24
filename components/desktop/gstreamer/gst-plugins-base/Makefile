@@ -20,7 +20,7 @@
 #
 
 #
-# Copyright (c) 2018 Jim Mason <jmason at ibinx dot com>.  All rights reserved.
+# Copyright (c) 2018-2020 Jim Mason <jmason at ibinx dot com>.
 #
 # Adapted from original code Copyright (c) 2015, 2018, Oracle and/or its
 # affiliates. All rights reserved.
@@ -32,19 +32,21 @@ BUILD_BITS =            32_and_64
 COMPILER =              gcc
 include ../../../../make-rules/shared-macros.mk
 
+BUILD_STYLE=meson
+
 COMPONENT_NAME=		gst-plugins-base
-COMPONENT_VERSION=	1.16.2
+COMPONENT_VERSION=	1.17.90
 COMPONENT_PROJECT_URL=	https://gstreamer.freedesktop.org/
 COMPONENT_ARCHIVE=	$(COMPONENT_SRC).tar.xz
 COMPONENT_ARCHIVE_HASH= \
-	sha256:b13e73e2fe74a4166552f9577c3dcb24bed077021b9c7fa600d910ec6987816a
+	sha256:f6f138d5ce6ccaa225f87b108df9f940968bd8d9d6dd1d94ef473695ad87bb65
 COMPONENT_ARCHIVE_URL=	https://gstreamer.freedesktop.org/src/$(COMPONENT_NAME)/$(COMPONENT_ARCHIVE)
 COMPONENT_ANITYA_ID=	1263
 
 
-# Only build for 2.7 for now as we need 32-bit and 64-bit support; all of the
-# GNOME and desktop components must be built for Python 2.7 for now.
-PYTHON_VERSIONS= 2.7
+# Supports Python 3.x only.
+PYTHON_VERSION= 3.5
+PYTHON_VERSIONS= $(PYTHON_VERSION)
 
 TEST_TARGET= $(SKIP_TEST)
 
@@ -57,6 +59,7 @@ PKG_CONFIG_PATHS += $(GST_BASE)$(USRLIB)/pkgconfig/
 CPPFLAGS += -I$(GST_BASE)/usr/include/gstreamer-1.0
 LD_OPTIONS += -L $(GST_BASE)$(USRLIB)
 LDFLAGS += -m$(BITS)
+$(SOLARIS_11_3_ONLY)LDFLAGS += -lnsl -lsocket
 
 COMPONENT_BUILD_ENV += LD_LIBRARY_PATH_32="$(GST_BASE)$(USRLIB.$(BITS)):$(BUILD_DIR_32)/gst-libs/gst/audio/.libs:$(BUILD_DIR_32)/gst-libs/gst/video/.libs:$(BUILD_DIR_32)/gst-libs/gst/rtp/.libs:$(BUILD_DIR_32)/gst-libs/gst/rtsp/.libs:$(BUILD_DIR_32)/gst-libs/gst/pbutils/.libs:$(BUILD_DIR_32)/gst-libs/gst/allocators/.libs:$(BUILD_DIR_32)/gst-libs/gst/gl/.libs"
 COMPONENT_BUILD_ENV += LD_LIBRARY_PATH_64="$(GST_BASE)$(USRLIB.$(BITS)):$(BUILD_DIR_64)/gst-libs/gst/audio/.libs:$(BUILD_DIR_64)/gst-libs/gst/video/.libs:$(BUILD_DIR_64)/gst-libs/gst/rtp/.libs:$(BUILD_DIR_64)/gst-libs/gst/rtsp/.libs:$(BUILD_DIR_64)/gst-libs/gst/pbutils/.libs:$(BUILD_DIR_64)/gst-libs/gst/allocators/.libs:$(BUILD_DIR_64)/gst-libs/gst/gl/.libs"
@@ -65,16 +68,14 @@ COMPONENT_BUILD_ENV += V=1
 
 CFLAGS += -DHAVE_FIONREAD_IN_SYS_FILIO
 
-CONFIGURE_OPTIONS += --disable-static
-CONFIGURE_OPTIONS += --enable-ogg
-CONFIGURE_OPTIONS += --enable-theora
-CONFIGURE_OPTIONS += --enable-vorbis
-CONFIGURE_OPTIONS += --with-x
-
-# The build process modifies the shebang line to use the version of Python
-# automatically found; to avoid using the current system default, one is
-# explicitly specified here.
-CONFIGURE_ENV += PYTHON="$(PYTHON.2.7)"
+CONFIGURE_OPTIONS.32 += -Dintrospection=disabled
+CONFIGURE_OPTIONS += -Dlibexecdir=$(CONFIGURE_LIBDIR.$(BITS))
+CONFIGURE_OPTIONS += -Dogg=enabled
+CONFIGURE_OPTIONS += -Dtheora=enabled
+CONFIGURE_OPTIONS += -Dvorbix=enabled
+CONFIGURE_OPTIONS += -Dx11=enabled
+CONFIGURE_OPTIONS += -Dexamples=disabled
+CONFIGURE_OPTIONS += -Dtests=disabled
 
 # Ensure Python modules are installed into vendor package directories.
 CONFIGURE_ENV += am_cv_python_pythondir=$(PYTHON_VENDOR_PACKAGES)
@@ -110,7 +111,7 @@ REQUIRED_PACKAGES += library/desktop/pango
 REQUIRED_PACKAGES += library/glib2
 REQUIRED_PACKAGES += library/media/libopus
 REQUIRED_PACKAGES += library/zlib
-REQUIRED_PACKAGES += runtime/python-27
+REQUIRED_PACKAGES += runtime/python-35
 REQUIRED_PACKAGES += system/library/gcc/gcc-c-runtime
 REQUIRED_PACKAGES += system/library/math
 REQUIRED_PACKAGES += x11/library/libx11

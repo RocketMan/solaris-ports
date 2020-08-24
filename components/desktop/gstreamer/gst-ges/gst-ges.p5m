@@ -20,7 +20,7 @@
 #
 
 #
-# Copyright (c) 2019 Jim Mason <jmason at ibinx dot com>.  All rights reserved.
+# Copyright (c) 2019-2020 Jim Mason <jmason at ibinx dot com>.
 #
 
 <transform file path=usr.*/man/.+ -> \
@@ -36,6 +36,7 @@ set name=info.classification \
 set name=info.source-url value=$(COMPONENT_ARCHIVE_URL)
 set name=info.upstream-url value=$(COMPONENT_PROJECT_URL)
 set name=org.opensolaris.consolidation value=$(CONSOLIDATION)
+file path=usr/bin/$(MACH32)/ges-launch-1.0
 file path=usr/bin/ges-launch-1.0
 file path=usr/include/gstreamer-1.0/ges/ges-asset.h
 file path=usr/include/gstreamer-1.0/ges/ges-audio-source.h
@@ -61,6 +62,7 @@ file path=usr/include/gstreamer-1.0/ges/ges-gerror.h
 file path=usr/include/gstreamer-1.0/ges/ges-group.h
 file path=usr/include/gstreamer-1.0/ges/ges-image-source.h
 file path=usr/include/gstreamer-1.0/ges/ges-layer.h
+file path=usr/include/gstreamer-1.0/ges/ges-marker-list.h
 file path=usr/include/gstreamer-1.0/ges/ges-meta-container.h
 file path=usr/include/gstreamer-1.0/ges/ges-multi-file-source.h
 file path=usr/include/gstreamer-1.0/ges/ges-operation-clip.h
@@ -71,16 +73,19 @@ file path=usr/include/gstreamer-1.0/ges/ges-pitivi-formatter.h
 file path=usr/include/gstreamer-1.0/ges/ges-prelude.h
 file path=usr/include/gstreamer-1.0/ges/ges-project.h
 file path=usr/include/gstreamer-1.0/ges/ges-screenshot.h
+file path=usr/include/gstreamer-1.0/ges/ges-source-clip-asset.h
 file path=usr/include/gstreamer-1.0/ges/ges-source-clip.h
 file path=usr/include/gstreamer-1.0/ges/ges-source.h
 file path=usr/include/gstreamer-1.0/ges/ges-test-clip.h
 file path=usr/include/gstreamer-1.0/ges/ges-text-overlay-clip.h
 file path=usr/include/gstreamer-1.0/ges/ges-text-overlay.h
+file path=usr/include/gstreamer-1.0/ges/ges-time-overlay-clip.h
 file path=usr/include/gstreamer-1.0/ges/ges-timeline-element.h
 file path=usr/include/gstreamer-1.0/ges/ges-timeline.h
 file path=usr/include/gstreamer-1.0/ges/ges-title-clip.h
 file path=usr/include/gstreamer-1.0/ges/ges-title-source.h
 file path=usr/include/gstreamer-1.0/ges/ges-track-element-asset.h
+file path=usr/include/gstreamer-1.0/ges/ges-track-element-deprecated.h
 file path=usr/include/gstreamer-1.0/ges/ges-track-element.h
 file path=usr/include/gstreamer-1.0/ges/ges-track.h
 file path=usr/include/gstreamer-1.0/ges/ges-transition-clip.h
@@ -99,35 +104,19 @@ file path=usr/include/gstreamer-1.0/ges/ges-xml-formatter.h
 file path=usr/include/gstreamer-1.0/ges/ges.h
 file path=usr/lib/$(MACH64)/girepository-1.0/GES-1.0.typelib
 file path=usr/lib/$(MACH64)/gst-validate-launcher/python/launcher/apps/geslaunch.py
-file path=usr/lib/$(MACH64)/gstreamer-1.0/libgstges.la
 file path=usr/lib/$(MACH64)/gstreamer-1.0/libgstges.so
-file path=usr/lib/$(MACH64)/gstreamer-1.0/libgstnle.la
 file path=usr/lib/$(MACH64)/gstreamer-1.0/libgstnle.so
-file path=usr/lib/$(MACH64)/libges-1.0.la
-link path=usr/lib/$(MACH64)/libges-1.0.so target=libges-1.0.so.0.1602.0
-link path=usr/lib/$(MACH64)/libges-1.0.so.0 target=libges-1.0.so.0.1602.0
-file path=usr/lib/$(MACH64)/libges-1.0.so.0.1601.0
-file path=usr/lib/$(MACH64)/libges-1.0.so.0.1602.0
+link path=usr/lib/$(MACH64)/libges-1.0.so target=libges-1.0.so.0
+link path=usr/lib/$(MACH64)/libges-1.0.so.0 target=libges-1.0.so.0.1790.0
+file path=usr/lib/$(MACH64)/libges-1.0.so.0.1790.0
 file path=usr/lib/$(MACH64)/pkgconfig/gst-editing-services-1.0.pc
-file path=usr/lib/girepository-1.0/GES-1.0.typelib
 file path=usr/lib/gst-validate-launcher/python/launcher/apps/geslaunch.py
-file path=usr/lib/gstreamer-1.0/libgstges.la
 file path=usr/lib/gstreamer-1.0/libgstges.so
-file path=usr/lib/gstreamer-1.0/libgstnle.la
 file path=usr/lib/gstreamer-1.0/libgstnle.so
-file path=usr/lib/libges-1.0.la
-link path=usr/lib/libges-1.0.so target=libges-1.0.so.0.1602.0
-link path=usr/lib/libges-1.0.so.0 target=libges-1.0.so.0.1602.0
-file path=usr/lib/libges-1.0.so.0.1601.0
-file path=usr/lib/libges-1.0.so.0.1602.0
+link path=usr/lib/libges-1.0.so target=libges-1.0.so.0
+link path=usr/lib/libges-1.0.so.0 target=libges-1.0.so.0.1790.0
+file path=usr/lib/libges-1.0.so.0.1790.0
 file path=usr/lib/pkgconfig/gst-editing-services-1.0.pc
-file path=usr/lib/python2.7/vendor-packages/64/gstreamer-editing-services/GES.py
-file path=usr/lib/python2.7/vendor-packages/64/gstreamer-editing-services/GES.pyc
-file path=usr/lib/python2.7/vendor-packages/64/gstreamer-editing-services/GES.pyo
-file path=usr/lib/python2.7/vendor-packages/gstreamer-editing-services/GES.py
-file path=usr/lib/python2.7/vendor-packages/gstreamer-editing-services/GES.pyc
-file path=usr/lib/python2.7/vendor-packages/gstreamer-editing-services/GES.pyo
-file path=usr/share/bash-completion/completions/ges-launch-1.0
 file path=usr/share/gir-1.0/GES-1.0.gir
 file path=usr/share/gstreamer-1.0/validate/scenarios/ges-edit-clip-while-paused.scenario
 file path=usr/share/man/man1/ges-launch-1.0.1

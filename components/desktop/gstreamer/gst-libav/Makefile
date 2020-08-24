@@ -20,19 +20,21 @@
 #
 
 #
-# Copyright (c) 2018 Jim Mason <jmason at ibinx dot com>.  All rights reserved.
+# Copyright (c) 2018-2020 Jim Mason <jmason at ibinx dot com>.
 #
 
 BUILD_BITS =            32_and_64
 COMPILER =              gcc
 include ../../../../make-rules/shared-macros.mk
 
+BUILD_STYLE=meson
+
 COMPONENT_NAME=		gst-libav
-COMPONENT_VERSION=	1.16.2
+COMPONENT_VERSION=	1.17.90
 COMPONENT_PROJECT_URL=	https://gstreamer.freedesktop.org/
 COMPONENT_ARCHIVE=	$(COMPONENT_SRC).tar.xz
 COMPONENT_ARCHIVE_HASH= \
-	sha256:c724f612700c15a933c7356fbeabb0bb9571fb5538f8b1b54d4d2d94188deef2
+	sha256:d81ef5ae47d8a9ce551fbb23a851aa5844f746a7740723d2b387ea60615f8062
 COMPONENT_ARCHIVE_URL=	https://gstreamer.freedesktop.org/src/$(COMPONENT_NAME)/$(COMPONENT_ARCHIVE)
 COMPONENT_BUGDB=	gnome/multimedia
 
@@ -49,9 +51,9 @@ CXXFLAGS += -std=c++11
 LDFLAGS += -m$(BITS)
 COMPONENT_BUILD_ENV += V=1
 
-CONFIGURE_OPTIONS += --with-system-libav
+#CONFIGURE_OPTIONS += --with-system-libav
 
-COMPONENT_PREP_ACTION += ( cd $(@D) ; NOCONFIGURE=1 $(CONFIG_SHELL) autogen.sh );
+#COMPONENT_PREP_ACTION += ( cd $(@D) ; NOCONFIGURE=1 $(CONFIG_SHELL) autogen.sh );
 
 REQUIRED_PACKAGES += library/desktop/gstreamer-1
 REQUIRED_PACKAGES += library/desktop/gstreamer-1/gst-plugins-base

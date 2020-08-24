@@ -20,7 +20,7 @@
 #
 
 #
-# Copyright (c) 2018 Jim Mason <jmason at ibinx dot com>.  All rights reserved.
+# Copyright (c) 2018-2020 Jim Mason <jmason at ibinx dot com>.
 #
 # Adapted from original code Copyright (c) 2015, 2018, Oracle and/or its
 # affiliates. All rights reserved.
@@ -32,39 +32,41 @@ BUILD_BITS =            32_and_64
 COMPILER=gcc
 include ../../../../make-rules/shared-macros.mk
 
+BUILD_STYLE=meson
+
 # gstreamer has an ancient 0.10 version supported by many applications and the
 # newest version which has no backwards API compatibility and we likely need to
 # ship both, hence the odd name.
 COMPONENT_NAME=		gstreamer
-COMPONENT_VERSION=	1.16.2
+COMPONENT_VERSION=	1.17.90
 COMPONENT_PROJECT_URL=	https://gstreamer.freedesktop.org/
 COMPONENT_SRC=		$(COMPONENT_NAME)-$(COMPONENT_VERSION)
 COMPONENT_ARCHIVE=	$(COMPONENT_SRC).tar.xz
 COMPONENT_ARCHIVE_HASH= \
-	sha256:e3f044246783fd685439647373fa13ba14f7ab0b346eadd06437092f8419e94e
+	sha256:08ec65757c032621f04c3f8e95db8e42e7646fa4512df99368e8ab34c5970f7b
 COMPONENT_ARCHIVE_URL=	https://gstreamer.freedesktop.org/src/$(COMPONENT_NAME)/$(COMPONENT_ARCHIVE)
 COMPONENT_ANITYA_ID=	1263
 
 
-# Supports Python 2.x only.
-PYTHON_VERSIONS= 2.7
+# Supports Python 3.x only.
+PYTHON_VERSION= 3.5
+PYTHON_VERSIONS= $(PYTHON_VERSION)
 
 TEST_TARGET= $(TEST_64)
 
 include $(WS_MAKE_RULES)/common.mk
 
-CONFIGURE_OPTIONS += --disable-static
-# Build documentation (man pages). 
-CONFIGURE_OPTIONS += --enable-docbook
-# Required for other components.
-CONFIGURE_OPTIONS += --enable-introspection
-CONFIGURE_OPTIONS += --libexecdir=$(CONFIGURE_LIBDIR.$(BITS))
-CONFIGURE_OPTIONS += --with-bash-completion-dir=/etc/bash_completion.d
+CONFIGURE_OPTIONS.32 += -Dintrospection=disabled
+CONFIGURE_OPTIONS += -Dlibexecdir=$(CONFIGURE_LIBDIR.$(BITS))
+
+$(SOLARIS_11_3_ONLY)LDFLAGS=-lnsl -lsocket
 
 # The build process modifies the shebang line to use the version of Python
-# automatically found; to avoid using the current system default, one is
-# explicitly specified here.
-CONFIGURE_ENV += PYTHON="$(PYTHON.2.7)"
+# for the following files
+PYTHON_SCRIPTS = $(PROTO_DIR)/$(USRLIB)/gstreamer-1.0/gst-plugins-doc-cache-generator
+
+# We setup the local to handle utf8 in the Python files above
+LC_ALL=en_US.UTF-8
 
 # Use GNU grep during configure
 CONFIGURE_ENV += PATH=$(GNUBIN):$(PATH)
@@ -89,6 +91,6 @@ REQUIRED_PACKAGES += data/docbook/docbook-style-dsssl
 REQUIRED_PACKAGES += data/docbook/docbook-style-xsl
 REQUIRED_PACKAGES += library/glib2
 REQUIRED_PACKAGES += library/libxslt
-REQUIRED_PACKAGES += runtime/python-27
+REQUIRED_PACKAGES += runtime/python-35
 REQUIRED_PACKAGES += system/library/gcc/gcc-c-runtime
 REQUIRED_PACKAGES += system/library/math

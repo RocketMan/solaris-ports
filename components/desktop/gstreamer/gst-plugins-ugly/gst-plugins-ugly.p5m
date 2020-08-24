@@ -20,7 +20,7 @@
 #
 
 #
-# Copyright (c) 2018 Jim Mason <jmason at ibinx dot com>.  All rights reserved.
+# Copyright (c) 2018-2020 Jim Mason <jmason at ibinx dot com>.
 #
 # Adapted from original code Copyright (c) 2015, 2017, Oracle and/or its
 # affiliates. All rights reserved.
@@ -37,37 +37,21 @@ set name=info.classification \
 set name=info.source-url value=$(COMPONENT_ARCHIVE_URL)
 set name=info.upstream-url value=$(COMPONENT_PROJECT_URL)
 set name=org.opensolaris.consolidation value=$(CONSOLIDATION)
-file path=usr/lib/$(MACH64)/gstreamer-1.0/libgstasf.la
 file path=usr/lib/$(MACH64)/gstreamer-1.0/libgstasf.so
-file path=usr/lib/$(MACH64)/gstreamer-1.0/libgstcdio.la
 file path=usr/lib/$(MACH64)/gstreamer-1.0/libgstcdio.so
-file path=usr/lib/$(MACH64)/gstreamer-1.0/libgstdvdlpcmdec.la
 file path=usr/lib/$(MACH64)/gstreamer-1.0/libgstdvdlpcmdec.so
-file path=usr/lib/$(MACH64)/gstreamer-1.0/libgstdvdread.la
 file path=usr/lib/$(MACH64)/gstreamer-1.0/libgstdvdread.so
-file path=usr/lib/$(MACH64)/gstreamer-1.0/libgstdvdsub.la
 file path=usr/lib/$(MACH64)/gstreamer-1.0/libgstdvdsub.so
-file path=usr/lib/$(MACH64)/gstreamer-1.0/libgstrealmedia.la
 file path=usr/lib/$(MACH64)/gstreamer-1.0/libgstrealmedia.so
-file path=usr/lib/$(MACH64)/gstreamer-1.0/libgstx264.la
 file path=usr/lib/$(MACH64)/gstreamer-1.0/libgstx264.so
-file path=usr/lib/$(MACH64)/gstreamer-1.0/libgstxingmux.la
 file path=usr/lib/$(MACH64)/gstreamer-1.0/libgstxingmux.so
-file path=usr/lib/gstreamer-1.0/libgstasf.la
 file path=usr/lib/gstreamer-1.0/libgstasf.so
-file path=usr/lib/gstreamer-1.0/libgstcdio.la
 file path=usr/lib/gstreamer-1.0/libgstcdio.so
-file path=usr/lib/gstreamer-1.0/libgstdvdlpcmdec.la
 file path=usr/lib/gstreamer-1.0/libgstdvdlpcmdec.so
-file path=usr/lib/gstreamer-1.0/libgstdvdread.la
 file path=usr/lib/gstreamer-1.0/libgstdvdread.so
-file path=usr/lib/gstreamer-1.0/libgstdvdsub.la
 file path=usr/lib/gstreamer-1.0/libgstdvdsub.so
-file path=usr/lib/gstreamer-1.0/libgstrealmedia.la
 file path=usr/lib/gstreamer-1.0/libgstrealmedia.so
-file path=usr/lib/gstreamer-1.0/libgstx264.la
 file path=usr/lib/gstreamer-1.0/libgstx264.so
-file path=usr/lib/gstreamer-1.0/libgstxingmux.la
 file path=usr/lib/gstreamer-1.0/libgstxingmux.so
 file path=usr/share/gstreamer-1.0/presets/GstX264Enc.prs
 file path=usr/share/locale/af/LC_MESSAGES/gst-plugins-ugly-1.0.mo

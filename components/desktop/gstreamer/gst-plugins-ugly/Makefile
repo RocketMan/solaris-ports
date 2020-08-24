@@ -20,7 +20,7 @@
 #
 
 #
-# Copyright (c) 2018 Jim Mason <jmason at ibinx dot com>.  All rights reserved.
+# Copyright (c) 2018-2020 Jim Mason <jmason at ibinx dot com>.
 #
 # Adapted from original code Copyright (c) 2015, 2018, Oracle and/or its
 # affiliates. All rights reserved.
@@ -32,12 +32,14 @@ BUILD_BITS =            32_and_64
 COMPILER =              gcc
 include ../../../../make-rules/shared-macros.mk
 
+BUILD_STYLE=meson
+
 COMPONENT_NAME=		gst-plugins-ugly
-COMPONENT_VERSION=	1.16.2
+COMPONENT_VERSION=	1.17.90
 COMPONENT_PROJECT_URL=	https://gstreamer.freedesktop.org/
 COMPONENT_ARCHIVE=	$(COMPONENT_SRC).tar.xz
 COMPONENT_ARCHIVE_HASH= \
-	sha256:5500415b865e8b62775d4742cbb9f37146a50caecfc0e7a6fc0160d3c560fbca
+	sha256:0952236c27aefa2c9f687ff8407f083579961b50197878fb51b256aa433e6d95
 COMPONENT_ARCHIVE_URL=	https://gstreamer.freedesktop.org/src/$(COMPONENT_NAME)/$(COMPONENT_ARCHIVE)
 COMPONENT_ANITYA_ID=	1263
 
@@ -45,9 +47,9 @@ COMPONENT_ANITYA_ID=	1263
 # Hook up tests after build servers are installed with dependencies
 TEST_TARGET= $(SKIP_TEST)
 
-# Only build for 2.7 for now as we need 32-bit and 64-bit support; all of the
-# GNOME and desktop components must be built for Python 2.7 for now.
-PYTHON_VERSIONS= 2.7
+# Supports Python 3.x only.
+PYTHON_VERSION= 3.5
+PYTHON_VERSIONS= $(PYTHON_VERSION)
 
 include $(WS_MAKE_RULES)/common.mk
 
@@ -68,28 +70,6 @@ CONFIGURE_ENV += ac_cv_prog_HAVE_CXX=yes
 
 # Use GNU grep during build
 COMPONENT_BUILD_ENV += PATH=$(GNUBIN):$(PATH)
-
-CONFIGURE_OPTIONS += --disable-static
-# sunaudio no longer builds; interfaces used in gstreamer are gone (mixer.h).
-CONFIGURE_OPTIONS += --disable-sunaudio
-CONFIGURE_OPTIONS += --enable-bz2
-CONFIGURE_OPTIONS += --enable-cairo
-CONFIGURE_OPTIONS += --enable-jpeg
-CONFIGURE_OPTIONS += --enable-libpng
-CONFIGURE_OPTIONS += --enable-oss
-CONFIGURE_OPTIONS += --enable-oss4
-CONFIGURE_OPTIONS += --enable-pulse
-CONFIGURE_OPTIONS += --enable-soup
-CONFIGURE_OPTIONS += --enable-speex
-CONFIGURE_OPTIONS += --enable-taglib
-CONFIGURE_OPTIONS += --enable-vpx
-CONFIGURE_OPTIONS += --enable-x
-CONFIGURE_OPTIONS += --enable-xshm
-CONFIGURE_OPTIONS += --enable-zlib
-CONFIGURE_OPTIONS += --with-x
-
-# Ensure system-default python is not used.
-CONFIGURE_ENV += PYTHON="$(PYTHON.2.7)"
 
 # Ensure Python modules are installed into vendor package directories.
 CONFIGURE_ENV += am_cv_python_pythondir=$(PYTHON_VENDOR_PACKAGES)
@@ -122,7 +102,7 @@ REQUIRED_PACKAGES += library/glib2
 REQUIRED_PACKAGES += library/libsoup
 REQUIRED_PACKAGES += library/ncurses
 REQUIRED_PACKAGES += library/zlib
-REQUIRED_PACKAGES += runtime/python-27
+REQUIRED_PACKAGES += runtime/python-35
 REQUIRED_PACKAGES += system/library/gcc/gcc-c++-runtime
 REQUIRED_PACKAGES += system/library/gcc/gcc-c-runtime
 REQUIRED_PACKAGES += system/library/math

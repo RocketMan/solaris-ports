@@ -693,10 +693,10 @@ PYTHON_DATA= $(PYTHON_LIB)
 # BUILD's $(PYTHON).
 PYTHON_SCRIPT_SHEBANG_FIX_FUNC = \
 	$(GSED) -i \
-		-e '1s@/usr/bin/python$$@$(PYTHON)@' \
-		-e '1s@/usr/bin/python\ @$(PYTHON) @' \
+		-e '1s@/usr/bin/python[[:digit:]]*$$@$(PYTHON)@' \
+		-e '1s@/usr/bin/python[[:digit:]]*\ @$(PYTHON) @' \
 		-e '1s@/usr/bin/env\ $(PYTHON)@$(PYTHON)@' \
-		-e '1s@/usr/bin/env\ python@$(PYTHON)@' $(1);
+		-e '1s@/usr/bin/env\ python[[:digit:]]*@$(PYTHON)@' $(1);
 
 # PYTHON_SCRIPTS is a list of files from the calling Makefile.
 PYTHON_SCRIPTS_PROCESS= \

@@ -20,7 +20,7 @@
 #
 
 #
-# Copyright (c) 2018-2020 Jim Mason <jmason at ibinx dot com>.  All rights reserved.
+# Copyright (c) 2018-2020 Jim Mason <jmason at ibinx dot com>.
 #
 # Adapted from original code Copyright (c) 2015, 2018, Oracle and/or its
 # affiliates. All rights reserved.
@@ -32,12 +32,14 @@ BUILD_BITS =            32_and_64
 COMPILER =              gcc
 include ../../../../make-rules/shared-macros.mk
 
+BUILD_STYLE=meson
+
 COMPONENT_NAME=		gst-plugins-good
-COMPONENT_VERSION=	1.16.2
+COMPONENT_VERSION=	1.17.90
 COMPONENT_PROJECT_URL=	https://gstreamer.freedesktop.org/
 COMPONENT_ARCHIVE=	$(COMPONENT_SRC).tar.xz
 COMPONENT_ARCHIVE_HASH= \
-	sha256:40bb3bafda25c0b739c8fc36e48380fccf61c4d3f83747e97ac3f9b0171b1319
+	sha256:077194aebf9cc5496f3e872d203955748a5d28cbcf42c0f6291c63dea190bd6f
 COMPONENT_ARCHIVE_URL=	https://gstreamer.freedesktop.org/src/$(COMPONENT_NAME)/$(COMPONENT_ARCHIVE)
 COMPONENT_ANITYA_ID=	1263
 
@@ -45,9 +47,9 @@ COMPONENT_ANITYA_ID=	1263
 # Hook up tests after build servers are installed with dependencies
 TEST_TARGET= $(SKIP_TEST)
 
-# Only build for 2.7 for now as we need 32-bit and 64-bit support; all of the
-# GNOME and desktop components must be built for Python 2.7 for now.
-PYTHON_VERSIONS= 2.7
+# Supports Python 3.x only.
+PYTHON_VERSION= 3.5
+PYTHON_VERSIONS= $(PYTHON_VERSION)
 
 include $(WS_MAKE_RULES)/common.mk
 
@@ -61,6 +63,9 @@ LD_OPTIONS += -L $(GST_BASE)$(USRLIB) -L $(GST_PL_BASE)$(USRLIB)
 
 CXXFLAGS += -std=c++11
 
+$(SOLARIS_11_3_ONLY)LDFLAGS += -lnsl -lsocket
+LDFLAGS.64 = -m64
+
 # configure script uses AC_CHECK_PROG erroneously; AC_CHECK_PROG looks for a
 # program in $PATH by default, and fails even if you provide an absolute path
 # to the command (no idea why); override the failed check.
@@ -70,41 +75,30 @@ CONFIGURE_ENV += ac_cv_prog_HAVE_CXX=yes
 COMPONENT_BUILD_ENV += PATH=$(GNUBIN):$(PATH)
 
 # No need for firewire support.
-CONFIGURE_OPTIONS += --disable-dv1394
+CONFIGURE_OPTIONS += -Ddv1394=disabled
 # Linux only; requires ALSA.
-CONFIGURE_OPTIONS += --disable-monoscope
-CONFIGURE_OPTIONS += --disable-static
+CONFIGURE_OPTIONS += -Dmonoscope=disabled
 # sunaudio no longer builds; interfaces used in gstreamer are gone (mixer.h).
-CONFIGURE_OPTIONS += --disable-sunaudio
-CONFIGURE_OPTIONS += --disable-gst-v4l2
-CONFIGURE_OPTIONS += --enable-bz2
-CONFIGURE_OPTIONS += --enable-cairo
-CONFIGURE_OPTIONS += --enable-jpeg
-CONFIGURE_OPTIONS += --enable-libpng
-CONFIGURE_OPTIONS += --enable-oss
-CONFIGURE_OPTIONS += --enable-oss4
-CONFIGURE_OPTIONS += --enable-pulse
-CONFIGURE_OPTIONS += --enable-soup
-CONFIGURE_OPTIONS += --enable-speex
-CONFIGURE_OPTIONS += --enable-taglib
-CONFIGURE_OPTIONS += --enable-vpx
-CONFIGURE_OPTIONS += --enable-x
-CONFIGURE_OPTIONS += --enable-xshm
-CONFIGURE_OPTIONS += --enable-zlib
-CONFIGURE_OPTIONS += --with-x
+CONFIGURE_OPTIONS.32 += -Dasm=disabled
+CONFIGURE_OPTIONS += -Dv4l2=disabled
+CONFIGURE_OPTIONS += -Dbz2=enabled
+CONFIGURE_OPTIONS += -Dcairo=enabled
+CONFIGURE_OPTIONS += -Djpeg=disabled
+CONFIGURE_OPTIONS += -Dpng=enabled
+CONFIGURE_OPTIONS += -Doss=enabled
+CONFIGURE_OPTIONS += -Doss4=enabled
+CONFIGURE_OPTIONS += -Dpulse=enabled
+CONFIGURE_OPTIONS += -Dsoup=enabled
+CONFIGURE_OPTIONS += -Dspeex=enabled
+CONFIGURE_OPTIONS += -Dtaglib=disabled
+CONFIGURE_OPTIONS += -Dvpx=enabled
 
 # Use GNU make during configure
 CONFIGURE_ENV += PATH=$(GNUBIN):$(PATH)
 
-# Ensure system-default python is not used.
-CONFIGURE_ENV += PYTHON="$(PYTHON.2.7)"
-
 # Ensure Python modules are installed into vendor package directories.
 CONFIGURE_ENV += am_cv_python_pythondir=$(PYTHON_VENDOR_PACKAGES)
 CONFIGURE_ENV += am_cv_python_pyexecdir=$(PYTHON_VENDOR_PACKAGES)
-
-# Required due to patches.
-COMPONENT_PREP_ACTION += ( cd $(@D) ; NOCONFIGURE=1 $(CONFIG_SHELL) autogen.sh );
 
 REQUIRED_PACKAGES += codec/flac
 REQUIRED_PACKAGES += codec/libogg
@@ -133,7 +127,7 @@ REQUIRED_PACKAGES += library/media/libmpg123
 REQUIRED_PACKAGES += library/ncurses
 REQUIRED_PACKAGES += library/zlib
 REQUIRED_PACKAGES += media/lame
-REQUIRED_PACKAGES += runtime/python-27
+REQUIRED_PACKAGES += runtime/python-35
 REQUIRED_PACKAGES += system/library/gcc/gcc-c++-runtime
 REQUIRED_PACKAGES += system/library/gcc/gcc-c-runtime
 REQUIRED_PACKAGES += system/library/math

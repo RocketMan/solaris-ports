@@ -1,0 +1,14 @@
+--- gst-plugins-base-1.17.90/gst-libs/gst/audio/audio-resampler-x86-sse41.c	2020-08-20 16:10:20.704922700 +0000
++++ gst-plugins-base-1.17.90/gst-libs/gst/audio/audio-resampler-x86-sse41.c	2020-08-24 16:34:09.216163393 +0000
+@@ -28,6 +28,11 @@
+ #pragma GCC target("sse4.1")
+ #endif
+ 
++// solaris ld fails with elf_getarsym if there are no symbols
++#ifdef __sun
++void resamplerdummy(void) {}
++#endif
++
+ #if defined (__x86_64__) && \
+     defined (HAVE_SMMINTRIN_H) && defined (HAVE_EMMINTRIN_H) && \
+     defined (__SSE4_1__)

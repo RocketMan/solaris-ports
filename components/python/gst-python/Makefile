@@ -20,24 +20,26 @@
 #
 
 #
-# Copyright (c) 2019 Jim Mason <jmason at ibinx dot com>.  All rights reserved.
+# Copyright (c) 2019-2020 Jim Mason <jmason at ibinx dot com>.
 #
 
-BUILD_BITS =            64_and_32
+BUILD_BITS =            64
 COMPILER =              gcc
 include ../../../make-rules/shared-macros.mk
 
+BUILD_STYLE=meson
+
 COMPONENT_NAME=		gst-python
-COMPONENT_VERSION=	1.16.2
+COMPONENT_VERSION=	1.17.90
 COMPONENT_PROJECT_URL=	https://gstreamer.freedesktop.org/modules/gst-python.html
 COMPONENT_ARCHIVE=	$(COMPONENT_SRC).tar.xz
 COMPONENT_ARCHIVE_HASH= \
-	sha256:208df3148d73d9f416d016564737585d8ea763d91201732d44b5fe688c6288a8
+	sha256:7d61562dc50acacf2fb363540d25b26ba8eb5c7a75119c9617f2bdaa7bda577d
 COMPONENT_ARCHIVE_URL=	https://gstreamer.freedesktop.org/src/$(COMPONENT_NAME)/$(COMPONENT_ARCHIVE)
 
 TEST_TARGET= $(SKIP_TEST)
 
-PYTHON_VERSIONS = 2.7 $(PYTHON3.7_READY)
+PYTHON_VERSIONS = $(PYTHON3.7_READY)
 
 CONFIGURE_32 = $(PYTHON2_VERSIONS:%=$(BUILD_DIR)/$(MACH32)-%/.configured)
 CONFIGURE_64 = $(PYTHON_VERSIONS:%=$(BUILD_DIR)/$(MACH64)-%/.configured)
@@ -54,6 +56,10 @@ include $(WS_MAKE_RULES)/common.mk
 GST_BASE = $(WS_COMPONENTS)/desktop/gstreamer/gstreamer/build/prototype/$(MACH)
 GST_PL_BASE = $(WS_COMPONENTS)/desktop/gstreamer/gst-plugins-base/build/prototype/$(MACH)
 PKG_CONFIG_PATHS += $(GST_BASE)$(USRLIB)/pkgconfig:$(GST_PL_BASE)$(USRLIB)/pkgconfig
+
+CONFIGURE_OPTIONS += -Dlibpython-dir=$(PYTHON_VENDOR_PACKAGES)
+CONFIGURE_OPTIONS += -Dpygi-overrides-dir=$(PYTHON_VENDOR_PACKAGES)/gi/overrides/
+CONFIGURE_OPTIONS += -Dpython=$(PYTHON)
 
 $(BUILD_DIR)/%-2.7/.configured:		PYTHON_VERSION=2.7
 $(BUILD_DIR)/%-3.5/.configured:		PYTHON_VERSION=3.5
@@ -117,9 +123,6 @@ endif
 LDFLAGS += -m$(BITS)
 
 COMPONENT_BUILD_ENV += V=1
-
-CONFIGURE_ENV += PYTHON_VERSION=$(PYTHON_VERSION)
-CONFIGURE_ENV += PYTHON=$(PYTHON)
 
 # Ensure Python modules are installed into vendor package directories.
 CONFIGURE_ENV += am_cv_python_pythondir=$(PYTHON_VENDOR_PACKAGES)

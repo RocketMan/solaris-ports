@@ -20,7 +20,7 @@
 #
 
 #
-# Copyright (c) 2018 Jim Mason <jmason at ibinx dot com>.  All rights reserved.
+# Copyright (c) 2018-2020 Jim Mason <jmason at ibinx dot com>.
 #
 # Adapted from original code Copyright (c) 2015, 2018, Oracle and/or its
 # affiliates. All rights reserved.
@@ -32,12 +32,14 @@ BUILD_BITS =            32_and_64
 COMPILER =              gcc
 include ../../../../make-rules/shared-macros.mk
 
+BUILD_STYLE=meson
+
 COMPONENT_NAME=		gst-plugins-bad
-COMPONENT_VERSION=	1.16.2
+COMPONENT_VERSION=	1.17.90
 COMPONENT_PROJECT_URL=	https://gstreamer.freedesktop.org/
 COMPONENT_ARCHIVE=	$(COMPONENT_SRC).tar.xz
 COMPONENT_ARCHIVE_HASH= \
-	sha256:f1cb7aa2389569a5343661aae473f0a940a90b872001824bc47fa8072a041e74
+	sha256:8bec772623c6ead9d2855d5f508da496e9ebe1424d2571aae6dac3df1f30b1f6
 COMPONENT_ARCHIVE_URL=	https://gstreamer.freedesktop.org/src/$(COMPONENT_NAME)/$(COMPONENT_ARCHIVE)
 COMPONENT_ANITYA_ID=	1263
 
@@ -45,9 +47,9 @@ COMPONENT_ANITYA_ID=	1263
 # Hook up tests after build servers are installed with dependencies
 TEST_TARGET= $(SKIP_TEST)
 
-# Only build for 2.7 for now as we need 32-bit and 64-bit support; all of the
-# GNOME and desktop components must be built for Python 2.7 for now.
-PYTHON_VERSIONS= 2.7
+# Supports Python 3.x only.
+PYTHON_VERSION= 3.5
+PYTHON_VERSIONS= $(PYTHON_VERSION)
 
 # Use GNU grep
 PATH=/usr/gnu/bin:/usr/bin
@@ -64,6 +66,8 @@ LD_OPTIONS += -L $(GST_BASE)$(USRLIB) -L $(GST_PL_BASE)$(USRLIB)
 
 CXXFLAGS += -std=c++11
 LDFLAGS += -m$(BITS)
+$(SOLARIS_11_3_ONLY)LDFLAGS += -lnsl -lsocket
+
 COMPONENT_BUILD_ENV += V=1
 
 # configure script uses AC_CHECK_PROG erroneously; AC_CHECK_PROG looks for a
@@ -72,15 +76,14 @@ COMPONENT_BUILD_ENV += V=1
 CONFIGURE_ENV += ac_cv_prog_HAVE_CXX=yes
 
 
-# Ensure system-default python is not used.
-CONFIGURE_ENV += PYTHON="$(PYTHON.2.7)"
-
 # Ensure Python modules are installed into vendor package directories.
 CONFIGURE_ENV += am_cv_python_pythondir=$(PYTHON_VENDOR_PACKAGES)
 CONFIGURE_ENV += am_cv_python_pyexecdir=$(PYTHON_VENDOR_PACKAGES)
 
-CONFIGURE_OPTIONS += --disable-openjpeg
-CONFIGURE_OPTIONS += --disable-ipcpipeline
+CONFIGURE_OPTIONS.32 += -Dintrospection=disabled
+CONFIGURE_OPTIONS += -Dlibexecdir=$(CONFIGURE_LIBDIR.$(BITS))
+CONFIGURE_OPTIONS += -Dopenjpeg=disabled
+CONFIGURE_OPTIONS += -Dipcpipeline=disabled
 
 REQUIRED_PACKAGES += codec/flac
 REQUIRED_PACKAGES += codec/libogg
@@ -106,7 +109,7 @@ REQUIRED_PACKAGES += library/glib2
 REQUIRED_PACKAGES += library/libsoup
 REQUIRED_PACKAGES += library/ncurses
 REQUIRED_PACKAGES += library/zlib
-REQUIRED_PACKAGES += runtime/python-27
+REQUIRED_PACKAGES += runtime/python-35
 REQUIRED_PACKAGES += system/library/gcc/gcc-c++-runtime
 REQUIRED_PACKAGES += system/library/gcc/gcc-c-runtime
 REQUIRED_PACKAGES += system/library/math
