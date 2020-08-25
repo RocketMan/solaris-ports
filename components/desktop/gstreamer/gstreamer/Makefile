@@ -56,6 +56,12 @@ TEST_TARGET= $(TEST_64)
 
 include $(WS_MAKE_RULES)/common.mk
 
+
+CONFIGURE_OPTIONS.i386.32 += -Dtarget-cpu=x86
+CONFIGURE_OPTIONS.i386.64 += -Dtarget-cpu=x86_64
+CONFIGURE_OPTIONS.sparc.32 += -Dtarget-cpu=sparc
+CONFIGURE_OPTIONS.sparc.64 += -Dtarget-cpu=sparc64
+
 CONFIGURE_OPTIONS.32 += -Dintrospection=disabled
 CONFIGURE_OPTIONS += -Dlibexecdir=$(CONFIGURE_LIBDIR.$(BITS))
 
