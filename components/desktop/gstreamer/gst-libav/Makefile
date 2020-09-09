@@ -23,18 +23,18 @@
 # Copyright (c) 2018-2020 Jim Mason <jmason at ibinx dot com>.
 #
 
-BUILD_BITS =            32_and_64
+BUILD_BITS =            64
 COMPILER =              gcc
 include ../../../../make-rules/shared-macros.mk
 
 BUILD_STYLE=meson
 
 COMPONENT_NAME=		gst-libav
-COMPONENT_VERSION=	1.17.90
+COMPONENT_VERSION=	1.18.0
 COMPONENT_PROJECT_URL=	https://gstreamer.freedesktop.org/
 COMPONENT_ARCHIVE=	$(COMPONENT_SRC).tar.xz
 COMPONENT_ARCHIVE_HASH= \
-	sha256:d81ef5ae47d8a9ce551fbb23a851aa5844f746a7740723d2b387ea60615f8062
+	sha256:42f93f5ce9a3fc22051e5f783a4574b56ebf213f331f75dcbc3552459bd3a06a
 COMPONENT_ARCHIVE_URL=	https://gstreamer.freedesktop.org/src/$(COMPONENT_NAME)/$(COMPONENT_ARCHIVE)
 COMPONENT_BUGDB=	gnome/multimedia
 

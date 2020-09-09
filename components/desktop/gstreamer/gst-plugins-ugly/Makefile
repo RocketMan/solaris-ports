@@ -26,7 +26,7 @@
 # affiliates. All rights reserved.
 #
 
-BUILD_BITS =            32_and_64
+BUILD_BITS =            64
 # All components using gobject-introspection must be built with gcc as
 # gobject-introspection does not produce correct results when using Studio.
 COMPILER =              gcc
@@ -35,11 +35,11 @@ include ../../../../make-rules/shared-macros.mk
 BUILD_STYLE=meson
 
 COMPONENT_NAME=		gst-plugins-ugly
-COMPONENT_VERSION=	1.17.90
+COMPONENT_VERSION=	1.18.0
 COMPONENT_PROJECT_URL=	https://gstreamer.freedesktop.org/
 COMPONENT_ARCHIVE=	$(COMPONENT_SRC).tar.xz
 COMPONENT_ARCHIVE_HASH= \
-	sha256:0952236c27aefa2c9f687ff8407f083579961b50197878fb51b256aa433e6d95
+	sha256:686644e45e08258ae240c4519376668ad8d34ea6d0f6ab556473c317bfb7e082
 COMPONENT_ARCHIVE_URL=	https://gstreamer.freedesktop.org/src/$(COMPONENT_NAME)/$(COMPONENT_ARCHIVE)
 COMPONENT_ANITYA_ID=	1263
 

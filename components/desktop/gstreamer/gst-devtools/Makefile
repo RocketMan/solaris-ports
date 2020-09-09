@@ -23,18 +23,18 @@
 # Copyright (c) 2019-2020 Jim Mason <jmason at ibinx dot com>.
 #
 
-BUILD_BITS =            64_and_32
+BUILD_BITS =            64
 COMPILER =              gcc
 include ../../../../make-rules/shared-macros.mk
 
 BUILD_STYLE=meson
 
 COMPONENT_NAME=		gst-devtools
-COMPONENT_VERSION=	1.17.90
+COMPONENT_VERSION=	1.18.0
 COMPONENT_PROJECT_URL=	https://gstreamer.freedesktop.org/
 COMPONENT_ARCHIVE=	$(COMPONENT_SRC).tar.xz
 COMPONENT_ARCHIVE_HASH= \
-	sha256:5df725101cf4a9f94016af0a53609b29717ec88c063b05cf53f058c234700340
+	sha256:82337141b5654f11c440f783892ba9d9498b3b6b98c2286b000f96dce6945f16
 COMPONENT_ARCHIVE_URL=	https://gstreamer.freedesktop.org/src/$(COMPONENT_NAME)/$(COMPONENT_ARCHIVE)
 
 # Supports Python 3.x only.

@@ -26,7 +26,7 @@
 # affiliates. All rights reserved.
 #
 
-BUILD_BITS =            32_and_64
+BUILD_BITS =            64
 # All components using gobject-introspection must be built with gcc as
 # gobject-introspection does not produce correct results when using Studio.
 COMPILER =              gcc
@@ -35,11 +35,11 @@ include ../../../../make-rules/shared-macros.mk
 BUILD_STYLE=meson
 
 COMPONENT_NAME=		gst-plugins-base
-COMPONENT_VERSION=	1.17.90
+COMPONENT_VERSION=	1.18.0
 COMPONENT_PROJECT_URL=	https://gstreamer.freedesktop.org/
 COMPONENT_ARCHIVE=	$(COMPONENT_SRC).tar.xz
 COMPONENT_ARCHIVE_HASH= \
-	sha256:f6f138d5ce6ccaa225f87b108df9f940968bd8d9d6dd1d94ef473695ad87bb65
+	sha256:762abdd1a950809a1cea62fff7f86b5f7d6bd5f6841e3e585c700b823cdb7897
 COMPONENT_ARCHIVE_URL=	https://gstreamer.freedesktop.org/src/$(COMPONENT_NAME)/$(COMPONENT_ARCHIVE)
 COMPONENT_ANITYA_ID=	1263
 
@@ -61,19 +61,18 @@ LD_OPTIONS += -L $(GST_BASE)$(USRLIB)
 LDFLAGS += -m$(BITS)
 $(SOLARIS_11_3_ONLY)LDFLAGS += -lnsl -lsocket
 
-COMPONENT_BUILD_ENV += LD_LIBRARY_PATH_32="$(GST_BASE)$(USRLIB.$(BITS)):$(BUILD_DIR_32)/gst-libs/gst/audio/.libs:$(BUILD_DIR_32)/gst-libs/gst/video/.libs:$(BUILD_DIR_32)/gst-libs/gst/rtp/.libs:$(BUILD_DIR_32)/gst-libs/gst/rtsp/.libs:$(BUILD_DIR_32)/gst-libs/gst/pbutils/.libs:$(BUILD_DIR_32)/gst-libs/gst/allocators/.libs:$(BUILD_DIR_32)/gst-libs/gst/gl/.libs"
 COMPONENT_BUILD_ENV += LD_LIBRARY_PATH_64="$(GST_BASE)$(USRLIB.$(BITS)):$(BUILD_DIR_64)/gst-libs/gst/audio/.libs:$(BUILD_DIR_64)/gst-libs/gst/video/.libs:$(BUILD_DIR_64)/gst-libs/gst/rtp/.libs:$(BUILD_DIR_64)/gst-libs/gst/rtsp/.libs:$(BUILD_DIR_64)/gst-libs/gst/pbutils/.libs:$(BUILD_DIR_64)/gst-libs/gst/allocators/.libs:$(BUILD_DIR_64)/gst-libs/gst/gl/.libs"
 
 COMPONENT_BUILD_ENV += V=1
 
 CFLAGS += -DHAVE_FIONREAD_IN_SYS_FILIO
 
-CONFIGURE_OPTIONS.32 += -Dintrospection=disabled
 CONFIGURE_OPTIONS += -Dlibexecdir=$(CONFIGURE_LIBDIR.$(BITS))
 CONFIGURE_OPTIONS += -Dogg=enabled
 CONFIGURE_OPTIONS += -Dtheora=enabled
 CONFIGURE_OPTIONS += -Dvorbix=enabled
 CONFIGURE_OPTIONS += -Dx11=enabled
+CONFIGURE_OPTIONS += -Dgl-graphene=disabled
 CONFIGURE_OPTIONS += -Dexamples=disabled
 CONFIGURE_OPTIONS += -Dtests=disabled
 

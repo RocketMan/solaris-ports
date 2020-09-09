@@ -36,11 +36,6 @@ set name=info.classification \
 set name=info.source-url value=$(COMPONENT_ARCHIVE_URL)
 set name=info.upstream-url value=$(COMPONENT_PROJECT_URL)
 set name=org.opensolaris.consolidation value=$(CONSOLIDATION)
-file path=usr/bin/$(MACH32)/gst-validate-1.0
-file path=usr/bin/$(MACH32)/gst-validate-images-check-1.0
-file path=usr/bin/$(MACH32)/gst-validate-launcher
-file path=usr/bin/$(MACH32)/gst-validate-media-check-1.0
-file path=usr/bin/$(MACH32)/gst-validate-transcoding-1.0
 file path=usr/bin/gst-validate-1.0
 file path=usr/bin/gst-validate-images-check-1.0
 file path=usr/bin/gst-validate-launcher
@@ -92,44 +87,14 @@ file path=usr/lib/$(MACH64)/gstreamer-1.0/validate/libgstvalidategtk.so
 file path=usr/lib/$(MACH64)/gstreamer-1.0/validate/libgstvalidatessim.so
 link path=usr/lib/$(MACH64)/libgstvalidate-1.0.so target=libgstvalidate-1.0.so.0
 link path=usr/lib/$(MACH64)/libgstvalidate-1.0.so.0 \
-    target=libgstvalidate-1.0.so.0.1790.0
-file path=usr/lib/$(MACH64)/libgstvalidate-1.0.so.0.1790.0
+    target=libgstvalidate-1.0.so.0.1800.0
+file path=usr/lib/$(MACH64)/libgstvalidate-1.0.so.0.1800.0
 link path=usr/lib/$(MACH64)/libgstvalidate-default-overrides-1.0.so \
     target=libgstvalidate-default-overrides-1.0.so.0
 link path=usr/lib/$(MACH64)/libgstvalidate-default-overrides-1.0.so.0 \
-    target=libgstvalidate-default-overrides-1.0.so.0.1790.0
-file path=usr/lib/$(MACH64)/libgstvalidate-default-overrides-1.0.so.0.1790.0
+    target=libgstvalidate-default-overrides-1.0.so.0.1800.0
+file path=usr/lib/$(MACH64)/libgstvalidate-default-overrides-1.0.so.0.1800.0
 file path=usr/lib/$(MACH64)/pkgconfig/gst-validate-1.0.pc
-file path=usr/lib/gst-validate-launcher/python/launcher/RangeHTTPServer.py
-file path=usr/lib/gst-validate-launcher/python/launcher/__init__.py
-file path=usr/lib/gst-validate-launcher/python/launcher/apps/__init__.py
-file path=usr/lib/gst-validate-launcher/python/launcher/apps/gstcheck.py
-file path=usr/lib/gst-validate-launcher/python/launcher/apps/gstvalidate.py
-file path=usr/lib/gst-validate-launcher/python/launcher/apps/pyunittest.py
-file path=usr/lib/gst-validate-launcher/python/launcher/baseclasses.py
-file path=usr/lib/gst-validate-launcher/python/launcher/config.py
-file path=usr/lib/gst-validate-launcher/python/launcher/httpserver.py
-file path=usr/lib/gst-validate-launcher/python/launcher/loggable.py
-file path=usr/lib/gst-validate-launcher/python/launcher/main.py
-file path=usr/lib/gst-validate-launcher/python/launcher/reporters.py
-file path=usr/lib/gst-validate-launcher/python/launcher/testsuites/check.py
-file path=usr/lib/gst-validate-launcher/python/launcher/testsuites/pyunittest.py
-file path=usr/lib/gst-validate-launcher/python/launcher/utils.py
-file path=usr/lib/gst-validate-launcher/python/launcher/vfb_server.py
-file path=usr/lib/gstreamer-1.0/libgstvalidatetracer.so
-file path=usr/lib/gstreamer-1.0/validate/libgstvalidatefaultinjection.so
-file path=usr/lib/gstreamer-1.0/validate/libgstvalidategapplication.so
-file path=usr/lib/gstreamer-1.0/validate/libgstvalidategtk.so
-file path=usr/lib/gstreamer-1.0/validate/libgstvalidatessim.so
-link path=usr/lib/libgstvalidate-1.0.so target=libgstvalidate-1.0.so.0
-link path=usr/lib/libgstvalidate-1.0.so.0 target=libgstvalidate-1.0.so.0.1790.0
-file path=usr/lib/libgstvalidate-1.0.so.0.1790.0
-link path=usr/lib/libgstvalidate-default-overrides-1.0.so \
-    target=libgstvalidate-default-overrides-1.0.so.0
-link path=usr/lib/libgstvalidate-default-overrides-1.0.so.0 \
-    target=libgstvalidate-default-overrides-1.0.so.0.1790.0
-file path=usr/lib/libgstvalidate-default-overrides-1.0.so.0.1790.0
-file path=usr/lib/pkgconfig/gst-validate-1.0.pc
 file path=usr/share/gir-1.0/GstValidate-1.0.gir
 file path=usr/share/gstreamer-1.0/validate/scenarios/adaptive_video_framerate.scenario
 file path=usr/share/gstreamer-1.0/validate/scenarios/adaptive_video_framerate_size.scenario

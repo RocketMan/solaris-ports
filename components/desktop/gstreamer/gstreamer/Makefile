@@ -26,7 +26,7 @@
 # affiliates. All rights reserved.
 #
 
-BUILD_BITS =            32_and_64
+BUILD_BITS =            64
 # All components using gobject-introspection must be built with gcc as
 # gobject-introspection does not produce correct results when using Studio.
 COMPILER=gcc
@@ -38,12 +38,12 @@ BUILD_STYLE=meson
 # newest version which has no backwards API compatibility and we likely need to
 # ship both, hence the odd name.
 COMPONENT_NAME=		gstreamer
-COMPONENT_VERSION=	1.17.90
+COMPONENT_VERSION=	1.18.0
 COMPONENT_PROJECT_URL=	https://gstreamer.freedesktop.org/
 COMPONENT_SRC=		$(COMPONENT_NAME)-$(COMPONENT_VERSION)
 COMPONENT_ARCHIVE=	$(COMPONENT_SRC).tar.xz
 COMPONENT_ARCHIVE_HASH= \
-	sha256:08ec65757c032621f04c3f8e95db8e42e7646fa4512df99368e8ab34c5970f7b
+	sha256:0ff09245b06c0aeb5d9a156edcab088a7e8213a0bf9c84a1ff0318f9c00c7805
 COMPONENT_ARCHIVE_URL=	https://gstreamer.freedesktop.org/src/$(COMPONENT_NAME)/$(COMPONENT_ARCHIVE)
 COMPONENT_ANITYA_ID=	1263
 
@@ -57,12 +57,9 @@ TEST_TARGET= $(TEST_64)
 include $(WS_MAKE_RULES)/common.mk
 
 
-CONFIGURE_OPTIONS.i386.32 += -Dtarget-cpu=x86
 CONFIGURE_OPTIONS.i386.64 += -Dtarget-cpu=x86_64
-CONFIGURE_OPTIONS.sparc.32 += -Dtarget-cpu=sparc
 CONFIGURE_OPTIONS.sparc.64 += -Dtarget-cpu=sparc64
 
-CONFIGURE_OPTIONS.32 += -Dintrospection=disabled
 CONFIGURE_OPTIONS += -Dlibexecdir=$(CONFIGURE_LIBDIR.$(BITS))
 
 $(SOLARIS_11_3_ONLY)LDFLAGS=-lnsl -lsocket

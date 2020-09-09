@@ -26,7 +26,7 @@
 # affiliates. All rights reserved.
 #
 
-BUILD_BITS =            32_and_64
+BUILD_BITS =            64
 # All components using gobject-introspection must be built with gcc as
 # gobject-introspection does not produce correct results when using Studio.
 COMPILER =              gcc
@@ -35,11 +35,11 @@ include ../../../../make-rules/shared-macros.mk
 BUILD_STYLE=meson
 
 COMPONENT_NAME=		gst-plugins-good
-COMPONENT_VERSION=	1.17.90
+COMPONENT_VERSION=	1.18.0
 COMPONENT_PROJECT_URL=	https://gstreamer.freedesktop.org/
 COMPONENT_ARCHIVE=	$(COMPONENT_SRC).tar.xz
 COMPONENT_ARCHIVE_HASH= \
-	sha256:077194aebf9cc5496f3e872d203955748a5d28cbcf42c0f6291c63dea190bd6f
+	sha256:6329bc377a3afea5cf1ab329a91cc4a906f075781780d1edc59e8bea8c1a8bac
 COMPONENT_ARCHIVE_URL=	https://gstreamer.freedesktop.org/src/$(COMPONENT_NAME)/$(COMPONENT_ARCHIVE)
 COMPONENT_ANITYA_ID=	1263
 
@@ -79,7 +79,6 @@ CONFIGURE_OPTIONS += -Ddv1394=disabled
 # Linux only; requires ALSA.
 CONFIGURE_OPTIONS += -Dmonoscope=disabled
 # sunaudio no longer builds; interfaces used in gstreamer are gone (mixer.h).
-CONFIGURE_OPTIONS.32 += -Dasm=disabled
 CONFIGURE_OPTIONS += -Dv4l2=disabled
 CONFIGURE_OPTIONS += -Dbz2=enabled
 CONFIGURE_OPTIONS += -Dcairo=enabled

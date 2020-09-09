@@ -26,6 +26,7 @@
 <transform file path=usr.*/man/.+ -> \
     default mangler.man.stability "pass-through volatile">
 <transform file path=usr/bin/.* -> add pkg.depend.bypass-generate .*>
+<transform file hardlink path=.*\.py$ -> add pkg.tmp.autopyc false>
 set name=pkg.fmri \
     value=pkg:/library/desktop/gstreamer-1/gst-ges@$(IPS_COMPONENT_VERSION),$(BUILD_VERSION)
 set name=pkg.summary value="GStreamer editing services"
@@ -36,7 +37,6 @@ set name=info.classification \
 set name=info.source-url value=$(COMPONENT_ARCHIVE_URL)
 set name=info.upstream-url value=$(COMPONENT_PROJECT_URL)
 set name=org.opensolaris.consolidation value=$(CONSOLIDATION)
-file path=usr/bin/$(MACH32)/ges-launch-1.0
 file path=usr/bin/ges-launch-1.0
 file path=usr/include/gstreamer-1.0/ges/ges-asset.h
 file path=usr/include/gstreamer-1.0/ges/ges-audio-source.h
@@ -107,16 +107,10 @@ file path=usr/lib/$(MACH64)/gst-validate-launcher/python/launcher/apps/geslaunch
 file path=usr/lib/$(MACH64)/gstreamer-1.0/libgstges.so
 file path=usr/lib/$(MACH64)/gstreamer-1.0/libgstnle.so
 link path=usr/lib/$(MACH64)/libges-1.0.so target=libges-1.0.so.0
-link path=usr/lib/$(MACH64)/libges-1.0.so.0 target=libges-1.0.so.0.1790.0
-file path=usr/lib/$(MACH64)/libges-1.0.so.0.1790.0
+link path=usr/lib/$(MACH64)/libges-1.0.so.0 target=libges-1.0.so.0.1800.0
+file path=usr/lib/$(MACH64)/libges-1.0.so.0.1800.0
 file path=usr/lib/$(MACH64)/pkgconfig/gst-editing-services-1.0.pc
-file path=usr/lib/gst-validate-launcher/python/launcher/apps/geslaunch.py
-file path=usr/lib/gstreamer-1.0/libgstges.so
-file path=usr/lib/gstreamer-1.0/libgstnle.so
-link path=usr/lib/libges-1.0.so target=libges-1.0.so.0
-link path=usr/lib/libges-1.0.so.0 target=libges-1.0.so.0.1790.0
-file path=usr/lib/libges-1.0.so.0.1790.0
-file path=usr/lib/pkgconfig/gst-editing-services-1.0.pc
+file path=usr/lib/python3.7/vendor-packages/gi/overrides/GES.py
 file path=usr/share/gir-1.0/GES-1.0.gir
 file path=usr/share/gstreamer-1.0/validate/scenarios/ges-edit-clip-while-paused.scenario
 file path=usr/share/man/man1/ges-launch-1.0.1

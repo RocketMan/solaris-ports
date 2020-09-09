@@ -23,18 +23,18 @@
 # Copyright (c) 2019-2020 Jim Mason <jmason at ibinx dot com>.
 #
 
-BUILD_BITS =            64_and_32
+BUILD_BITS =            64
 COMPILER =              gcc
 include ../../../../make-rules/shared-macros.mk
 
 BUILD_STYLE=meson
 
 COMPONENT_NAME=		gst-editing-services
-COMPONENT_VERSION=	1.17.90
+COMPONENT_VERSION=	1.18.0
 COMPONENT_PROJECT_URL=	https://gstreamer.freedesktop.org/
 COMPONENT_ARCHIVE=	$(COMPONENT_SRC).tar.xz
 COMPONENT_ARCHIVE_HASH= \
-	sha256:99d654ecdfa06b794990211687e34ff9275060eb149e9514a39848fdf5e63cc3
+	sha256:4daef0d4875415ea262f7fb1287d4a33939a9594f3c1e661f8587ab00f7000a8
 COMPONENT_ARCHIVE_URL=	https://gstreamer.freedesktop.org/src/$(COMPONENT_NAME)/$(COMPONENT_ARCHIVE)
 
 # Supports Python 3.x only.
@@ -45,7 +45,6 @@ TEST_TARGET= $(SKIP_TEST)
 
 include $(WS_MAKE_RULES)/common.mk
 
-CONFIGURE_OPTIONS.32 += -Dintrospection=disabled
 CONFIGURE_OPTIONS += -Dlibexecdir=$(CONFIGURE_LIBDIR.$(BITS))
 CONFIGURE_OPTIONS += -Dpython=enabled
 CONFIGURE_OPTIONS += -Dlibpython-dir=$(PYTHON_VENDOR_PACKAGES)
@@ -59,7 +58,6 @@ PKG_CONFIG_PATHS += $(GST_BASE)$(USRLIB)/pkgconfig:$(GST_PL_BASE)$(USRLIB)/pkgco
 
 LDFLAGS += -m$(BITS)
 
-COMPONENT_BUILD_ENV += LD_LIBRARY_PATH_32="$(BUILD_DIR_32)/ges/.libs"
 COMPONENT_BUILD_ENV += LD_LIBRARY_PATH_64="$(BUILD_DIR_64)/ges/.libs"
 
 COMPONENT_BUILD_ENV += V=1
