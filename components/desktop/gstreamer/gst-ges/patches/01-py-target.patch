@@ -1,0 +1,20 @@
+--- a/meson_options.txt	2020-09-08 00:09:26.922830000 +0000
++++ b/meson_options.txt	2020-09-10 13:03:01.308156382 +0000
+@@ -21,5 +21,6 @@
+        description: 'Enable python formatters.')
+ option('libpython-dir', type : 'string', value : '',
+         description: 'Path to find libpythonXX.so')
++option('py-target', type : 'string', description : 'target Python')
+ option('validate', type : 'feature', value : 'auto', yield: true,
+        description: 'Enable GstValidate integration.')
+--- a/meson.build	2020-09-10 13:03:42.900117047 +0000
++++ b/meson.build	2020-09-10 13:00:16.405575384 +0000
+@@ -242,7 +242,7 @@
+   endif
+ endforeach
+ 
+-python3 = import('python').find_installation()
++python3 = import('python').find_installation(get_option('py-target'))
+ configinc = include_directories('.')
+ subdir('ges')
+ subdir('plugins')

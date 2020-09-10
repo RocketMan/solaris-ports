@@ -48,6 +48,7 @@ include $(WS_MAKE_RULES)/common.mk
 CONFIGURE_OPTIONS += -Dlibexecdir=$(CONFIGURE_LIBDIR.$(BITS))
 CONFIGURE_OPTIONS += -Dpython=enabled
 CONFIGURE_OPTIONS += -Dlibpython-dir=$(PYTHON_VENDOR_PACKAGES)
+CONFIGURE_OPTIONS += -Dpy-target=$(PYTHON)
 
 # Use the build area of gstreamer and gst-plugins-base
 GST_BASE = $(WS_COMPONENTS)/desktop/gstreamer/gstreamer/build/prototype/$(MACH)
