@@ -1,15 +1,10 @@
-Restore removed SPARC code and fixup for CMake-based build.
-
-Also patch up Source/cmake/OptionsCommon.cmake and to detect these properly?
-This seems like mostly an option for detecting whether or not to enable JIT in
-Source/JavaScriptCore/CMakeLists.txt.  Since neither version of SPARC will have
-that, probably doesn't matter for now.
+Restore SPARC support
 
 https://bugs.webkit.org/show_bug.cgi?id=124941
 
 --- a/Source/WTF/wtf/PlatformCPU.h	2020-01-20 16:38:04.000000000 +0000
 +++ b/Source/WTF/wtf/PlatformCPU.h	2020-01-20 17:54:31.642071523 +0000
-@@ -89,6 +89,23 @@
+@@ -89,6 +89,26 @@
  #define WTF_CPU_KNOWN 1
  #endif
  
@@ -17,17 +12,20 @@ https://bugs.webkit.org/show_bug.cgi?id=124941
 +#if defined(__sparc) && !defined(__arch64__) || defined(__sparcv8)
 +#define WTF_CPU_SPARC32 1
 +#define WTF_CPU_BIG_ENDIAN 1
++#define WTF_CPU_KNOWN 1
 +#endif
 +
 +/* CPU(SPARC64) - SPARC 64-bit */
 +#if defined(__sparc__) && defined(__arch64__) || defined (__sparcv9)
 +#define WTF_CPU_SPARC64 1
 +#define WTF_CPU_BIG_ENDIAN 1
++#define WTF_CPU_KNOWN 1
 +#endif
 +
 +/* CPU(SPARC) - any SPARC, true for CPU(SPARC32) and CPU(SPARC64) */
 +#if CPU(SPARC32) || CPU(SPARC64)
 +#define WTF_CPU_SPARC 1
++#define WTF_CPU_KNOWN 1
 +#endif
 +
  /* CPU(X86) - i386 / x86 32-bit */

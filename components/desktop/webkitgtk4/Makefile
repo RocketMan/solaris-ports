@@ -34,14 +34,14 @@ BUILD_BITS= 64
 # project already specify the required -std.
 COMPILER= gcc
 include ../../../make-rules/shared-macros.mk
-GCC_ROOT= /usr/gcc/9
+GCC_ROOT= /usr/gcc/10
 
 COMPONENT_NAME=		webkitgtk
-COMPONENT_VERSION=	2.28.3
+COMPONENT_VERSION=	2.30.0
 COMPONENT_PROJECT_URL=	https://webkitgtk.org
 COMPONENT_ARCHIVE=	$(COMPONENT_SRC).tar.xz
 COMPONENT_ARCHIVE_HASH= \
-	sha256:f0898ac072c220e13a4aee819408421a6cb56a6eb89170ceafe52468b0903522
+	sha256:caf3dbf2d2383072614e34281f2fffb6331faf92f4ecf215f6f6a5a57f755d11
 COMPONENT_ARCHIVE_URL=	https://webkitgtk.org/releases/$(COMPONENT_ARCHIVE)
 COMPONENT_ANITYA_ID=	5355
 
@@ -50,7 +50,8 @@ gcc_OPT=
 
 CXXFLAGS += -fpermissive
 
-LDFLAGS += -lsocket  -lnsl
+$(SOLARIS_11_3_ONLY)LDFLAGS += -lsocket  -lnsl
+
 # Uncomment this line if you are using the icu-gcc from this repo:
 #$(SOLARIS_11_3_ONLY)LDFLAGS += -licuuc_gcc
 
@@ -92,6 +93,7 @@ CMAKE_OPTIONS += -DENABLE_ENCRYPTED_MEDIA=ON
 CMAKE_OPTIONS += -DUSE_LIBHYPHEN=OFF
 CMAKE_OPTIONS += -DUSE_WOFF2=OFF
 CMAKE_OPTIONS += -DENABLE_JIT=ON
+CMAKE_OPTIONS += -DUSE_SYSTEMD=OFF
 
 CMAKE_OPTIONS += -DLIB_INSTALL_DIR="$(USRLIB)"
 CMAKE_OPTIONS += -DLIBEXEC_INSTALL_DIR="$(USRLIB)"

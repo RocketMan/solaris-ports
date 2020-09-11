@@ -1,14 +1,3 @@
---- a/Source/WTF/wtf/Assertions.h	2019-08-12 12:11:40.344341406 +0000
-+++ b/Source/WTF/wtf/Assertions.h	2019-08-12 12:11:23.631513186 +0000
-@@ -433,7 +433,7 @@
- 
- /* COMPILE_ASSERT */
- #ifndef COMPILE_ASSERT
--#if COMPILER_SUPPORTS(C_STATIC_ASSERT)
-+#if COMPILER_SUPPORTS(C_STATIC_ASSERT) && !OS(SOLARIS)
- /* Unlike static_assert below, this also works in plain C code. */
- #define COMPILE_ASSERT(exp, name) _Static_assert((exp), #name)
- #else
 --- a/Source/ThirdParty/ANGLE/src/common/third_party/smhasher/src/PMurHash.cpp	2019-08-12 12:12:55.497722973 +0000
 +++ b/Source/ThirdParty/ANGLE/src/common/third_party/smhasher/src/PMurHash.cpp	2019-08-12 12:01:29.830388849 +0000
 @@ -74,6 +74,12 @@

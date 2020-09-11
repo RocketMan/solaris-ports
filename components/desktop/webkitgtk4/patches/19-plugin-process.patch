@@ -1,0 +1,11 @@
+--- a/Source/WebKit/CMakeLists.txt	2020-04-07 13:24:16.000000000 +0000
++++ b/Source/WebKit/CMakeLists.txt	2020-04-09 14:47:32.345831490 +0000
+@@ -559,4 +559,8 @@
+         LIBRARY DESTINATION "${LIB_INSTALL_DIR}"
+         RUNTIME DESTINATION "${LIBEXEC_INSTALL_DIR}"
+     )
++
++    if (ENABLE_PLUGIN_PROCESS)
++        install(TARGETS PluginProcess DESTINATION "${LIBEXEC_INSTALL_DIR}")
++    endif ()
+ endif ()

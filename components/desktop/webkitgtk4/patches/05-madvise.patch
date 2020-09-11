@@ -1,0 +1,30 @@
+--- a/Source/bmalloc/bmalloc/BPlatform.h	2020-05-06 15:16:33.000000000 +0000
++++ b/Source/bmalloc/bmalloc/BPlatform.h	2020-07-16 11:14:42.608308291 +0000
+@@ -52,6 +52,10 @@
+ #define BOS_FREEBSD 1
+ #endif
+ 
++#if defined(sun) || defined(__sun)
++#define BOS_SOLARIS 1
++#endif
++
+ #if defined(WIN32) || defined(_WIN32)
+ #define BOS_WINDOWS 1
+ #endif
+--- a/Source/bmalloc/bmalloc/VMAllocate.h	2020-07-15 19:21:07.536004242 +0000
++++ b/Source/bmalloc/bmalloc/VMAllocate.h	2020-07-16 11:06:25.330777260 +0000
+@@ -52,6 +52,14 @@
+ #define BMALLOC_NORESERVE 0
+ #endif
+ 
++#if BOS(SOLARIS)
++// Signature of Solaris madvise() differs from that of other Unix.
++inline int madvise(void* addr, size_t len, int advice)
++{
++    return ::madvise(static_cast<caddr_t>(addr), len, advice);
++}
++#endif
++
+ inline size_t vmPageSize()
+ {
+     static size_t cached;

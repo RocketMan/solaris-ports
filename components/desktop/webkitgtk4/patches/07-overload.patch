@@ -29,7 +29,7 @@ file upstream bug to determine correct fix
  
 --- a/Source/JavaScriptCore/dfg/DFGOperations.cpp	2018-02-14 21:27:54.322665171 -0800
 +++ a/Source/JavaScriptCore/dfg/DFGOperations.cpp	2018-02-14 21:29:06.968857287 -0800
-@@ -2360,7 +2360,7 @@
+@@ -2860,7 +2860,7 @@
  
  double JIT_OPERATION operationFModOnInts(int32_t a, int32_t b)
  {
@@ -38,17 +38,17 @@ file upstream bug to determine correct fix
  }
  
  #if USE(JSVALUE32_64)
---- a/Source/JavaScriptCore/heap/MarkedSpace.cpp	2020-01-20 17:46:32.752720725 +0000
-+++ b/Source/JavaScriptCore/heap/MarkedSpace.cpp	2020-01-20 17:50:22.289703258 +0000
-@@ -75,7 +75,7 @@
-             dataLogLnIf(Options::dumpSizeClasses(), "    Marked block payload size: ", static_cast<size_t>(MarkedSpace::blockPayload));
-             
-             for (unsigned i = 0; ; ++i) {
--                double approximateSize = MarkedSpace::preciseCutoff * pow(Options::sizeClassProgression(), i);
-+                double approximateSize = MarkedSpace::preciseCutoff * pow(static_cast<double>(Options::sizeClassProgression()), static_cast<double>(i));
-                 dataLogLnIf(Options::dumpSizeClasses(), "    Next size class as a double: ", approximateSize);
-         
-                 size_t approximateSizeInBytes = static_cast<size_t>(approximateSize);
+--- a/Source/JavaScriptCore/heap/MarkedSpace.cpp	2020-06-10 14:32:09.318854189 +0000
++++ b/Source/JavaScriptCore/heap/MarkedSpace.cpp	2020-06-10 14:33:01.554451114 +0000
+@@ -68,7 +68,7 @@
+     dataLogLnIf(Options::dumpSizeClasses(), "    Marked block payload size: ", static_cast<size_t>(MarkedSpace::blockPayload));
+     
+     for (unsigned i = 0; ; ++i) {
+-        double approximateSize = MarkedSpace::preciseCutoff * pow(Options::sizeClassProgression(), i);
++        double approximateSize = MarkedSpace::preciseCutoff * pow(static_cast<double>(Options::sizeClassProgression()), static_cast<double>(i));
+         dataLogLnIf(Options::dumpSizeClasses(), "    Next size class as a double: ", approximateSize);
+ 
+         size_t approximateSizeInBytes = static_cast<size_t>(approximateSize);
 --- a/Source/JavaScriptCore/dfg/DFGStaticExecutionCountEstimationPhase.cpp
 +++ b/Source/JavaScriptCore/dfg/DFGStaticExecutionCountEstimationPhase.cpp
 @@ -53,7 +53,7 @@
@@ -60,3 +60,14 @@ file upstream bug to determine correct fix
          }
          
          // Estimate branch weights based on execution counts. This isn't quite correct. It'll
+--- a/Source/WTF/wtf/MathExtras.h	2020-06-19 15:06:04.000000000 +0000
++++ b/Source/WTF/wtf/MathExtras.h	2020-07-15 15:28:39.435103621 +0000
+@@ -411,7 +411,7 @@
+         value = 0;
+     else {
+         // -2^{64} < fmodValue < 2^{64}.
+-        double fmodValue = fmod(trunc(d), maxPlusOne<unsigned long long>);
++        double fmodValue = fmod((float)trunc(d), maxPlusOne<float>);
+         if (fmodValue >= 0) {
+             // 0 <= fmodValue < 2^{64}.
+             // 0 <= value < 2^{64}. This cast causes no loss.

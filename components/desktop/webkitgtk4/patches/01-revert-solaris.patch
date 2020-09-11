@@ -1,0 +1,308 @@
+Restore SOLARIS support
+
+https://bugs.webkit.org/show_bug.cgi?id=176341
+
+--- a/Source/WTF/wtf/PlatformOS.h	2018-08-15 09:53:48.950348332 -0700
++++ b/Source/WTF/wtf/PlatformOS.h	2018-08-15 10:09:02.845778665 -0700
+@@ -114,6 +114,11 @@
+ #define WTF_OS_OPENBSD 1
+ #endif
+ 
++/* OS(SOLARIS) - Solaris */
++#if defined(sun) || defined(__sun)
++#define WTF_OS_SOLARIS 1
++#endif
++
+ /* OS(WINDOWS) - Any version of Windows */
+ #if defined(WIN32) || defined(_WIN32)
+ #define WTF_OS_WINDOWS 1
+@@ -129,6 +134,7 @@
+     || OS(LINUX)            \
+     || OS(NETBSD)           \
+     || OS(OPENBSD)          \
++    || OS(SOLARIS)          \
+     || defined(unix)        \
+     || defined(__unix)      \
+     || defined(__unix__)
+--- a/Source/WTF/wtf/PlatformHave.h	2020-07-06 19:08:01.000000000 +0000
++++ b/Source/WTF/wtf/PlatformHave.h	2020-07-13 16:33:19.038156885 +0000
+@@ -202,19 +202,19 @@
+ #define HAVE_HOSTED_CORE_ANIMATION 1
+ #endif
+ 
+-#if OS(DARWIN) || OS(FUCHSIA) || ((OS(FREEBSD) || defined(__GLIBC__) || defined(__BIONIC__)) && (CPU(X86) || CPU(X86_64) || CPU(ARM) || CPU(ARM64) || CPU(MIPS)))
++#if OS(DARWIN) || OS(FUCHSIA) || OS(SOLARIS) || ((OS(FREEBSD) || defined(__GLIBC__) || defined(__BIONIC__)) && (CPU(X86) || CPU(X86_64) || CPU(ARM) || CPU(ARM64) || CPU(MIPS)))
+ #define HAVE_MACHINE_CONTEXT 1
+ #endif
+ 
+-#if OS(DARWIN) || (OS(LINUX) && defined(__GLIBC__) && !defined(__UCLIBC__) && !CPU(MIPS))
++#if OS(DARWIN) || OS(SOLARIS) || (OS(LINUX) && defined(__GLIBC__) && !defined(__UCLIBC__) && !CPU(MIPS))
+ #define HAVE_BACKTRACE 1
+ #endif
+ 
+-#if (OS(DARWIN) || OS(LINUX)) && (PLATFORM(GTK) || PLATFORM(WPE)) && defined(__GLIBC__) && !defined(__UCLIBC__) && !CPU(MIPS)
++#if (OS(DARWIN) || OS(LINUX)) && (PLATFORM(GTK) || PLATFORM(WPE)) && defined(__GLIBC__) && !defined(__UCLIBC__) && !CPU(MIPS) || OS(SOLARIS)
+ #define HAVE_BACKTRACE_SYMBOLS 1
+ #endif
+ 
+-#if OS(DARWIN) || OS(LINUX)
++#if OS(DARWIN) || OS(LINUX) || OS(SOLARIS)
+ #define HAVE_DLADDR 1
+ #endif
+ 
+@@ -306,7 +306,7 @@
+ #define HAVE_URL_FORMATTING 1
+ #endif
+ 
+-#if !OS(WINDOWS)
++#if !OS(WINDOWS) && !OS(SOLARIS)
+ #define HAVE_STACK_BOUNDS_FOR_NEW_THREAD 1
+ #endif
+ 
+--- a/Source/WTF/wtf/PlatformUse.h	2020-01-20 16:38:04.000000000 +0000
++++ b/Source/WTF/wtf/PlatformUse.h	2020-01-20 17:58:26.652992226 +0000
+@@ -92,8 +92,10 @@
+ #endif
+ 
+ #if PLATFORM(COCOA) || (PLATFORM(GTK) || PLATFORM(WPE))
++#if !OS(SOLARIS)
+ #define USE_FILE_LOCK 1
+ #endif
++#endif
+ 
+ #if PLATFORM(COCOA)
+ #define USE_FOUNDATION 1
+--- a/Source/WTF/wtf/InlineASM.h	2018-09-21 15:44:27.100682339 +0000
++++ b/Source/WTF/wtf/InlineASM.h	2018-09-21 15:46:02.981322402 +0000
+@@ -42,11 +42,11 @@
+ #define THUMB_FUNC_PARAM(name)
+ #endif
+ 
+-#if (OS(LINUX) || OS(FREEBSD)) && CPU(X86_64)
++#if (OS(LINUX) || OS(FREEBSD) || OS(SOLARIS)) && CPU(X86_64)
+ #define GLOBAL_REFERENCE(name) #name "@plt"
+ #elif CPU(X86) && COMPILER(MINGW)
+ #define GLOBAL_REFERENCE(name) "@" #name "@4"
+-#elif OS(LINUX) && CPU(X86) && defined(__PIC__)
++#elif (OS(LINUX) || OS(SOLARIS)) && CPU(X86) && defined(__PIC__)
+ #define GLOBAL_REFERENCE(name) SYMBOL_STRING(name) "@plt"
+ #else
+ #define GLOBAL_REFERENCE(name) SYMBOL_STRING(name)
+@@ -68,6 +68,7 @@
+     || OS(FREEBSD)             \
+     || OS(FUCHSIA)             \
+     || OS(OPENBSD)             \
++    || OS(SOLARIS)             \
+     || OS(HPUX)                \
+     || OS(NETBSD)
+     // ELF platform
+@@ -82,6 +82,7 @@
+ #if OS(DARWIN)
+ #define LOCAL_LABEL_STRING(name) "L" #name
+ #elif  OS(LINUX)               \
++    || OS(SOLARIS)             \
+     || OS(FREEBSD)             \
+     || OS(FUCHSIA)             \
+     || OS(OPENBSD)             \
+--- a/Source/WTF/wtf/NumberOfCores.cpp	2018-08-15 10:12:46.542551846 -0700
++++ b/Source/WTF/wtf/NumberOfCores.cpp	2018-08-15 10:13:55.247620671 -0700
+@@ -34,7 +34,7 @@
+ // data types defined in the former. See sysctl(3) and style(9).
+ #include <sys/types.h>
+ #include <sys/sysctl.h>
+-#elif OS(LINUX) || OS(AIX) || OS(OPENBSD) || OS(NETBSD) || OS(FREEBSD)
++#elif OS(LINUX) || OS(AIX) || OS(SOLARIS) || OS(OPENBSD) || OS(NETBSD) || OS(FREEBSD)
+ #include <unistd.h>
+ #elif OS(WINDOWS)
+ #include <windows.h>
+@@ -69,7 +69,7 @@
+     int sysctlResult = sysctl(name, sizeof(name) / sizeof(int), &result, &length, 0, 0);
+ 
+     s_numberOfCores = sysctlResult < 0 ? defaultIfUnavailable : result;
+-#elif OS(LINUX) || OS(AIX) || OS(OPENBSD) || OS(NETBSD) || OS(FREEBSD)
++#elif OS(LINUX) || OS(AIX) || OS(SOLARIS) || OS(OPENBSD) || OS(NETBSD) || OS(FREEBSD)
+     long sysconfResult = sysconf(_SC_NPROCESSORS_ONLN);
+ 
+     s_numberOfCores = sysconfResult < 0 ? defaultIfUnavailable : static_cast<int>(sysconfResult);
+--- a/Source/JavaScriptCore/runtime/MachineContext.h	2020-05-14 18:09:21.000000000 +0000
++++ b/Source/JavaScriptCore/runtime/MachineContext.h	2020-05-29 18:34:00.405996855 +0000
+@@ -196,7 +196,7 @@
+ #error Unknown Architecture
+ #endif
+ 
+-#elif OS(FUCHSIA) || defined(__GLIBC__) || defined(__BIONIC__)
++#elif OS(FUCHSIA) || OS(SOLARIS) || defined(__GLIBC__) || defined(__BIONIC__)
+ 
+ #if CPU(X86)
+     return reinterpret_cast<void*&>((uintptr_t&) machineContext.gregs[REG_ESP]);
+@@ -347,7 +347,7 @@
+ #error Unknown Architecture
+ #endif
+ 
+-#elif OS(FUCHSIA) || defined(__GLIBC__) || defined(__BIONIC__)
++#elif OS(FUCHSIA) || OS(SOLARIS) || defined(__GLIBC__) || defined(__BIONIC__)
+ 
+ // The following sequence depends on glibc's sys/ucontext.h.
+ #if CPU(X86)
+@@ -498,7 +498,7 @@
+ #error Unknown Architecture
+ #endif
+ 
+-#elif OS(FUCHSIA) || defined(__GLIBC__) || defined(__BIONIC__)
++#elif OS(FUCHSIA) || OS(SOLARIS) || defined(__GLIBC__) || defined(__BIONIC__)
+ 
+ // The following sequence depends on glibc's sys/ucontext.h.
+ #if CPU(X86)
+@@ -656,7 +656,7 @@
+ #error Unknown Architecture
+ #endif
+ 
+-#elif OS(FUCHSIA) || defined(__GLIBC__) || defined(__BIONIC__)
++#elif OS(FUCHSIA) || OS(SOLARIS) || defined(__GLIBC__) || defined(__BIONIC__)
+ 
+ // The following sequence depends on glibc's sys/ucontext.h.
+ #if CPU(X86)
+@@ -773,7 +773,7 @@
+ #error Unknown Architecture
+ #endif
+ 
+-#elif OS(FUCHSIA) || defined(__GLIBC__) || defined(__BIONIC__)
++#elif OS(FUCHSIA) || OS(SOLARIS) || defined(__GLIBC__) || defined(__BIONIC__)
+ 
+ // The following sequence depends on glibc's sys/ucontext.h.
+ #if CPU(X86)
+--- a/Source/WTF/wtf/Assertions.h	2019-08-12 12:11:40.344341406 +0000
++++ b/Source/WTF/wtf/Assertions.h	2019-08-12 12:11:23.631513186 +0000
+@@ -433,7 +433,7 @@
+ 
+ /* COMPILE_ASSERT */
+ #ifndef COMPILE_ASSERT
+-#if COMPILER_SUPPORTS(C_STATIC_ASSERT)
++#if COMPILER_SUPPORTS(C_STATIC_ASSERT) && !OS(SOLARIS)
+ /* Unlike static_assert below, this also works in plain C code. */
+ #define COMPILE_ASSERT(exp, name) _Static_assert((exp), #name)
+ #else
+--- a/Source/WTF/wtf/StackBounds.cpp	2018-08-15 10:14:40.847145054 -0700
++++ b/Source/WTF/wtf/StackBounds.cpp	2018-08-15 10:17:23.584352622 -0700
+@@ -29,6 +29,10 @@
+ 
+ #include <windows.h>
+ 
++#elif OS(SOLARIS)
++
++#include <thread.h>
++
+ #elif OS(UNIX)
+ 
+ #include <pthread.h>
+@@ -65,6 +69,17 @@
+     return newThreadStackBounds(pthread_self());
+ }
+ 
++#elif OS(SOLARIS)
++
++StackBounds StackBounds::currentThreadStackBoundsInternal()
++{
++    stack_t s;
++    thr_stksegment(&s);
++    void* origin = s.ss_sp;
++    void* bound = static_cast<char*>(origin) - s.ss_size;
++    return StackBounds { origin, bound };
++}
++
+ #elif OS(UNIX)
+ 
+ #if OS(OPENBSD)
+--- a/Source/WTF/wtf/RAMSize.cpp	2019-09-18 09:52:36.000000000 +0000
++++ b/Source/WTF/wtf/RAMSize.cpp	2019-11-29 14:15:59.012169645 +0000
+@@ -34,6 +34,8 @@
+ #elif defined(USE_SYSTEM_MALLOC) && USE_SYSTEM_MALLOC
+ #if OS(LINUX)
+ #include <sys/sysinfo.h>
++#elif OS(SOLARIS)
++#include <unistd.h>
+ #endif // OS(LINUX)
+ #else
+ #include <bmalloc/bmalloc.h>
+@@ -59,6 +61,8 @@
+     struct sysinfo si;
+     sysinfo(&si);
+     return si.totalram * si.mem_unit;
++#elif OS(SOLARIS)
++    return sysconf(_SC_PHYS_PAGES) * sysconf(_SC_PAGESIZE);
+ #else
+ #error "Missing a platform specific way of determining the available RAM"
+ #endif // OS(LINUX)
+--- a/Source/WebCore/platform/network/DNS.h	2020-04-01 16:42:11.000000000 +0000
++++ b/Source/WebCore/platform/network/DNS.h	2020-04-01 19:23:23.178682184 +0000
+@@ -28,6 +28,8 @@
+ #if OS(WINDOWS)
+ #include <winsock2.h>
+ #include <ws2tcpip.h>
++#elif OS(SOLARIS)
++#include <sys/socket.h>
+ #else
+ #include <netinet/in.h>
+ #endif
+--- a/Source/WebCore/page/NavigatorBase.cpp	2019-08-28 12:46:31.000000000 +0000
++++ b/Source/WebCore/page/NavigatorBase.cpp	2019-09-10 15:24:15.399520597 +0000
+@@ -98,6 +98,18 @@
+     return "MacIntel"_s;
+ #elif OS(WINDOWS)
+     return "Win32"_s;
++#elif OS(SOLARIS)
++    // If the user agent is being masqueraded, then change the platform
++    // also, as some sites rely on this (e.g., dslreports speed test)
++    const String& agent = userAgent();
++    if(agent.find("Linux", 0) != notFound)
++        return "Linux"_s;
++    else if(agent.find("Windows", 0) != notFound)
++        return "Win32"_s;
++    else if(agent.find("Intel Mac", 0) != notFound)
++        return "MacIntel"_s;
++    else
++        return "SunOS"_s;
+ #else
+     return ""_s;
+ #endif
+--- a/Source/WTF/wtf/FileSystem.cpp	2020-05-14 18:09:21.000000000 +0000
++++ b/Source/WTF/wtf/FileSystem.cpp	2020-07-20 17:58:11.682210644 +0000
+@@ -43,6 +43,11 @@
+ #include <gio/gio.h>
+ #endif
+ 
++#if OS(SOLARIS) && !defined(MAP_FILE)
++// Solaris doesn't have MAP_FILE
++#define MAP_FILE 0
++#endif
++
+ namespace WTF {
+ 
+ namespace FileSystemImpl {
+--- a/Source/WebKit/Platform/IPC/unix/ConnectionUnix.cpp	2020-05-22 12:40:55.000000000 +0000
++++ b/Source/WebKit/Platform/IPC/unix/ConnectionUnix.cpp	2020-05-22 13:59:58.928308413 +0000
+@@ -56,6 +56,11 @@
+ #endif
+ #endif // SOCK_SEQPACKET
+ 
++#if OS(SOLARIS) && !defined(MSG_NOSIGNAL)
++// Solaris does not support MSG_NOSIGNAL
++#define MSG_NOSIGNAL 0
++#endif
++
+ namespace IPC {
+ 
+ static const size_t messageMaxSize = 4096;
+--- a/Source/ThirdParty/ANGLE/src/common/debug.h	2018-02-14 09:25:23.653561020 -0800
++++ b/Source/ThirdParty/ANGLE/src/common/debug.h	2018-02-14 09:27:14.110989611 -0800
+@@ -204,6 +204,10 @@
+ #endif
+ 
+ #define WARN() ANGLE_LOG(WARN)
++#if defined(__sun) && defined(ERR)
++// ERR conflicts with Solaris regset.h
++#undef ERR
++#endif
+ #define ERR() ANGLE_LOG(ERR)
+ 
+ // A macro to log a performance event around a scope.

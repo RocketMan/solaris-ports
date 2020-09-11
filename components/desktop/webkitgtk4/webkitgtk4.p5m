@@ -137,7 +137,9 @@ file path=usr/include/webkitgtk-4.0/webkit2/WebKitWebView.h
 file path=usr/include/webkitgtk-4.0/webkit2/WebKitWebViewBase.h
 file path=usr/include/webkitgtk-4.0/webkit2/WebKitWebViewSessionState.h
 file path=usr/include/webkitgtk-4.0/webkit2/WebKitWebsiteData.h
+file path=usr/include/webkitgtk-4.0/webkit2/WebKitWebsiteDataAccessPermissionRequest.h
 file path=usr/include/webkitgtk-4.0/webkit2/WebKitWebsiteDataManager.h
+file path=usr/include/webkitgtk-4.0/webkit2/WebKitWebsitePolicies.h
 file path=usr/include/webkitgtk-4.0/webkit2/WebKitWindowProperties.h
 file path=usr/include/webkitgtk-4.0/webkit2/webkit-web-extension.h
 file path=usr/include/webkitgtk-4.0/webkit2/webkit2.h
@@ -265,12 +267,12 @@ file path=usr/lib/$(MACH64)/jsc mode=0555
 link path=usr/lib/$(MACH64)/libjavascriptcoregtk-4.0.so \
     target=libjavascriptcoregtk-4.0.so.18
 link path=usr/lib/$(MACH64)/libjavascriptcoregtk-4.0.so.18 \
-    target=libjavascriptcoregtk-4.0.so.18.16.6
-file path=usr/lib/$(MACH64)/libjavascriptcoregtk-4.0.so.18.16.6
+    target=libjavascriptcoregtk-4.0.so.18.17.8
+file path=usr/lib/$(MACH64)/libjavascriptcoregtk-4.0.so.18.17.8
 link path=usr/lib/$(MACH64)/libwebkit2gtk-4.0.so target=libwebkit2gtk-4.0.so.37
 link path=usr/lib/$(MACH64)/libwebkit2gtk-4.0.so.37 \
-    target=libwebkit2gtk-4.0.so.37.44.5
-file path=usr/lib/$(MACH64)/libwebkit2gtk-4.0.so.37.44.5
+    target=libwebkit2gtk-4.0.so.37.49.4
+file path=usr/lib/$(MACH64)/libwebkit2gtk-4.0.so.37.49.4
 file path=usr/lib/$(MACH64)/pkgconfig/javascriptcoregtk-4.0.pc
 file path=usr/lib/$(MACH64)/pkgconfig/webkit2gtk-4.0.pc
 file path=usr/lib/$(MACH64)/pkgconfig/webkit2gtk-web-extension-4.0.pc

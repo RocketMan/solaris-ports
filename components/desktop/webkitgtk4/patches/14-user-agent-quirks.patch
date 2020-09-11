@@ -1,0 +1,21 @@
+--- a/Source/WebCore/platform/UserAgentQuirks.cpp	2019-09-10 13:46:35.169229789 +0000
++++ b/Source/WebCore/platform/UserAgentQuirks.cpp	2019-09-10 13:48:53.969416868 +0000
+@@ -140,7 +140,17 @@
+ 
+ static bool urlRequiresLinuxDesktopPlatform(const URL& url)
+ {
+-    return isGoogle(url) && chassisType() != WTF::ChassisType::Mobile;
++#if OS(SOLARIS)
++    // The speed test at dslreports does not recognize the SunOS platform,
++    // so we masquerade as Linux.
++    String domain = url.host().toString();
++    String baseDomain = topPrivatelyControlledDomain(domain);
++
++    return baseDomain == "dslreports.com" || baseDomain == "dslr.com" ||
++#else
++    return
++#endif
++           isGoogle(url) && chassisType() != WTF::ChassisType::Mobile;
+ }
+ 
+ UserAgentQuirks UserAgentQuirks::quirksForURL(const URL& url)
