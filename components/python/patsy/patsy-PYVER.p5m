@@ -1,0 +1,113 @@
+#
+# CDDL HEADER START
+#
+# The contents of this file are subject to the terms of the
+# Common Development and Distribution License (the "License").
+# You may not use this file except in compliance with the License.
+#
+# You can obtain a copy of the license at usr/src/OPENSOLARIS.LICENSE
+# or http://www.opensolaris.org/os/licensing.
+# See the License for the specific language governing permissions
+# and limitations under the License.
+#
+# When distributing Covered Code, include this CDDL HEADER in each
+# file and include the License file at usr/src/OPENSOLARIS.LICENSE.
+# If applicable, add the following below this CDDL HEADER, with the
+# fields enclosed by brackets "[]" replaced with your own identifying
+# information: Portions Copyright [yyyy] [name of copyright owner]
+#
+# CDDL HEADER END
+#
+
+#
+# Copyright (c) 2020 Jim Mason <jmason at ibinx dot com>.  All rights reserved.
+#
+
+<transform file hardlink path=.*\.py$ -> add pkg.tmp.autopyc false>
+<transform file hardlink path=.*\.pyc$ -> drop>
+set name=pkg.fmri \
+    value=pkg:/library/python/patsy-$(PYV)@$(IPS_COMPONENT_VERSION),$(BUILD_VERSION)
+set name=pkg.summary value="Describing statistical models in Python"
+set name=pkg.description \
+    value="patsy is a Python package for describing statistical models (especially linear models, or models that have a linear component) and building design matrices. It is closely inspired by and compatible with the formula mini-language used in R and S."
+set name=info.classification \
+    value=org.opensolaris.category.2008:Development/Python
+set name=info.source-url value=$(COMPONENT_ARCHIVE_URL)
+set name=info.upstream-url value=$(COMPONENT_PROJECT_URL)
+set name=org.opensolaris.consolidation value=$(CONSOLIDATION)
+#
+file path=usr/lib/python$(PYVER)/vendor-packages/patsy-$(IPS_COMPONENT_VERSION)-py$(PYVER).egg-info/PKG-INFO
+file path=usr/lib/python$(PYVER)/vendor-packages/patsy-$(IPS_COMPONENT_VERSION)-py$(PYVER).egg-info/SOURCES.txt
+file path=usr/lib/python$(PYVER)/vendor-packages/patsy-$(IPS_COMPONENT_VERSION)-py$(PYVER).egg-info/dependency_links.txt
+file path=usr/lib/python$(PYVER)/vendor-packages/patsy-$(IPS_COMPONENT_VERSION)-py$(PYVER).egg-info/requires.txt
+file path=usr/lib/python$(PYVER)/vendor-packages/patsy-$(IPS_COMPONENT_VERSION)-py$(PYVER).egg-info/top_level.txt
+file path=usr/lib/python$(PYVER)/vendor-packages/patsy/__init__.py
+file path=usr/lib/python$(PYVER)/vendor-packages/patsy/__init__.pyc
+file path=usr/lib/python$(PYVER)/vendor-packages/patsy/build.py
+file path=usr/lib/python$(PYVER)/vendor-packages/patsy/build.pyc
+file path=usr/lib/python$(PYVER)/vendor-packages/patsy/builtins.py
+file path=usr/lib/python$(PYVER)/vendor-packages/patsy/builtins.pyc
+file path=usr/lib/python$(PYVER)/vendor-packages/patsy/categorical.py
+file path=usr/lib/python$(PYVER)/vendor-packages/patsy/categorical.pyc
+file path=usr/lib/python$(PYVER)/vendor-packages/patsy/compat.py
+file path=usr/lib/python$(PYVER)/vendor-packages/patsy/compat.pyc
+file path=usr/lib/python$(PYVER)/vendor-packages/patsy/compat_ordereddict.py
+file path=usr/lib/python$(PYVER)/vendor-packages/patsy/compat_ordereddict.pyc
+file path=usr/lib/python$(PYVER)/vendor-packages/patsy/constraint.py
+file path=usr/lib/python$(PYVER)/vendor-packages/patsy/constraint.pyc
+file path=usr/lib/python$(PYVER)/vendor-packages/patsy/contrasts.py
+file path=usr/lib/python$(PYVER)/vendor-packages/patsy/contrasts.pyc
+file path=usr/lib/python$(PYVER)/vendor-packages/patsy/desc.py
+file path=usr/lib/python$(PYVER)/vendor-packages/patsy/desc.pyc
+file path=usr/lib/python$(PYVER)/vendor-packages/patsy/design_info.py
+file path=usr/lib/python$(PYVER)/vendor-packages/patsy/design_info.pyc
+file path=usr/lib/python$(PYVER)/vendor-packages/patsy/eval.py
+file path=usr/lib/python$(PYVER)/vendor-packages/patsy/eval.pyc
+file path=usr/lib/python$(PYVER)/vendor-packages/patsy/highlevel.py
+file path=usr/lib/python$(PYVER)/vendor-packages/patsy/highlevel.pyc
+file path=usr/lib/python$(PYVER)/vendor-packages/patsy/infix_parser.py
+file path=usr/lib/python$(PYVER)/vendor-packages/patsy/infix_parser.pyc
+file path=usr/lib/python$(PYVER)/vendor-packages/patsy/mgcv_cubic_splines.py
+file path=usr/lib/python$(PYVER)/vendor-packages/patsy/mgcv_cubic_splines.pyc
+file path=usr/lib/python$(PYVER)/vendor-packages/patsy/missing.py
+file path=usr/lib/python$(PYVER)/vendor-packages/patsy/missing.pyc
+file path=usr/lib/python$(PYVER)/vendor-packages/patsy/origin.py
+file path=usr/lib/python$(PYVER)/vendor-packages/patsy/origin.pyc
+file path=usr/lib/python$(PYVER)/vendor-packages/patsy/parse_formula.py
+file path=usr/lib/python$(PYVER)/vendor-packages/patsy/parse_formula.pyc
+file path=usr/lib/python$(PYVER)/vendor-packages/patsy/redundancy.py
+file path=usr/lib/python$(PYVER)/vendor-packages/patsy/redundancy.pyc
+file path=usr/lib/python$(PYVER)/vendor-packages/patsy/splines.py
+file path=usr/lib/python$(PYVER)/vendor-packages/patsy/splines.pyc
+file path=usr/lib/python$(PYVER)/vendor-packages/patsy/state.py
+file path=usr/lib/python$(PYVER)/vendor-packages/patsy/state.pyc
+file path=usr/lib/python$(PYVER)/vendor-packages/patsy/test_build.py
+file path=usr/lib/python$(PYVER)/vendor-packages/patsy/test_build.pyc
+file path=usr/lib/python$(PYVER)/vendor-packages/patsy/test_highlevel.py
+file path=usr/lib/python$(PYVER)/vendor-packages/patsy/test_highlevel.pyc
+file path=usr/lib/python$(PYVER)/vendor-packages/patsy/test_regressions.py
+file path=usr/lib/python$(PYVER)/vendor-packages/patsy/test_regressions.pyc
+file path=usr/lib/python$(PYVER)/vendor-packages/patsy/test_splines_bs_data.py
+file path=usr/lib/python$(PYVER)/vendor-packages/patsy/test_splines_bs_data.pyc
+file path=usr/lib/python$(PYVER)/vendor-packages/patsy/test_splines_crs_data.py
+file path=usr/lib/python$(PYVER)/vendor-packages/patsy/test_splines_crs_data.pyc
+file path=usr/lib/python$(PYVER)/vendor-packages/patsy/test_state.py
+file path=usr/lib/python$(PYVER)/vendor-packages/patsy/test_state.pyc
+file path=usr/lib/python$(PYVER)/vendor-packages/patsy/tokens.py
+file path=usr/lib/python$(PYVER)/vendor-packages/patsy/tokens.pyc
+file path=usr/lib/python$(PYVER)/vendor-packages/patsy/user_util.py
+file path=usr/lib/python$(PYVER)/vendor-packages/patsy/user_util.pyc
+file path=usr/lib/python$(PYVER)/vendor-packages/patsy/util.py
+file path=usr/lib/python$(PYVER)/vendor-packages/patsy/util.pyc
+file path=usr/lib/python$(PYVER)/vendor-packages/patsy/version.py
+file path=usr/lib/python$(PYVER)/vendor-packages/patsy/version.pyc
+#
+license LICENSE.txt license=BSD
+
+# force a dependency on the Python runtime
+depend type=require fmri=__TBD pkg.debug.depend.file=python$(PYVER) \
+    pkg.debug.depend.path=usr/bin
+
+# force a dependency on the unversioned package
+depend type=require \
+    fmri=library/python/patsy@$(IPS_COMPONENT_VERSION),$(BUILD_VERSION)
