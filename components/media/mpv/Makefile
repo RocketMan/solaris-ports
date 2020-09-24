@@ -70,6 +70,9 @@ CONFIGURE_OPTIONS += --confdir=/etc
 CONFIGURE_OPTIONS += --enable-cdda
 CONFIGURE_OPTIONS += --enable-dvdnav
 CONFIGURE_OPTIONS += --enable-libmpv-shared
+CONFIGURE_OPTIONS.64 += --enable-libsmbclient
+
+PKG_CONFIG_PATH.64 += /usr/lib/samba/$(MACH64)/pkgconfig
 
 CFLAGS +=	-D__EXTENSIONS__
 $(SOLARIS_11_3_ONLY)CFLAGS += -DSOLARIS_11_3
@@ -107,6 +110,7 @@ REQUIRED_PACKAGES += library/media/libass
 REQUIRED_PACKAGES += library/media/libcdio
 REQUIRED_PACKAGES += library/media/libcdio-paranoia
 REQUIRED_PACKAGES += library/media/libdvdnav
+REQUIRED_PACKAGES += library/samba/libsmbclient
 REQUIRED_PACKAGES += library/zlib
 REQUIRED_PACKAGES += media/ffmpeg
 REQUIRED_PACKAGES += runtime/lua
