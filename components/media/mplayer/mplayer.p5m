@@ -11,10 +11,10 @@ set name=info.classification \
 set name=info.source-url value=$(COMPONENT_ARCHIVE_URL)
 set name=info.upstream-url value=$(COMPONENT_PROJECT_URL)
 set name=org.opensolaris.consolidation value=$(CONSOLIDATION)
-file usr/bin/mencoder path=usr/bin/mencoder
-file usr/bin/mplayer path=usr/bin/mplayer
+file path=usr/bin/mencoder
+file path=usr/bin/mplayer
 link path=usr/share/man/man1/mencoder.1 target=mplayer.1
-file usr/share/man/man1/mplayer.1 path=usr/share/man/man1/mplayer.1
+file path=usr/share/man/man1/mplayer.1
 license LICENSE license=GPLv2
 depend type=require fmri=__TBD pkg.debug.depend.file=usr/lib/mesa/libEGL.so.1
 depend type=require fmri=__TBD pkg.debug.depend.file=usr/lib/mesa/libGL.so.1

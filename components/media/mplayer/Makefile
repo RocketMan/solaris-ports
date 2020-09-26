@@ -63,6 +63,10 @@ CONFIGURE_OPTIONS += --disable-ffmpeg_a
 CONFIGURE_OPTIONS += --disable-lirc
 CONFIGURE_OPTIONS += --disable-lircc
 CONFIGURE_OPTIONS += --disable-ossaudio
+CONFIGURE_OPTIONS += --enable-smb
+
+CFLAGS += -I/usr/include/samba
+PKG_CONFIG_PATH += /usr/lib/samba/$(MACH64)/pkgconfig
 
 
 REQUIRED_PACKAGES += codec/libtheora
@@ -86,6 +90,7 @@ REQUIRED_PACKAGES += library/media/libdvdnav
 REQUIRED_PACKAGES += library/media/libdvdread
 REQUIRED_PACKAGES += library/media/libmpg123
 REQUIRED_PACKAGES += library/media/libx264
+REQUIRED_PACKAGES += library/samba/libsmbclient
 REQUIRED_PACKAGES += library/sdl
 REQUIRED_PACKAGES += media/ffmpeg
 REQUIRED_PACKAGES += media/lame
