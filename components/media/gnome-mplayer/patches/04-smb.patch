@@ -1,0 +1,17 @@
+--- a/src/support.c	2013-11-25 19:44:09.000000000 +0000
++++ b/src/support.c	2020-09-27 13:29:52.718410558 +0000
+@@ -928,13 +928,7 @@
+             if (file != NULL) {
+                 info = g_file_query_info(file, "*", G_FILE_QUERY_INFO_NONE, NULL, NULL);
+                 if (info != NULL) {
+-                    // SMB filesystems seem to give incorrect access answers over GIO, 
+-                    // so if the file has a filesize > 0 we think it is not streaming
+-                    if (g_ascii_strncasecmp(uri, "smb://", strlen("smb://")) == 0) {
+-                        ret = (g_file_info_get_size(info) > 0) ? FALSE : TRUE;
+-                    } else {
+-                        ret = !g_file_info_get_attribute_boolean(info, G_FILE_ATTRIBUTE_ACCESS_CAN_READ);
+-                    }
++                    ret = !g_file_info_get_attribute_boolean(info, G_FILE_ATTRIBUTE_ACCESS_CAN_READ);
+                     g_object_unref(info);
+                 } else {
+                     ret = !g_file_test(uri, G_FILE_TEST_EXISTS);
