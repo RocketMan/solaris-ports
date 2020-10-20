@@ -47,6 +47,7 @@ file path=usr/php/$(PHPVER)/include/php/ext/apcu/apc_sma.h
 file path=usr/php/$(PHPVER)/include/php/ext/apcu/apc_sma_api.h
 file path=usr/php/$(PHPVER)/include/php/ext/apcu/apc_stack.h
 file path=usr/php/$(PHPVER)/include/php/ext/apcu/php_apc.h
+file path=usr/php/$(PHPVER)/include/php/ext/apcu/php_apc_legacy_arginfo.h
 license LICENSE license="PHP license"
 depend type=require fmri=web/php-$(PHV)
 depend type=require \
