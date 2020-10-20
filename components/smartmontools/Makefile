@@ -44,5 +44,7 @@ COMPONENT_PREP_ACTION = (cd $(@D) ; ./autogen.sh)
 
 CONFIGURE_OPTIONS += --sysconfdir=$(ETCDIR)
 
+REQUIRED_PACKAGES += system/core-os
+REQUIRED_PACKAGES += system/device-administration
 REQUIRED_PACKAGES += system/library/gcc/gcc-c-runtime
 REQUIRED_PACKAGES += system/library/gcc/gcc-c++-runtime
