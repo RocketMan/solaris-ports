@@ -1,0 +1,8 @@
+--- libsamplerate-0.1.9/autogen.sh	2016-09-18 23:17:58.000000000 +0000
++++ libsamplerate-0.1.9/autogen.sh	2020-10-21 12:38:39.376377635 +0000
+@@ -126,4 +126,4 @@
+ autoconf || exit 1
+ 
+ cd $olddir
+-$srcdir/configure --enable-gcc-werror "$@" && echo
++test -n "$NOCONFIGURE" || $srcdir/configure --enable-gcc-werror "$@" && echo
