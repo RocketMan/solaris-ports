@@ -9,6 +9,21 @@
       version='1'>
 
     <instance name='default' enabled='false'>
+
+      <dependency name='filesystem-local'
+		  grouping='require_all'
+		  restart_on='none'
+		  type='service'>
+	<service_fmri value='svc:/system/filesystem/local'/>
+      </dependency>
+
+      <dependency name='devices'
+		  grouping='require_all'
+		  restart_on='none'
+		  type='service'>
+	<service_fmri value='svc:/system/device/local' />
+      </dependency>
+
       <exec_method
           type='method'
           name='start'
