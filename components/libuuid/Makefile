@@ -37,6 +37,8 @@ COMPONENT_ARCHIVE_HASH=	\
 
 include $(WS_MAKE_RULES)/common.mk
 
+CONFIGURE_OPTIONS += --enable-static=no
+
 # needs to co-exist with uuid deliverables from system/library
 CONFIGURE_OPTIONS += --includedir=$(USRINCDIR)/$(COMPONENT_NAME)-1/
 CONFIGURE_OPTIONS.32 += --libdir=$(USRLIBDIR)/$(COMPONENT_NAME)-1/
