@@ -1,0 +1,21 @@
+This package delivers more APIs than the libuuid that ships with 11.3.
+However, they both identify as version 1.0.  This creates possible
+ambiguity at runtime.  If an application links with this library, but
+the OS's default libuuid is loaded at runtime, there could well be
+unresolved references.
+
+As libuuid has not been updated in many years, it's unlikely to
+receive a version bump anytime soon.  For now, we'll bump to 2.0.0, so
+that there is no ambiguity at runtime.
+
+--- a/configure	2014-08-12 09:19:19.000000000 +0000
++++ b/configure	2020-11-01 19:54:58.454308409 +0000
+@@ -12450,7 +12450,7 @@
+ PACKAGE_VERSION_RELEASE=$(echo $PACKAGE_VERSION | awk -F. '{print $3}')
+ 
+ LIBUUID_VERSION="$PACKAGE_VERSION_MAJOR.$PACKAGE_VERSION_MINOR.$PACKAGE_VERSION_RELEASE"
+-LIBUUID_LT_MAJOR=1
++LIBUUID_LT_MAJOR=2
+ LIBUUID_LT_MINOR=0
+ LIBUUID_LT_MICRO=0
+ LIBUUID_VERSION_INFO=`expr $LIBUUID_LT_MAJOR + $LIBUUID_LT_MINOR`:$LIBUUID_LT_MICRO:$LIBUUID_LT_MINOR

@@ -33,15 +33,17 @@ set name=info.upstream-url value=$(COMPONENT_PROJECT_URL)
 set name=org.opensolaris.consolidation value=$(CONSOLIDATION)
 file path=usr/include/libuuid-1/uuid/uuid.h
 file path=usr/lib/$(MACH64)/libuuid-1/libuuid.la
-link path=usr/lib/$(MACH64)/libuuid-1/libuuid.so target=libuuid.so.1.0.0
-link path=usr/lib/$(MACH64)/libuuid-1/libuuid.so.1 target=libuuid.so.1.0.0
-file path=usr/lib/$(MACH64)/libuuid-1/libuuid.so.1.0.0
+link path=usr/lib/$(MACH64)/libuuid-1/libuuid.so target=libuuid.so.2.0.0
+link path=usr/lib/$(MACH64)/libuuid-1/libuuid.so.2 target=libuuid.so.2.0.0
+file path=usr/lib/$(MACH64)/libuuid-1/libuuid.so.2.0.0
+link path=usr/lib/$(MACH64)/libuuid.so.2 target=libuuid-1/libuuid.so.2
 file usr/lib/$(MACH64)/libuuid-1/pkgconfig/uuid.pc \
     path=usr/lib/$(MACH64)/pkgconfig/libuuid-1/uuid.pc
 file path=usr/lib/libuuid-1/libuuid.la
-link path=usr/lib/libuuid-1/libuuid.so target=libuuid.so.1.0.0
-link path=usr/lib/libuuid-1/libuuid.so.1 target=libuuid.so.1.0.0
-file path=usr/lib/libuuid-1/libuuid.so.1.0.0
+link path=usr/lib/libuuid-1/libuuid.so target=libuuid.so.2.0.0
+link path=usr/lib/libuuid-1/libuuid.so.2 target=libuuid.so.2.0.0
+file path=usr/lib/libuuid-1/libuuid.so.2.0.0
+link path=usr/lib/libuuid.so.2 target=libuuid-1/libuuid.so.2
 file usr/lib/libuuid-1/pkgconfig/uuid.pc \
     path=usr/lib/pkgconfig/libuuid-1/uuid.pc
 license COPYING license=BSD
