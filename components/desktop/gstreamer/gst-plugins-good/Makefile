@@ -35,11 +35,11 @@ include ../../../../make-rules/shared-macros.mk
 BUILD_STYLE=meson
 
 COMPONENT_NAME=		gst-plugins-good
-COMPONENT_VERSION=	1.18.0
+COMPONENT_VERSION=	1.18.1
 COMPONENT_PROJECT_URL=	https://gstreamer.freedesktop.org/
 COMPONENT_ARCHIVE=	$(COMPONENT_SRC).tar.xz
 COMPONENT_ARCHIVE_HASH= \
-	sha256:6329bc377a3afea5cf1ab329a91cc4a906f075781780d1edc59e8bea8c1a8bac
+	sha256:e210e91a5590ecb6accc9d06c949a58ca6897d8edb3b3d55828e424c624f626c
 COMPONENT_ARCHIVE_URL=	https://gstreamer.freedesktop.org/src/$(COMPONENT_NAME)/$(COMPONENT_ARCHIVE)
 COMPONENT_ANITYA_ID=	1263
 

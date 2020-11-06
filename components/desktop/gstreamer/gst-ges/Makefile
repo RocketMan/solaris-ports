@@ -30,11 +30,11 @@ include ../../../../make-rules/shared-macros.mk
 BUILD_STYLE=meson
 
 COMPONENT_NAME=		gst-editing-services
-COMPONENT_VERSION=	1.18.0
+COMPONENT_VERSION=	1.18.1
 COMPONENT_PROJECT_URL=	https://gstreamer.freedesktop.org/
 COMPONENT_ARCHIVE=	$(COMPONENT_SRC).tar.xz
 COMPONENT_ARCHIVE_HASH= \
-	sha256:4daef0d4875415ea262f7fb1287d4a33939a9594f3c1e661f8587ab00f7000a8
+	sha256:e93cb3f1896565c57defa72758e49b6eb6685e0f804abd184f395c94822a3927
 COMPONENT_ARCHIVE_URL=	https://gstreamer.freedesktop.org/src/$(COMPONENT_NAME)/$(COMPONENT_ARCHIVE)
 
 # Supports Python 3.x only.

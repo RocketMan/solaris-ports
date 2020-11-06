@@ -35,11 +35,11 @@ include ../../../../make-rules/shared-macros.mk
 BUILD_STYLE=meson
 
 COMPONENT_NAME=		gst-plugins-bad
-COMPONENT_VERSION=	1.18.0
+COMPONENT_VERSION=	1.18.1
 COMPONENT_PROJECT_URL=	https://gstreamer.freedesktop.org/
 COMPONENT_ARCHIVE=	$(COMPONENT_SRC).tar.xz
 COMPONENT_ARCHIVE_HASH= \
-	sha256:f382ab1caddd64aaa7acb7c4787487f63fd39bd0fde9c757655cbaa457c1185f
+	sha256:c195978c85d97406c05eb9d43ac54b9ab35eda6ffdae32b3ed597b8f1743c1b2
 COMPONENT_ARCHIVE_URL=	https://gstreamer.freedesktop.org/src/$(COMPONENT_NAME)/$(COMPONENT_ARCHIVE)
 COMPONENT_ANITYA_ID=	1263
 
@@ -139,4 +139,4 @@ REQUIRED_PACKAGES += library/media/libopus
 REQUIRED_PACKAGES += image/library/librsvg
 REQUIRED_PACKAGES += library/libsndfile
 REQUIRED_PACKAGES += library/graphics/libvdpau
-
+REQUIRED_PACKAGES += library/lcms2
