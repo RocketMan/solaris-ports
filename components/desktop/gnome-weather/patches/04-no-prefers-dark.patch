@@ -1,0 +1,11 @@
+--- a/src/app/main.js	2019-09-25 00:42:45.000000000 +0000
++++ b/src/app/main.js	2020-11-09 15:55:25.747438019 +0000
+@@ -91,7 +91,7 @@
+         Util.loadStyleSheet('/org/gnome/Weather/application.css');
+ 
+         let settings = Gtk.Settings.get_for_screen(Gdk.Screen.get_default());
+-        settings.gtk_application_prefer_dark_theme = true;
++        // settings.gtk_application_prefer_dark_theme = true;
+ 
+         this.world = GWeather.Location.get_world();
+         this.model = new World.WorldModel(this.world, true);
