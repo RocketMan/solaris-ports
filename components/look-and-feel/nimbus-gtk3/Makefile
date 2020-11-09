@@ -61,6 +61,8 @@ $(SOURCE_DIR_1)/.patched:	$(SOURCE_DIR_1)/.unpacked
 		$(COMPONENT_DIR)/patches_1/03-linked-buttons.patch
 	$(GPATCH) -d $(@D) $(GPATCH_FLAGS) < \
 		$(COMPONENT_DIR)/patches_1/04-title.patch
+	$(GPATCH) -d $(@D) $(GPATCH_FLAGS) < \
+		$(COMPONENT_DIR)/patches_1/05-headerbar-separator.patch
 	$(TOUCH) $(@)
 
 $(SOURCE_DIR_2)/.patched:	$(SOURCE_DIR_2)/.unpacked
@@ -72,4 +74,6 @@ $(SOURCE_DIR_2)/.patched:	$(SOURCE_DIR_2)/.unpacked
 		$(COMPONENT_DIR)/patches_2/03-linked-buttons.patch
 	$(GPATCH) -d $(@D) $(GPATCH_FLAGS) < \
 		$(COMPONENT_DIR)/patches_2/04-title.patch
+	$(GPATCH) -d $(@D) $(GPATCH_FLAGS) < \
+		$(COMPONENT_DIR)/patches_2/05-headerbar-separator.patch
 	$(TOUCH) $(@)
