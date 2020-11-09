@@ -276,6 +276,10 @@ file files/title-buttons/button-unmax-icon-unfocused.png \
     path=usr/share/themes/nimbus/gtk-3.0/assets/title-buttons/button-unmax-icon-unfocused.png
 file files/title-buttons/button-unmax-icon.png \
     path=usr/share/themes/nimbus/gtk-3.0/assets/title-buttons/button-unmax-icon.png
+file $(NORMAL)/gtk-3.0/gtk-dark.css \
+    path=usr/share/themes/nimbus/gtk-3.0/gtk-dark.css
+file $(NORMAL)/gtk-3.0/gtk-light.css \
+    path=usr/share/themes/nimbus/gtk-3.0/gtk-light.css
 file $(NORMAL)/gtk-3.0/gtk-widgets-assets.css \
     path=usr/share/themes/nimbus/gtk-3.0/gtk-widgets-assets.css
 file $(NORMAL)/gtk-3.0/gtk-widgets.css \

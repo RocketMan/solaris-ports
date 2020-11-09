@@ -51,6 +51,9 @@ publish: download unpack patch
 include $(WS_MAKE_RULES)/common.mk
 
 $(SOURCE_DIR)/.patched:  $(SOURCE_DIR_1)/.patched $(SOURCE_DIR_2)/.patched
+	$(GSED) 's/@import url("/@import url("..\/..\/light-nimbus\/gtk-3.0\//' $(SOURCE_DIR_1)/gtk-3.0/gtk.css > $(SOURCE_DIR)/gtk-3.0/gtk-light.css
+	$(GSED) 's/@import url("/@import url("..\/..\/dark-nimbus\/gtk-3.0\//' $(SOURCE_DIR_2)/gtk-3.0/gtk.css > $(SOURCE_DIR)/gtk-3.0/gtk-dark.css
+	$(TOUCH) $(@)
 
 $(SOURCE_DIR_1)/.patched:	$(SOURCE_DIR_1)/.unpacked
 	$(GPATCH) -d $(@D) $(GPATCH_FLAGS) < \
