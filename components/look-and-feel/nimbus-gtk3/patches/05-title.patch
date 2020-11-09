@@ -1,0 +1,11 @@
+--- a/gtk-3.0/gtk-widgets.css	2020-04-14 15:22:39.769059805 +0000
++++ b/gtk-3.0/gtk-widgets.css	2020-11-09 13:22:54.182453227 +0000
+@@ -2583,7 +2583,7 @@
+ /* pantheon photos label fix */
+ headerbar .title {
+     font-weight: bold;
+-    padding: 0 12px;
++    padding: 6px 12px;
+ }
+ 
+ headerbar .subtitle {
