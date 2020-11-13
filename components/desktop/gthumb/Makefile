@@ -40,6 +40,7 @@ COMPONENT_ANITYA_ID=	1270
 PATH=$(GNUBIN):$(USRBINDIR)
 
 CFLAGS += -D__EXTENSIONS__ -D_XOPEN_SOURCE=600 -D_XPG6
+CPPFLAGS += -I/usr/include/lcms2
 
 BUILD_STYLE = meson
 include $(WS_MAKE_RULES)/common.mk
@@ -66,6 +67,7 @@ REQUIRED_PACKAGES += library/desktop/webkitgtk4
 REQUIRED_PACKAGES += library/glib2
 REQUIRED_PACKAGES += library/gnome/libsecret
 REQUIRED_PACKAGES += library/json-glib
+REQUIRED_PACKAGES += library/lcms2
 REQUIRED_PACKAGES += library/libsoup
 REQUIRED_PACKAGES += library/zlib
 REQUIRED_PACKAGES += system/library/gcc/gcc-c-runtime
