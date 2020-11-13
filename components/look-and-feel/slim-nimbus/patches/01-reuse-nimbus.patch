@@ -1,0 +1,115 @@
+diff --git a/Makefile.am b/Makefile.am
+index 50f61d8..23a4df5 100644
+--- a/Makefile.am
++++ b/Makefile.am
+@@ -2,7 +2,7 @@
+ 
+ AUTOMAKE_OPTIONS = dist-bzip2
+ 
+-SUBDIRS=gtk-engine metacity icons po
++SUBDIRS=gtk-engine metacity po
+ 
+ themedir = $(datadir)/themes/$(PACKAGE)/
+ darkthemedir = $(datadir)/themes/$(PACKAGE)-dark/
+diff --git a/dark-index.theme.in b/dark-index.theme.in
+index 8e6c5c8..cc26f0b 100644
+--- a/dark-index.theme.in
++++ b/dark-index.theme.in
+@@ -6,6 +6,6 @@ Encoding=UTF-8
+ 
+ [X-GNOME-Metatheme]
+ GtkTheme=slim-nimbus-dark
+-IconTheme=slim-nimbus
++IconTheme=nimbus
+ MetacityTheme=slim-nimbus-dark
+ CursorTheme=DMZ-White
+diff --git a/gtk-engine/gtk-2.0/dark-gtkrc b/gtk-engine/gtk-2.0/dark-gtkrc
+index eae818a..c4b2b6e 100644
+--- a/gtk-engine/gtk-2.0/dark-gtkrc
++++ b/gtk-engine/gtk-2.0/dark-gtkrc
+@@ -18,7 +18,7 @@ style "dark-defaut"
+   base[NORMAL]	    = "white"
+   text[NORMAL]	    = "black"
+   text[INSENSITIVE] = "#798295"
+-  engine "slimnimbus"
++  engine "nimbus"
+   {
+     dark_theme 
+   }
+@@ -53,7 +53,7 @@ style "test"
+ 
+   base[NORMAL]	    = "red"
+   text[NORMAL]	    = "red"
+-  engine "slimnimbus"
++  engine "nimbus"
+   {
+     dark_theme 
+   }
+diff --git a/gtk-engine/gtk-2.0/gtkrc b/gtk-engine/gtk-2.0/gtkrc
+index 748dcab..72b00c5 100644
+--- a/gtk-engine/gtk-2.0/gtkrc
++++ b/gtk-engine/gtk-2.0/gtkrc
+@@ -8,7 +8,7 @@ style "default"
+   bg[INSENSITIVE]   = "#efebe5" 
+   bg[ACTIVE]        = "#bec1c7" 
+ 
+-  engine "slimnimbus"
++  engine "nimbus"
+     {
+     }
+ }
+@@ -20,7 +20,7 @@ style "entry"  = "default"
+   bg[INSENSITIVE] = "#dee0e5"
+   base[INSENSITIVE] = "#dee0e5"
+   base[SELECTED] = "#0e5a8f"
+-  engine "slimnimbus"
++  engine "nimbus"
+   {
+   }
+ }
+diff --git a/gtk-engine/gtk-2.0/light-gtkrc b/gtk-engine/gtk-2.0/light-gtkrc
+index 90cc1bd..21be1be 100644
+--- a/gtk-engine/gtk-2.0/light-gtkrc
++++ b/gtk-engine/gtk-2.0/light-gtkrc
+@@ -8,7 +8,7 @@ style "default"
+   bg[INSENSITIVE]   = "#efebe5" 
+   bg[ACTIVE]        = "#bec1c7" 
+ 
+-  engine "slimnimbus"
++  engine "nimbus"
+     {
+       light_theme
+     }
+@@ -21,7 +21,7 @@ style "entry"  = "default"
+   bg[INSENSITIVE] = "#dee0e5"
+   base[INSENSITIVE] = "#dee0e5"
+   base[SELECTED] = "#0e5a8f"
+-  engine "slimnimbus"
++  engine "nimbus"
+   {
+       light_theme
+   }
+diff --git a/index.theme.in b/index.theme.in
+index 3f62057..2c04e94 100644
+--- a/index.theme.in
++++ b/index.theme.in
+@@ -6,6 +6,6 @@ Encoding=UTF-8
+ 
+ [X-GNOME-Metatheme]
+ GtkTheme=slim-nimbus
+-IconTheme=slim-nimbus
++IconTheme=nimbus
+ MetacityTheme=slim-nimbus
+ CursorTheme=DMZ-White
+diff --git a/light-index.theme.in b/light-index.theme.in
+index 13e24aa..fa644be 100644
+--- a/light-index.theme.in
++++ b/light-index.theme.in
+@@ -6,6 +6,6 @@ Encoding=UTF-8
+ 
+ [X-GNOME-Metatheme]
+ GtkTheme=slim-nimbus-light
+-IconTheme=slim-nimbus
++IconTheme=nimbus
+ MetacityTheme=slim-nimbus-light
+ CursorTheme=DMZ-White
