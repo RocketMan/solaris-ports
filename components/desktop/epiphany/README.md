@@ -15,11 +15,11 @@ the relevant lines in the Makefile to use it.
 Performance is decent relative to Firefox.  Compare the results of the
 JetStream test:
 
-### GNOME Web 3.30.4 powered by WebKitGTK+ 2.29.0 (SVN) (64-bits)
+### GNOME Web 3.30.5 powered by WebKitGTK+ 2.31.0 (SVN) (64-bits)
 ![screenshot](https://raw.githubusercontent.com/RocketMan/solaris-ports/master/components/desktop/epiphany/screenshot-epiphany.png "Epiphany/WebKitGTK+")
-(Shown using the [nimbus-gtk3](../../look-and-feel/nimbus-gtk3/)
+(Shown using the [slim-nimbus](../../look-and-feel/slim-nimbus/)
 theme, available in this repo.)
 
-### Firefox 68.3.0 ESR (64-bits)
-![screenshot](https://raw.githubusercontent.com/RocketMan/solaris-ports/master/components/desktop/epiphany/screenshot-firefox-68.3.0.png "Firefox 68.3.0esr")
+### Firefox 78.5.0 ESR (64-bits)
+![screenshot](https://raw.githubusercontent.com/RocketMan/solaris-ports/master/components/desktop/epiphany/screenshot-firefox.png "Firefox 78.5.0esr")
 (Shown using the [firefox-nimbus-theme](https://github.com/RocketMan/firefox-nimbus-theme).)

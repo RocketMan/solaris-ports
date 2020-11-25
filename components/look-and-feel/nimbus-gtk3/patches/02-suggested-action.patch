@@ -1,7 +1,0 @@
---- a/gtk-3.0/gtk.css	2018-09-06 15:54:59.005517735 +0000
-+++ b/gtk-3.0/gtk.css	2018-09-06 15:55:24.184140762 +0000
-@@ -103,3 +103,4 @@
- @import url("apps/gnome-terminal.css");
- @import url("apps/gnome-flashback.css");
- @import url("apps/desktop.css");
-+@import url("suggested-action.css");
