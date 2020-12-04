@@ -35,161 +35,85 @@ set name=info.source-url value=$(COMPONENT_ARCHIVE_URL)
 set name=info.upstream-url value=$(COMPONENT_PROJECT_URL)
 set name=org.opensolaris.consolidation value=$(CONSOLIDATION)
 link path=usr/bin/gnome-weather \
-    target=../share/org.gnome.Weather/org.gnome.Weather.Application
-file usr/share/applications/org.gnome.Weather.Application.desktop \
-    path=usr/share/applications/org.gnome.Weather.Application.desktop
-file usr/share/dbus-1/services/org.gnome.Weather.Application.service \
-    path=usr/share/dbus-1/services/org.gnome.Weather.Application.service
-file usr/share/dbus-1/services/org.gnome.Weather.BackgroundService.service \
-    path=usr/share/dbus-1/services/org.gnome.Weather.BackgroundService.service
-file usr/share/glib-2.0/schemas/org.gnome.Weather.Application.gschema.xml \
-    path=usr/share/glib-2.0/schemas/org.gnome.Weather.Application.gschema.xml
-file usr/share/gnome-shell/search-providers/org.gnome.Weather.Application.search-provider.ini \
-    path=usr/share/gnome-shell/search-providers/org.gnome.Weather.Application.search-provider.ini
-file usr/share/icons/hicolor/16x16/apps/org.gnome.Weather.png \
-    path=usr/share/icons/hicolor/16x16/apps/org.gnome.Weather.png
-file usr/share/icons/hicolor/22x22/apps/org.gnome.Weather.png \
-    path=usr/share/icons/hicolor/22x22/apps/org.gnome.Weather.png
-file usr/share/icons/hicolor/256x256/apps/org.gnome.Weather.png \
-    path=usr/share/icons/hicolor/256x256/apps/org.gnome.Weather.png
-file usr/share/icons/hicolor/32x32/apps/org.gnome.Weather.png \
-    path=usr/share/icons/hicolor/32x32/apps/org.gnome.Weather.png
-file usr/share/icons/hicolor/48x48/apps/org.gnome.Weather.png \
-    path=usr/share/icons/hicolor/48x48/apps/org.gnome.Weather.png
-file usr/share/icons/hicolor/symbolic/apps/org.gnome.Weather-symbolic.svg \
-    path=usr/share/icons/hicolor/symbolic/apps/org.gnome.Weather-symbolic.svg
-file usr/share/locale/an/LC_MESSAGES/org.gnome.Weather.mo \
-    path=usr/share/locale/an/LC_MESSAGES/org.gnome.Weather.mo
-file usr/share/locale/ar/LC_MESSAGES/org.gnome.Weather.mo \
-    path=usr/share/locale/ar/LC_MESSAGES/org.gnome.Weather.mo
-file usr/share/locale/as/LC_MESSAGES/org.gnome.Weather.mo \
-    path=usr/share/locale/as/LC_MESSAGES/org.gnome.Weather.mo
-file usr/share/locale/be/LC_MESSAGES/org.gnome.Weather.mo \
-    path=usr/share/locale/be/LC_MESSAGES/org.gnome.Weather.mo
-file usr/share/locale/bg/LC_MESSAGES/org.gnome.Weather.mo \
-    path=usr/share/locale/bg/LC_MESSAGES/org.gnome.Weather.mo
-file usr/share/locale/bs/LC_MESSAGES/org.gnome.Weather.mo \
-    path=usr/share/locale/bs/LC_MESSAGES/org.gnome.Weather.mo
-file usr/share/locale/ca/LC_MESSAGES/org.gnome.Weather.mo \
-    path=usr/share/locale/ca/LC_MESSAGES/org.gnome.Weather.mo
-file usr/share/locale/ca@valencia/LC_MESSAGES/org.gnome.Weather.mo \
-    path=usr/share/locale/ca@valencia/LC_MESSAGES/org.gnome.Weather.mo
-file usr/share/locale/cs/LC_MESSAGES/org.gnome.Weather.mo \
-    path=usr/share/locale/cs/LC_MESSAGES/org.gnome.Weather.mo
-file usr/share/locale/da/LC_MESSAGES/org.gnome.Weather.mo \
-    path=usr/share/locale/da/LC_MESSAGES/org.gnome.Weather.mo
-file usr/share/locale/de/LC_MESSAGES/org.gnome.Weather.mo \
-    path=usr/share/locale/de/LC_MESSAGES/org.gnome.Weather.mo
-file usr/share/locale/el/LC_MESSAGES/org.gnome.Weather.mo \
-    path=usr/share/locale/el/LC_MESSAGES/org.gnome.Weather.mo
-file usr/share/locale/en_GB/LC_MESSAGES/org.gnome.Weather.mo \
-    path=usr/share/locale/en_GB/LC_MESSAGES/org.gnome.Weather.mo
-file usr/share/locale/eo/LC_MESSAGES/org.gnome.Weather.mo \
-    path=usr/share/locale/eo/LC_MESSAGES/org.gnome.Weather.mo
-file usr/share/locale/es/LC_MESSAGES/org.gnome.Weather.mo \
-    path=usr/share/locale/es/LC_MESSAGES/org.gnome.Weather.mo
-file usr/share/locale/et/LC_MESSAGES/org.gnome.Weather.mo \
-    path=usr/share/locale/et/LC_MESSAGES/org.gnome.Weather.mo
-file usr/share/locale/eu/LC_MESSAGES/org.gnome.Weather.mo \
-    path=usr/share/locale/eu/LC_MESSAGES/org.gnome.Weather.mo
-file usr/share/locale/fa/LC_MESSAGES/org.gnome.Weather.mo \
-    path=usr/share/locale/fa/LC_MESSAGES/org.gnome.Weather.mo
-file usr/share/locale/fi/LC_MESSAGES/org.gnome.Weather.mo \
-    path=usr/share/locale/fi/LC_MESSAGES/org.gnome.Weather.mo
-file usr/share/locale/fr/LC_MESSAGES/org.gnome.Weather.mo \
-    path=usr/share/locale/fr/LC_MESSAGES/org.gnome.Weather.mo
-file usr/share/locale/fur/LC_MESSAGES/org.gnome.Weather.mo \
-    path=usr/share/locale/fur/LC_MESSAGES/org.gnome.Weather.mo
-file usr/share/locale/ga/LC_MESSAGES/org.gnome.Weather.mo \
-    path=usr/share/locale/ga/LC_MESSAGES/org.gnome.Weather.mo
-file usr/share/locale/gd/LC_MESSAGES/org.gnome.Weather.mo \
-    path=usr/share/locale/gd/LC_MESSAGES/org.gnome.Weather.mo
-file usr/share/locale/gl/LC_MESSAGES/org.gnome.Weather.mo \
-    path=usr/share/locale/gl/LC_MESSAGES/org.gnome.Weather.mo
-file usr/share/locale/he/LC_MESSAGES/org.gnome.Weather.mo \
-    path=usr/share/locale/he/LC_MESSAGES/org.gnome.Weather.mo
-file usr/share/locale/hu/LC_MESSAGES/org.gnome.Weather.mo \
-    path=usr/share/locale/hu/LC_MESSAGES/org.gnome.Weather.mo
-file usr/share/locale/id/LC_MESSAGES/org.gnome.Weather.mo \
-    path=usr/share/locale/id/LC_MESSAGES/org.gnome.Weather.mo
-file usr/share/locale/is/LC_MESSAGES/org.gnome.Weather.mo \
-    path=usr/share/locale/is/LC_MESSAGES/org.gnome.Weather.mo
-file usr/share/locale/it/LC_MESSAGES/org.gnome.Weather.mo \
-    path=usr/share/locale/it/LC_MESSAGES/org.gnome.Weather.mo
-file usr/share/locale/ja/LC_MESSAGES/org.gnome.Weather.mo \
-    path=usr/share/locale/ja/LC_MESSAGES/org.gnome.Weather.mo
-file usr/share/locale/kk/LC_MESSAGES/org.gnome.Weather.mo \
-    path=usr/share/locale/kk/LC_MESSAGES/org.gnome.Weather.mo
-file usr/share/locale/kn/LC_MESSAGES/org.gnome.Weather.mo \
-    path=usr/share/locale/kn/LC_MESSAGES/org.gnome.Weather.mo
-file usr/share/locale/ko/LC_MESSAGES/org.gnome.Weather.mo \
-    path=usr/share/locale/ko/LC_MESSAGES/org.gnome.Weather.mo
-file usr/share/locale/lt/LC_MESSAGES/org.gnome.Weather.mo \
-    path=usr/share/locale/lt/LC_MESSAGES/org.gnome.Weather.mo
-file usr/share/locale/lv/LC_MESSAGES/org.gnome.Weather.mo \
-    path=usr/share/locale/lv/LC_MESSAGES/org.gnome.Weather.mo
-file usr/share/locale/ml/LC_MESSAGES/org.gnome.Weather.mo \
-    path=usr/share/locale/ml/LC_MESSAGES/org.gnome.Weather.mo
-file usr/share/locale/nb/LC_MESSAGES/org.gnome.Weather.mo \
-    path=usr/share/locale/nb/LC_MESSAGES/org.gnome.Weather.mo
-file usr/share/locale/ne/LC_MESSAGES/org.gnome.Weather.mo \
-    path=usr/share/locale/ne/LC_MESSAGES/org.gnome.Weather.mo
-file usr/share/locale/nl/LC_MESSAGES/org.gnome.Weather.mo \
-    path=usr/share/locale/nl/LC_MESSAGES/org.gnome.Weather.mo
-file usr/share/locale/oc/LC_MESSAGES/org.gnome.Weather.mo \
-    path=usr/share/locale/oc/LC_MESSAGES/org.gnome.Weather.mo
-file usr/share/locale/pa/LC_MESSAGES/org.gnome.Weather.mo \
-    path=usr/share/locale/pa/LC_MESSAGES/org.gnome.Weather.mo
-file usr/share/locale/pl/LC_MESSAGES/org.gnome.Weather.mo \
-    path=usr/share/locale/pl/LC_MESSAGES/org.gnome.Weather.mo
-file usr/share/locale/pt/LC_MESSAGES/org.gnome.Weather.mo \
-    path=usr/share/locale/pt/LC_MESSAGES/org.gnome.Weather.mo
-file usr/share/locale/pt_BR/LC_MESSAGES/org.gnome.Weather.mo \
-    path=usr/share/locale/pt_BR/LC_MESSAGES/org.gnome.Weather.mo
-file usr/share/locale/ro/LC_MESSAGES/org.gnome.Weather.mo \
-    path=usr/share/locale/ro/LC_MESSAGES/org.gnome.Weather.mo
-file usr/share/locale/ru/LC_MESSAGES/org.gnome.Weather.mo \
-    path=usr/share/locale/ru/LC_MESSAGES/org.gnome.Weather.mo
-file usr/share/locale/sk/LC_MESSAGES/org.gnome.Weather.mo \
-    path=usr/share/locale/sk/LC_MESSAGES/org.gnome.Weather.mo
-file usr/share/locale/sl/LC_MESSAGES/org.gnome.Weather.mo \
-    path=usr/share/locale/sl/LC_MESSAGES/org.gnome.Weather.mo
-file usr/share/locale/sr/LC_MESSAGES/org.gnome.Weather.mo \
-    path=usr/share/locale/sr/LC_MESSAGES/org.gnome.Weather.mo
-file usr/share/locale/sr@latin/LC_MESSAGES/org.gnome.Weather.mo \
-    path=usr/share/locale/sr@latin/LC_MESSAGES/org.gnome.Weather.mo
-file usr/share/locale/sv/LC_MESSAGES/org.gnome.Weather.mo \
-    path=usr/share/locale/sv/LC_MESSAGES/org.gnome.Weather.mo
-file usr/share/locale/te/LC_MESSAGES/org.gnome.Weather.mo \
-    path=usr/share/locale/te/LC_MESSAGES/org.gnome.Weather.mo
-file usr/share/locale/tg/LC_MESSAGES/org.gnome.Weather.mo \
-    path=usr/share/locale/tg/LC_MESSAGES/org.gnome.Weather.mo
-file usr/share/locale/th/LC_MESSAGES/org.gnome.Weather.mo \
-    path=usr/share/locale/th/LC_MESSAGES/org.gnome.Weather.mo
-file usr/share/locale/tr/LC_MESSAGES/org.gnome.Weather.mo \
-    path=usr/share/locale/tr/LC_MESSAGES/org.gnome.Weather.mo
-file usr/share/locale/uk/LC_MESSAGES/org.gnome.Weather.mo \
-    path=usr/share/locale/uk/LC_MESSAGES/org.gnome.Weather.mo
-file usr/share/locale/vi/LC_MESSAGES/org.gnome.Weather.mo \
-    path=usr/share/locale/vi/LC_MESSAGES/org.gnome.Weather.mo
-file usr/share/locale/zh_CN/LC_MESSAGES/org.gnome.Weather.mo \
-    path=usr/share/locale/zh_CN/LC_MESSAGES/org.gnome.Weather.mo
-file usr/share/locale/zh_HK/LC_MESSAGES/org.gnome.Weather.mo \
-    path=usr/share/locale/zh_HK/LC_MESSAGES/org.gnome.Weather.mo
-file usr/share/locale/zh_TW/LC_MESSAGES/org.gnome.Weather.mo \
-    path=usr/share/locale/zh_TW/LC_MESSAGES/org.gnome.Weather.mo
-file usr/share/org.gnome.Weather/org.gnome.Weather.Application \
-    path=usr/share/org.gnome.Weather/org.gnome.Weather.Application mode=0555
-file usr/share/org.gnome.Weather/org.gnome.Weather.Application.data.gresource \
-    path=usr/share/org.gnome.Weather/org.gnome.Weather.Application.data.gresource
-file usr/share/org.gnome.Weather/org.gnome.Weather.Application.src.gresource \
-    path=usr/share/org.gnome.Weather/org.gnome.Weather.Application.src.gresource
-file usr/share/org.gnome.Weather/org.gnome.Weather.BackgroundService \
-    path=usr/share/org.gnome.Weather/org.gnome.Weather.BackgroundService
-file usr/share/org.gnome.Weather/org.gnome.Weather.BackgroundService.data.gresource \
-    path=usr/share/org.gnome.Weather/org.gnome.Weather.BackgroundService.data.gresource
-file usr/share/org.gnome.Weather/org.gnome.Weather.BackgroundService.src.gresource \
-    path=usr/share/org.gnome.Weather/org.gnome.Weather.BackgroundService.src.gresource
+    target=../share/org.gnome.Weather/org.gnome.Weather
+file path=usr/share/applications/org.gnome.Weather.desktop
+file path=usr/share/dbus-1/services/org.gnome.Weather.BackgroundService.service
+file path=usr/share/dbus-1/services/org.gnome.Weather.service
+file path=usr/share/glib-2.0/schemas/org.gnome.Weather.gschema.xml
+file path=usr/share/gnome-shell/search-providers/org.gnome.Weather.search-provider.ini
+file path=usr/share/icons/hicolor/scalable/apps/org.gnome.Weather.svg
+file path=usr/share/icons/hicolor/symbolic/apps/org.gnome.Weather-symbolic.svg
+file path=usr/share/locale/af/LC_MESSAGES/org.gnome.Weather.mo
+file path=usr/share/locale/an/LC_MESSAGES/org.gnome.Weather.mo
+file path=usr/share/locale/ar/LC_MESSAGES/org.gnome.Weather.mo
+file path=usr/share/locale/as/LC_MESSAGES/org.gnome.Weather.mo
+file path=usr/share/locale/be/LC_MESSAGES/org.gnome.Weather.mo
+file path=usr/share/locale/bg/LC_MESSAGES/org.gnome.Weather.mo
+file path=usr/share/locale/bs/LC_MESSAGES/org.gnome.Weather.mo
+file path=usr/share/locale/ca/LC_MESSAGES/org.gnome.Weather.mo
+file path=usr/share/locale/ca@valencia/LC_MESSAGES/org.gnome.Weather.mo
+file path=usr/share/locale/cs/LC_MESSAGES/org.gnome.Weather.mo
+file path=usr/share/locale/da/LC_MESSAGES/org.gnome.Weather.mo
+file path=usr/share/locale/de/LC_MESSAGES/org.gnome.Weather.mo
+file path=usr/share/locale/el/LC_MESSAGES/org.gnome.Weather.mo
+file path=usr/share/locale/en_GB/LC_MESSAGES/org.gnome.Weather.mo
+file path=usr/share/locale/eo/LC_MESSAGES/org.gnome.Weather.mo
+file path=usr/share/locale/es/LC_MESSAGES/org.gnome.Weather.mo
+file path=usr/share/locale/et/LC_MESSAGES/org.gnome.Weather.mo
+file path=usr/share/locale/eu/LC_MESSAGES/org.gnome.Weather.mo
+file path=usr/share/locale/fa/LC_MESSAGES/org.gnome.Weather.mo
+file path=usr/share/locale/fi/LC_MESSAGES/org.gnome.Weather.mo
+file path=usr/share/locale/fr/LC_MESSAGES/org.gnome.Weather.mo
+file path=usr/share/locale/fur/LC_MESSAGES/org.gnome.Weather.mo
+file path=usr/share/locale/ga/LC_MESSAGES/org.gnome.Weather.mo
+file path=usr/share/locale/gd/LC_MESSAGES/org.gnome.Weather.mo
+file path=usr/share/locale/gl/LC_MESSAGES/org.gnome.Weather.mo
+file path=usr/share/locale/he/LC_MESSAGES/org.gnome.Weather.mo
+file path=usr/share/locale/hr/LC_MESSAGES/org.gnome.Weather.mo
+file path=usr/share/locale/hu/LC_MESSAGES/org.gnome.Weather.mo
+file path=usr/share/locale/id/LC_MESSAGES/org.gnome.Weather.mo
+file path=usr/share/locale/is/LC_MESSAGES/org.gnome.Weather.mo
+file path=usr/share/locale/it/LC_MESSAGES/org.gnome.Weather.mo
+file path=usr/share/locale/ja/LC_MESSAGES/org.gnome.Weather.mo
+file path=usr/share/locale/kk/LC_MESSAGES/org.gnome.Weather.mo
+file path=usr/share/locale/kn/LC_MESSAGES/org.gnome.Weather.mo
+file path=usr/share/locale/ko/LC_MESSAGES/org.gnome.Weather.mo
+file path=usr/share/locale/lt/LC_MESSAGES/org.gnome.Weather.mo
+file path=usr/share/locale/lv/LC_MESSAGES/org.gnome.Weather.mo
+file path=usr/share/locale/mjw/LC_MESSAGES/org.gnome.Weather.mo
+file path=usr/share/locale/ml/LC_MESSAGES/org.gnome.Weather.mo
+file path=usr/share/locale/nb/LC_MESSAGES/org.gnome.Weather.mo
+file path=usr/share/locale/ne/LC_MESSAGES/org.gnome.Weather.mo
+file path=usr/share/locale/nl/LC_MESSAGES/org.gnome.Weather.mo
+file path=usr/share/locale/oc/LC_MESSAGES/org.gnome.Weather.mo
+file path=usr/share/locale/pa/LC_MESSAGES/org.gnome.Weather.mo
+file path=usr/share/locale/pl/LC_MESSAGES/org.gnome.Weather.mo
+file path=usr/share/locale/pt/LC_MESSAGES/org.gnome.Weather.mo
+file path=usr/share/locale/pt_BR/LC_MESSAGES/org.gnome.Weather.mo
+file path=usr/share/locale/ro/LC_MESSAGES/org.gnome.Weather.mo
+file path=usr/share/locale/ru/LC_MESSAGES/org.gnome.Weather.mo
+file path=usr/share/locale/sk/LC_MESSAGES/org.gnome.Weather.mo
+file path=usr/share/locale/sl/LC_MESSAGES/org.gnome.Weather.mo
+file path=usr/share/locale/sr/LC_MESSAGES/org.gnome.Weather.mo
+file path=usr/share/locale/sr@latin/LC_MESSAGES/org.gnome.Weather.mo
+file path=usr/share/locale/sv/LC_MESSAGES/org.gnome.Weather.mo
+file path=usr/share/locale/ta/LC_MESSAGES/org.gnome.Weather.mo
+file path=usr/share/locale/te/LC_MESSAGES/org.gnome.Weather.mo
+file path=usr/share/locale/tg/LC_MESSAGES/org.gnome.Weather.mo
+file path=usr/share/locale/th/LC_MESSAGES/org.gnome.Weather.mo
+file path=usr/share/locale/tr/LC_MESSAGES/org.gnome.Weather.mo
+file path=usr/share/locale/uk/LC_MESSAGES/org.gnome.Weather.mo
+file path=usr/share/locale/vi/LC_MESSAGES/org.gnome.Weather.mo
+file path=usr/share/locale/zh_CN/LC_MESSAGES/org.gnome.Weather.mo
+file path=usr/share/locale/zh_HK/LC_MESSAGES/org.gnome.Weather.mo
+file path=usr/share/locale/zh_TW/LC_MESSAGES/org.gnome.Weather.mo
+file path=usr/share/metainfo/org.gnome.Weather.appdata.xml
+file path=usr/share/org.gnome.Weather/org.gnome.Weather mode=0555
+file path=usr/share/org.gnome.Weather/org.gnome.Weather.BackgroundService
+file path=usr/share/org.gnome.Weather/org.gnome.Weather.BackgroundService.data.gresource
+file path=usr/share/org.gnome.Weather/org.gnome.Weather.BackgroundService.src.gresource
+file path=usr/share/org.gnome.Weather/org.gnome.Weather.data.gresource
+file path=usr/share/org.gnome.Weather/org.gnome.Weather.src.gresource
 license COPYING license=GPLv2
 depend type=require fmri=pkg:/library/desktop/geoclue
 depend type=require fmri=pkg:/library/desktop/geocode-glib

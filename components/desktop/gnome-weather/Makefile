@@ -28,19 +28,17 @@ COMPILER =		gcc
 include ../../../make-rules/shared-macros.mk
 
 COMPONENT_NAME=		gnome-weather
-COMPONENT_VERSION=	3.24.0
+COMPONENT_VERSION=	3.34.0
 COMPONENT_SRC=		$(COMPONENT_NAME)-$(GIT_COMMIT_ID)
 COMPONENT_ARCHIVE_URL=	$(GIT_REPO)/archive/$(GIT_COMMIT_ID).tar.gz
 GIT_REPO=		https://github.com/GNOME/gnome-weather
-GIT_COMMIT_ID=		3.24.0
+GIT_COMMIT_ID=		3.34.0
 COMPONENT_PROJECT_URL=	https://wiki.gnome.org/Apps/Weather
 COMPONENT_ANITYA_ID=	9546
 
-PATH=$(GNUBIN):$(USRBINDIR)
+BUILD_STYLE=		meson
 
-COMPONENT_PREP_ACTION = \
-	(cd $(@D) ; \
-	NOCONFIGURE=1 ./autogen.sh ; )
+PATH=$(GNUBIN):$(USRBINDIR)
 
 include $(WS_MAKE_RULES)/common.mk
 

@@ -1,6 +1,6 @@
---- a/src/app/city.js	2017-03-19 21:02:20.000000000 +0000
-+++ b/src/app/city.js	2018-11-29 10:47:50.285509658 +0000
-@@ -179,7 +179,7 @@
+--- gnome-weather-3.34.0/src/app/city.js	2019-09-25 00:42:45.000000000 +0000
++++ gnome-weather-3.34.0/src/app/city.js	2020-12-04 17:32:49.979254032 +0000
+@@ -176,7 +176,7 @@
          this._conditionsLabel.label = Util.getWeatherConditions(info);
          this._temperatureLabel.label = info.get_temp_summary();
  
@@ -9,9 +9,9 @@
          let context = this._contentFrame.get_style_context();
          if (this._currentStyle)
              context.remove_class(this._currentStyle);
---- a/src/app/forecast.js	2017-03-19 21:02:20.000000000 +0000
-+++ b/src/app/forecast.js	2018-11-29 10:48:02.883242146 +0000
-@@ -134,7 +134,7 @@
+--- gnome-weather-3.34.0/src/app/forecast.js	2019-09-25 00:42:45.000000000 +0000
++++ gnome-weather-3.34.0/src/app/forecast.js	2020-12-04 17:33:01.117200588 +0000
+@@ -139,7 +139,7 @@
                                      visible: true });
          this._grid.attach(label, col, 0, 1, 1);
  
@@ -20,9 +20,9 @@
                                      pixel_size: 32,
                                      margin_start: 10,
                                      margin_end: 10,
---- a/src/app/weeklyForecast.js	2017-03-19 21:02:20.000000000 +0000
-+++ b/src/app/weeklyForecast.js	2018-11-29 10:48:15.248652170 +0000
-@@ -130,7 +130,7 @@
+--- gnome-weather-3.34.0/src/app/weeklyForecast.js	2019-09-25 00:42:45.000000000 +0000
++++ gnome-weather-3.34.0/src/app/weeklyForecast.js	2020-12-04 17:33:30.484974431 +0000
+@@ -129,7 +129,7 @@
                                          visible: true });
              grid.attach(label, 0, 0, 2, 1);
  
@@ -31,19 +31,19 @@
                                          icon_size: Gtk.IconSize.DIALOG,
                                          use_fallback: true,
                                          halign: Gtk.Align.START,
---- a/src/app/world.js	2017-03-19 21:02:20.000000000 +0000
-+++ b/src/app/world.js	2018-11-29 10:48:28.286710275 +0000
-@@ -208,7 +208,7 @@
+--- gnome-weather-3.34.0/src/app/world.js	2019-09-25 00:42:45.000000000 +0000
++++ gnome-weather-3.34.0/src/app/world.js	2020-12-04 17:33:44.379311567 +0000
+@@ -212,7 +212,7 @@
  
-         info._updatedId = info.connect('updated', Lang.bind(this, function(info) {
+         info._updatedId = info.connect('updated', (info) => {
              tempLabel.label = info.get_temp_summary();
 -            image.icon_name = info.get_symbolic_icon_name();
 +            image.icon_name = info.get_icon_name();
-         }));
+         });
  
          this._syncStackPopover();
---- a/data/application.css	2017-03-19 21:02:20.000000000 +0000
-+++ b/data/application.css	2018-11-29 14:51:02.895667857 +0000
+--- gnome-weather-3.34.0/data/application.css	2019-09-25 00:42:45.000000000 +0000
++++ gnome-weather-3.34.0/data/application.css	2020-12-04 17:37:03.980849292 +0000
 @@ -4,7 +4,7 @@
  }
  
@@ -151,9 +151,9 @@
 -}
 \ No newline at end of file
 +}
---- a/data/org.gnome.Weather.Application.data.gresource.xml	2017-03-19 21:02:20.000000000 +0000
-+++ b/data/org.gnome.Weather.Application.data.gresource.xml	2018-11-29 14:53:06.944215860 +0000
-@@ -7,14 +7,5 @@
+--- gnome-weather-3.34.0/data/org.gnome.Weather.data.gresource.xml	2019-09-25 00:42:45.000000000 +0000
++++ gnome-weather-3.34.0/data/org.gnome.Weather.data.gresource.xml	2020-12-04 17:38:04.657243884 +0000
+@@ -7,15 +7,6 @@
      <file preprocess="xml-stripblanks">weather-widget.ui</file>
      <file preprocess="xml-stripblanks">window.ui</file>
      <file>application.css</file>
@@ -167,4 +167,5 @@
 -    <file>weather-snow.jpg</file>
 -    <file>weather-storm.jpg</file>
    </gresource>
- </gresources>
+   <gresource prefix="/org/gnome/shell">
+     <file>ShellWeatherIntegration.xml</file>

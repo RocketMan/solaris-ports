@@ -1,38 +1,6 @@
---- a/configure.ac	2017-03-19 21:02:20.000000000 +0000
-+++ b/configure.ac	2018-11-28 16:18:52.174650047 +0000
-@@ -5,7 +5,6 @@
- 	[https://wiki.gnome.org/Apps/Weather])
- 
- AC_CONFIG_MACRO_DIR([m4])
--AX_IS_RELEASE([minor-version])
- 
- AM_INIT_AUTOMAKE([1.12 dist-xz no-dist-gzip foreign tar-ustar no-define serial-tests -Wno-portability])
- # revert automake using PACKAGE_TARNAME instead of PACKAGE_NAME
-@@ -20,11 +20,7 @@
- 
- PKG_PROG_PKG_CONFIG([0.22])
- 
--AX_REQUIRE_DEFINED([APPSTREAM_XML])
--APPSTREAM_XML
--AX_REQUIRE_DEFINED([GLIB_GSETTINGS])
- GLIB_GSETTINGS
--AX_REQUIRE_DEFINED([GOBJECT_INTROSPECTION_REQUIRE])
- GOBJECT_INTROSPECTION_REQUIRE([1.35.9])
- GJS_MIN_VERSION=1.39.91
- PKG_CHECK_MODULES([DEPS], [gdk-3.0
---- a/data/Makefile.am	2017-03-19 21:02:20.000000000 +0000
-+++ b/data/Makefile.am	2018-11-28 16:22:36.130256453 +0000
-@@ -23,7 +23,6 @@
- 
- appstream_XML = $(PACKAGE_NAME).appdata.xml
- 
--@APPSTREAM_XML_RULES@
- @INTLTOOL_XML_RULE@
- 
- $(PACKAGE_NAME).Application.service: $(PACKAGE_NAME).Application.service.in
---- a/src/app/window.js	2017-03-19 21:02:20.000000000 +0000
-+++ b/src/app/window.js	2018-11-28 19:07:17.590348217 +0000
-@@ -232,7 +232,6 @@
+--- gnome-weather-3.34.0/src/app/window.js	2020-12-04 17:47:54.558360800 +0000
++++ gnome-weather-3.34.0/src/app/window.js	2019-09-25 00:42:45.000000000 +0000
+@@ -261,7 +261,6 @@
                wrap_license: true,
                modal: true,
                transient_for: this,
