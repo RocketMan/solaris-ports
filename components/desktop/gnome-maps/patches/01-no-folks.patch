@@ -1,117 +1,121 @@
---- a/configure.ac	2017-10-30 20:43:05.000000000 +0000
-+++ b/configure.ac	2019-09-13 13:52:02.044013062 +0000
-@@ -40,7 +40,6 @@
-     geoclue-2.0                  >= $GEOCLUE_MIN_VERSION
- ])
+--- gnome-maps-3.38.2/meson.build	2020-11-21 13:24:04.000000000 +0000
++++ gnome-maps-3.38.2/meson.build	2020-12-04 18:07:43.999266640 +0000
+@@ -33,7 +33,6 @@
  
--FOLKS_MIN_VERSION=0.10.0
- GEE_MIN_VERSION=0.16.0
- GEOCODE_MIN_VERSION=3.15.2
- CHAMPLAIN_MIN_VERSION=0.12.14
-@@ -48,7 +47,6 @@
+ libmaps_deps = [
+ 	dependency('gee-0.8', version: '>= 0.16.0'),
+-	dependency('folks', version: '>= 0.10.0'),
+ 	dependency('geocode-glib-1.0', version: '>= 3.15.2'),
+ 	dependency('champlain-0.12', version: '>= 0.12.14'),
+ 	dependency('libxml-2.0'),
+--- gnome-maps-3.38.2/lib/meson.build	2020-11-21 13:24:04.000000000 +0000
++++ gnome-maps-3.38.2/lib/meson.build	2020-12-04 18:10:56.477688187 +0000
+@@ -1,8 +1,6 @@
+ maps_h = 'maps.h'
  
- PKG_CHECK_MODULES(GNOME_MAPS_LIB, [
-     gee-0.8                      >= $GEE_MIN_VERSION
--    folks                        >= $FOLKS_MIN_VERSION
-     geocode-glib-1.0             >= $GEOCODE_MIN_VERSION
-     champlain-0.12               >= $CHAMPLAIN_MIN_VERSION
-     libxml-2.0
---- a/src/application.js	2017-10-30 20:43:05.000000000 +0000
-+++ b/src/application.js	2019-09-13 14:25:41.479924544 +0000
-@@ -118,17 +118,6 @@
-     },
+ headers_private = files(
+-	'maps-contact.h',
+-	'maps-contact-store.h',
+ 	'maps-file-tile-source.h',
+ 	'maps-osm.h',
+ 	'maps-osm-changeset.h',
+@@ -14,8 +12,6 @@
+ )
  
-     _showContact: function(id) {
--        contactStore.lookup(id, (function(contact) {
--            this._mainWindow.markBusy();
+ sources = files(
+-	'maps-contact.c',
+-	'maps-contact-store.c',
+ 	'maps-file-tile-source.c',
+ 	'maps-osm.c',
+ 	'maps-osm-changeset.c',
+--- gnome-maps-3.38.2/src/application.js	2020-11-21 13:24:04.000000000 +0000
++++ gnome-maps-3.38.2/src/application.js	2020-12-04 18:10:08.554875218 +0000
+@@ -129,17 +129,6 @@
+     }
+ 
+     _showContact(id) {
+-        contactStore.lookup(id, (contact) => {
+-            this.mark_busy();
 -            if (!contact) {
--                this._mainWindow.unmarkBusy();
+-                this.unmark_busy();
 -                return;
 -            }
--            contact.geocode((function() {
--                this._mainWindow.unmarkBusy();
+-            contact.geocode(() => {
+-                this.unmark_busy();
 -                this._mainWindow.mapView.showContact(contact);
--            }).bind(this));
--        }).bind(this));
-     },
+-            });
+-        });
+     }
  
-     _onShowContactActivate: function(action, parameter) {
-@@ -138,14 +127,6 @@
+     _onShowContactActivate(action, parameter) {
+@@ -148,15 +137,6 @@
+         this._mainWindow.present();
  
          let id = parameter.deep_unpack();
- 
+-
 -        if (contactStore.state === Maps.ContactStoreState.LOADED) {
 -            this. _showContact(id);
 -        } else {
--            Utils.once(contactStore, 'notify::state', (function() {
+-            Utils.once(contactStore, 'notify::state', () => {
 -                if (contactStore.state === Maps.ContactStoreState.LOADED)
 -                    this._showContact(id);
--            }).bind(this));
+-            });
 -        }
-     },
+     }
  
-     _onQuitActivate: function() {
-@@ -160,19 +141,6 @@
-     },
+     _onOsmAccountSetupActivate() {
+@@ -167,29 +147,6 @@
+     }
  
-     _addContacts: function() {
--        contactStore.get_contacts().forEach(function(contact) {
--            contact.geocode(function() {
--                contact.get_places().forEach(function(p) {
+     _addContacts() {
+-        let contacts = contactStore.get_contacts();
+-
+-        this._addContactsRecursive(contacts, 0);
+-    }
+-
+-    _addContactsRecursive(contacts, index) {
+-        if (index < contacts.length) {
+-            let contact = contacts[index];
+-
+-            contact.geocode(() => {
+-                contact.get_places().forEach((p) => {
 -                    if (!p.location)
--                        return;
+-                        return
 -
 -                    Utils.debug('Adding contact address: ' + p.name);
 -                    let place = new ContactPlace.ContactPlace({ place: p,
 -                                                                contact: contact });
 -                    placeStore.addPlace(place, PlaceStore.PlaceType.CONTACT);
 -                });
+-
+-                this._addContactsRecursive(contacts, index + 1);
 -            });
--        });
-     },
+-        }
+     }
  
-     _initPlaceStore: function() {
-@@ -187,14 +155,6 @@
+     _initPlaceStore() {
+@@ -203,15 +160,6 @@
+             log('Failed to parse Maps places file, ' +
                  'subsequent writes will overwrite the file!');
          }
- 
+-
 -        if (contactStore.state === Maps.ContactStoreState.LOADED) {
 -            this._addContacts();
 -        } else {
--            Utils.once(contactStore, 'notify::state', (function() {
+-            Utils.once(contactStore, 'notify::state', () => {
 -                if (contactStore.state === Maps.ContactStoreState.LOADED)
 -                    this._addContacts();
--            }).bind(this));
+-            });
 -        }
-     },
+     }
  
-     _initAppMenu: function() {
-@@ -242,8 +202,6 @@
+     _onNightModeChange(action) {
+@@ -269,8 +217,6 @@
          networkMonitor.connect('network-changed',
                                 this._checkNetwork.bind(this));
          checkInManager = new CheckIn.CheckInManager();
 -        contactStore = new Maps.ContactStore();
 -        contactStore.load();
          osmEdit = new OSMEdit.OSMEdit();
-     },
+     }
  
---- a/lib/Makefile.am	2017-10-30 20:43:05.000000000 +0000
-+++ b/lib/Makefile.am	2019-09-13 13:54:00.148283126 +0000
-@@ -5,8 +5,6 @@
- 	maps-enum-types.h
- 
- libgnome_maps_headers_private =					\
--	maps-contact-store.h						\
--	maps-contact.h							\
- 	mapsintl.h							\
- 	maps.h								\
- 	maps-file-tile-source.h					        \
-@@ -19,8 +17,6 @@
- 	maps-osm-oauth-proxy-call.h
- 
- libgnome_maps_sources =						\
--	maps-contact-store.c						\
--	maps-contact.c							\
- 	maps-file-tile-source.c					        \
- 	maps-osm.c						        \
- 	maps-osm-changeset.c					        \

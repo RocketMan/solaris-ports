@@ -1,0 +1,181 @@
+--- gnome-maps-3.38.2/src/utils.js	2020-11-21 13:24:04.000000000 +0000
++++ gnome-maps-3.38.2/src/utils.js	2020-12-04 18:39:47.075416381 +0000
+@@ -42,11 +42,6 @@
+ // Matches all unicode stand-alone accent characters
+ const ACCENTS_REGEX = /[\u0300-\u036F]/g;
+ 
+-const _integerFormat = new Intl.NumberFormat([], { maximumFractionDigits: 0 });
+-const _integerTwoDigitFormat =
+-    new Intl.NumberFormat([], { minimumIntegerDigits: 2,
+-                                maximumFractionDigits: 0 });
+-
+ let debugInit = false;
+ let measurementSystem = null;
+ 
+@@ -297,23 +292,6 @@
+     }
+ }
+ 
+-/**
+- * Return a formatted integer number with no
+- * fraction, using locale-specific numerals
+- */
+-function formatLocaleInteger(n) {
+-    return _integerFormat.format(n);
+-}
+-
+-/**
+- * Return a formatted integer number with no
+- * fraction, using locale-specific numerals using at least two digits
+- * with possible leading 0, suitable for time rendering.
+- */
+-function formatLocaleIntegerMinimumTwoDigits(n) {
+-    return _integerTwoDigitFormat.format(n);
+-}
+-
+ function prettyTime(time) {
+     let seconds = Math.floor(time / 1000);
+     let minutes = Math.floor(seconds / 60);
+@@ -321,35 +299,14 @@
+     let hours = Math.floor(minutes / 60);
+     minutes = minutes % 60;
+ 
+-    let secondsStr = formatLocaleInteger(seconds);
+-    let minutesStr = formatLocaleInteger(minutes);
+-    let hoursStr = formatLocaleInteger(hours);
+-
+-    if (hours > 0 && minutes === 0) {
+-        /* Translators: this is a duration with only hours, using
+-         * an abbreviation for hours, corresponding to 'h' in English
+-         */
+-        return _("%s h").format(hoursStr);
+-    } else if (hours > 0) {
+-        /* Translators: this is a duration with hours and minutes parts
+-         * using abbreviations for hours and minutes, correspoding to 'h'
+-         * and 'min' in English. The minutes has appropriate plural variations
+-         */
+-        return ngettext("%s h %s min", "%s h %s min",
+-                        minutes).format(hoursStr, minutesStr);
+-    } else if (minutes > 0) {
+-        /* Translators: this is a duration with minutes part
+-         * using abbreviation for minutes, corresponding to 'min' in English
+-         * with appropriate plural variations
+-         */
+-        return ngettext("%s min", "%s min", minutes).format(minutesStr);
+-    } else {
+-        /* Translators: this is a duration of less than one minute
+-         * with seconds using an abbreviation for seconds, corresponding to
+-         * 's' in English with appropriate plural forms
+-         */
+-        return ngettext("%s s", "%s s", seconds).format(secondsStr);
+-    }
++    let labelledTime = "";
++    if (hours > 0)
++        labelledTime += _("%f h").format(hours)+' ';
++    if (minutes > 0)
++        labelledTime += _("%f min").format(minutes);
++    if (hours === 0 && minutes === 0)
++        labelledTime = _("%f s").format(seconds);
++    return labelledTime;
+ }
+ 
+ function prettyDistance(distance, noRound) {
+--- gnome-maps-3.38.2/src/transitPlan.js	2020-11-21 13:24:04.000000000 +0000
++++ gnome-maps-3.38.2/src/transitPlan.js	2020-12-04 18:44:20.322363706 +0000
+@@ -74,18 +74,14 @@
+ /* extra time to add to the first itinerary leg when it's a walking leg */
+ const WALK_SLACK = 120;
+ 
+-const _timeFormat = new Intl.DateTimeFormat([], { hour:     '2-digit',
+-                                                  minute:   '2-digit',
+-                                                  hour12:   clockFormat === '12h',
+-                                                  timeZone: 'UTC'});
+-
+ function _printTimeWithTZOffset(time, offset) {
+-    let utcTimeWithOffset = time + offset;
+-    let date = new Date();
+-
+-    date.setTime(utcTimeWithOffset);
++    let utcTimeWithOffset = (time + offset) / 1000;
++    let date = GLib.DateTime.new_from_unix_utc(utcTimeWithOffset);
+ 
+-    return _timeFormat.format(date);
++    if (clockFormat === '24h')
++        return date.format('%R');
++    else
++        return date.format('%r');
+ }
+ 
+ var DEFAULT_ROUTE_COLOR = '4c4c4c';
+@@ -342,16 +338,13 @@
+         let mins = this.duration / 60;
+ 
+         if (mins < 60) {
+-            let minStr = Utils.formatLocaleInteger(mins);
+-
+             /* translators: this is an indication for a trip duration of
+              * less than an hour, with only the minutes part, using plural forms
+              * as appropriate
+              */
+-            return ngettext("%s minute", "%s minutes", mins).format(minStr);
++            return ngettext("%d minute", "%d minutes", mins).format(mins);
+         } else {
+             let hours = Math.floor(mins / 60);
+-            let hourStr = Utils.formatLocaleInteger(hours);
+ 
+             mins = mins % 60;
+ 
+@@ -360,15 +353,13 @@
+                  * where the duration is an exact number of hours (i.e. no
+                  * minutes part), using plural forms as appropriate
+                  */
+-                return ngettext("%s hour", "%s hours", hours).format(hourStr);
++                return ngettext("%d hour", "%d hours", hours).format(hours);
+             } else {
+-                let minStr = Utils.formatLocaleIntegerMinimumTwoDigits(mins);
+-
+                 /* translators: this is an indication for a trip duration
+                  * where the duration contains an hour and minute part, it's
+                  * pluralized on the hours part
+                  */
+-                return ngettext("%s:%s hour", "%s:%s hours", hours).format(hourStr, minStr);
++                return ngettext("%d:%02d hour", "%d:%02d hours", hours).format(hours, mins);
+             }
+         }
+     }
+--- gnome-maps-3.38.2/src/transitOptionsPanel.js	2020-11-21 13:24:04.000000000 +0000
++++ gnome-maps-3.38.2/src/transitOptionsPanel.js	2020-12-04 18:50:10.260893609 +0000
+@@ -36,10 +36,6 @@
+ let _desktopSettings = new Gio.Settings({ schema_id: 'org.gnome.desktop.interface' });
+ let clockFormat = _desktopSettings.get_string(CLOCK_FORMAT_KEY);
+ 
+-const _timeFormat = new Intl.DateTimeFormat([], { hour:     '2-digit',
+-                                                  minute:   '2-digit',
+-                                                  hour12:   clockFormat === '12h' });
+-
+ var TransitOptionsPanel = GObject.registerClass({
+     Template: 'resource:///org/gnome/Maps/ui/transit-options-panel.ui',
+     InternalChildren: ['transitTimeOptionsComboBox',
+@@ -103,7 +99,7 @@
+             this._transitDateButton.visible = true;
+ 
+             if (!this._timeSelected)
+-                this._transitTimeEntry.text = _timeFormat.format(new Date());
++                this._updateTransitTimeEntry(GLib.DateTime.new_now_local());
+ 
+             if (!this._dateSelected)
+                 this._updateTransitDateButton(GLib.DateTime.new_now_local());
+@@ -116,6 +112,13 @@
+         }
+     }
+ 
++    _updateTransitTimeEntry(time) {
++        if (clockFormat === '24h')
++            this._transitTimeEntry.text = time.format('%R');
++        else
++            this._transitTimeEntry.text = time.format('%r');
++    }
++
+     _onTransitTimeEntryActivated() {
+         let timeString = this._transitTimeEntry.text;
+ 

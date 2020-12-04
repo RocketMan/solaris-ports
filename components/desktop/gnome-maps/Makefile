@@ -28,7 +28,7 @@ COMPILER =		gcc
 include ../../../make-rules/shared-macros.mk
 
 COMPONENT_NAME=		gnome-maps
-COMPONENT_VERSION=	3.26.2
+COMPONENT_VERSION=	3.38.2
 COMPONENT_SRC=		$(COMPONENT_NAME)-$(COMPONENT_VERSION)
 COMPONENT_ARCHIVE_URL=	$(GIT_REPO)/archive/$(GIT_COMMIT_ID).tar.gz
 GIT_REPO=		https://github.com/GNOME/$(COMPONENT_NAME)
@@ -37,7 +37,7 @@ COMPONENT_PROJECT_URL=	https://wiki.gnome.org/Apps/Maps
 COMPONENT_ANITYA_ID=	9526
 
 
-COMPONENT_PREP_ACTION += ( cd $(@D) ; NOCONFIGURE=1 $(CONFIG_SHELL) autogen.sh );
+BUILD_STYLE=		meson
 
 include $(WS_MAKE_RULES)/common.mk
 
