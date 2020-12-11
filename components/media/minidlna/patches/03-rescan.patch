@@ -1,6 +1,6 @@
---- a/minidlna.c	2017-08-24 18:28:25.000000000 +0000
-+++ b/minidlna.c	2018-08-10 14:51:44.650627489 +0000
-@@ -160,7 +160,6 @@
+--- a/minidlna.c	2020-11-24 18:53:50.000000000 +0000
++++ b/minidlna.c	2020-12-10 17:02:23.779417190 +0000
+@@ -205,7 +205,6 @@
  static void
  sigusr1(int sig)
  {
@@ -8,19 +8,20 @@
  	DPRINTF(E_WARN, L_GENERAL, "received signal %d, clear cache\n", sig);
  
  	memset(&clients, '\0', sizeof(clients));
-@@ -169,10 +168,7 @@
+@@ -214,11 +213,7 @@
  static void
  sighup(int sig)
  {
 -	signal(sig, sighup);
--	DPRINTF(E_WARN, L_GENERAL, "received signal %d, re-read\n", sig);
+-	DPRINTF(E_WARN, L_GENERAL, "received signal %d, reloading\n", sig);
 -
 -	reload_ifaces(1);
+-	log_reopen();
 +	SETFLAG(RESCAN_MASK);
  }
  
  /* record the startup time */
-@@ -301,6 +297,24 @@
+@@ -350,6 +345,24 @@
  	int i, rows = 0;
  	int ret;
  
@@ -45,7 +46,7 @@
  	if (!new_db)
  	{
  		/* Check if any new media dirs appeared */
-@@ -363,6 +377,10 @@
+@@ -412,12 +425,18 @@
  	}
  	if (ret || GETFLAG(RESCAN_MASK))
  	{
@@ -54,9 +55,8 @@
 +		sigaddset(&mask, SIGHUP);
 +		pthread_sigmask(SIG_BLOCK, &mask, NULL);
  #if USE_FORK
- 		SETFLAG(SCANNING_MASK);
  		sqlite3_close(db);
-@@ -370,6 +388,8 @@
+ 		*scanner_pid = fork();
  		open_db(&db);
  		if (*scanner_pid == 0) /* child (scanner) process */
  		{
@@ -65,7 +65,7 @@
  			start_scanner();
  			sqlite3_close(db);
  			log_close();
-@@ -380,10 +400,20 @@
+@@ -428,12 +447,22 @@
  		else if (*scanner_pid < 0)
  		{
  			start_scanner();
@@ -75,6 +75,8 @@
 +			pthread_mutex_unlock(&inotify_lock);
 +#endif /* HAVE_INOTIFY */
  		}
+ 		else
+ 			SETFLAG(SCANNING_MASK);
  #else
  		start_scanner();
 +		CLEARFLAG(RESCAN_MASK);
@@ -86,7 +88,7 @@
  	}
  }
  
-@@ -979,9 +1009,11 @@
+@@ -1046,11 +1075,13 @@
  		DPRINTF(E_FATAL, L_GENERAL, "Failed to set %s handler. EXITING.\n", "SIGINT");
  	if (signal(SIGPIPE, SIG_IGN) == SIG_ERR)
  		DPRINTF(E_FATAL, L_GENERAL, "Failed to set %s handler. EXITING.\n", "SIGPIPE");
@@ -94,42 +96,40 @@
 +	sa.sa_handler = sighup;
 +	if (sigaction(SIGHUP, &sa, NULL))
  		DPRINTF(E_FATAL, L_GENERAL, "Failed to set %s handler. EXITING.\n", "SIGHUP");
+ 	if (signal(SIGUSR2, SIG_IGN) == SIG_ERR)
+ 		DPRINTF(E_FATAL, L_GENERAL, "Failed to set %s handler. EXITING.\n", "SIGUSR2");
 -	signal(SIGUSR1, &sigusr1);
 +	sa.sa_handler = sigusr1;
 +	sigaction(SIGUSR1, &sa, NULL);
  	sa.sa_handler = process_handle_child_termination;
  	if (sigaction(SIGCHLD, &sa, NULL))
  		DPRINTF(E_FATAL, L_GENERAL, "Failed to set %s handler. EXITING.\n", "SIGCHLD");
-@@ -1179,14 +1211,21 @@
+@@ -1273,7 +1304,11 @@
  #endif
- 		}
  
--		if (GETFLAG(SCANNING_MASK))
-+		if (GETFLAG(SCANNING_MASK) && kill(scanner_pid, 0))
- 		{
--			if (!scanner_pid || kill(scanner_pid, 0) != 0)
--			{
--				CLEARFLAG(SCANNING_MASK);
--				if (_get_dbtime() != lastdbtime)
--					updateID++;
--			}
+ 		if (GETFLAG(SCANNING_MASK) && kill(scanner_pid, 0) != 0) {
 +#ifdef HAVE_INOTIFY
 +			pthread_mutex_unlock(&inotify_lock);
 +#endif /* HAVE_INOTIFY */
-+			CLEARFLAG(SCANNING_MASK);
+ 			CLEARFLAG(SCANNING_MASK);
 +			CLEARFLAG(RESCAN_MASK);
-+			if (_get_dbtime() != lastdbtime)
-+				updateID++;
-+		}
-+
+ 			if (_get_dbtime() != lastdbtime)
+ 				updateID++;
+ #ifdef HAVE_KQUEUE
+@@ -1282,6 +1317,12 @@
+ #endif /* HAVE_KQUEUE */
+ 		}
+ 
 +		if (GETFLAG(RESCAN_MASK) &&
 +				!GETFLAG(SCANNING_MASK))
 +		{
 +			check_db(db, -1, &scanner_pid);
- 		}
- 
- 		/* select open sockets (SSDP, HTTP listen, and all HTTP soap sockets) */
-@@ -1332,7 +1371,7 @@
++ 		}
++
+ 		event_module.process(timeout);
+ 		if (quitting)
+ 			goto shutdown;
+@@ -1324,7 +1365,7 @@
  
  shutdown:
  	/* kill the scanner */
@@ -138,7 +138,7 @@
  		kill(scanner_pid, SIGKILL);
  
  	/* close out open sockets */
-@@ -1363,6 +1402,7 @@
+@@ -1355,6 +1396,7 @@
  	{
  		pthread_kill(inotify_thread, SIGCHLD);
  		pthread_join(inotify_thread, NULL);
@@ -146,9 +146,9 @@
  	}
  
  	/* kill other child processes */
---- a/process.c	2017-08-24 18:28:25.000000000 +0000
-+++ b/process.c	2018-07-22 19:57:53.476166882 +0000
-@@ -93,14 +93,24 @@
+--- a/process.c	2020-12-10 17:04:57.262472070 +0000
++++ b/process.c	2020-12-10 17:07:57.770297810 +0000
+@@ -94,17 +94,27 @@
  		return -1;
  	}
  
@@ -158,24 +158,23 @@
 +	pthread_sigmask(SIG_BLOCK, &mask, NULL);
 +
  	pid_t pid = fork();
--	if (pid > 0)
-+	if (pid)
+ 	if (pid > 0)
  	{
--		if (client)
--			client->connections++;
--		add_process_info(pid, client);
--		number_of_children++;
--	}
 +		pthread_sigmask(SIG_UNBLOCK, &mask, NULL);
 +		
-+		if (pid > 0) {
-+			if (client)
-+				client->connections++;
-+			add_process_info(pid, client);
-+			number_of_children++;
-+		}
-+	} else
+ 		if (client)
+ 			client->connections++;
+ 		add_process_info(pid, client);
+ 		number_of_children++;
+-	} else if (pid == 0)
++	} else if (pid == 0) {
 +		signal(SIGHUP, SIG_IGN);
+ 		event_module.fini();
+-	else
++	} else {
++		pthread_sigmask(SIG_UNBLOCK, &mask, NULL);
+ 		DPRINTF(E_FATAL, L_GENERAL, "Fork() failed: %s\n", strerror(errno));
++	}
  
  	return pid;
  }
