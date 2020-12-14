@@ -1,0 +1,334 @@
+Upstream changes in support of _GTK_FRAME_EXTENTS failed to update the
+`place` plugin.  As a result, windows would be placed as though their
+visible area included the extents, which resulted in a gap around each
+window.
+
+This patch complements the gtk-frame-extents patch to provide
+_GTK_FRAME_EXTENTS support in the place plugin.  Windows that are
+placed at the screen edge or adjactent to one another now touch the
+adjoining edge as expected with no gap.
+
+
+--- a/plugins/place.c	2009-10-14 03:34:41.000000000 +0000
++++ b/plugins/place.c	2020-12-13 11:17:28.270083986 +0000
+@@ -129,14 +129,33 @@
+      (!wi->attrib.override_redirect) &&                                 \
+      (!(wi->wmType & (CompWindowTypeDockMask | CompWindowTypeDesktopMask))))
+ 
++/* We remove gtk frame extents when calculating window placement.
++ * BORDER_ADJ() is a hack to exclude eventual non-solid csd window
++ * border decorations from the extents on the side and bottom.  We
++ * do not know how wide these borders are, if any, hence the hack.
++ * For slim-nimbus, it is one pixel.
++ */
++
++#define BORDER_WID 1			/* side and bottom border width */
++#define M(x, y) ((x) > (y) ? (x) : (y))
++#define BORDER_ADJ(x) M((x) - BORDER_WID, 0)	/* adjust extent for border */
++
+ /* helper macros to get the full dimensions of a window,
+    including decorations */
+-#define WIN_FULL_X(w) ((w)->serverX - (w)->input.left)
+-#define WIN_FULL_Y(w) ((w)->serverY - (w)->input.top)
+-#define WIN_FULL_W(w) ((w)->serverWidth + 2 * (w)->serverBorderWidth + \
+-		       (w)->input.left + (w)->input.right)
+-#define WIN_FULL_H(w) ((w)->serverHeight + 2 * (w)->serverBorderWidth + \
+-		       (w)->input.top + (w)->input.bottom)
++#define BORDER_WIDTH(w)  ((w)->input.left + (w)->input.right - \
++			  BORDER_ADJ ((w)->clientFrame.left) - \
++			  BORDER_ADJ ((w)->clientFrame.right) +	\
++			  2 * (w)->serverBorderWidth)
++#define BORDER_HEIGHT(w) ((w)->input.top + (w)->input.bottom - \
++			  (w)->clientFrame.top - \
++			  BORDER_ADJ ((w)->clientFrame.bottom) + \
++			  2 * (w)->serverBorderWidth)
++
++#define WIN_FULL_X(w) ((w)->serverX - (w)->input.left + \
++		       BORDER_ADJ ((w)->clientFrame.left))
++#define WIN_FULL_Y(w) ((w)->serverY - (w)->input.top + (w)->clientFrame.top)
++#define WIN_FULL_W(w) ((w)->serverWidth + BORDER_WIDTH (w))
++#define WIN_FULL_H(w) ((w)->serverHeight + BORDER_HEIGHT (w))
+ 
+ static Bool
+ placeMatchXYValue (CompWindow *w,
+@@ -304,29 +323,6 @@
+     return FALSE;
+ }
+ 
+-static void
+-placeSendWindowMaximizationRequest (CompWindow *w)
+-{
+-    XEvent      xev;
+-    CompDisplay *d = w->screen->display;
+-
+-    xev.xclient.type    = ClientMessage;
+-    xev.xclient.display = d->display;
+-    xev.xclient.format  = 32;
+-
+-    xev.xclient.message_type = d->winStateAtom;
+-    xev.xclient.window	     = w->id;
+-
+-    xev.xclient.data.l[0] = 1;
+-    xev.xclient.data.l[1] = d->winStateMaximizedHorzAtom;
+-    xev.xclient.data.l[2] = d->winStateMaximizedVertAtom;
+-    xev.xclient.data.l[3] = 0;
+-    xev.xclient.data.l[4] = 0;
+-
+-    XSendEvent (d->display, w->screen->root, FALSE,
+-		SubstructureRedirectMask | SubstructureNotifyMask, &xev);
+-}
+-
+ static Bool
+ placeGetPointerPosition (CompScreen *s,
+ 			 int        *x,
+@@ -705,8 +701,8 @@
+ 	     * point. The new window frame should go at the origin
+ 	     * of the client window we're stacking above.
+ 	     */
+-	    wx = cascadeX = wi->serverX;
+-	    wy = cascadeY = wi->serverY;
++	    wx = cascadeX = WIN_FULL_X (wi);
++	    wy = cascadeY = WIN_FULL_Y (wi);
+ 
+ 	    /* If we go off the screen, start over with a new cascade */
+ 	    if ((cascadeX + winWidth > workArea->x + workArea->width) ||
+@@ -784,10 +780,10 @@
+ 			CompWindowTypeUnknownMask))
+ 	    continue;
+ 
+-	if (wi->serverX >= workArea->x + workArea->width  ||
+-	    wi->serverX + wi->serverWidth <= workArea->x  ||
+-	    wi->serverY >= workArea->y + workArea->height ||
+-	    wi->serverY + wi->serverHeight <= workArea->y)
++	if (WIN_FULL_X (wi) >= workArea->x + workArea->width  ||
++	    WIN_FULL_X (wi) + wi->serverWidth <= workArea->x  ||
++	    WIN_FULL_Y (wi) >= workArea->y + workArea->height ||
++	    WIN_FULL_Y (wi) + wi->serverHeight <= workArea->y)
+ 	    continue;
+ 
+ 	windows[count++] = wi;
+@@ -810,8 +806,8 @@
+ 	       int	  *x,
+ 	       int	  *y)
+ {
+-    *x = workArea->x + (workArea->width - w->serverWidth) / 2;
+-    *y = workArea->y + (workArea->height - w->serverHeight) / 2;
++    *x = workArea->x + (workArea->width - WIN_FULL_W (w)) / 2;
++    *y = workArea->y + (workArea->height - WIN_FULL_H (w)) / 2;
+ }
+ 
+ static void
+@@ -844,8 +840,8 @@
+ 
+     if (placeGetPointerPosition (w->screen, &xPointer, &yPointer))
+     {
+-	*x = xPointer - (w->serverWidth / 2);
+-	*y = yPointer - (w->serverHeight / 2);
++	*x = xPointer - (w->serverWidth / 2) - w->serverBorderWidth;
++	*y = yPointer - (w->serverHeight / 2) - w->serverBorderWidth;
+     }
+     else
+     {
+@@ -1042,13 +1038,38 @@
+     *y = yOptimal + w->input.top;
+ }
+ 
+-static PlacementStrategy
+-placeGetStrategyForWindow (CompWindow *w)
++static Bool
++placeWindowHasUserDefinedPosition (CompWindow *w,
++				   Bool       acceptPPosition)
+ {
+     CompMatch *match;
+ 
+     PLACE_SCREEN (w->screen);
+ 
++    match = &ps->opt[PLACE_SCREEN_OPTION_FORCE_PLACEMENT].value.match;
++    if (matchEval (match, w))
++	return FALSE;
++
++    if (acceptPPosition && (w->sizeHints.flags & PPosition))
++	return TRUE;
++
++    if ((w->type & CompWindowTypeNormalMask) ||
++	ps->opt[PLACE_SCREEN_OPTION_WORKAROUND].value.b)
++    {
++	/* Only accept USPosition on non-normal windows if workarounds are
++	 * enabled because apps claiming the user set -geometry for a
++	 * dialog or dock are most likely wrong
++	 */
++	if (w->sizeHints.flags & USPosition)
++	    return TRUE;
++    }
++
++    return FALSE;
++}
++
++static PlacementStrategy
++placeGetStrategyForWindow (CompWindow *w)
++{
+     if (w->type & (CompWindowTypeDockMask | CompWindowTypeDesktopMask    |
+ 		   CompWindowTypeUtilMask | CompWindowTypeToolbarMask    |
+ 		   CompWindowTypeMenuMask | CompWindowTypeFullscreenMask |
+@@ -1064,29 +1085,10 @@
+ 	return NoPlacement;
+     }
+ 
+-    /* no placement for unmovable windows */
+-    if (!(w->actions & CompWindowActionMoveMask))
+-	return NoPlacement;
++    if (placeWindowHasUserDefinedPosition (w, TRUE))
++	return ConstrainOnly;
+ 
+-    match = &ps->opt[PLACE_SCREEN_OPTION_FORCE_PLACEMENT].value.match;
+-    if (!matchEval (match, w))
+-    {
+-	if ((w->type & CompWindowTypeNormalMask) ||
+-	    ps->opt[PLACE_SCREEN_OPTION_WORKAROUND].value.b)
+-	{
+-	    /* Only accept USPosition on non-normal windows if workarounds are
+-	     * enabled because apps claiming the user set -geometry for a
+-	     * dialog or dock are most likely wrong
+-	     */
+-	    if (w->sizeHints.flags & USPosition)
+-		return ConstrainOnly;
+-	}
+-
+-	if (w->sizeHints.flags & PPosition)
+-	    return ConstrainOnly;
+-    }
+-
+-   if (w->transientFor &&
++    if (w->transientFor &&
+ 	(w->type & (CompWindowTypeDialogMask |
+ 		    CompWindowTypeModalDialogMask)))
+     {
+@@ -1216,8 +1218,8 @@
+ 
+     extents.left   = *x - w->input.left;
+     extents.top    = *y - w->input.top;
+-    extents.right  = *x + w->serverWidth + w->input.right;
+-    extents.bottom = *y + w->serverHeight + w->input.bottom;
++    extents.right  = extents.left + WIN_FULL_W (w);
++    extents.bottom = extents.top + WIN_FULL_H (w);
+ 
+     delta = workArea->x + workArea->width - extents.right;
+     if (delta < 0)
+@@ -1339,7 +1341,7 @@
+ 	    placePointer (w, &workArea, &x, &y);
+ 	    break;
+ 	case PLACE_MODE_MAXIMIZE:
+-	    placeSendWindowMaximizationRequest (w);
++	    maximizeWindow (w, MAXIMIZE_STATE);
+ 	    break;
+ 	case PLACE_MODE_SMART:
+ 	    placeSmart (w, &workArea, &x, &y);
+@@ -1373,7 +1375,7 @@
+ 	    if (WIN_FULL_W (w) >= workArea.width &&
+ 		WIN_FULL_H (w) >= workArea.height)
+ 	    {
+-		placeSendWindowMaximizationRequest (w);
++		maximizeWindow (w, MAXIMIZE_STATE);
+ 	    }
+ 	}
+     }
+@@ -1381,8 +1383,8 @@
+     if (strategy == ConstrainOnly || strategy == PlaceAndConstrain)
+ 	placeConstrainToWorkarea (w, &workArea, &x, &y);
+ 
+-    *newX = x;
+-    *newY = y;
++    *newX = x - BORDER_ADJ (w->clientFrame.left);
++    *newY = y - w->clientFrame.top;
+ 
+     return TRUE;
+ }
+@@ -1419,9 +1421,9 @@
+     }
+ 
+     left   = x - w->input.left;
+-    right  = x + xwc->width + w->input.right;
++    right  = left + xwc->width + BORDER_WIDTH (w);
+     top    = y - w->input.top;
+-    bottom = y + xwc->height + w->input.bottom;
++    bottom = top + xwc->height + BORDER_HEIGHT (w);
+ 
+     output = outputDeviceForGeometry (s,
+ 				      xwc->x, xwc->y,
+@@ -1438,7 +1440,7 @@
+ 	    (w->mwmDecor & (MwmDecorAll | MwmDecorTitle))   &&
+ 	    !(w->state & CompWindowStateFullscreenMask))
+ 	{
+-	    placeSendWindowMaximizationRequest (w);
++	    maximizeWindow (w, MAXIMIZE_STATE);
+ 	}
+     }
+ 
+@@ -1484,9 +1486,14 @@
+ 
+     /* bring left/right/top/bottom to actual window coordinates */
+     left   += w->input.left;
+-    right  -= w->input.right;
++    right  -= w->input.right + 2 * w->serverBorderWidth;
+     top    += w->input.top;
+-    bottom -= w->input.bottom;
++    bottom -= w->input.bottom + 2 * w->serverBorderWidth;
++
++    /* always validate position if the application changed only its size,
++       as it might become partially offscreen because of that */
++    if (!(*mask & (CWX | CWY)) && (*mask & (CWWidth | CWHeight)))
++	sizeOnly = FALSE;
+ 
+     if ((right - left) != xwc->width)
+     {
+@@ -1549,17 +1556,20 @@
+ 		     CompWindowTypeDesktopMask))
+ 	return;
+ 
+-    if (w->sizeHints.flags & USPosition)
++    /* do nothing if the window was already (at least partially) offscreen */
++    if (w->serverX < 0                         ||
++	w->serverX + w->serverWidth > s->width ||
++	w->serverY < 0                         ||
++	w->serverY + w->serverHeight > s->height)
+     {
+-	/* only respect USPosition on normal windows if
+-	   workarounds are disabled, reason see above */
+-	if (ps->opt[PLACE_SCREEN_OPTION_WORKAROUND].value.b ||
+-	    (w->type & CompWindowTypeNormalMask))
+-	{
+-	    /* try to keep the window position intact for USPosition -
+-	       obviously we can't do that if we need to change the size */
+-	    sizeOnly = TRUE;
+-	}
++	return;
++    }
++
++    if (placeWindowHasUserDefinedPosition (w, FALSE))
++    {
++	/* try to keep the window position intact for USPosition -
++	   obviously we can't do that if we need to change the size */
++	sizeOnly = TRUE;
+     }
+ 
+     placeDoValidateWindowResizeRequest (w, mask, xwc, sizeOnly, TRUE);
+@@ -1877,17 +1887,13 @@
+ 		{
+ 		    mask |= CWX | CWWidth;
+ 		    xwc.x = vpX * s->width + workArea.x + w->input.left;
+-		    xwc.width = workArea.width -
+-			(2 * w->serverBorderWidth +
+-			 w->input.left + w->input.right);
++		    xwc.width = workArea.width - BORDER_WIDTH (w);
+ 		}
+ 		if (w->state & CompWindowStateMaximizedVertMask)
+ 		{
+ 		    mask |= CWY | CWHeight;
+ 		    xwc.y = vpY * s->height + workArea.y + w->input.top;
+-		    xwc.height = workArea.height -
+-			(2 * w->serverBorderWidth +
+-			 w->input.top + w->input.bottom);
++		    xwc.height = workArea.height - BORDER_HEIGHT (w);
+ 		}
+ 	    }
+ 	}

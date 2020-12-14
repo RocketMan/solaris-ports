@@ -1,0 +1,704 @@
+Add support for _GTK_FRAME_EXTENTS
+
+Backport of https://gitlab.com/compiz/compiz-core/-/commit/b0ad06bce6b1562f962648455ad305be8cf7a8de
+
+
+diff --git a/include/compiz-core.h b/include/compiz-core.h
+index edc3a51f9a56f570d2de222b289eb7078b899048..ce21fc9a8dd306d52fb6e89056ab7a0cd3b08df9 100644
+--- a/include/compiz-core.h
++++ b/include/compiz-core.h
+@@ -1061,6 +1061,7 @@
+ 
+     LogMessageProc logMessage;
+ 
++    Atom gtkFrameExtentsAtom;
+     void *reserved;
+ };
+ 
+@@ -2677,6 +2678,7 @@
+     /* must be set by addWindowGeometry */
+     DrawWindowGeometryProc drawWindowGeometry;
+ 
++    CompWindowExtents clientFrame;
+     void *reserved;
+ };
+ 
+@@ -2805,6 +2807,9 @@
+ void
+ updateIconGeometry (CompWindow *w);
+ 
++void
++updateClientFrame (CompWindow *w);
++
+ Window
+ getClientLeader (CompWindow *w);
+ 
+diff --git a/plugins/move.c b/plugins/move.c
+index beb758b1d704a69f230c9787a9a472f46e1bf6b0..8c0bbe5f965a84292bafd864497e18d689d0c4d0 100644
+--- a/plugins/move.c
++++ b/plugins/move.c
+@@ -545,8 +545,8 @@ moveHandleMotionEvent (CompScreen *s,
+ 		    int x, y, width, height;
+ 		    int status;
+ 
+-		    x	   = wX + dx - w->input.left;
+-		    y	   = wY + dy - w->input.top;
++		    x	   = (wX + dx - w->input.left) + w->clientFrame.left;
++		    y	   = (wY + dy - w->input.top) + w->clientFrame.top;
+ 		    width  = wWidth + w->input.left + w->input.right;
+ 		    height = w->input.top ? w->input.top : 1;
+ 
+diff --git a/src/display.c b/src/display.c
+index 45f34776e92e5033d4e5f62a1496813a76c258a2..a18a9ec350ffe01d8b6097327e1a2aeca360ac9a 100644
+--- a/src/display.c
++++ b/src/display.c
+@@ -2136,6 +2136,7 @@ addDisplay (const char *name)
+ 	XInternAtom (dpy, "_NET_CLIENT_LIST_STACKING", 0);
+ 
+     d->frameExtentsAtom = XInternAtom (dpy, "_NET_FRAME_EXTENTS", 0);
++    d->gtkFrameExtentsAtom = XInternAtom (dpy, "_GTK_FRAME_EXTENTS", 0);
+     d->frameWindowAtom  = XInternAtom (dpy, "_NET_FRAME_WINDOW", 0);
+ 
+     d->wmStateAtom	  = XInternAtom (dpy, "WM_STATE", 0);
+diff --git a/src/event.c b/src/event.c
+index 3f5098b078d057df96496ff17b7734b03c3593bd..283b79e2b012c3ba669a05d5d682888f2ca311db 100644
+--- a/src/event.c
++++ b/src/event.c
+@@ -1539,6 +1539,13 @@ handleEvent (CompDisplay *d,
+ 	    if (w)
+ 		updateIconGeometry (w);
+ 	}
++	else if (event->xproperty.atom == d->gtkFrameExtentsAtom)
++	{
++	    w = findWindowAtDisplay (d, event->xproperty.window);
++	    if (w)
++		updateClientFrame (w);
++	}
++
+ 	else if (event->xproperty.atom == d->winOpacityAtom)
+ 	{
+ 	    w = findWindowAtDisplay (d, event->xproperty.window);
+diff --git a/src/screen.c b/src/screen.c
+index c44c2a22ef0161d880fc686cb63657673fdfb1e1..e722bdd55c0ecea3cfc2071dfd70ad42778b7c2e 100644
+--- a/src/screen.c
++++ b/src/screen.c
+@@ -1246,6 +1246,7 @@ addSupportedAtoms (CompScreen   *s,
+ 
+     atoms[count++] = d->wmUserTimeAtom;
+     atoms[count++] = d->frameExtentsAtom;
++    atoms[count++] = d->gtkFrameExtentsAtom;
+     atoms[count++] = d->frameWindowAtom;
+ 
+     atoms[count++] = d->winStateAtom;
+diff --git a/src/window.c b/src/window.c
+index 6b91b8693d7f9ff9501105dbdbc9620d8e6d5def..087c29382f3cec957fe401c0c77c5439b4b71b83 100644
+--- a/src/window.c
++++ b/src/window.c
+@@ -450,6 +450,40 @@ updateIconGeometry (CompWindow *w)
+     }
+ }
+ 
++void
++updateClientFrame (CompWindow *w)
++{
++    Atom	  actual;
++    int		  result, format;
++    unsigned long n, left;
++    unsigned char *data;
++
++    w->clientFrame.left   = 0;
++    w->clientFrame.right  = 0;
++    w->clientFrame.top    = 0;
++    w->clientFrame.bottom = 0;
++
++    result = XGetWindowProperty (w->screen->display->display, w->id,
++				 w->screen->display->gtkFrameExtentsAtom,
++				 0L, 65536, False, XA_CARDINAL,
++				 &actual, &format, &n, &left, &data);
++
++     if (result == Success && data)
++    {
++	if (n == 4 && actual == XA_CARDINAL)
++	{
++	    unsigned long *extents = *(unsigned long **) &data;
++
++	    w->clientFrame.left   = extents[0];
++	    w->clientFrame.right  = extents[1];
++	    w->clientFrame.top    = extents[2];
++	    w->clientFrame.bottom = extents[3];
++	}
++
++	XFree (data);
++    }
++}
++
+ static Window
+ getClientLeaderOfAncestor (CompWindow *w)
+ {
+@@ -2392,6 +2426,7 @@ addWindow (CompScreen *screen,
+ 
+     recalcWindowActions (w);
+     updateIconGeometry (w);
++    updateClientFrame (w);
+ 
+     if (w->shaded)
+ 	resizeWindow (w,
+@@ -3815,6 +3850,30 @@ addWindowSizeChanges (CompWindow     *w,
+ 				      oldBorderWidth);
+     getWorkareaForOutput (w->screen, output, &workArea);
+ 
++    /*Adjust for GtkFrameExtents when maximized one direction only
++     *                         ****
++	 *FIXME: if a theme author sets different shadow dimensions for
++     *the .tiled style class this will break and left/right tiled
++     *windows end up oversize. That is not normal theming practice
++     *but is a potential source of a bug. Fixing this right may require
++     *supporting _GTK_EDGE_CONSTRAINTS as in Mutter
++     */
++    if (!(w->state & CompWindowStateMaximizedVertMask) &&
++		(w->state & CompWindowStateMaximizedHorzMask)){
++        workArea.x = workArea.x - w ->clientFrame.left;
++        workArea.width = workArea.width +
++            w ->clientFrame.left + w ->clientFrame.right;
++
++	}
++
++    if ((w->state & CompWindowStateMaximizedVertMask) &&
++		!(w->state & CompWindowStateMaximizedHorzMask)){
++        workArea.y = workArea.y - w ->clientFrame.top;
++         workArea.height = workArea.height +
++            w ->clientFrame.top + w ->clientFrame.bottom;
++
++    }
++
+     if (w->type & CompWindowTypeFullscreenMask)
+     {
+ 	saveWindowGeometryFF (w);
+--- compiz-core-compiz-0.8.4/plugins/resize.c.~1~	2020-12-08 11:55:46.406891560 +0000
++++ compiz-core-compiz-0.8.4/plugins/resize.c	2020-12-08 12:00:00.390575171 +0000
+@@ -100,7 +100,11 @@
+     int		 pointerDy;
+     KeyCode	 key[NUM_KEYS];
+ 
+-    Bool offWorkAreaConstrained;
++    Region       constraintRegion;
++    int          inRegionStatus;
++    int          lastGoodHotSpotY;
++    int          lastGoodWidth;
++    int          lastGoodHeight;
+ } ResizeDisplay;
+ 
+ typedef struct _ResizeScreen {
+@@ -121,8 +125,6 @@
+     Cursor downRightCursor;
+     Cursor middleCursor;
+     Cursor cursor[NUM_KEYS];
+-
+-    const XRectangle *grabWindowWorkArea;
+ } ResizeScreen;
+ 
+ #define GET_RESIZE_DISPLAY(d)					    \
+@@ -301,6 +303,7 @@
+ resizeFinishResizing (CompDisplay *d)
+ {
+     RESIZE_DISPLAY (d);
++    BoxRec box;
+ 
+     (*rd->w->screen->windowUngrabNotify) (rd->w);
+ 
+@@ -308,9 +311,51 @@
+ 		     rd->w->id,
+ 		     rd->resizeInformationAtom);
+ 
++    if (rd->mode != RESIZE_MODE_NORMAL) {
++	if (rd->mode == RESIZE_MODE_STRETCH)
++	    resizeGetStretchRectangle (d, &box);
++	else
++	    resizeGetPaintRectangle (d, &box);
++	resizeDamageRectangle (rd->w->screen, &box);
++    }
++
+     rd->w = NULL;
+ }
+ 
++static Region
++resizeGetConstraintRegion (CompWindow *w, CompScreen *s)
++{
++    Region       region;
++    int          i , TempX, TempY, TempWidth, TempHeight;
++
++    region = XCreateRegion ();
++    if (!region)
++	return NULL;
++    for (i = 0; i < s->nOutputDev; i++){
++        /*Save the original values here*/
++        TempX = s->outputDev[i].workArea.x;
++        TempY = s->outputDev[i].workArea.y;
++        TempWidth = s->outputDev[i].workArea.width;
++        TempHeight = s->outputDev[i].workArea.height;
++        /*Allow for GtkFrameExtents*/
++        s->outputDev[i].workArea.x = s->outputDev[i].workArea.x - w->clientFrame.left;
++        s->outputDev[i].workArea.width = s->outputDev[i].workArea.width
++                                         + (w->clientFrame.left + w->clientFrame.right);
++        s->outputDev[i].workArea.y = s->outputDev[i].workArea.y - w->clientFrame.top;
++        s->outputDev[i].workArea.height = s->outputDev[i].workArea.height
++                                        + (w->clientFrame.top + w->clientFrame.bottom);
++
++	    XUnionRectWithRegion (&s->outputDev[i].workArea, region, region);
++
++         /*Reset original workarea values*/
++        s->outputDev[i].workArea.x = TempX;
++        s->outputDev[i].workArea.y = TempY;
++        s->outputDev[i].workArea.width = TempWidth;
++        s->outputDev[i].workArea.height = TempHeight;
++        }
++    return region;
++}
++
+ static Bool
+ resizeInitiate (CompDisplay     *d,
+ 		CompAction      *action,
+@@ -493,18 +538,24 @@
+ 		warpPointer (w->screen, xRoot - pointerX, yRoot - pointerY);
+ 	    }
+ 
+-	    /* Update offWorkAreaConstrained and workArea at grab time */
+-	    rd->offWorkAreaConstrained = FALSE;
++	    if (rd->constraintRegion)
++		XDestroyRegion (rd->constraintRegion);
++
+ 	    if (sourceExternalApp)
+ 	    {
+-		int output = outputDeviceForWindow (w);
+-
+-		rs->grabWindowWorkArea = &w->screen->outputDev[output].workArea;
+-
+ 		/* Prevent resizing beyond work area edges when resize is
+ 		   initiated externally (e.g. with window frame or menu)
+ 		   and not with a key (e.g. alt+button) */
+-		rd->offWorkAreaConstrained = TRUE;
++
++		rd->inRegionStatus   = RectangleOut;
++		rd->lastGoodHotSpotY = -1;
++		rd->lastGoodWidth    = w->serverWidth;
++		rd->lastGoodHeight   = w->serverHeight;
++		rd->constraintRegion = resizeGetConstraintRegion (w, w->screen);
++	    }
++	    else
++	    {
++		rd->constraintRegion = NULL;
+ 	    }
+ 	}
+     }
+@@ -550,18 +601,7 @@
+ 	    else
+ 		geometry = rd->geometry;
+ 
+-	    if (memcmp (&geometry, &rd->savedGeometry, sizeof (geometry)) == 0)
+-	    {
+-		BoxRec box;
+-
+-		if (rd->mode == RESIZE_MODE_STRETCH)
+-		    resizeGetStretchRectangle (d, &box);
+-		else
+-		    resizeGetPaintRectangle (d, &box);
+-
+-		resizeDamageRectangle (w->screen, &box);
+-	    }
+-	    else
++	    if (!memcmp (&geometry, &rd->savedGeometry, sizeof (geometry)) == 0)
+ 	    {
+ 		xwc.x      = geometry.x;
+ 		xwc.y      = geometry.y;
+@@ -586,6 +626,20 @@
+ 	    configureXWindow (w, mask, &xwc);
+ 	}
+ 
++	/*
++	 * XXX: This is just wacko. Only terminate if we DIDN'T change,
++	 * because if we did change, we'll shortly get a ResizeNotify about
++	 * it at which point we WILL terminate. Weird and buggy.
++	 *
++	 * It actually means we might paint resize-logic AFTER terminating
++	 * the resize, since we could get a paint-event before we get the
++	 * resize-one.
++	 *
++	 * I don't currently know why it was done like this and I'm
++	 * reluctant to just remove the if() clause until I do.
++	 *
++	 * - Kristian
++	 */
+ 	if (!(mask & (CWWidth | CWHeight)))
+ 	    resizeFinishResizing (d);
+ 
+@@ -694,7 +748,10 @@
+     if (rs->grabIndex)
+     {
+ 	BoxRec box;
+-	int    w, h;
++	int    w, h;                    /* size of window contents */
++	int    wX, wY, wWidth, wHeight; /* rect. for window contents+borders */
++	int    i;
++	int    workAreaSnapDistance = 15;
+ 
+ 	RESIZE_DISPLAY (s->display);
+ 
+@@ -703,16 +760,16 @@
+ 
+ 	if (!rd->mask)
+ 	{
+-	    CompWindow *w = rd->w;
++	    CompWindow *cw = rd->w;
+ 	    int        xDist, yDist;
+ 	    int        minPointerOffsetX, minPointerOffsetY;
+ 
+-	    xDist = xRoot - (w->serverX + (w->serverWidth / 2));
+-	    yDist = yRoot - (w->serverY + (w->serverHeight / 2));
++	    xDist = xRoot - (cw->serverX + (cw->serverWidth / 2));
++	    yDist = yRoot - (cw->serverY + (cw->serverHeight / 2));
+ 
+ 	    /* decision threshold is 10% of window size */
+-	    minPointerOffsetX = MIN (20, w->serverWidth / 10);
+-	    minPointerOffsetY = MIN (20, w->serverHeight / 10);
++	    minPointerOffsetX = MIN (20, cw->serverWidth / 10);
++	    minPointerOffsetY = MIN (20, cw->serverHeight / 10);
+ 
+ 	    /* if we reached the threshold in one direction,
+ 	       make the threshold in the other direction smaller
+@@ -757,16 +814,16 @@
+ 		action->state |= CompActionStateTermButton;
+ 
+ 		if (rd->mask & ResizeRightMask)
+-			pointerAdjustX = w->serverX + w->serverWidth +
+-					 w->input.right - xRoot;
++			pointerAdjustX = cw->serverX + cw->serverWidth +
++					 cw->input.right - xRoot;
+ 		else if (rd->mask & ResizeLeftMask)
+-			pointerAdjustX = w->serverX - w->input.left - xRoot;
++			pointerAdjustX = cw->serverX - cw->input.left - xRoot;
+ 
+ 		if (rd->mask & ResizeDownMask)
+-			pointerAdjustY = w->serverY + w->serverHeight +
+-					 w->input.bottom - yRoot;
++			pointerAdjustY = cw->serverY + cw->serverHeight +
++					 cw->input.bottom - yRoot;
+ 		else if (rd->mask & ResizeUpMask)
+-			pointerAdjustY = w->serverY - w->input.top - yRoot;
++			pointerAdjustY = cw->serverY - cw->input.top - yRoot;
+ 
+ 		warpPointer (s, pointerAdjustX, pointerAdjustY);
+ 
+@@ -801,42 +858,235 @@
+ 
+ 	constrainNewWindowSize (rd->w, w, h, &w, &h);
+ 
+-	/* constrain to work area */
+-	if (rd->offWorkAreaConstrained)
++	/* compute rect. for window + borders */
++	wWidth  = w + rd->w->input.left + rd->w->input.right;
++	wHeight = h + rd->w->input.top + rd->w->input.bottom;
++
++	if (rd->mask & ResizeLeftMask)
++	    wX = rd->savedGeometry.x + rd->savedGeometry.width -
++		 (w + rd->w->input.left);
++	else
++	    wX = rd->savedGeometry.x - rd->w->input.left;
++
++	if (rd->mask & ResizeUpMask)
++	    wY = rd->savedGeometry.y + rd->savedGeometry.height -
++		 (h + rd->w->input.top);
++	else
++	    wY = rd->savedGeometry.y - rd->w->input.top;
++
++	/* Check if resized edge(s) are near a work-area boundary */
++	for (i = 0; i < s->nOutputDev; i++)
+ 	{
+-	    if (rd->mask & ResizeUpMask)
++	    const XRectangle *workArea = &s->outputDev[i].workArea;
++
++	    /* if window and work-area intersect in x axis */
++	    if (wX + wWidth > workArea->x &&
++		wX < workArea->x + workArea->width)
+ 	    {
+-		int decorTop = rd->savedGeometry.y + rd->savedGeometry.height -
+-		    (h + rd->w->input.top);
++		if (rd->mask & ResizeLeftMask)
++		{
++		    int dw = workArea->x - wX;
+ 
+-		if (rs->grabWindowWorkArea->y > decorTop)
+-		    h -= rs->grabWindowWorkArea->y - decorTop;
++		    if (0 < dw && dw < workAreaSnapDistance)
++		    {
++			w      -= dw;
++			wWidth -= dw;
++			wX     += dw;
++		    }
++		}
++		else if (rd->mask & ResizeRightMask)
++		{
++		    int dw = wX + wWidth - (workArea->x + workArea->width);
++
++		    if (0 < dw && dw < workAreaSnapDistance)
++		    {
++			w      -= dw;
++			wWidth -= dw;
++		    }
++		}
+ 	    }
+-	    if (rd->mask & ResizeDownMask)
++
++	    /* if window and work-area intersect in y axis */
++	    if (wY + wHeight > workArea->y &&
++		wY < workArea->y + workArea->height)
+ 	    {
+-		int decorBottom = rd->savedGeometry.y + h + rd->w->input.bottom;
++		if (rd->mask & ResizeUpMask)
++		{
++		    int dh = workArea->y - wY;
+ 
+-		if (decorBottom >
+-		    rs->grabWindowWorkArea->y + rs->grabWindowWorkArea->height)
+-		    h -= decorBottom - (rs->grabWindowWorkArea->y +
+-					rs->grabWindowWorkArea->height);
++		    if (0 < dh && dh < workAreaSnapDistance)
++		    {
++			h       -= dh;
++			wHeight -= dh;
++			wY      += dh;
++		    }
++		}
++		else if (rd->mask & ResizeDownMask)
++		{
++		    int dh = wY + wHeight - (workArea->y + workArea->height);
++
++		    if (0 < dh && dh < workAreaSnapDistance)
++		    {
++			h       -= dh;
++			wHeight -= dh;
++		    }
++		}
+ 	    }
++	}
++
++	if (rd->constraintRegion)
++	{
++	    int minWidth  = 50;
++	    int minHeight = 50;
++
++	    /* rect. for a minimal height window + borders
++	       (used for the constraining in X axis) */
++	    int minimalInputHeight = minHeight +
++		                     rd->w->input.top + rd->w->input.bottom;
++
++	    /* small hot-spot square (on window's corner or edge) that is to be
++	       constrained to the combined output work-area region */
++	    int x, y;
++	    int width = rd->w->input.top; /* square size = title bar height */
++	    int height = width;
++	    int status;
++
++	    /* compute x & y for constrained hot-spot rect */
+ 	    if (rd->mask & ResizeLeftMask)
++		x = wX;
++	    else if (rd->mask & ResizeRightMask)
++		x = wX + wWidth - width;
++	    else
++		x = MIN (MAX (xRoot, wX), wX + wWidth - width);
++
++	    if (rd->mask & ResizeUpMask)
++		y = wY;
++	    else if (rd->mask & ResizeDownMask)
++		y = wY + wHeight - height;
++	    else
++		y = MIN (MAX (yRoot, wY), wY + wHeight - height);
++
++	    status = XRectInRegion (rd->constraintRegion,
++				    x, y, width, height);
++
++	    /* only constrain movement if previous position was valid */
++	    if (rd->inRegionStatus == RectangleIn)
+ 	    {
+-		int decorLeft = rd->savedGeometry.x + rd->savedGeometry.width -
+-		    (w + rd->w->input.left);
++		int xStatus=-1, yForXResize;
++		int nx = x;
++		int nw = w;
++		int nh = h;
++
++		if (rd->mask & (ResizeLeftMask | ResizeRightMask))
++		{
++		    xStatus = status;
++
++		    if (rd->mask & ResizeUpMask)
++			yForXResize = wY + wHeight - minimalInputHeight;
++		    else if (rd->mask & ResizeDownMask)
++			yForXResize = wY + minimalInputHeight - height;
++		    else
++			yForXResize = y;
++
++		    if (XRectInRegion (rd->constraintRegion,
++				       x, yForXResize,
++				       width, height) != RectangleIn)
++		    {
++			if (rd->lastGoodHotSpotY >= 0)
++			    yForXResize = rd->lastGoodHotSpotY;
++			else
++			    yForXResize = y;
++		    }
++		    if (rd->mask & ResizeLeftMask)
++		    {
++			while ((nw > minWidth) && xStatus != RectangleIn)
++			{
++			    xStatus = XRectInRegion (rd->constraintRegion,
++						     nx, yForXResize, width, height);
++			    if (xStatus != RectangleIn)
++			    {
++				nw--;
++				nx++;
++			    }
++			}
++			if (nw > minWidth)
++			{
++			    x = nx;
++			    w = nw;
++			}
++		    }
++		    else if (rd->mask & ResizeRightMask)
++		    {
++			while ((nw > minWidth) && xStatus != RectangleIn)
++			{
++			    xStatus = XRectInRegion (rd->constraintRegion,
++						     nx, yForXResize,
++						     width, height);
++			    if (xStatus != RectangleIn)
++			    {
++				nw--;
++				nx--;
++			    }
++			}
++			if (nw > minWidth)
++			{
++			    x = nx;
++			    w = nw;
++			}
++		    }
++		}
++
++		if (rd->mask & ResizeUpMask)
++		{
++		    while ((nh > minHeight) && status != RectangleIn)
++		    {
++			status = XRectInRegion (rd->constraintRegion,
++						x, y, width, height);
++			if (status != RectangleIn)
++			{
++			    nh--;
++			    y++;
++			}
++		    }
++		    if (nh > minHeight)
++			h = nh;
++		}
++		else if (rd->mask & ResizeDownMask)
++		{
++		    while ((nh > minHeight) && status != RectangleIn)
++		    {
++			status = XRectInRegion (rd->constraintRegion,
++						x, y, width, height);
++			if (status != RectangleIn)
++			{
++			    nh--;
++			    y--;
++			}
++		    }
++		    if (nh > minHeight)
++			h = nh;
++		}
+ 
+-		if (rs->grabWindowWorkArea->x > decorLeft)
+-		    w -= rs->grabWindowWorkArea->x - decorLeft;
++		if (((rd->mask & (ResizeLeftMask | ResizeRightMask)) &&
++		     xStatus == RectangleIn) ||
++		    ((rd->mask & (ResizeUpMask | ResizeDownMask)) &&
++		     status == RectangleIn))
++		{
++		    /* hot-spot inside work-area region, store good values */
++		    rd->lastGoodHotSpotY = y;
++		    rd->lastGoodWidth    = w;
++		    rd->lastGoodHeight   = h;
++		}
++		else
++		{
++		    /* failed to find a good hot-spot position, restore size */
++		    w = rd->lastGoodWidth;
++		    h = rd->lastGoodHeight;
++		}
+ 	    }
+-	    if (rd->mask & ResizeRightMask)
++	    else
+ 	    {
+-		int decorRight = rd->savedGeometry.x + w + rd->w->input.right;
+-
+-		if (decorRight >
+-		    rs->grabWindowWorkArea->x + rs->grabWindowWorkArea->width)
+-		    w -= decorRight - (rs->grabWindowWorkArea->x +
+-				       rs->grabWindowWorkArea->width);
++		rd->inRegionStatus = status;
+ 	    }
+ 	}
+ 
+@@ -1096,6 +1346,7 @@
+ {
+     BoxRec        box;
+     CompTransform sTransform = *transform;
++    GLint srcAlpha, dstAlpha;
+ 
+     resizeGetPaintRectangle (s->display, &box);
+ 
+@@ -1107,6 +1358,9 @@
+ 
+     glDisableClientState (GL_TEXTURE_COORD_ARRAY);
+     glEnable (GL_BLEND);
++    glGetIntegerv(GL_BLEND_SRC_ALPHA, &srcAlpha);
++    glGetIntegerv(GL_BLEND_DST_ALPHA, &dstAlpha);
++    glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+ 
+     /* fill rectangle */
+     if (fillColor)
+@@ -1127,6 +1381,7 @@
+ 
+     /* clean up */
+     glColor4usv (defaultColor);
++    glBlendFunc (srcAlpha, dstAlpha);
+     glDisable (GL_BLEND);
+     glEnableClientState (GL_TEXTURE_COORD_ARRAY);
+     glPopMatrix ();
+@@ -1357,7 +1612,7 @@
+ 	rd->key[i] = XKeysymToKeycode (d->display,
+ 				       XStringToKeysym (rKeys[i].name));
+ 
+-    rd->offWorkAreaConstrained = TRUE;
++    rd->constraintRegion = NULL;
+ 
+     WRAP (rd, d, handleEvent, resizeHandleEvent);
+ 
+@@ -1378,6 +1633,9 @@
+ 
+     compFiniDisplayOptions (d, rd->opt, RESIZE_DISPLAY_OPTION_NUM);
+ 
++    if (rd->constraintRegion)
++	XDestroyRegion (rd->constraintRegion);
++
+     free (rd);
+ }
+ 
+@@ -1416,8 +1674,6 @@
+     rs->cursor[2] = rs->upCursor;
+     rs->cursor[3] = rs->downCursor;
+ 
+-    rs->grabWindowWorkArea = NULL;
+-
+     WRAP (rs, s, windowResizeNotify, resizeWindowResizeNotify);
+     WRAP (rs, s, paintOutput, resizePaintOutput);
+     WRAP (rs, s, paintWindow, resizePaintWindow);
