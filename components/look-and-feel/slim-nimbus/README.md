@@ -10,7 +10,8 @@ It is based on the B00merang Project's gtk3 nimbus theme.
 
 ## Screenshots
 
-A simple sample illustrating the theme:
+Screenshots below illustrate the theme using solid csd.  Depictions of
+the theme with transparent csd [can be found here](../../desktop/compiz-legacy/).
 
 ![screenshot](https://raw.githubusercontent.com/RocketMan/solaris-ports/master/components/look-and-feel/slim-nimbus/screenshot.png)
 
