@@ -26,13 +26,14 @@
 BUILD_BITS =            64
 COMPILER =		gcc
 include ../../../make-rules/shared-macros.mk
+GCC_ROOT =		/usr/gcc/10
 
 COMPONENT_NAME=		font-manager
-COMPONENT_VERSION=	0.7.8
+COMPONENT_VERSION=	0.8.3
 COMPONENT_SRC=		$(COMPONENT_NAME)-$(GIT_COMMIT_ID)
 COMPONENT_ARCHIVE_URL=	$(GIT_REPO)/archive/$(GIT_COMMIT_ID).tar.gz
 GIT_REPO=		https://github.com/FontManager/font-manager
-GIT_COMMIT_ID=		0.7.8
+GIT_COMMIT_ID=		0.8.3
 COMPONENT_PROJECT_URL=	https://fontmanager.github.io/
 COMPONENT_ANITYA_ID=	15389
 
@@ -47,8 +48,10 @@ REQUIRED_PACKAGES += database/sqlite-3
 REQUIRED_PACKAGES += library/desktop/gtk3
 REQUIRED_PACKAGES += library/desktop/cairo
 REQUIRED_PACKAGES += library/desktop/pango
+REQUIRED_PACKAGES += library/desktop/webkitgtk4
 REQUIRED_PACKAGES += library/glib2
 REQUIRED_PACKAGES += library/json-glib
+REQUIRED_PACKAGES += library/libsoup
 REQUIRED_PACKAGES += library/libxml2
 REQUIRED_PACKAGES += system/library/fontconfig
 REQUIRED_PACKAGES += system/library/freetype-2
