@@ -30,11 +30,11 @@ include ../../../../make-rules/shared-macros.mk
 BUILD_STYLE=meson
 
 COMPONENT_NAME=		gst-devtools
-COMPONENT_VERSION=	1.18.1
+COMPONENT_VERSION=	1.18.2
 COMPONENT_PROJECT_URL=	https://gstreamer.freedesktop.org/
 COMPONENT_ARCHIVE=	$(COMPONENT_SRC).tar.xz
 COMPONENT_ARCHIVE_HASH= \
-	sha256:712212babd2238233d55beecfc0fe1ea8db18e8807ac6ab05a64505b2c7ab0df
+	sha256:6ea73d718bf1f9692218540ff88479c51d67c0b477fa56d6812fc7b739d30a56
 COMPONENT_ARCHIVE_URL=	https://gstreamer.freedesktop.org/src/$(COMPONENT_NAME)/$(COMPONENT_ARCHIVE)
 
 # Supports Python 3.x only.
