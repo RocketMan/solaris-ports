@@ -27,11 +27,11 @@ include ../../../make-rules/shared-macros.mk
 COMPILER=	gcc
 
 COMPONENT_NAME=		matplotlib
-COMPONENT_VERSION=	3.3.2
+COMPONENT_VERSION=	3.3.3
 COMPONENT_SRC=		$(COMPONENT_NAME)-$(COMPONENT_VERSION)
 COMPONENT_ARCHIVE=	$(COMPONENT_SRC).tar.gz
 COMPONENT_ARCHIVE_HASH= \
-    sha256:3d2edbf59367f03cd9daf42939ca06383a7d7803e3993eb5ff1bee8e8a3fbb6b
+    sha256:b1b60c6476c4cfe9e5cf8ab0d3127476fd3d5f05de0f343a452badaad0e4bdec
 COMPONENT_ARCHIVE_URL=	$(call pypi_url)
 COMPONENT_PROJECT_URL=	https://github.com/matplotlib/matplotlib
 COMPONENT_ANITYA_ID=	3919
