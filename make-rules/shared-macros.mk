@@ -200,12 +200,27 @@ endif
 # BUILD_STYLE=
 
 # The default version should go last.
-PYTHON_VERSION =	2.7
+PYTHON_VERSION =	3.7
 PYTHON2_VERSIONS =	2.7
-PYTHON3_VERSIONS =	3.5
+PYTHON3_VERSIONS =	3.7 3.9
 PYTHON_VERSIONS =	$(PYTHON3_VERSIONS) $(PYTHON2_VERSIONS)
 
-PYTHON3.7_READY = $(PYTHON3_VERSIONS) 3.7
+PYTHON3.7_READY = $(PYTHON3_VERSIONS)
+
+# PYTHON3_SOABI variable defines the naming scheme
+# of python3 extension libraries: cpython or abi3.
+# Currently, most of the components use cpython naming scheme by default,
+# only python/xattr and python/cryptography require abi3 naming.
+PYTHON3_SOABI ?= cpython
+ifeq ($(PYTHON3_SOABI),cpython)
+PY3_CPYTHON_NAMING=
+PY3_ABI3_NAMING=\#
+else ifeq ($(PYTHON3_SOABI),abi3)
+PY3_CPYTHON_NAMING=\#
+PY3_ABI3_NAMING=
+else
+$(error "Invalid python naming scheme '$(PYTHON3_SOABI)' selected!")
+endif
 
 BASS_O_MATIC =	$(WS_TOOLS)/bass-o-matic
 
@@ -641,6 +656,9 @@ PYTHON.3.5.VENDOR_PACKAGES = $(PYTHON.3.5.VENDOR_PACKAGES.$(BITS))
 PYTHON.3.7.VENDOR_PACKAGES.64 = /usr/lib/python3.7/vendor-packages
 PYTHON.3.7.VENDOR_PACKAGES = $(PYTHON.3.7.VENDOR_PACKAGES.$(BITS))
 
+PYTHON.3.9.VENDOR_PACKAGES.64 = /usr/lib/python3.9/vendor-packages
+PYTHON.3.9.VENDOR_PACKAGES = $(PYTHON.3.9.VENDOR_PACKAGES.$(BITS))
+
 PYTHON_VENDOR_PACKAGES.32 = $(PYTHON.$(PYTHON_VERSION).VENDOR_PACKAGES.32)
 PYTHON_VENDOR_PACKAGES.64 = $(PYTHON.$(PYTHON_VERSION).VENDOR_PACKAGES.64)
 PYTHON_VENDOR_PACKAGES = $(PYTHON_VENDOR_PACKAGES.$(BITS))
@@ -648,6 +666,7 @@ PYTHON_VENDOR_PACKAGES = $(PYTHON_VENDOR_PACKAGES.$(BITS))
 PYTHON.2.7.TEST = /usr/lib/python2.7/test
 PYTHON.3.5.TEST = /usr/lib/python3.5/test
 PYTHON.3.7.TEST = /usr/lib/python3.7/test
+PYTHON.3.9.TEST = /usr/lib/python3.9/test
 
 USRBIN.32 =	/usr/bin
 USRBIN.64 =	/usr/bin/$(MACH64)
@@ -672,6 +691,10 @@ PYTHON.3.5 =	$(USRBIN.32)/python3.5
 PYTHON.3.7.32 =	$(USRBIN.32)/python3.7
 PYTHON.3.7.64 =	$(USRBIN.32)/python3.7
 PYTHON.3.7 =	$(USRBIN.32)/python3.7
+
+PYTHON.3.9.32 =	$(USRBIN.32)/python3.9
+PYTHON.3.9.64 =	$(USRBIN.32)/python3.9
+PYTHON.3.9 =	$(USRBIN.32)/python3.9
 
 PYTHON.32 =	$(PYTHON.$(PYTHON_VERSION).32)
 PYTHON.64 =	$(PYTHON.$(PYTHON_VERSION).64)
@@ -795,6 +818,7 @@ GPATCH =	/usr/bin/patch
 PATCH_LEVEL =	1
 GPATCH_BACKUP =	--backup --version-control=numbered
 GPATCH_FLAGS =	-p$(PATCH_LEVEL) $(GPATCH_BACKUP)
+GAWK =		/usr/gnu/bin/awk
 GSED =		/usr/gnu/bin/sed
 GDIFF =		/usr/gnu/bin/diff
 GSORT =		/usr/gnu/bin/sort

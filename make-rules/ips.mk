@@ -94,6 +94,17 @@ PUBLISH_TRANSFORMS +=	$(PKGMOGRIFY_TRANSFORMS)
 PUBLISH_TRANSFORMS +=	$(WS_TOP)/transforms/incorporate
 PUBLISH_TRANSFORMS +=	$(WS_TOP)/transforms/publish-cleanup
 
+define add-limiting-variable
+PKG_VARS += $(1)
+MANIFEST_LIMITING_VARS += -D $(1)="$(subst #,\#,$($(1)))"
+endef
+
+# Make all the limiting variables available to manifest processing
+$(foreach var, $(filter SOLARIS_11_%_ONLY,$(.VARIABLES)), \
+    $(eval $(call add-limiting-variable,$(var))))
+$(foreach var, $(filter PY3_%_NAMING,$(.VARIABLES)), \
+    $(eval $(call add-limiting-variable,$(var))))
+
 # For items defined as variables or that may contain whitespace, add
 # them to a list to be expanded into PKG_OPTIONS later.
 PKG_VARS += ARC_CASE TPNO
@@ -105,7 +116,6 @@ PKG_VARS += HG_REPO HG_REV HG_URL
 PKG_VARS += GIT_COMMIT_ID GIT_REPO GIT_TAG
 PKG_VARS += MACH MACH32 MACH64
 PKG_VARS += PUBLISHER PUBLISHER_LOCALIZABLE
-PKG_VARS += SOLARIS_11_3_ONLY SOLARIS_11_4_ONLY
 
 # Include TPNO_* Makefile variables in PKG_VARS.
 $(foreach macro, $(filter TPNO_%, $(.VARIABLES)), \
