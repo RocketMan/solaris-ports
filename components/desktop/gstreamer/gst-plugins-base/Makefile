@@ -20,7 +20,7 @@
 #
 
 #
-# Copyright (c) 2018-2020 Jim Mason <jmason at ibinx dot com>.
+# Copyright (c) 2018-2021 Jim Mason <jmason at ibinx dot com>.
 #
 # Adapted from original code Copyright (c) 2015, 2018, Oracle and/or its
 # affiliates. All rights reserved.
@@ -45,10 +45,9 @@ COMPONENT_ANITYA_ID=	1263
 
 
 # Supports Python 3.x only.
-PYTHON_VERSION= 3.5
-PYTHON_VERSIONS= $(PYTHON_VERSION)
+PYTHON_VERSIONS= $(PYTHON3_VERSIONS)
 
-TEST_TARGET= $(SKIP_TEST)
+TEST_TARGET = $(TEST_64)
 
 include $(WS_MAKE_RULES)/common.mk
 
@@ -67,6 +66,7 @@ COMPONENT_BUILD_ENV += V=1
 
 CFLAGS += -DHAVE_FIONREAD_IN_SYS_FILIO
 
+CONFIGURE_OPTIONS += -Dgl_platform=glx,egl
 CONFIGURE_OPTIONS += -Dlibexecdir=$(CONFIGURE_LIBDIR.$(BITS))
 CONFIGURE_OPTIONS += -Dogg=enabled
 CONFIGURE_OPTIONS += -Dtheora=enabled
@@ -74,7 +74,6 @@ CONFIGURE_OPTIONS += -Dvorbix=enabled
 CONFIGURE_OPTIONS += -Dx11=enabled
 CONFIGURE_OPTIONS += -Dgl-graphene=disabled
 CONFIGURE_OPTIONS += -Dexamples=disabled
-CONFIGURE_OPTIONS += -Dtests=disabled
 
 # Ensure Python modules are installed into vendor package directories.
 CONFIGURE_ENV += am_cv_python_pythondir=$(PYTHON_VENDOR_PACKAGES)
@@ -86,14 +85,11 @@ COMPONENT_BUILD_ENV += PATH=$(GNUBIN):$(PATH)
 
 # for the tests
 COMPONENT_TEST_MASTER = $(COMPONENT_TEST_RESULTS_DIR)/results-all.master
-COMPONENT_TEST_ARGS =   -k -i
-COMPONENT_TEST_TRANSFORMS += \
-        '-n ' \
-        '-e "/TOTAL:/p" ' \
-        '-e "/SKIP:/p" ' \
-        '-e "/PASS:/p" ' \
-        '-e "/FAIL:/p" ' \
-        '-e "/ERROR:/p" '
+COMPONENT_TEST_TRANSFORMER = $(GAWK)
+COMPONENT_TEST_TRANSFORMS = "'" '/OK/ {++ok} \
+        /FAIL/ {++fail; print $$3, $$2} \
+        /SKIP/ {++skip; print $$3, $$2} \
+        END {print "OK:\\t"ok"\\nFAIL:\\t"fail"\\nSKIP:\\t"skip}' "'"
 
 REQUIRED_PACKAGES += codec/libtheora
 REQUIRED_PACKAGES += codec/libogg

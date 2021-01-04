@@ -20,7 +20,7 @@
 #
 
 #
-# Copyright (c) 2019 Jim Mason <jmason at ibinx dot com>.  All rights reserved.
+# Copyright (c) 2019-2021 Jim Mason <jmason at ibinx dot com>.  All rights reserved.
 #
 
 BUILD_BITS =            64
@@ -45,7 +45,6 @@ PATH=/usr/lib/amd64/gstreamer-1.0:$(GNUBIN):$(USRBINDIR)
 COMPONENT_BUILD_ENV += VERBOSE=1
 
 PYTHON_VERSION=3.7
-CONFIGURE_ENV += PYTHON="$(PYTHON)"
 
 SCRATCH_DIR = $(COMPONENT_DIR)/tmp
 CLEAN_PATHS += $(SCRATCH_DIR)
@@ -53,23 +52,19 @@ CLEAN_PATHS += $(SCRATCH_DIR)
 # Ensure Python modules are installed into vendor package directories.
 CONFIGURE_ENV += am_cv_python_pythondir=$(PYTHON_VENDOR_PACKAGES)
 CONFIGURE_ENV += am_cv_python_pyexecdir=$(PYTHON_VENDOR_PACKAGES)
-CONFIGURE_ENV += PKG_CONFIG_PATH=$(PKG_CONFIG_PATH):$(SCRATCH_DIR)
+CONFIGURE_ENV += PKG_CONFIG_PATH=$(PKG_CONFIG_PATH):$(PYTHON_VENDOR_PACKAGES)/lib/pkgconfig
+
+CONFIGURE_OPTIONS += -Dpython=$(PYTHON)
 
 # Use GNU grep during configure and build
 CONFIGURE_ENV += PATH="$(PATH)"
 COMPONENT_BUILD_ENV += PATH=$(PATH)
 COMPONENT_INSTALL_ENV += PATH=$(PATH)
 
-COMPONENT_PREP_ACTION += ( \
-	mkdir -p $(SCRATCH_DIR); \
-	cp $(PYTHON_VENDOR_PACKAGES)/lib/pkgconfig/py3cairo.pc $(SCRATCH_DIR); \
-	sed -i 's|prefix=/usr|prefix=$(PYTHON_VENDOR_PACKAGES)|' $(SCRATCH_DIR)/py3cairo.pc; \
-	);
-
 REQUIRED_PACKAGES += library/desktop/cairo
 REQUIRED_PACKAGES += library/desktop/gstreamer-1
 REQUIRED_PACKAGES += library/desktop/gstreamer-1/gst-plugins-base
 REQUIRED_PACKAGES += library/desktop/gstreamer-1/gst-transcoder
 REQUIRED_PACKAGES += library/glib2
-REQUIRED_PACKAGES += runtime/python-35
+REQUIRED_PACKAGES += runtime/python-37
 

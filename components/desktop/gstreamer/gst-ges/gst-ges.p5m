@@ -20,7 +20,7 @@
 #
 
 #
-# Copyright (c) 2019-2020 Jim Mason <jmason at ibinx dot com>.
+# Copyright (c) 2019-2021 Jim Mason <jmason at ibinx dot com>.
 #
 
 <transform file path=usr.*/man/.+ -> \
@@ -110,7 +110,7 @@ link path=usr/lib/$(MACH64)/libges-1.0.so target=libges-1.0.so.0
 link path=usr/lib/$(MACH64)/libges-1.0.so.0 target=libges-1.0.so.0.1802.0
 file path=usr/lib/$(MACH64)/libges-1.0.so.0.1802.0
 file path=usr/lib/$(MACH64)/pkgconfig/gst-editing-services-1.0.pc
-file path=usr/lib/python3.5/vendor-packages/gi/overrides/GES.py
+file path=usr/lib/python3.7/vendor-packages/gi/overrides/GES.py
 file path=usr/share/gir-1.0/GES-1.0.gir
 file path=usr/share/gstreamer-1.0/validate/scenarios/ges-edit-clip-while-paused.scenario
 file path=usr/share/man/man1/ges-launch-1.0.1

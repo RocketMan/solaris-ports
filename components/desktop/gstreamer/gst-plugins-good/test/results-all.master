@@ -1,0 +1,8 @@
+FAIL elements_rtpulpfec
+FAIL elements_udpsrc
+FAIL elements_rtpulpfec
+FAIL elements_udpsrc
+ meson-test
+OK:	96
+FAIL:	5
+SKIP:	

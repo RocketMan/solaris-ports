@@ -20,7 +20,7 @@
 #
 
 #
-# Copyright (c) 2018-2020 Jim Mason <jmason at ibinx dot com>.
+# Copyright (c) 2018-2021 Jim Mason <jmason at ibinx dot com>.
 #
 # Adapted from original code Copyright (c) 2015, 2018, Oracle and/or its
 # affiliates. All rights reserved.
@@ -43,13 +43,10 @@ COMPONENT_ARCHIVE_HASH= \
 COMPONENT_ARCHIVE_URL=	https://gstreamer.freedesktop.org/src/$(COMPONENT_NAME)/$(COMPONENT_ARCHIVE)
 COMPONENT_ANITYA_ID=	1263
 
-
-# Hook up tests after build servers are installed with dependencies
-TEST_TARGET= $(SKIP_TEST)
-
 # Supports Python 3.x only.
-PYTHON_VERSION= 3.5
-PYTHON_VERSIONS= $(PYTHON_VERSION)
+PYTHON_VERSIONS= $(PYTHON3_VERSIONS)
+
+TEST_TARGET= $(TEST_64)
 
 include $(WS_MAKE_RULES)/common.mk
 
@@ -73,6 +70,14 @@ CONFIGURE_ENV += ac_cv_prog_HAVE_CXX=yes
 
 # Use GNU grep during build
 COMPONENT_BUILD_ENV += PATH=$(GNUBIN):$(PATH)
+
+unexport SHELLOPTS
+COMPONENT_TEST_MASTER = $(COMPONENT_TEST_RESULTS_DIR)/results-all.master
+COMPONENT_TEST_TRANSFORMER = $(GAWK)
+COMPONENT_TEST_TRANSFORMS = "'" '/OK/ {++ok} \
+        /FAIL/ {++fail; print $$3, $$2} \
+        /SKIP/ {++skip; print $$3, $$2} \
+        END {print "OK:\\t"ok"\\nFAIL:\\t"fail"\\nSKIP:\\t"skip}' "'"
 
 # No need for firewire support.
 CONFIGURE_OPTIONS += -Ddv1394=disabled

@@ -20,7 +20,7 @@
 #
 
 #
-# Copyright (c) 2018-2020 Jim Mason <jmason at ibinx dot com>.
+# Copyright (c) 2018-2021 Jim Mason <jmason at ibinx dot com>.
 #
 # Adapted from original code Copyright (c) 2015, 2017, Oracle and/or its
 # affiliates. All rights reserved.
@@ -43,7 +43,6 @@ set name=org.opensolaris.consolidation value=$(CONSOLIDATION)
 file path=usr/bin/gst-device-monitor-1.0
 file path=usr/bin/gst-discoverer-1.0
 file path=usr/bin/gst-play-1.0
-file path=usr/include/GL/wglext.h
 file path=usr/include/gstreamer-1.0/gst/allocators/allocators-prelude.h
 file path=usr/include/gstreamer-1.0/gst/allocators/allocators.h
 file path=usr/include/gstreamer-1.0/gst/allocators/gstdmabuf.h

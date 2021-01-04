@@ -20,7 +20,7 @@
 #
 
 #
-# Copyright (c) 2019-2020 Jim Mason <jmason at ibinx dot com>.
+# Copyright (c) 2019-2021 Jim Mason <jmason at ibinx dot com>.
 #
 
 BUILD_BITS =            64
@@ -64,18 +64,21 @@ CONFIGURE_OPTIONS += -Dpython=$(PYTHON)
 $(BUILD_DIR)/%-2.7/.configured:		PYTHON_VERSION=2.7
 $(BUILD_DIR)/%-3.5/.configured:		PYTHON_VERSION=3.5
 $(BUILD_DIR)/%-3.7/.configured:		PYTHON_VERSION=3.7
+$(BUILD_DIR)/%-3.9/.configured:		PYTHON_VERSION=3.9
 $(BUILD_DIR)/$(MACH32)-%/.configured:	BITS=32
 $(BUILD_DIR)/$(MACH64)-%/.configured:	BITS=64
 
 $(BUILD_DIR)/%-2.7/.built:		PYTHON_VERSION=2.7
 $(BUILD_DIR)/%-3.5/.built:		PYTHON_VERSION=3.5
 $(BUILD_DIR)/%-3.7/.built:		PYTHON_VERSION=3.7
+$(BUILD_DIR)/%-3.9/.built:		PYTHON_VERSION=3.9
 $(BUILD_DIR)/$(MACH32)-%/.built:	BITS=32
 $(BUILD_DIR)/$(MACH64)-%/.built:	BITS=64
 
 $(BUILD_DIR)/%-2.7/.installed:		PYTHON_VERSION=2.7
 $(BUILD_DIR)/%-3.5/.installed:		PYTHON_VERSION=3.5
 $(BUILD_DIR)/%-3.7/.installed:		PYTHON_VERSION=3.7
+$(BUILD_DIR)/%-3.9/.installed:		PYTHON_VERSION=3.9
 $(BUILD_DIR)/$(MACH32)-%/.installed:	BITS=32
 $(BUILD_DIR)/$(MACH64)-%/.installed:	BITS=64
 
@@ -84,6 +87,9 @@ ifeq ($(PYTHON_VERSION),3.5)
 BUILD_32_and_64 = $(BUILD_64)
 endif
 ifeq ($(PYTHON_VERSION),3.7)
+BUILD_32_and_64 = $(BUILD_64)
+endif
+ifeq ($(PYTHON_VERSION),3.9)
 BUILD_32_and_64 = $(BUILD_64)
 endif
 INSTALL_32 = $(PYTHON2_VERSIONS:%=$(BUILD_DIR)/$(MACH32)-%/.installed)
@@ -96,6 +102,9 @@ endif
 ifeq ($(PYTHON_VERSION),3.7)
 INSTALL_32_and_64 = $(INSTALL_64)
 endif
+ifeq ($(PYTHON_VERSION),3.9)
+INSTALL_32_and_64 = $(INSTALL_64)
+endif
 
 # Build the canonical version (currently 2.7) last.
 ifneq ($(findstring 3.5,$(PYTHON_VERSIONS)),)
@@ -105,6 +114,10 @@ endif
 ifneq ($(findstring 3.7,$(PYTHON_VERSIONS)),)
 $(BUILD_DIR)/%-2.7/.built:     $(BUILD_DIR)/%-3.7/.built
 $(BUILD_DIR)/%-2.7/.installed: $(BUILD_DIR)/%-3.7/.installed
+endif
+ifneq ($(findstring 3.9,$(PYTHON_VERSIONS)),)
+$(BUILD_DIR)/%-2.7/.built:     $(BUILD_DIR)/%-3.9/.built
+$(BUILD_DIR)/%-2.7/.installed: $(BUILD_DIR)/%-3.9/.installed
 endif
 
 ifneq ($(findstring 2.7, $(PYTHON_VERSIONS)),)
@@ -118,6 +131,10 @@ endif
 ifneq ($(findstring 3.7, $(PYTHON_VERSIONS)),)
 REQUIRED_PACKAGES += runtime/python-37
 REQUIRED_PACKAGES += library/python/setuptools-37
+endif
+ifneq ($(findstring 3.9, $(PYTHON_VERSIONS)),)
+REQUIRED_PACKAGES += runtime/python-39
+REQUIRED_PACKAGES += library/python/setuptools-39
 endif
 
 LDFLAGS += -m$(BITS)

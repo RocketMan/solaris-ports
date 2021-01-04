@@ -20,7 +20,7 @@
 #
 
 #
-# Copyright (c) 2018-2020 Jim Mason <jmason at ibinx dot com>.
+# Copyright (c) 2018-2021 Jim Mason <jmason at ibinx dot com>.
 #
 # Adapted from original code Copyright (c) 2015, 2018, Oracle and/or its
 # affiliates. All rights reserved.
@@ -49,8 +49,7 @@ COMPONENT_ANITYA_ID=	1263
 
 
 # Supports Python 3.x only.
-PYTHON_VERSION= 3.5
-PYTHON_VERSIONS= $(PYTHON_VERSION)
+PYTHON_VERSIONS= $(PYTHON3_VERSIONS)
 
 TEST_TARGET= $(TEST_64)
 
@@ -80,20 +79,17 @@ COMPONENT_BUILD_ENV += PATH=$(GNUBIN):$(PATH)
 # for the tests
 unexport SHELLOPTS
 COMPONENT_TEST_MASTER = $(COMPONENT_TEST_RESULTS_DIR)/results-all.master
-COMPONENT_TEST_ARGS =   -k -i
-COMPONENT_TEST_TRANSFORMS += \
-        '-n ' \
-        '-e "/TOTAL:/p" ' \
-        '-e "/SKIP:/p" ' \
-        '-e "/PASS:/p" ' \
-        '-e "/FAIL:/p" ' \
-        '-e "/ERROR:/p" '
+COMPONENT_TEST_TRANSFORMER = $(GAWK)
+COMPONENT_TEST_TRANSFORMS = "'" '/OK/ {++ok} \
+        /FAIL/ {++fail; print $$3, $$2} \
+        /SKIP/ {++skip; print $$3, $$2} \
+        END {print "OK:\\t"ok"\\nFAIL:\\t"fail"\\nSKIP:\\t"skip}' "'"
 
 REQUIRED_PACKAGES += data/docbook/docbook-dtds
 REQUIRED_PACKAGES += data/docbook/docbook-style-dsssl
 REQUIRED_PACKAGES += data/docbook/docbook-style-xsl
 REQUIRED_PACKAGES += library/glib2
 REQUIRED_PACKAGES += library/libxslt
-REQUIRED_PACKAGES += runtime/python-35
+REQUIRED_PACKAGES += runtime/python-37
 REQUIRED_PACKAGES += system/library/gcc/gcc-c-runtime
 REQUIRED_PACKAGES += system/library/math

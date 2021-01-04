@@ -1,0 +1,14 @@
+FAIL elements_libvisual
+FAIL elements_multifdsink
+FAIL pipelines_tcp
+FAIL pipelines_gl_launch_lines
+SKIP validate.videorate.reverse.variable_to_10fps
+SKIP validate.compositor.renogotiate_failing_unsupported_src_format
+FAIL elements_libvisual
+FAIL elements_multifdsink
+FAIL pipelines_tcp
+FAIL pipelines_gl_launch_lines
+ meson-test
+OK:	110
+FAIL:	9
+SKIP:	2

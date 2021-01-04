@@ -1,0 +1,12 @@
+FAIL ges_clip
+FAIL nle_tempochange
+FAIL check_keyframes_in_compositor_two_sources
+FAIL pythontests
+FAIL ges_clip
+FAIL nle_tempochange
+FAIL check_keyframes_in_compositor_two_sources
+FAIL pythontests
+ meson-test
+OK:	31
+FAIL:	9
+SKIP:	
