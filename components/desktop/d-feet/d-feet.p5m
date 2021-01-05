@@ -20,7 +20,7 @@
 #
 
 #
-# Copyright (c) 2018 Jim Mason <jmason at ibinx dot com>.  All rights reserved.
+# Copyright (c) 2018-2021 Jim Mason <jmason at ibinx dot com>.  All rights reserved.
 #
 
 <transform file path=usr.*/man/.+ -> \
@@ -37,18 +37,18 @@ set name=info.source-url value=$(COMPONENT_ARCHIVE_URL)
 set name=info.upstream-url value=$(COMPONENT_PROJECT_URL)
 set name=org.opensolaris.consolidation value=$(CONSOLIDATION)
 file path=usr/bin/d-feet
-file path=usr/lib/python3.5/site-packages/dfeet/__init__.py
-file path=usr/lib/python3.5/site-packages/dfeet/addconnectiondialog.py
-file path=usr/lib/python3.5/site-packages/dfeet/application.py
-file path=usr/lib/python3.5/site-packages/dfeet/bus_watch.py
-file path=usr/lib/python3.5/site-packages/dfeet/dbus_utils.py
-file path=usr/lib/python3.5/site-packages/dfeet/executemethoddialog.py
-file path=usr/lib/python3.5/site-packages/dfeet/introspection.py
-file path=usr/lib/python3.5/site-packages/dfeet/introspection_helper.py
-file path=usr/lib/python3.5/site-packages/dfeet/settings.py
-file path=usr/lib/python3.5/site-packages/dfeet/uiloader.py
-file path=usr/lib/python3.5/site-packages/dfeet/window.py
-file path=usr/lib/python3.5/site-packages/dfeet/wnck_utils.py
+file path=usr/lib/python3.7/site-packages/dfeet/__init__.py
+file path=usr/lib/python3.7/site-packages/dfeet/addconnectiondialog.py
+file path=usr/lib/python3.7/site-packages/dfeet/application.py
+file path=usr/lib/python3.7/site-packages/dfeet/bus_watch.py
+file path=usr/lib/python3.7/site-packages/dfeet/dbus_utils.py
+file path=usr/lib/python3.7/site-packages/dfeet/executemethoddialog.py
+file path=usr/lib/python3.7/site-packages/dfeet/introspection.py
+file path=usr/lib/python3.7/site-packages/dfeet/introspection_helper.py
+file path=usr/lib/python3.7/site-packages/dfeet/settings.py
+file path=usr/lib/python3.7/site-packages/dfeet/uiloader.py
+file path=usr/lib/python3.7/site-packages/dfeet/window.py
+file path=usr/lib/python3.7/site-packages/dfeet/wnck_utils.py
 file path=usr/share/applications/org.gnome.dfeet.desktop
 file path=usr/share/d-feet/ui/addconnectiondialog.ui
 file path=usr/share/d-feet/ui/bus.ui

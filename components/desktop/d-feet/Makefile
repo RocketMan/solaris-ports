@@ -20,7 +20,7 @@
 #
 
 #
-# Copyright (c) 2018 Jim Mason <jmason at ibinx dot com>.  All rights reserved.
+# Copyright (c) 2018-2021 Jim Mason <jmason at ibinx dot com>.  All rights reserved.
 #
 
 BUILD_BITS=		64
@@ -40,10 +40,10 @@ BUILD_STYLE=meson
 
 include $(WS_MAKE_RULES)/common.mk
 
-PYTHON=$(PYTHON.3.5)
+PYTHON=$(PYTHON.3.7)
 
 CONFIGURE_ENV += PYTHON="$(PYTHON)"
 CONFIGURE_OPTIONS += -Dpython-path="$(PYTHON)"
 
-REQUIRED_PACKAGES += library/python/pygobject-3-35
-REQUIRED_PACKAGES += runtime/python-35
+REQUIRED_PACKAGES += library/python/pygobject-3-37
+REQUIRED_PACKAGES += runtime/python-37
