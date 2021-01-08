@@ -32,6 +32,7 @@ include $(WS_MAKE_RULES)/configure.mk
 $(BUILD_DIR)/%-7.1/.configured:	PHP_VERSION=7.1
 $(BUILD_DIR)/%-7.3/.configured:	PHP_VERSION=7.3
 $(BUILD_DIR)/%-7.4/.configured:	PHP_VERSION=7.4
+$(BUILD_DIR)/%-8.0/.configured:	PHP_VERSION=8.0
 
 PHP_BINDIR = /usr/php/$(PHP_VERSION)/bin
 
@@ -55,3 +56,4 @@ COMPONENT_INSTALL_ENV += INSTALL_ROOT=$(PROTO_DIR)
 REQUIRED_PACKAGES += web/php-71
 REQUIRED_PACKAGES += web/php-73
 REQUIRED_PACKAGES += web/php-74
+REQUIRED_PACKAGES += web/php-80
