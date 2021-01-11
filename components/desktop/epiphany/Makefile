@@ -20,7 +20,7 @@
 #
 
 #
-# Copyright (c) 2018-2020 Jim Mason <jmason at ibinx dot com>.  All rights reserved.
+# Copyright (c) 2018-2021 Jim Mason <jmason at ibinx dot com>.  All rights reserved.
 #
 
 BUILD_BITS =            64
@@ -31,7 +31,7 @@ GCC_ROOT = 		/usr/gcc/9
 COMPONENT_NAME=		epiphany
 COMPONENT_VERSION=	3.30.5
 IPS_COMPONENT_VERSION=	3.30.5.3
-COMPONENT_REVISION=	1
+COMPONENT_REVISION=	2
 COMPONENT_SRC=		$(COMPONENT_NAME)-$(COMPONENT_VERSION)
 COMPONENT_ARCHIVE_URL=	$(GIT_REPO)/archive/$(COMPONENT_VERSION).tar.gz
 COMPONENT_ARCHIVE_HASH= \
@@ -49,12 +49,12 @@ COMPONENT_ARCHIVE_HASH_1= \
 	sha256:a76a3cfc2be2e3ace62f73e816f73b67378d61b1ed2d5eb1e0af4d9ec87d5d7b
 
 COMPONENT_NAME_2=	highlightjs
-COMPONENT_VERSION_2=	10.4.1
+COMPONENT_VERSION_2=	10.5.0
 COMPONENT_SRC_2=	highlight.js-$(COMPONENT_VERSION_2)
 COMPONENT_ARCHIVE_2=	$(COMPONENT_VERSION_2).tar.gz
 COMPONENT_ARCHIVE_URL_2= https://github.com/highlightjs/highlight.js/archive/$(COMPONENT_ARCHIVE_2)
 COMPONENT_ARCHIVE_HASH_2= \
-	sha256:621a2420ee8dedd5425dd42f9be99d1a39cbebc0afb46a55279ab6e580138a2d
+	sha256:607a68a00964c36d454dd884c5e84c50598086dc9e19c1695020e8c42dd7193d
 
 COMPONENT_NAME_3=	highlightjs_line_numbers
 COMPONENT_VERSION_3=	2.8.0
