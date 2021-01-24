@@ -1,0 +1,11 @@
+--- a/platforms/sun/apccontrol.in	2014-10-14 22:10:25.000000000 +0000
++++ b/platforms/sun/apccontrol.in	2021-01-24 16:06:07.146184287 +0000
+@@ -89,7 +89,7 @@
+    ;;
+    doshutdown)
+       printf "Beginning Shutdown Sequence" | wall -a
+-      ${SHUTDOWN} -y -g0 -i0 "apcupsd initiated shutdown"
++      ${SHUTDOWN} -y -g0 -i5 "apcupsd initiated shutdown"
+    ;;
+    annoyme)
+       printf "Power problems please logoff." | wall -a
