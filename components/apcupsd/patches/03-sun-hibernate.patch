@@ -1,0 +1,26 @@
+Not suitable for upstream.
+
+--- a/src/apcupsd.c	2021-01-27 12:55:28.060567935 +0000
++++ b/src/apcupsd.c	2021-01-27 13:03:57.899804433 +0000
+@@ -49,6 +49,21 @@
+    if (sig != 0)
+       log_event(ups, LOG_WARNING, "apcupsd exiting, signal %u", sig);
+ 
++#ifdef __sun
++   /*
++    * Solaris does not have a good hook for a halt script to
++    * initiate a UPS hibernate, so do it now, if requested.
++    */
++   if(ups->is_onbatt() && ups->mode.type != DUMB_UPS) {
++      int pwdf;
++      pwdf = open(ups->pwrfailpath, O_RDONLY|O_CLOEXEC);
++      if (pwdf != -1) {
++         close(pwdf);
++         initiate_hibernate(ups);
++      }
++   }
++#endif
++
+    clean_threads();
+    clear_files();
+    if (ups->driver)
