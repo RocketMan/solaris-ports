@@ -29,3 +29,18 @@ In /var/adm/messages, if you see (bad):
 it has bound to the hid driver.  You want to see (good):
 
     Oct 15 14:59:36 m5a97 usba: [ID 912658 kern.info] USB 1.10 device (usb51d,2) operating at low speed (USB 1.x) on USB 1.10 root hub: input@1, ugen0 at bus address 2
+
+### UPS shutdown note
+
+When apcupsd detects that power has failed and the `BATTERYLEVEL`,
+`MINUTES`, or `TIMEOUT` conditions as specified in apcupsd.conf(5) are
+reached, it will initiate shutdown of the system.  On Solaris, when
+smf(5) eventually brings apcupsd down, apcupsd will then request that
+the UPS kill power.
+
+**A very important consideration is that you must set the EEPROM in
+your UPS so that it will wait a sufficient time for the system to
+complete shutdown before it kills the power.**  When connected via USB,
+apcupsd automatically sets this wait time to 60 seconds.  When using a
+serial connection to a SmartUPS, you must configure the value in the
+UPS EEPROM by hand using apctest.
