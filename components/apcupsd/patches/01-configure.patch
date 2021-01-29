@@ -10,7 +10,7 @@
  else
  
     if test x$sysconfdir = x'${prefix}/etc' ; then
-@@ -13200,7 +13197,7 @@
+@@ -13200,10 +13197,10 @@
  sun)
     DISTVER=Solaris
     SERIALDEV=/dev/ttya
@@ -18,4 +18,8 @@
 +   PWRFAILDIR=/etc/svc/volatile
     PIDDIR=/var/run
     LOCKDIR=/var/spool/locks
-    LOGDIR=${sysconfdir}
+-   LOGDIR=${sysconfdir}
++   LOGDIR=/var/log/apcupsd
+    APCUPSD_MAIL=/usr/bin/mailx
+    PTHREAD_CFLAGS="-D_POSIX_PTHREAD_SEMANTICS"
+    DFILES="\

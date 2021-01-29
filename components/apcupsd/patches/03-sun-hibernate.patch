@@ -11,7 +11,7 @@ Not suitable for upstream.
 +    * Solaris does not have a good hook for a halt script to
 +    * initiate a UPS hibernate, so do it now, if requested.
 +    */
-+   if(ups->is_onbatt() && ups->mode.type != DUMB_UPS) {
++   if (ups->is_onbatt() && ups->mode.type != DUMB_UPS) {
 +      int pwdf;
 +      pwdf = open(ups->pwrfailpath, O_RDONLY|O_CLOEXEC);
 +      if (pwdf != -1) {

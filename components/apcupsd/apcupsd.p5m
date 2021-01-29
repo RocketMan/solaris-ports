@@ -48,4 +48,5 @@ file path=usr/share/man/man8/apcaccess.8
 file path=usr/share/man/man8/apccontrol.8
 file path=usr/share/man/man8/apctest.8
 file path=usr/share/man/man8/apcupsd.8
+dir  path=var/log/apcupsd
 license COPYING license=GPLv2
