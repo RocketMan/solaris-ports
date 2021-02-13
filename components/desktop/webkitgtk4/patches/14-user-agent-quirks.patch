@@ -1,10 +1,10 @@
---- a/Source/WebCore/platform/UserAgentQuirks.cpp	2019-09-10 13:46:35.169229789 +0000
-+++ b/Source/WebCore/platform/UserAgentQuirks.cpp	2019-09-10 13:48:53.969416868 +0000
-@@ -140,7 +140,17 @@
+--- a/Source/WebCore/platform/UserAgentQuirks.cpp	2021-02-13 12:45:24.829172948 +0000
++++ b/Source/WebCore/platform/UserAgentQuirks.cpp	2021-02-13 12:47:16.871819133 +0000
+@@ -170,7 +170,17 @@
  
  static bool urlRequiresLinuxDesktopPlatform(const URL& url)
  {
--    return isGoogle(url) && chassisType() != WTF::ChassisType::Mobile;
+-    return isGoogle(url) && !urlRequiresInternetExplorerBrowser(url) && chassisType() != WTF::ChassisType::Mobile;
 +#if OS(SOLARIS)
 +    // The speed test at dslreports does not recognize the SunOS platform,
 +    // so we masquerade as Linux.
@@ -15,7 +15,7 @@
 +#else
 +    return
 +#endif
-+           isGoogle(url) && chassisType() != WTF::ChassisType::Mobile;
++           isGoogle(url) && !urlRequiresInternetExplorerBrowser(url) && chassisType() != WTF::ChassisType::Mobile;
  }
  
  UserAgentQuirks UserAgentQuirks::quirksForURL(const URL& url)
