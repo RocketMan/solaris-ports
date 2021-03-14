@@ -11,12 +11,6 @@ gFTP includes both a graphical user interface (GUI) and a command-line
 interface.
 
 ## NOTE - Full support for FTPS
-While the upstream gFTP source code supports encryption on the FTP
-control channel, it has never had working support for encryption on
-the *data channel*.
-
-Unlike the upstream source code, this release of gFTP for Solaris has
-full FTPS support for encryption on **both** the control channel and
-the data channel.  On account of this additional functionality, this
-release is being numbered 2.0.19.1, to differentiate it from the
-upstream source release 2.0.19.
+RocketMan's patch for FTPS landed upstream.  As such, gFTP now
+includes full FTPS support for encryption on **both** the control channel
+as well as the data channel.

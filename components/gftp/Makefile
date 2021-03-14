@@ -20,27 +20,30 @@
 #
 
 #
-# Copyright (c) 2018 Jim Mason <jmason at ibinx dot com>.  All rights reserved.
+# Copyright (c) 2018-2021 Jim Mason <jmason at ibinx dot com>.
 #
 
-BUILD_BITS=		32
+BUILD_BITS=		64
 COMPILER=		gcc
 include ../../make-rules/shared-macros.mk
 
 COMPONENT_NAME=		gftp
-COMPONENT_VERSION=	2.0.19.1
-COMPONENT_SRC=		$(COMPONENT_NAME)-2.0.19
-COMPONENT_ARCHIVE =	$(COMPONENT_SRC).tar.bz2
+COMPONENT_VERSION=	2.7.0b
+IPS_COMPONENT_VERSION=	2.6.90
+COMPONENT_SRC=		$(COMPONENT_NAME)-$(COMPONENT_VERSION)
+COMPONENT_ARCHIVE =	$(COMPONENT_VERSION).tar.gz
 COMPONENT_ARCHIVE_HASH=	\
-	sha256:5306a46be96d6f4d23906cb1836fb3d732039621a6c7fcfa921acc21ac110bfd
-COMPONENT_ARCHIVE_URL =	https://www.gftp.org/$(COMPONENT_ARCHIVE)
+	sha256:164651e19c840e5df148e905fbfcf4d24c65204a2df078dc98ad6c95a421e7f4
+COMPONENT_ARCHIVE_URL =	https://github.com/masneyb/$(COMPONENT_NAME)/archive/$(COMPONENT_ARCHIVE)
 COMPONENT_PROJECT_URL=	https://www.gftp.org/
 COMPONENT_ANITYA_ID=	905
 
 
 include $(WS_MAKE_RULES)/common.mk
 
+COMPONENT_PREP_ACTION = (cd $(@D) ; ./autogen.sh)
 
+REQUIRED_PACKAGES += library/desktop/gdk-pixbuf
 REQUIRED_PACKAGES += library/desktop/gtk2
 REQUIRED_PACKAGES += library/glib2
 REQUIRED_PACKAGES += library/ncurses
