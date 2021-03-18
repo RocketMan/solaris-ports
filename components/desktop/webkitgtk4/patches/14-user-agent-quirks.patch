@@ -1,21 +1,16 @@
---- a/Source/WebCore/platform/UserAgentQuirks.cpp	2021-02-13 12:45:24.829172948 +0000
-+++ b/Source/WebCore/platform/UserAgentQuirks.cpp	2021-02-13 12:47:16.871819133 +0000
-@@ -170,7 +170,17 @@
+--- a/Source/WebCore/platform/UserAgentQuirks.cpp	2021-03-02 21:43:53.541837668 +0000
++++ b/Source/WebCore/platform/UserAgentQuirks.cpp	2021-03-02 23:11:21.761743664 +0000
+@@ -120,6 +120,13 @@
+         || domain == "exchange.tu-berlin.de")
+         return true;
  
- static bool urlRequiresLinuxDesktopPlatform(const URL& url)
- {
--    return isGoogle(url) && !urlRequiresInternetExplorerBrowser(url) && chassisType() != WTF::ChassisType::Mobile;
 +#if OS(SOLARIS)
 +    // The speed test at dslreports does not recognize the SunOS platform,
-+    // so we masquerade as Linux.
-+    String domain = url.host().toString();
-+    String baseDomain = topPrivatelyControlledDomain(domain);
-+
-+    return baseDomain == "dslreports.com" || baseDomain == "dslr.com" ||
-+#else
-+    return
++    // so we masquerade as Macintosh.
++    if (baseDomain == "dslreports.com" || baseDomain == "dslr.com")
++        return true;
 +#endif
-+           isGoogle(url) && !urlRequiresInternetExplorerBrowser(url) && chassisType() != WTF::ChassisType::Mobile;
++
+     return false;
  }
  
- UserAgentQuirks UserAgentQuirks::quirksForURL(const URL& url)
