@@ -20,10 +20,10 @@
 #
 
 #
-# Copyright (c) 2018 Jim Mason <jmason at ibinx dot com>.  All rights reserved.
+# Copyright (c) 2018-2021 Jim Mason <jmason at ibinx dot com>.
 #
 
-BUILD_BITS =            64_and_32
+BUILD_BITS =            64
 # All components using gobject-introspection must be built with gcc as
 # gobject-introspection does not produce correct results when using Studio.
 COMPILER =              gcc
@@ -31,6 +31,7 @@ include ../../../make-rules/shared-macros.mk
 
 COMPONENT_NAME=		gupnp-dlna
 COMPONENT_VERSION=	0.10.5
+COMPONENT_REVISION=	1
 COMPONENT_PROJECT_URL=	https://wiki.gnome.org/Projects/GUPnP
 COMPONENT_ARCHIVE_HASH= \
 	sha256:123e368227c11d5c17fc1aa76cbdaffa345355eb51d172cd39fc74a5b468ff6a
