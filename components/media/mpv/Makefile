@@ -20,9 +20,9 @@
 #
 
 #
-# Copyright (c) 2020 Jim Mason <jmason at ibinx dot com>.  All rights reserved.
+# Copyright (c) 2020-2021 Jim Mason <jmason at ibinx dot com>.
 #
-BUILD_BITS=	64_and_32
+BUILD_BITS=	64
 COMPILER=	gcc
 
 include ../../../make-rules/shared-macros.mk
@@ -105,8 +105,10 @@ COMPONENT_INSTALL_ARGS = --destdir=$(PROTO_DIR)
 REQUIRED_PACKAGES += image/library/libjpeg
 REQUIRED_PACKAGES += library/audio/pulseaudio
 REQUIRED_PACKAGES += library/graphics/libvdpau
+REQUIRED_PACKAGES += library/lcms2
 REQUIRED_PACKAGES += library/libarchive
 REQUIRED_PACKAGES += library/media/libass
+REQUIRED_PACKAGES += library/media/libbluray
 REQUIRED_PACKAGES += library/media/libcdio
 REQUIRED_PACKAGES += library/media/libcdio-paranoia
 REQUIRED_PACKAGES += library/media/libdvdnav
