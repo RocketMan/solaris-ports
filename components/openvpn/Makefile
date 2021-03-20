@@ -22,7 +22,7 @@
 #
 # Copyright 2013 Adam Stevko. All rights reserved.
 # Copyright 2016 Jim Klimov
-# Copyright 2020 Jim Mason <jmason at ibinx dot com>.  All rights reserved.
+# Copyright 2020-2021 Jim Mason <jmason at ibinx dot com>.
 #
 
 BUILD_BITS=64
@@ -30,12 +30,12 @@ COMPILER=gcc
 include ../../make-rules/shared-macros.mk
 
 COMPONENT_NAME=		openvpn
-COMPONENT_VERSION=	2.4.9
+COMPONENT_VERSION=	2.4.10
 COMPONENT_ARCHIVE=	v$(COMPONENT_VERSION).tar.gz
 COMPONENT_ARCHIVE_URL=	https://github.com/OpenVPN/$(COMPONENT_NAME)/archive/$(COMPONENT_ARCHIVE)
 COMPONENT_PROJECT_URL=	https://openvpn.net/
 COMPONENT_ARCHIVE_HASH=	\
-    sha256:cccadc1b4849107df3ba34f5d9d64284676ba99aa88415f1bcd481e08a3bc548
+    sha256:6ceb59e9430149c123fa530b5045e39b022b3651d74f367611418e4b51ebf267
 COMPONENT_ANITYA_ID=	2567
 
 COMPONENT_PREP_ACTION = \
