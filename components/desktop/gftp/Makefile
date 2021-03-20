@@ -25,7 +25,7 @@
 
 BUILD_BITS=		64
 COMPILER=		gcc
-include ../../make-rules/shared-macros.mk
+include ../../../make-rules/shared-macros.mk
 
 COMPONENT_NAME=		gftp
 COMPONENT_VERSION=	2.7.0b

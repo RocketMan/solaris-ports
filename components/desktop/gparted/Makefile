@@ -23,42 +23,36 @@
 # Copyright (c) 2018 Jim Mason <jmason at ibinx dot com>.  All rights reserved.
 #
 
-BUILD_BITS =            64
+BUILD_BITS =            32
 COMPILER =		gcc
-include ../../make-rules/shared-macros.mk
+include ../../../make-rules/shared-macros.mk
 
-COMPONENT_NAME=		gsmartcontrol
-COMPONENT_VERSION=	1.1.3
-COMPONENT_ARCHIVE =	$(COMPONENT_SRC).tar.bz2
+COMPONENT_NAME=		gparted
+COMPONENT_VERSION=	0.4.5
+IPS_COMPONENT_VERSION=	0.4.5.1
+COMPONENT_ARCHIVE=	$(COMPONENT_NAME)-$(COMPONENT_VERSION).tar.bz2
+COMPONENT_PROJECT_URL=	https://gparted.org/
+COMPONENT_ARCHIVE_URL = https://netix.dl.sourceforge.net/project/gparted/$(COMPONENT_NAME)/$(COMPONENT_NAME)-$(COMPONENT_VERSION)/$(COMPONENT_ARCHIVE)
 COMPONENT_ARCHIVE_HASH=	\
-	sha256:b64f62cffa4430a90b6d06cd52ebadd5bcf39d548df581e67dfb275a673b12a9
-SOURCEFORGE_URL =	https://downloads.sourceforge.net/project
-COMPONENT_ARCHIVE_URL = $(SOURCEFORGE_URL)/$(COMPONENT_NAME)/$(COMPONENT_VERSION)/$(COMPONENT_ARCHIVE)
-COMPONENT_PROJECT_URL=	https://gsmartcontrol.sourceforge.io/
-
+    sha256:a0a102ee51c1d70fa1c786c77a613111179ce81efccb637bd04aef525199b93f
 
 include $(WS_MAKE_RULES)/common.mk
 
-CXXFLAGS.studio = $(studio_XBITS) $(studio_XREGS) $(studio_IROPTS) \
-		  $(studio_ALIGN)
-CXXFLAGS += -I"$(SOURCE_DIR)/src" -DCONFIG_KERNEL_SOLARIS=1
-
-CONFIGURE_OPTIONS += --sysconfdir=/etc
-
+REQUIRED_PACKAGES += developer/gnome/gnome-doc-utils
 REQUIRED_PACKAGES += library/c++/glibmm
 REQUIRED_PACKAGES += library/c++/sigcpp
 REQUIRED_PACKAGES += library/desktop/c++/atkmm
 REQUIRED_PACKAGES += library/desktop/c++/cairomm
-REQUIRED_PACKAGES += library/desktop/c++/gtkmm3
+REQUIRED_PACKAGES += library/desktop/c++/gtkmm
 REQUIRED_PACKAGES += library/desktop/c++/pangomm
-REQUIRED_PACKAGES += library/desktop/cairo
-REQUIRED_PACKAGES += library/desktop/gtk3
+REQUIRED_PACKAGES += library/desktop/gtk2
 REQUIRED_PACKAGES += library/glib2
-REQUIRED_PACKAGES += library/pcre
-REQUIRED_PACKAGES += system/core-os
+REQUIRED_PACKAGES += library/perl-5/xml-parser
+REQUIRED_PACKAGES += shell/ksh93
 REQUIRED_PACKAGES += system/library/c++-runtime
 REQUIRED_PACKAGES += system/library/gcc/gcc-c-runtime
 REQUIRED_PACKAGES += system/library/gcc/gcc-c++-runtime
 REQUIRED_PACKAGES += system/library/math
-REQUIRED_PACKAGES += system/library
-REQUIRED_PACKAGES += system/storage/smartmontools
+ifneq ($(MACH), sparc)
+REQUIRED_PACKAGES += system/storage/parted
+endif
