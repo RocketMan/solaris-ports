@@ -1,21 +1,3 @@
---- a/aclocal.m4	2018-06-26 11:53:18.809052751 +0000
-+++ b/aclocal.m4	2018-06-26 11:53:49.484636565 +0000
-@@ -1,15 +1,3 @@
--dnl Special rpc library for Solaris
--dnl
--AC_DEFUN([UNFS3_SOLARIS_RPC],[
--  AC_CHECK_FUNC(svc_tli_create, [
--    # On Solaris, you must link with librpcsoc, or the binaries won't work. 
--    LDFLAGS="-L=/usr/ucblib -R/usr/ucblib $LDFLAGS"
--    AC_CHECK_LIB(rpcsoc, svctcp_create, 
--        [ LIBS="-lrpcsoc $LIBS" ],
--        [ AC_MSG_WARN([*** Cannot find librpcsoc. On Solaris, install package SUNWscpu. ***]) ]
--    )
--  ])
--])
- dnl PORTMAP define needed for Solaris
- dnl
- AC_DEFUN([UNFS3_PORTMAP_DEFINE],[
 --- a/configure.ac	2015-07-14 15:35:26.000000000 +0000
 +++ b/configure.ac	2018-06-27 18:53:21.214437360 +0000
 @@ -37,7 +36,7 @@

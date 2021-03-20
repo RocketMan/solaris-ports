@@ -20,7 +20,7 @@
 #
 
 #
-# Copyright (c) 2018 Jim Mason <jmason at ibinx dot com>.  All rights reserved.
+# Copyright (c) 2018-2021 Jim Mason <jmason at ibinx dot com>.
 #
 
 BUILD_BITS=		32
@@ -29,14 +29,15 @@ include ../../make-rules/shared-macros.mk
 
 COMPONENT_NAME=		unfs
 COMPONENT_VERSION=	0.9.23
+COMPONENT_REVISION=	1
 COMPONENT_SRC=		$(COMPONENT_NAME)-$(COMPONENT_VERSION)
 COMPONENT_PROJECT_URL=	https://unfs3.github.io/
 
 COMPONENT_ARCHIVE_SRC=	git
 
 GIT_REPO=		https://github.com/unfs3/unfs3
-GIT_COMMIT_ID=		651058b
-GIT_HASH=		sha256:acc68889f8ba237914481ef720f604c15cbef87b79a435b69501bd8271b81716
+GIT_COMMIT_ID=		3fa0568
+GIT_HASH=		sha256:27fac81ebacc839ff9ffe567d12568bcda2b687a745cebda69204d9da790f273
 
 COMPONENT_ARCHIVE_URL=	$(GIT_REPO)/archive/unfs3/$(COMPONENT_SRC).tar.gz
 
@@ -48,6 +49,7 @@ COMPONENT_PREP_ACTION = \
         automake --add-missing --copy ; \
         autoconf ; )
 
+PATH=$(GNUBIN):$(USRBINDIR)
 
 include $(WS_MAKE_RULES)/common.mk
 
