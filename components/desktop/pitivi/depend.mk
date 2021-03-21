@@ -1,1 +1,1 @@
-desktop/pitivi: desktop/gstreamer-1/gst-transcoder python/matplotlib python/gst-python
+desktop/pitivi: desktop/gstreamer/gstreamer python/matplotlib python/gst-python
