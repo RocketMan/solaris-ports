@@ -3,7 +3,7 @@
 ## Introduction
 
 gFTP is a multithreaded file transfer client.  It supports the FTP,
-FTPS(**see NOTE below), HTTP, HTTPS, SSH, and FSP protocols, as well
+FTPS(**see NOTE below), HTTP, HTTPS, and SSH protocols, as well
 as FTP and HTTP proxy server support, and file transfers between
 remote FTP servers via FXP.
 
