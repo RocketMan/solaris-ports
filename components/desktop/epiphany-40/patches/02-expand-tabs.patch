@@ -1,0 +1,11 @@
+--- epiphany-40.0/src/ephy-tab-view.c~	2021-03-19 19:43:48.000000000 +0000
++++ epiphany-40.0/src/ephy-tab-view.c	2021-03-27 19:35:59.803146375 +0000
+@@ -640,6 +640,8 @@
+ 
+     hdy_tab_bar_set_start_action_widget (tab_bar, button);
+   } else {
++    expand_changed_cb (self);
++
+     g_signal_connect_object (EPHY_SETTINGS_UI,
+                              "changed::" EPHY_PREFS_UI_TABS_BAR_VISIBILITY_POLICY,
+                              G_CALLBACK (visibility_policy_changed_cb), self,
