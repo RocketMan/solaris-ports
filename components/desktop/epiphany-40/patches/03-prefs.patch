@@ -1,3 +1,7 @@
+Add the 'linked' style to the preferences page chooser for the benefit
+of (among others) the slim-nimbus theme, so the buttons render in a
+linked way, as in gnome-system-monitor.
+
 --- epiphany-40.0/src/resources/gtk/prefs-dialog.ui.~1~	2021-03-19 19:43:48.000000000 +0000
 +++ epiphany-40.0/src/resources/gtk/prefs-dialog.ui	2021-03-27 16:52:03.278895515 +0000
 @@ -10,6 +10,9 @@

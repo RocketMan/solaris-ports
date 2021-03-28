@@ -1,0 +1,13 @@
+Restore fonts on the 'Most visited' page
+
+--- epiphany-40.0/src/resources/about.css~	2021-03-19 19:43:48.000000000 +0000
++++ epiphany-40.0/src/resources/about.css	2021-03-28 10:56:45.619719940 +0000
+@@ -292,7 +292,7 @@
+     display: inherit;
+     white-space: nowrap;
+     overflow: hidden;
+-    font-family: -webkit-system-font;
++    font-family: -webkit-system-font, Cantarell, sans-serif;
+     font-size: 11pt;
+     color: var(--fg-color);
+     text-overflow: ellipsis;

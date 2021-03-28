@@ -1,3 +1,6 @@
+Upstream already tracks changes to the 'expand-tabs-bar' preference.
+This patch respects the setting of the preference at startup.
+
 --- epiphany-40.0/src/ephy-tab-view.c~	2021-03-19 19:43:48.000000000 +0000
 +++ epiphany-40.0/src/ephy-tab-view.c	2021-03-27 19:35:59.803146375 +0000
 @@ -640,6 +640,8 @@

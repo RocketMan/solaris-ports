@@ -1,0 +1,14 @@
+Smooth scrolling on Solaris 11.3 seems to eat thumbwheel scroll events
+that occur in rapid succession.  Disable it.
+
+--- epiphany-40.0/embed/ephy-embed-prefs.c~	2021-03-19 19:43:48.000000000 +0000
++++ epiphany-40.0/embed/ephy-embed-prefs.c	2021-03-28 11:29:25.348708208 +0000
+@@ -568,7 +568,7 @@
+                                                        "enable-dns-prefetching", TRUE,
+                                                        "enable-plugins", FALSE,
+                                                        "enable-media-stream", TRUE,
+-                                                       "enable-smooth-scrolling", TRUE,
++                                                       "enable-smooth-scrolling", FALSE,
+                                                        "javascript-can-open-windows-automatically", TRUE,
+                                                        NULL);
+ 
