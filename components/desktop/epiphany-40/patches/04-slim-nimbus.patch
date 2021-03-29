@@ -9,7 +9,7 @@
  </gresources>
 --- /dev/null	2021-03-28 12:20:24.662567944 +0000
 +++ epiphany-40.0/src/resources/themes/slim-nimbus.css	2021-03-28 12:27:27.191238804 +0000
-@@ -0,0 +1,205 @@
+@@ -0,0 +1,224 @@
 +.incognito-mode headerbar {
 +  background: transparent -gtk-icontheme("user-not-tracked-symbolic") 160px 0/64px 64px no-repeat, linear-gradient(to top, #a5b1bd, #c5cdd5 2px, #cbd2d9 3px);
 +  box-shadow: none;
@@ -132,8 +132,27 @@
 +    tabbar tab > button {
 +	padding: 2px; }
 +
-+    viewswitcher {
-+       min-width: 325px; }
++    viewswitcher, viewswitcher button {
++       margin: 0;
++       padding: 0; }
++
++    viewswitcher button > stack > box.narrow {
++       font-size: 0.75rem;
++       padding-top: 7px;
++       padding-bottom: 5px; }
++
++    viewswitcher button:last-child:not(:only-child) {
++	border-top-left-radius: 0;
++	border-bottom-left-radius: 0; }
++
++    viewswitcher button:first-child:not(:only-child) {
++	border-top-right-radius: 0;
++	border-bottom-right-radius: 0;
++	border-right: 0; }
++
++    viewswitcher button:not(:first-child):not(:last-child) {
++	border-radius: 0;
++	border-right: 0; }
 +
 +    /* rest is copied from shared.css */
 +.floating-bar { background-color: @theme_base_color; border-width: 1px; border-style: solid solid none; border-color: @borders; border-radius: 3px 3px 0 0; }
