@@ -1,8 +1,7 @@
 ## GNOME Weather
 
 With the GNOME Weather application, you can view the current conditions
-at your location or from weather stations around the world.  In
-addition, GNOME Weather gives you a 2-day hourly and 5-day forecast.
+at your location or from weather stations around the world.
 
 ### Requirements
 
@@ -13,5 +12,7 @@ you want automatic geolocation to work, you will need to enable system
 DBus activation (by default, this is disabled).  The latter is
 required for `geoclue`.
 
-### Screenshot
-![screenshot](https://raw.githubusercontent.com/RocketMan/solaris-ports/master/components/desktop/gnome-weather/screenshot.png "GNOME Weather")
+### Screenshots
+![screenshot](https://raw.githubusercontent.com/RocketMan/solaris-ports/master/components/desktop/gnome-weather/screenshot.png "GNOME Weather Hourly")
+
+![screenshot](https://raw.githubusercontent.com/RocketMan/solaris-ports/master/components/desktop/gnome-weather/screenshot2.png "GNOME Weather Daily")
