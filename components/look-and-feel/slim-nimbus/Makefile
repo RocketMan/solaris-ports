@@ -20,7 +20,7 @@
 #
 
 #
-# Copyright (c) 2020 Jim Mason <jmason at ibinx dot com>.  All rights reserved.
+# Copyright (c) 2020-2021 Jim Mason <jmason at ibinx dot com>.
 #
 
 BUILD_BITS= 64_and_32
@@ -28,11 +28,11 @@ COMPILER= gcc
 include ../../../make-rules/shared-macros.mk
 
 COMPONENT_NAME=		slim-nimbus
-COMPONENT_VERSION=	1.0.0.7
+COMPONENT_VERSION=	1.0.0.8
 COMPONENT_PROJECT_URL=	https://github.com/RocketMan/slim-nimbus
 COMPONENT_ARCHIVE=	v$(COMPONENT_VERSION).tar.gz
 COMPONENT_ARCHIVE_HASH= \
-	sha256:3b95ea3bd888a3123f79d58a4efd59636dda3fea9ffc64ee9f436924302e87ec
+	sha256:19977fbbbff799c066b746a65275fffac213b7120f56f9a71f79f95b43e69a42
 COMPONENT_ARCHIVE_URL=	$(COMPONENT_PROJECT_URL)/archive/$(COMPONENT_ARCHIVE)
 
 PATH=$(GNUBIN):$(USRBINDIR)
