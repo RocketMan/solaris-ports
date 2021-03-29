@@ -1,6 +1,6 @@
 --- epiphany-3.30.0/src/resources/themes/shared.css.~1~	2018-09-02 21:17:31.000000000 +0000
 +++ epiphany-3.30.0/src/resources/themes/shared.css	2018-09-22 10:24:46.099789340 +0000
-@@ -6,7 +6,102 @@
+@@ -6,7 +6,107 @@
  
  .floating-bar:backdrop { background-color: @theme_unfocused_base_color; border-color: @unfocused_borders; }
  
@@ -101,6 +101,11 @@
 +      box-shadow: inset 0 0 0 1px #4a90d9; }
 +    .incognito-mode.titlebar entry:backdrop {
 +      box-shadow: none; }
++  .incognito-mode.titlebar .titlebutton:not(separator) {
++    padding: 0px;
++    margin: 0px;
++    border: 1px solid black;
++    border-radius: 4px; }
  
  .entry_icon { color: mix(@theme_fg_color, @theme_base_color, 0.2); }
  
