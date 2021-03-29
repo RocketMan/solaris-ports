@@ -13,6 +13,8 @@ DBus activation (by default, this is disabled).  The latter is
 required for `geoclue`.
 
 ### Screenshots
-![screenshot](https://raw.githubusercontent.com/RocketMan/solaris-ports/master/components/desktop/gnome-weather/screenshot.png "GNOME Weather Hourly")
+![screenshot](https://raw.githubusercontent.com/RocketMan/solaris-ports/master/components/desktop/gnome-weather/screenshot.png "GNOME Weather Daily")
 
-![screenshot](https://raw.githubusercontent.com/RocketMan/solaris-ports/master/components/desktop/gnome-weather/screenshot2.png "GNOME Weather Daily")
+![screenshot](https://raw.githubusercontent.com/RocketMan/solaris-ports/master/components/desktop/gnome-weather/screenshot2.png "GNOME Weather Daily with detail")
+
+![screenshot](https://raw.githubusercontent.com/RocketMan/solaris-ports/master/components/desktop/gnome-weather/screenshot3.png "GNOME Weather Hourly")

@@ -1,3 +1,5 @@
+This reverts all the flat icons to the 3D icons from the theme.
+
 --- gnome-weather-40.0/src/app/world.js~	2021-03-20 23:24:49.000000000 +0000
 +++ gnome-weather-40.0/src/app/world.js	2021-03-29 12:38:37.008361570 +0000
 @@ -212,7 +212,7 @@
@@ -9,3 +11,61 @@
          });
  
          this._syncStackPopover();
+--- gnome-weather-40.0/src/app/hourlyForecast.js~	2021-03-20 23:24:49.000000000 +0000
++++ gnome-weather-40.0/src/app/hourlyForecast.js	2021-03-29 17:49:56.367702835 +0000
+@@ -111,7 +111,7 @@
+         let hourEntry = new HourEntry();
+ 
+         hourEntry.timeLabel.label = datetime.format(timeFormat);
+-        hourEntry.image.iconName = info.get_icon_name() + '-small';
++        hourEntry.image.iconName = info.get_icon_name();
+         hourEntry.temperatureLabel.label = Util.getTempString(info);
+ 
+         this._box.pack_start(hourEntry, false, false, 0);
+--- gnome-weather-40.0/src/app/dailyForecast.js	2021-03-29 17:50:44.880224357 +0000
++++ gnome-weather-40.0/src/app/dailyForecast.js~	2021-03-20 23:24:49.000000000 +0000
+@@ -179,28 +179,28 @@
+         let dateFormat = _('%b %e');
+         dayEntry.dateLabel.label = day.format(dateFormat);
+ 
+-        dayEntry.image.iconName = dayInfo.get_icon_name() + '-small';
++        dayEntry.image.iconName = dayInfo.get_icon_name();
+ 
+         dayEntry.maxTemperatureLabel.label = Util.getTempString(maxInfo);
+         dayEntry.minTemperatureLabel.label = Util.getTempString(minInfo);
+ 
+         dayEntry.nightTemperatureLabel.label = Util.getTempString(nightInfo);
+-        dayEntry.nightImage.iconName = nightInfo.get_icon_name() + '-small';
++        dayEntry.nightImage.iconName = nightInfo.get_icon_name();
+         dayEntry.nightHumidity.label = nightInfo.get_humidity();
+         this._setWindInfo(nightInfo, dayEntry.nightWind);
+ 
+         dayEntry.morningTemperatureLabel.label = Util.getTempString(morningInfo);
+-        dayEntry.morningImage.iconName = morningInfo.get_icon_name() + '-small';
++        dayEntry.morningImage.iconName = morningInfo.get_icon_name();
+         dayEntry.morningHumidity.label = morningInfo.get_humidity();
+         this._setWindInfo(morningInfo, dayEntry.morningWind);
+ 
+         dayEntry.afternoonTemperatureLabel.label = Util.getTempString(afternoonInfo);
+-        dayEntry.afternoonImage.iconName = afternoonInfo.get_icon_name() + '-small';
++        dayEntry.afternoonImage.iconName = afternoonInfo.get_icon_name();
+         dayEntry.afternoonHumidity.label = afternoonInfo.get_humidity();
+         this._setWindInfo(afternoonInfo, dayEntry.afternoonWind);
+ 
+         dayEntry.eveningTemperatureLabel.label = Util.getTempString(eveningInfo);
+-        dayEntry.eveningImage.iconName = eveningInfo.get_icon_name() + '-small';
++        dayEntry.eveningImage.iconName = eveningInfo.get_icon_name();
+         dayEntry.eveningHumidity.label = eveningInfo.get_humidity();
+         this._setWindInfo(eveningInfo, dayEntry.eveningWind);
+ 
+--- gnome-weather-40.0/src/app/city.js~	2021-03-20 23:24:49.000000000 +0000
++++ gnome-weather-40.0/src/app/city.js	2021-03-29 18:24:40.094104568 +0000
+@@ -200,7 +200,7 @@
+ 
+         this._worldView.refilter();
+ 
+-        this._conditionsImage.iconName = info.get_icon_name() + '-large';
++        this._conditionsImage.iconName = info.get_icon_name();
+ 
+         const [, tempValue] = info.get_value_temp(GWeather.TemperatureUnit.DEFAULT);
+         this._temperatureLabel.label = '%d°'.format(Math.round(tempValue));
