@@ -9,7 +9,7 @@
  </gresources>
 --- /dev/null	2021-03-28 12:20:24.662567944 +0000
 +++ epiphany-40.0/src/resources/themes/slim-nimbus.css	2021-03-28 12:27:27.191238804 +0000
-@@ -0,0 +1,202 @@
+@@ -0,0 +1,206 @@
 +.incognito-mode headerbar {
 +  background: transparent -gtk-icontheme("user-not-tracked-symbolic") 160px 0/64px 64px no-repeat, linear-gradient(to top, #a5b1bd, #c5cdd5 2px, #cbd2d9 3px);
 +  box-shadow: none;
@@ -131,6 +131,10 @@
 +	margin-top: 2px; }
 +    tabbar tab > button {
 +	padding: 2px; }
++    tabbar tab > button:not(:hover) {
++	border-color: transparent;
++	background: transparent;
++	box-shadow: none; }
 +
 +    /* rest is copied from shared.css */
 +.floating-bar { background-color: @theme_base_color; border-width: 1px; border-style: solid solid none; border-color: @borders; border-radius: 3px 3px 0 0; }
