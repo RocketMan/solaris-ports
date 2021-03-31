@@ -1,0 +1,13 @@
+StartupNotify doesn't work with GNOME 2/Solaris 11.3
+
+--- epiphany-40.0/data/org.gnome.Epiphany.desktop.in.in~	2021-03-19 19:43:48.000000000 +0000
++++ epiphany-40.0/data/org.gnome.Epiphany.desktop.in.in	2021-03-31 16:19:08.688565924 +0000
+@@ -5,7 +5,7 @@
+ # Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
+ Keywords=web;browser;internet;
+ Exec=epiphany %U
+-StartupNotify=true
++StartupNotify=false
+ Terminal=false
+ Type=Application
+ # Translators: Do NOT translate or transliterate this text (this is an icon file name)!
