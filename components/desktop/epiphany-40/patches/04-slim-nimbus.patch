@@ -9,7 +9,7 @@
  </gresources>
 --- /dev/null	2021-03-28 12:20:24.662567944 +0000
 +++ epiphany-40.0/src/resources/themes/slim-nimbus.css	2021-03-28 12:27:27.191238804 +0000
-@@ -0,0 +1,206 @@
+@@ -0,0 +1,186 @@
 +.incognito-mode headerbar {
 +  background: transparent -gtk-icontheme("user-not-tracked-symbolic") 160px 0/64px 64px no-repeat, linear-gradient(to top, #a5b1bd, #c5cdd5 2px, #cbd2d9 3px);
 +  box-shadow: none;
@@ -115,26 +115,6 @@
 +	border-color: #909fae; }
 +    .incognito-mode headerbar .titlebutton:backdrop {
 +	opacity: 0.5; }
-+
-+    tabbar tab {
-+	padding: 6px;
-+	border-radius: 5px;
-+	border-bottom-right-radius: 0;
-+	border-bottom-left-radius: 0;
-+	border: 1px solid #888888; }
-+    tabbar tab:checked {
-+	background-color: #a3b8cb;
-+	border-color: #394e61;
-+	border-bottom-color: #a3b8cb;
-+	box-shadow: inset 0 -3px 4px 0 alpha(white, 0.3), inset 0 1px 0 0 alpha(white, 0.7), inset 0 8px 4px 0 alpha(white, 0.5); }
-+    tabbar tab:not(:checked) {
-+	margin-top: 2px; }
-+    tabbar tab > button {
-+	padding: 2px; }
-+    tabbar tab > button:not(:hover) {
-+	border-color: transparent;
-+	background: transparent;
-+	box-shadow: none; }
 +
 +    /* rest is copied from shared.css */
 +.floating-bar { background-color: @theme_base_color; border-width: 1px; border-style: solid solid none; border-color: @borders; border-radius: 3px 3px 0 0; }
