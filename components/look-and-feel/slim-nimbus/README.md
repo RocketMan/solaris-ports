@@ -15,6 +15,10 @@ the theme with transparent csd [can be found here](../../desktop/compiz-legacy/)
 
 ![screenshot](https://raw.githubusercontent.com/RocketMan/solaris-ports/master/components/look-and-feel/slim-nimbus/screenshot.png)
 
+libhandy under the theme (epiphany 40.0 preferences dialog):
+
+![libhandy](https://raw.githubusercontent.com/RocketMan/solaris-ports/master/components/look-and-feel/slim-nimbus/screenshot-libhandy.png)
+
 mixed gtk2 and gtk3 windows under the dark theme:
 
 ![mixed](https://raw.githubusercontent.com/RocketMan/solaris-ports/master/components/look-and-feel/slim-nimbus/screenshot-mixed-dark.png "mixed")
