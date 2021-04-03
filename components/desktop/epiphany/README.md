@@ -7,19 +7,5 @@ from this repo, in place of webkitgtk4 from the Solaris userland gate,
 as the webkitgtk4 in the userland gate has JIT disabled, while the
 one here does not.  You need JIT for a reasonable browser experience.
 
-By default, this package depends on the icu from the userland gate.
-If you are running under 11.3 and have dependencies on the existing
-icu, then build the [icu-gcc](../../icu-gcc) in this repo and uncomment
-the relevant lines in the Makefile to use it.
-
-Performance is decent relative to Firefox.  Compare the results of the
-JetStream test:
-
-### GNOME Web 3.30.5 powered by WebKitGTK+ 2.31.0 (SVN) (64-bits)
-![screenshot](https://raw.githubusercontent.com/RocketMan/solaris-ports/master/components/desktop/epiphany/screenshot-epiphany.png "Epiphany/WebKitGTK+")
-(Shown using the [slim-nimbus](../../look-and-feel/slim-nimbus/)
-theme, available in this repo.)
-
-### Firefox 78.5.0 ESR (64-bits)
-![screenshot](https://raw.githubusercontent.com/RocketMan/solaris-ports/master/components/desktop/epiphany/screenshot-firefox.png "Firefox 78.5.0esr")
-(Shown using the [firefox-nimbus-theme](https://github.com/RocketMan/firefox-nimbus-theme).)
+### GNOME Web 40.0 with WebKitGTK+ 2.33.0 (SVN r275202)
+![screenshot](https://raw.githubusercontent.com/RocketMan/solaris-ports/master/components/desktop/epiphany/screenshot-epiphany-40.png "GNOME Web 40.0")

@@ -20,98 +20,39 @@
 #
 
 #
-# Copyright (c) 2018-2021 Jim Mason <jmason at ibinx dot com>.  All rights reserved.
+# Copyright (c) 2018-2021 Jim Mason <jmason at ibinx dot com>.
 #
 
 BUILD_BITS =            64
 COMPILER =		gcc
 include ../../../make-rules/shared-macros.mk
-GCC_ROOT = 		/usr/gcc/9
+GCC_ROOT = 		/usr/gcc/10
 
 COMPONENT_NAME=		epiphany
-COMPONENT_VERSION=	3.30.5
-IPS_COMPONENT_VERSION=	3.30.5.3
-COMPONENT_REVISION=	2
+COMPONENT_VERSION=	40.0
 COMPONENT_SRC=		$(COMPONENT_NAME)-$(COMPONENT_VERSION)
-COMPONENT_ARCHIVE_URL=	$(GIT_REPO)/archive/$(COMPONENT_VERSION).tar.gz
+COMPONENT_ARCHIVE_URL=	https://github.com/GNOME/epiphany/archive/refs/tags/$(COMPONENT_VERSION).tar.gz
 COMPONENT_ARCHIVE_HASH= \
-	sha256:12d4d7f6bf1b320995d218126ac1021d064554f279be62df61fb19cc75dee1ed
-GIT_REPO=		https://github.com/GNOME/epiphany
-GIT_COMMIT_ID=		3.30.5
+	sha256:e493e9a5fc7102d6516aaa0a0ce1e1f8a000f6dab5842a54769a1d6bfbcd1c18
 COMPONENT_PROJECT_URL=	https://wiki.gnome.org/Apps/Web
 COMPONENT_ANITYA_ID=	10903
-
-COMPONENT_NAME_1=	pdfjs
-COMPONENT_VERSION_1=	2.5.207
-COMPONENT_ARCHIVE_1=	pdfjs-$(COMPONENT_VERSION_1)-dist.zip
-COMPONENT_ARCHIVE_URL_1= https://github.com/mozilla/pdf.js/releases/download/v$(COMPONENT_VERSION_1)/$(COMPONENT_ARCHIVE_1)
-COMPONENT_ARCHIVE_HASH_1= \
-	sha256:a76a3cfc2be2e3ace62f73e816f73b67378d61b1ed2d5eb1e0af4d9ec87d5d7b
-
-COMPONENT_NAME_2=	highlightjs
-COMPONENT_VERSION_2=	10.5.0
-COMPONENT_SRC_2=	highlight.js-$(COMPONENT_VERSION_2)
-COMPONENT_ARCHIVE_2=	$(COMPONENT_VERSION_2).tar.gz
-COMPONENT_ARCHIVE_URL_2= https://github.com/highlightjs/highlight.js/archive/$(COMPONENT_ARCHIVE_2)
-COMPONENT_ARCHIVE_HASH_2= \
-	sha256:607a68a00964c36d454dd884c5e84c50598086dc9e19c1695020e8c42dd7193d
-
-COMPONENT_NAME_3=	highlightjs_line_numbers
-COMPONENT_VERSION_3=	2.8.0
-COMPONENT_SRC_3=	highlightjs-line-numbers.js-$(COMPONENT_VERSION_3)
-COMPONENT_ARCHIVE_3=	$(COMPONENT_SRC_3).tar.gz
-COMPONENT_ARCHIVE_URL_3= https://github.com/wcoder/highlightjs-line-numbers.js/archive/v$(COMPONENT_VERSION_3).tar.gz
-COMPONENT_ARCHIVE_HASH_3= \
-	sha256:9dd4fd284d53b0ecd6b965bf44de6483099f38358abe19a3e2a3e95dae9c47c1
 
 BUILD_STYLE = meson
 include $(WS_MAKE_RULES)/common.mk
 
 CFLAGS += -Wno-deprecated-declarations
 LDFLAGS += -lm -lsocket -lnsl
-#$(SOLARIS_11_3_ONLY)LDFLAGS += -licuuc_gcc
 
-
-PDFJS=$(SOURCE_DIR)/third-party/pdfjs
-HIGHLIGHTJS=$(SOURCE_DIR)/third-party/highlightjs
-
-COMPONENT_POST_UNPACK_ACTION += ( \
-	$(MKDIR) -p $(PDFJS) ; \
-	cd $(PDFJS) ; \
-	$(UNZIP) $(COMPONENT_DIR)/$(COMPONENT_ARCHIVE_1) )
-
-$(SOURCE_DIR)/.prep: $(COMPONENT_SRC_3)/.prep $(COMPONENT_SRC_2)/.prep $(PDFJS)/.prep
-
-$(PDFJS)/.prep: download unpack patch
-	(cd $(@D) ; \
-	$(RM) build/*.map ; \
-	$(PYTHON) pdfjs_generate_resource.py ; \
-	$(GPATCH) -p0 < epiphany-pdfjs-changes.patch )
-	$(TOUCH) $@
-
-$(COMPONENT_SRC_2)/.prep: download unpack patch
-	(cd $(@D) ; \
-	$(ENV) npm install ; \
-	$(ENV) node tools/build.js -n css javascript xml ; \
-	$(CP) build/highlight.js $(HIGHLIGHTJS) ; \
-	$(CP) src/styles/nnfx.css $(HIGHLIGHTJS); \
-	$(CP) src/styles/nnfx-dark.css $(HIGHLIGHTJS) )
-	$(TOUCH) $@
-
-$(COMPONENT_SRC_3)/.prep: download unpack patch
-	(cd $(@D) ; \
-	$(CP) src/highlightjs-line-numbers.js $(HIGHLIGHTJS) )
-	$(TOUCH) $@
-
-
-#CONFIGURE_OPTIONS += -Ddeveloper_mode=true
+CONFIGURE_OPTIONS += -Dlibportal=disabled
 
 REQUIRED_PACKAGES += database/sqlite-3
 REQUIRED_PACKAGES += gnome/gnome-shell
+REQUIRED_PACKAGES += library/desktop/atk
 REQUIRED_PACKAGES += library/desktop/gdk-pixbuf
 REQUIRED_PACKAGES += library/desktop/gtk3
 REQUIRED_PACKAGES += library/desktop/cairo
 REQUIRED_PACKAGES += library/desktop/libdazzle
+REQUIRED_PACKAGES += library/desktop/libhandy
 REQUIRED_PACKAGES += library/desktop/libnotify
 REQUIRED_PACKAGES += library/desktop/libwnck3
 REQUIRED_PACKAGES += library/desktop/pango
@@ -121,8 +62,8 @@ REQUIRED_PACKAGES += library/gmp
 REQUIRED_PACKAGES += library/gnome/libsecret
 REQUIRED_PACKAGES += library/gnome/gcr
 REQUIRED_PACKAGES += library/icu
-#REQUIRED_PACKAGES += library/icu-gcc
 REQUIRED_PACKAGES += library/json-glib
+REQUIRED_PACKAGES += library/libarchive
 REQUIRED_PACKAGES += library/libsoup
 REQUIRED_PACKAGES += library/libxml2
 REQUIRED_PACKAGES += library/libxslt
