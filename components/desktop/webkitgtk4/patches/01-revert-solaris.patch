@@ -26,12 +26,12 @@ https://bugs.webkit.org/show_bug.cgi?id=176341
      || defined(__unix__)
 --- a/Source/WTF/wtf/PlatformHave.h	2020-07-06 19:08:01.000000000 +0000
 +++ b/Source/WTF/wtf/PlatformHave.h	2020-07-13 16:33:19.038156885 +0000
-@@ -202,19 +202,19 @@
+@@ -206,19 +206,19 @@
  #define HAVE_HOSTED_CORE_ANIMATION 1
  #endif
  
--#if OS(DARWIN) || OS(FUCHSIA) || ((OS(FREEBSD) || defined(__GLIBC__) || defined(__BIONIC__)) && (CPU(X86) || CPU(X86_64) || CPU(ARM) || CPU(ARM64) || CPU(MIPS)))
-+#if OS(DARWIN) || OS(FUCHSIA) || OS(SOLARIS) || ((OS(FREEBSD) || defined(__GLIBC__) || defined(__BIONIC__)) && (CPU(X86) || CPU(X86_64) || CPU(ARM) || CPU(ARM64) || CPU(MIPS)))
+-#if OS(DARWIN) || OS(FUCHSIA) || ((OS(FREEBSD) || OS(LINUX)) && (CPU(X86) || CPU(X86_64) || CPU(ARM) || CPU(ARM64) || CPU(MIPS)))
++#if OS(DARWIN) || OS(FUCHSIA) || OS(SOLARIS) || ((OS(FREEBSD) || OS(LINUX)) && (CPU(X86) || CPU(X86_64) || CPU(ARM) || CPU(ARM64) || CPU(MIPS)))
  #define HAVE_MACHINE_CONTEXT 1
  #endif
  
@@ -50,7 +50,7 @@ https://bugs.webkit.org/show_bug.cgi?id=176341
  #define HAVE_DLADDR 1
  #endif
  
-@@ -306,7 +306,7 @@
+@@ -328,7 +328,7 @@
  #define HAVE_URL_FORMATTING 1
  #endif
  
@@ -130,8 +130,8 @@ https://bugs.webkit.org/show_bug.cgi?id=176341
  #error Unknown Architecture
  #endif
  
--#elif OS(FUCHSIA) || defined(__GLIBC__) || defined(__BIONIC__)
-+#elif OS(FUCHSIA) || OS(SOLARIS) || defined(__GLIBC__) || defined(__BIONIC__)
+-#elif OS(FUCHSIA) || OS(LINUX)
++#elif OS(FUCHSIA) || OS(LINUX) || OS(SOLARIS)
  
  #if CPU(X86)
      return reinterpret_cast<void*&>((uintptr_t&) machineContext.gregs[REG_ESP]);
@@ -139,8 +139,8 @@ https://bugs.webkit.org/show_bug.cgi?id=176341
  #error Unknown Architecture
  #endif
  
--#elif OS(FUCHSIA) || defined(__GLIBC__) || defined(__BIONIC__)
-+#elif OS(FUCHSIA) || OS(SOLARIS) || defined(__GLIBC__) || defined(__BIONIC__)
+-#elif OS(FUCHSIA) || OS(LINUX)
++#elif OS(FUCHSIA) || OS(LINUX) || OS(SOLARIS)
  
  // The following sequence depends on glibc's sys/ucontext.h.
  #if CPU(X86)
@@ -148,8 +148,8 @@ https://bugs.webkit.org/show_bug.cgi?id=176341
  #error Unknown Architecture
  #endif
  
--#elif OS(FUCHSIA) || defined(__GLIBC__) || defined(__BIONIC__)
-+#elif OS(FUCHSIA) || OS(SOLARIS) || defined(__GLIBC__) || defined(__BIONIC__)
+-#elif OS(FUCHSIA) || OS(LINUX)
++#elif OS(FUCHSIA) || OS(LINUX) || OS(SOLARIS)
  
  // The following sequence depends on glibc's sys/ucontext.h.
  #if CPU(X86)
@@ -157,8 +157,8 @@ https://bugs.webkit.org/show_bug.cgi?id=176341
  #error Unknown Architecture
  #endif
  
--#elif OS(FUCHSIA) || defined(__GLIBC__) || defined(__BIONIC__)
-+#elif OS(FUCHSIA) || OS(SOLARIS) || defined(__GLIBC__) || defined(__BIONIC__)
+-#elif OS(FUCHSIA) || OS(LINUX)
++#elif OS(FUCHSIA) || OS(LINUX) || OS(SOLARIS)
  
  // The following sequence depends on glibc's sys/ucontext.h.
  #if CPU(X86)
@@ -166,8 +166,8 @@ https://bugs.webkit.org/show_bug.cgi?id=176341
  #error Unknown Architecture
  #endif
  
--#elif OS(FUCHSIA) || defined(__GLIBC__) || defined(__BIONIC__)
-+#elif OS(FUCHSIA) || OS(SOLARIS) || defined(__GLIBC__) || defined(__BIONIC__)
+-#elif OS(FUCHSIA) || OS(LINUX)
++#elif OS(FUCHSIA) || OS(LINUX) || OS(SOLARIS)
  
  // The following sequence depends on glibc's sys/ucontext.h.
  #if CPU(X86)
