@@ -1,101 +1,108 @@
---- openvpn-2.4.8/doc/openvpn.8.~1~	2019-10-30 11:27:56.000000000 +0000
-+++ openvpn-2.4.8/doc/openvpn.8	2020-01-10 14:16:55.719924402 +0000
-@@ -41,7 +41,7 @@
- .  TP \\$1\" no doublequotes around argument!
- ..
- .\" End of TQ macro
--.TH openvpn 8 "28 February 2018"
-+.TH openvpn 1m "28 February 2018"
- .\"*********************************************************
- .SH NAME
- openvpn \- secure IP tunnel daemon.
-@@ -647,7 +647,7 @@
- .I our
- IP address changes due to DHCP, we should configure
- our IP address change script (see man page for
--.BR dhcpcd (8)
-+.BR in.dhcpcd (1m)
- ) to deliver a
- .B SIGHUP
- or
-@@ -793,7 +793,7 @@
- directive code.  When used on Windows, requires version 8.2 or higher
- of the TAP\-Win32 driver.  When used on *nix, requires that the tun
- driver supports an
--.BR ifconfig (8)
-+.BR ifconfig (1m)
- command which sets a subnet instead of a remote endpoint IP address.
+--- openvpn-2.5.2/doc/openvpn.8.rst~	2021-04-20 13:50:41.000000000 +0000
++++ openvpn-2.5.2/doc/openvpn.8.rst	2021-05-13 16:32:47.462775394 +0000
+@@ -5,7 +5,7 @@
+  Secure IP tunnel daemon
+ -------------------------
  
- This option exists in OpenVPN 2.1 or higher.
-@@ -900,7 +900,7 @@
- same purpose).
+-:Manual section: 8
++:Manual section: 1m
+ :Manual group: System Manager's Manual
  
- This option, while primarily a proxy for the
--.BR ifconfig (8)
-+.BR ifconfig (1m)
- command, is designed to simplify TUN/TAP
- tunnel configuration by providing a
- standard interface to the different
-@@ -958,7 +958,7 @@
  
- This option is intended as
- a convenience proxy for the
--.BR route (8)
-+.BR route (1m)
- shell command,
- while at the same time providing portable semantics
- across OpenVPN's platform space.
-@@ -2242,7 +2242,7 @@
- .TP
- .B \-\-inetd [wait|nowait] [progname]
- Use this option when OpenVPN is being run from the inetd or
--.BR xinetd(8)
-+.BR xinetd(1m)
- server.
+@@ -134,10 +134,10 @@
+ SEE ALSO
+ ========
  
- The
-@@ -5712,9 +5712,9 @@
- and
- .B \-\-down
- scripts to run the appropriate
--.BR ifconfig (8)
-+.BR ifconfig (1m)
- and
--.BR route (8)
-+.BR route (1m)
- commands.  These commands can be placed in the the same shell script
- which starts or terminates an OpenVPN session.
+-``dhcpcd``\(8),
+-``ifconfig``\(8),
+-``openssl``\(1),
+-``route``\(8),
++``in.dhcpcd``\(1m),
++``ifconfig``\(1m),
++``openssl``\(1openssl),
++``route``\(1m),
+ ``scp``\(1)
+ ``ssh``\(1)
  
-@@ -6070,7 +6070,7 @@
- Show available TAP\-Win32 adapters which can be selected using the
- .B \-\-dev\-node
- option.  On non\-Windows systems, the
--.BR ifconfig (8)
-+.BR ifconfig (1m)
- command provides similar functionality.
- .\"*********************************************************
- .TP
-@@ -7096,7 +7096,7 @@
- The
- .B \-\-verb 9
- option will produce verbose output, similar to the
--.BR tcpdump (8)
-+.BR tcpdump (1)
- program.  Omit the
- .B \-\-verb 9
- option to have OpenVPN run quietly.
-@@ -7311,10 +7311,10 @@
- Report all bugs to the OpenVPN team <info@openvpn.net>.
- .\"*********************************************************
- .SH "SEE ALSO"
--.BR dhcpcd (8),
--.BR ifconfig (8),
--.BR openssl (1),
--.BR route (8),
-+.BR in.dhcpcd (1m),
-+.BR ifconfig (1m),
-+.BR openssl (1openssl),
-+.BR route (1m),
- .BR scp (1)
- .BR ssh (1)
- .\"*********************************************************
+--- openvpn-2.5.2/doc/man-sections/examples.rst~	2021-04-20 13:50:41.000000000 +0000
++++ openvpn-2.5.2/doc/man-sections/examples.rst	2021-05-13 16:34:24.060559292 +0000
+@@ -88,7 +88,7 @@
+    ping 10.4.0.1
+ 
+ The ``--verb 9`` option will produce verbose output, similar to the
+-``tcpdump``\(8) program. Omit the ``--verb 9`` option to have OpenVPN run
++``tcpdump``\(1) program. Omit the ``--verb 9`` option to have OpenVPN run
+ quietly.
+ 
+ 
+--- openvpn-2.5.2/doc/man-sections/script-options.rst~	2021-04-20 13:50:41.000000000 +0000
++++ openvpn-2.5.2/doc/man-sections/script-options.rst	2021-05-13 16:35:28.374995897 +0000
+@@ -204,7 +204,7 @@
+   changes its IP address.
+ 
+   Similarly if *our* IP address changes due to DHCP, we should configure
+-  our IP address change script (see man page for ``dhcpcd``\(8)) to
++  our IP address change script (see man page for ``in.dhcpcd``\(1m)) to
+   deliver a ``SIGHUP`` or ``SIGUSR1`` signal to OpenVPN. OpenVPN will
+   then re-establish a connection with its most recently authenticated
+   peer on its new IP address.
+--- openvpn-2.5.2/doc/man-sections/server-options.rst~	2021-04-20 13:50:41.000000000 +0000
++++ openvpn-2.5.2/doc/man-sections/server-options.rst	2021-05-13 16:36:11.031354146 +0000
+@@ -295,7 +295,7 @@
+      inetd nowait
+      inetd wait progname
+ 
+-  Use this option when OpenVPN is being run from the inetd or ``xinetd``\(8)
++  Use this option when OpenVPN is being run from the inetd or ``xinetd``\(1m)
+   server.
+ 
+   The :code:`wait` and :code:`nowait` option must match what is specified
+--- openvpn-2.5.2/doc/man-sections/vpn-network-options.rst~	2021-04-20 13:50:41.000000000 +0000
++++ openvpn-2.5.2/doc/man-sections/vpn-network-options.rst	2021-05-13 16:36:59.854988365 +0000
+@@ -208,7 +208,7 @@
+   would be valid on the the bridged ethernet segment (note also that DHCP
+   can be used for the same purpose).
+ 
+-  This option, while primarily a proxy for the ``ifconfig``\(8) command,
++  This option, while primarily a proxy for the ``ifconfig``\(1m) command,
+   is designed to simplify TUN/TAP tunnel configuration by providing a
+   standard interface to the different ifconfig implementations on
+   different platforms.
+@@ -350,7 +350,7 @@
+       route network/IP netmask gateway
+       route network/IP netmask gateway metric
+ 
+-  This option is intended as a convenience proxy for the ``route``\(8)
++  This option is intended as a convenience proxy for the ``route``\(1m)
+   shell command, while at the same time providing portable semantics
+   across OpenVPN's platform space.
+ 
+@@ -487,7 +487,7 @@
+     OpenVPN 2.1 or higher, or OpenVPN 2.0.x which has been manually patched
+     with the ``--topology`` directive code. When used on Windows, requires
+     version 8.2 or higher of the TAP-Win32 driver. When used on \*nix,
+-    requires that the tun driver supports an ``ifconfig``\(8) command which
++    requires that the tun driver supports an ``ifconfig``\(1m) command which
+     sets a subnet instead of a remote endpoint IP address.
+ 
+   *Note:* Using ``--topology subnet`` changes the interpretation of the
+@@ -535,7 +535,7 @@
+ 
+   One of the advantages of persistent tunnels is that they eliminate the
+   need for separate ``--up`` and ``--down`` scripts to run the appropriate
+-  ``ifconfig``\(8) and ``route``\(8) commands. These commands can be
++  ``ifconfig``\(1m) and ``route``\(1m) commands. These commands can be
+   placed in the the same shell script which starts or terminates an
+   OpenVPN session.
+ 
+--- openvpn-2.5.2/doc/man-sections/windows-options.rst~	2021-04-20 13:50:41.000000000 +0000
++++ openvpn-2.5.2/doc/man-sections/windows-options.rst	2021-05-13 16:37:38.564780346 +0000
+@@ -196,7 +196,7 @@
+ --show-adapters
+   (Standalone) Show available TAP-Win32 adapters which can be selected
+   using the ``--dev-node`` option. On non-Windows systems, the
+-  ``ifconfig``\(8) command provides similar functionality.
++  ``ifconfig``\(1m) command provides similar functionality.
+ 
+ --show-net
+   (Standalone) Show OpenVPN's view of the system routing table and network
