@@ -1,0 +1,66 @@
+#
+# CDDL HEADER START
+#
+# The contents of this file are subject to the terms of the
+# Common Development and Distribution License (the "License").
+# You may not use this file except in compliance with the License.
+#
+# You can obtain a copy of the license at usr/src/OPENSOLARIS.LICENSE
+# or http://www.opensolaris.org/os/licensing.
+# See the License for the specific language governing permissions
+# and limitations under the License.
+#
+# When distributing Covered Code, include this CDDL HEADER in each
+# file and include the License file at usr/src/OPENSOLARIS.LICENSE.
+# If applicable, add the following below this CDDL HEADER, with the
+# fields enclosed by brackets "[]" replaced with your own identifying
+# information: Portions Copyright [yyyy] [name of copyright owner]
+#
+# CDDL HEADER END
+#
+
+#
+# Copyright (c) 2021 Jim Mason <jmason at ibinx dot com>.  All rights reserved.
+#
+
+<transform file path=usr.*/man/.+ -> default mangler.man.stability uncommitted>
+set name=pkg.fmri \
+    value=pkg:/media/mpg123@$(IPS_COMPONENT_VERSION),$(BUILD_VERSION)
+set name=pkg.summary \
+    value="Mpg123 is a fast console MPEG audio player and decoder library"
+set name=info.classification \
+    value="org.opensolaris.category.2008:Applications/Sound and Video"
+set name=info.source-url value=$(COMPONENT_ARCHIVE_URL)
+set name=info.upstream-url value=$(COMPONENT_PROJECT_URL)
+set name=org.opensolaris.consolidation value=$(CONSOLIDATION)
+file path=usr/bin/mpg123
+file path=usr/bin/mpg123-id3dump
+file path=usr/bin/mpg123-strip
+file path=usr/bin/out123
+file path=usr/include/fmt123.h
+file path=usr/include/mpg123.h
+file path=usr/include/out123.h
+file path=usr/include/syn123.h
+file path=usr/lib/$(MACH64)/libmpg123.la
+link path=usr/lib/$(MACH64)/libmpg123.so target=libmpg123.so.0.46.1
+link path=usr/lib/$(MACH64)/libmpg123.so.0 target=libmpg123.so.0.46.1
+file path=usr/lib/$(MACH64)/libmpg123.so.0.46.1
+file path=usr/lib/$(MACH64)/libout123.la
+link path=usr/lib/$(MACH64)/libout123.so target=libout123.so.0.4.0
+link path=usr/lib/$(MACH64)/libout123.so.0 target=libout123.so.0.4.0
+file path=usr/lib/$(MACH64)/libout123.so.0.4.0
+file path=usr/lib/$(MACH64)/libsyn123.la
+link path=usr/lib/$(MACH64)/libsyn123.so target=libsyn123.so.0.1.2
+link path=usr/lib/$(MACH64)/libsyn123.so.0 target=libsyn123.so.0.1.2
+file path=usr/lib/$(MACH64)/libsyn123.so.0.1.2
+file path=usr/lib/$(MACH64)/mpg123/output_dummy.so
+file path=usr/lib/$(MACH64)/mpg123/output_oss.so
+file path=usr/lib/$(MACH64)/mpg123/output_pulse.so
+file path=usr/lib/$(MACH64)/mpg123/output_sdl.so
+file path=usr/lib/$(MACH64)/mpg123/output_sun.so
+file path=usr/lib/$(MACH64)/pkgconfig/libmpg123.pc
+file path=usr/lib/$(MACH64)/pkgconfig/libout123.pc
+file path=usr/lib/$(MACH64)/pkgconfig/libsyn123.pc
+file path=usr/share/man/man1/mpg123.1
+file path=usr/share/man/man1/out123.1
+license COPYING license=LGPLv2.1
