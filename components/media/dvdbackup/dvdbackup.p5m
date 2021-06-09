@@ -1,3 +1,28 @@
+#
+# CDDL HEADER START
+#
+# The contents of this file are subject to the terms of the
+# Common Development and Distribution License (the "License").
+# You may not use this file except in compliance with the License.
+#
+# You can obtain a copy of the license at usr/src/OPENSOLARIS.LICENSE
+# or http://www.opensolaris.org/os/licensing.
+# See the License for the specific language governing permissions
+# and limitations under the License.
+#
+# When distributing Covered Code, include this CDDL HEADER in each
+# file and include the License file at usr/src/OPENSOLARIS.LICENSE.
+# If applicable, add the following below this CDDL HEADER, with the
+# fields enclosed by brackets "[]" replaced with your own identifying
+# information: Portions Copyright [yyyy] [name of copyright owner]
+#
+# CDDL HEADER END
+#
+
+#
+# Copyright (c) 2018-2021 Jim Mason <jmason at ibinx dot com>.
+#
+
 <transform file path=usr.*/man/.+ -> default mangler.man.stability uncommitted>
 set name=pkg.fmri \
     value=pkg:/media/dvdbackup@$(IPS_COMPONENT_VERSION),$(BUILD_VERSION)
@@ -8,36 +33,23 @@ set name=info.classification \
 set name=info.source-url value=$(COMPONENT_ARCHIVE_URL)
 set name=info.upstream-url value=$(COMPONENT_PROJECT_URL)
 set name=org.opensolaris.consolidation value=$(CONSOLIDATION)
-file usr/bin/dvdbackup path=usr/bin/dvdbackup
-file usr/share/locale/da/LC_MESSAGES/dvdbackup.mo \
-    path=usr/share/locale/da/LC_MESSAGES/dvdbackup.mo
-file usr/share/locale/de/LC_MESSAGES/dvdbackup.mo \
-    path=usr/share/locale/de/LC_MESSAGES/dvdbackup.mo
-file usr/share/locale/en@boldquot/LC_MESSAGES/dvdbackup.mo \
-    path=usr/share/locale/en@boldquot/LC_MESSAGES/dvdbackup.mo
-file usr/share/locale/en@quot/LC_MESSAGES/dvdbackup.mo \
-    path=usr/share/locale/en@quot/LC_MESSAGES/dvdbackup.mo
-file usr/share/locale/en_GB/LC_MESSAGES/dvdbackup.mo \
-    path=usr/share/locale/en_GB/LC_MESSAGES/dvdbackup.mo
-file usr/share/locale/es/LC_MESSAGES/dvdbackup.mo \
-    path=usr/share/locale/es/LC_MESSAGES/dvdbackup.mo
-file usr/share/locale/et/LC_MESSAGES/dvdbackup.mo \
-    path=usr/share/locale/et/LC_MESSAGES/dvdbackup.mo
-file usr/share/locale/fr/LC_MESSAGES/dvdbackup.mo \
-    path=usr/share/locale/fr/LC_MESSAGES/dvdbackup.mo
-file usr/share/locale/gl/LC_MESSAGES/dvdbackup.mo \
-    path=usr/share/locale/gl/LC_MESSAGES/dvdbackup.mo
-file usr/share/locale/it/LC_MESSAGES/dvdbackup.mo \
-    path=usr/share/locale/it/LC_MESSAGES/dvdbackup.mo
-file usr/share/locale/nb/LC_MESSAGES/dvdbackup.mo \
-    path=usr/share/locale/nb/LC_MESSAGES/dvdbackup.mo
-file usr/share/locale/pt/LC_MESSAGES/dvdbackup.mo \
-    path=usr/share/locale/pt/LC_MESSAGES/dvdbackup.mo
-file usr/share/locale/ru/LC_MESSAGES/dvdbackup.mo \
-    path=usr/share/locale/ru/LC_MESSAGES/dvdbackup.mo
-file usr/share/locale/sk/LC_MESSAGES/dvdbackup.mo \
-    path=usr/share/locale/sk/LC_MESSAGES/dvdbackup.mo
-file usr/share/locale/tr/LC_MESSAGES/dvdbackup.mo \
-    path=usr/share/locale/tr/LC_MESSAGES/dvdbackup.mo
-file usr/share/man/man1/dvdbackup.1 path=usr/share/man/man1/dvdbackup.1
+file path=usr/bin/dvdbackup
+file path=usr/share/doc/dvdbackup/NEWS
+file path=usr/share/doc/dvdbackup/README
+file path=usr/share/locale/da/LC_MESSAGES/dvdbackup.mo
+file path=usr/share/locale/de/LC_MESSAGES/dvdbackup.mo
+file path=usr/share/locale/en@boldquot/LC_MESSAGES/dvdbackup.mo
+file path=usr/share/locale/en@quot/LC_MESSAGES/dvdbackup.mo
+file path=usr/share/locale/en_GB/LC_MESSAGES/dvdbackup.mo
+file path=usr/share/locale/es/LC_MESSAGES/dvdbackup.mo
+file path=usr/share/locale/et/LC_MESSAGES/dvdbackup.mo
+file path=usr/share/locale/fr/LC_MESSAGES/dvdbackup.mo
+file path=usr/share/locale/gl/LC_MESSAGES/dvdbackup.mo
+file path=usr/share/locale/it/LC_MESSAGES/dvdbackup.mo
+file path=usr/share/locale/nb/LC_MESSAGES/dvdbackup.mo
+file path=usr/share/locale/pt/LC_MESSAGES/dvdbackup.mo
+file path=usr/share/locale/ru/LC_MESSAGES/dvdbackup.mo
+file path=usr/share/locale/sk/LC_MESSAGES/dvdbackup.mo
+file path=usr/share/locale/tr/LC_MESSAGES/dvdbackup.mo
+file path=usr/share/man/man1/dvdbackup.1
 license COPYING license=GPLv3

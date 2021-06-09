@@ -20,7 +20,7 @@
 #
 
 #
-# Copyright (c) 2018 Jim Mason <jmason at ibinx dot com>.  All rights reserved.
+# Copyright (c) 2018-2021 Jim Mason <jmason at ibinx dot com>.
 #
 
 BUILD_BITS =            64
@@ -29,11 +29,12 @@ include ../../../make-rules/shared-macros.mk
 
 COMPONENT_NAME=		dvdbackup
 COMPONENT_VERSION=	0.4.2
+COMPONENT_REVISION=	1
 COMPONENT_ARCHIVE =	$(COMPONENT_SRC).tar.gz
 COMPONENT_ARCHIVE_HASH=	\
 	sha256:0a37c31cc6f2d3c146ec57064bda8a06cf5f2ec90455366cb250506bab964550
-SOURCEFORGE_URL =	https://datapacket.dl.sourceforge.net/project
-COMPONENT_ARCHIVE_URL = $(SOURCEFORGE_URL)/dvdbackup/$(COMPONENT_NAME)/$(COMPONENT_SRC)/$(COMPONENT_ARCHIVE)
+SOURCEFORGE_URL =	https://downloads.sourceforge.net
+COMPONENT_ARCHIVE_URL = $(SOURCEFORGE_URL)/$(COMPONENT_NAME)/$(COMPONENT_ARCHIVE)
 COMPONENT_PROJECT_URL=	http://dvdbackup.sourceforge.net/
 COMPONENT_ANITYA_ID=	640
 
