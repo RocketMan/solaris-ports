@@ -1,3 +1,28 @@
+#
+# CDDL HEADER START
+#
+# The contents of this file are subject to the terms of the
+# Common Development and Distribution License (the "License").
+# You may not use this file except in compliance with the License.
+#
+# You can obtain a copy of the license at usr/src/OPENSOLARIS.LICENSE
+# or http://www.opensolaris.org/os/licensing.
+# See the License for the specific language governing permissions
+# and limitations under the License.
+#
+# When distributing Covered Code, include this CDDL HEADER in each
+# file and include the License file at usr/src/OPENSOLARIS.LICENSE.
+# If applicable, add the following below this CDDL HEADER, with the
+# fields enclosed by brackets "[]" replaced with your own identifying
+# information: Portions Copyright [yyyy] [name of copyright owner]
+#
+# CDDL HEADER END
+#
+
+#
+# Copyright (c) 2018-2021 Jim Mason <jmason at ibinx dot com>.
+#
+
 set name=pkg.fmri \
     value=pkg:/library/media/libdvdnav@$(IPS_COMPONENT_VERSION),$(BUILD_VERSION)
 set name=pkg.summary \
@@ -9,17 +34,18 @@ set name=info.classification \
 set name=info.source-url value=$(COMPONENT_ARCHIVE_URL)
 set name=info.upstream-url value=$(COMPONENT_PROJECT_URL)
 set name=org.opensolaris.consolidation value=$(CONSOLIDATION)
-file usr/include/dvdnav/dvd_types.h path=usr/include/dvdnav/dvd_types.h
-file usr/include/dvdnav/dvdnav.h path=usr/include/dvdnav/dvdnav.h
-file usr/include/dvdnav/dvdnav_events.h path=usr/include/dvdnav/dvdnav_events.h
-file usr/lib/amd64/libdvdnav.la path=usr/lib/amd64/libdvdnav.la
-link path=usr/lib/amd64/libdvdnav.so target=libdvdnav.so.4.2.0
-link path=usr/lib/amd64/libdvdnav.so.4 target=libdvdnav.so.4.2.0
-file usr/lib/amd64/libdvdnav.so.4.2.0 path=usr/lib/amd64/libdvdnav.so.4.2.0
-file usr/lib/amd64/pkgconfig/dvdnav.pc path=usr/lib/amd64/pkgconfig/dvdnav.pc
-file usr/lib/libdvdnav.la path=usr/lib/libdvdnav.la
-link path=usr/lib/libdvdnav.so target=libdvdnav.so.4.2.0
-link path=usr/lib/libdvdnav.so.4 target=libdvdnav.so.4.2.0
-file usr/lib/libdvdnav.so.4.2.0 path=usr/lib/libdvdnav.so.4.2.0
-file usr/lib/pkgconfig/dvdnav.pc path=usr/lib/pkgconfig/dvdnav.pc
+file path=usr/include/dvdnav/dvd_types.h
+file path=usr/include/dvdnav/dvdnav.h
+file path=usr/include/dvdnav/dvdnav_events.h
+file path=usr/include/dvdnav/version.h
+file path=usr/lib/$(MACH64)/libdvdnav.la
+link path=usr/lib/$(MACH64)/libdvdnav.so target=libdvdnav.so.4.3.0
+link path=usr/lib/$(MACH64)/libdvdnav.so.4 target=libdvdnav.so.4.3.0
+file path=usr/lib/$(MACH64)/libdvdnav.so.4.3.0
+file path=usr/lib/$(MACH64)/pkgconfig/dvdnav.pc
+file path=usr/lib/libdvdnav.la
+link path=usr/lib/libdvdnav.so target=libdvdnav.so.4.3.0
+link path=usr/lib/libdvdnav.so.4 target=libdvdnav.so.4.3.0
+file path=usr/lib/libdvdnav.so.4.3.0
+file path=usr/lib/pkgconfig/dvdnav.pc
 license COPYING license=GPLv2

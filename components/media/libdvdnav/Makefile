@@ -20,7 +20,7 @@
 #
 
 #
-# Copyright (c) 2018 Jim Mason <jmason at ibinx dot com>.  All rights reserved.
+# Copyright (c) 2018-2021 Jim Mason <jmason at ibinx dot com>.
 #
 
 BUILD_BITS =            64_and_32
@@ -28,10 +28,10 @@ COMPILER =		gcc
 include ../../../make-rules/shared-macros.mk
 
 COMPONENT_NAME=		libdvdnav
-COMPONENT_VERSION=	6.0.0
+COMPONENT_VERSION=	6.1.1
 COMPONENT_ARCHIVE =	$(COMPONENT_SRC).tar.bz2
 COMPONENT_ARCHIVE_HASH=	\
-	sha256:f0a2711b08a021759792f8eb14bb82ff8a3c929bf88c33b64ffcddaa27935618
+	sha256:c191a7475947d323ff7680cf92c0fb1be8237701885f37656c64d04e98d18d48
 COMPONENT_ARCHIVE_URL = http://www.videolan.org/pub/videolan/$(COMPONENT_NAME)/$(COMPONENT_VERSION)/$(COMPONENT_ARCHIVE)
 COMPONENT_PROJECT_URL=	http://dvdnav.mplayerhq.hu/
 COMPONENT_ANITYA_ID=	5615
