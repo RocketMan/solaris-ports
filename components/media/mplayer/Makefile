@@ -20,7 +20,7 @@
 #
 
 #
-# Copyright (c) 2018 Jim Mason <jmason at ibinx dot com>.  All rights reserved.
+# Copyright (c) 2018-2021 Jim Mason <jmason at ibinx dot com>.
 #
 
 BUILD_BITS =            64
@@ -84,6 +84,7 @@ REQUIRED_PACKAGES += library/graphics/libvdpau
 REQUIRED_PACKAGES += library/lzo
 REQUIRED_PACKAGES += library/zlib
 REQUIRED_PACKAGES += library/media/libass
+REQUIRED_PACKAGES += library/media/libbluray
 REQUIRED_PACKAGES += library/media/libcdio
 REQUIRED_PACKAGES += library/media/libcdio-paranoia
 REQUIRED_PACKAGES += library/media/libdvdnav
