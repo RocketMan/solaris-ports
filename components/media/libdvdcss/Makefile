@@ -20,7 +20,7 @@
 #
 
 #
-# Copyright (c) 2018 Jim Mason <jmason at ibinx dot com>.  All rights reserved.
+# Copyright (c) 2018-2021 Jim Mason <jmason at ibinx dot com>.
 #
 
 BUILD_BITS =            64_and_32
@@ -28,10 +28,10 @@ COMPILER =		gcc
 include ../../../make-rules/shared-macros.mk
 
 COMPONENT_NAME=		libdvdcss
-COMPONENT_VERSION=	1.4.2
+COMPONENT_VERSION=	1.4.3
 COMPONENT_ARCHIVE =	$(COMPONENT_SRC).tar.bz2
 COMPONENT_ARCHIVE_HASH=	\
-	sha256:78c2ed77ec9c0d8fbed7bf7d3abc82068b8864be494cfad165821377ff3f2575
+	sha256:233cc92f5dc01c5d3a96f5b3582be7d5cee5a35a52d3a08158745d3d86070079
 COMPONENT_ARCHIVE_URL = https://download.videolan.org/pub/$(COMPONENT_NAME)/$(COMPONENT_VERSION)/$(COMPONENT_ARCHIVE)
 COMPONENT_PROJECT_URL=	https://www.videolan.org/developers/libdvdcss.html
 COMPONENT_ANITYA_ID=	5568
