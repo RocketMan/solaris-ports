@@ -27,16 +27,20 @@ BUILD_BITS =            64_and_32
 COMPILER =		gcc
 include ../../../make-rules/shared-macros.mk
 
-COMPONENT_NAME=		libcdio
-COMPONENT_VERSION=	10.2.94
+COMPONENT_NAME=		libcdio-paranoia
+COMPONENT_VERSION=	10.2.201
 GIT_REPO=		https://github.com/rocky/libcdio-paranoia.git
-GIT_COMMIT_ID=		release-10.2+0.94+2
+GIT_COMMIT_ID=		release-10.2+2.0.1
+COMPONENT_SRC=		$(COMPONENT_NAME)-release-10.2-2.0.1
+COMPONENT_ARCHIVE_URL=	https://github.com/rocky/libcdio-paranoia/archive/refs/tags/$(GIT_COMMIT_ID).tar.gz
 COMPONENT_PROJECT_URL=	https://www.gnu.org/software/libcdio/
 
 COMPONENT_PRE_CONFIGURE_ACTION = ($(CLONEY) $(SOURCE_DIR) $(@D))
 COMPONENT_PREP_ACTION = \
 	(cd $(@D) ; \
 	autoreconf -f -i ; )
+
+PATH=$(GNUBIN):$(USRBINDIR)
 
 include $(WS_MAKE_RULES)/common.mk
 
