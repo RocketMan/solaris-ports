@@ -20,7 +20,7 @@
 #
 
 #
-# Copyright (c) 2018 Jim Mason <jmason at ibinx dot com>.  All rights reserved.
+# Copyright (c) 2018-2021 Jim Mason <jmason at ibinx dot com>.
 #
 
 BUILD_BITS =            64_and_32
@@ -28,11 +28,15 @@ COMPILER =		gcc
 include ../../../make-rules/shared-macros.mk
 
 COMPONENT_NAME=		libcdio
-COMPONENT_VERSION=	2.0.0
+COMPONENT_VERSION=	2.1.0
 GIT_REPO=		https://git.savannah.gnu.org/git/libcdio.git
-GIT_COMMIT_ID=		release-2.0.0
+GIT_COMMIT_ID=		release-2.1.0
+COMPONENT_SRC=		$(COMPONENT_NAME)-$(GIT_COMMIT_ID)
+COMPONENT_ARCHIVE_URL=	http://git.savannah.gnu.org/cgit/libcdio.git/snapshot/$(COMPONENT_ARCHIVE)
 COMPONENT_PROJECT_URL=	https://www.gnu.org/software/libcdio/
 COMPONENT_ANITYA_ID=	1573
+
+PATH=$(GNUBIN):$(USRBINDIR)
 
 COMPONENT_PRE_CONFIGURE_ACTION = ($(CLONEY) $(SOURCE_DIR) $(@D))
 COMPONENT_PREP_ACTION = \
