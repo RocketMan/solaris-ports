@@ -20,7 +20,7 @@
 #
 
 #
-# Copyright (c) 2019 Jim Mason <jmason at ibinx dot com>.  All rights reserved.
+# Copyright (c) 2019-2021 Jim Mason <jmason at ibinx dot com>.
 #
 # Adapted from original code Copyright (c) 2017 Oracle and/or its
 # affiliates. All rights reserved.
@@ -51,7 +51,6 @@ file path=usr/sbin/update-smart-drivedb
 file path=usr/share/doc/smartmontools/AUTHORS
 file path=usr/share/doc/smartmontools/COPYING
 file path=usr/share/doc/smartmontools/ChangeLog
-file path=usr/share/doc/smartmontools/ChangeLog-5.0-6.0
 file path=usr/share/doc/smartmontools/ChangeLog-6.0-7.0
 file path=usr/share/doc/smartmontools/INSTALL
 file path=usr/share/doc/smartmontools/NEWS

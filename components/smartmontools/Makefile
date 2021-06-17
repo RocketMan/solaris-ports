@@ -18,7 +18,7 @@
 #
 # CDDL HEADER END
 #
-# Copyright (c) 2019 Jim Mason <jmason at ibinx dot com>.  All rights reserved.
+# Copyright (c) 2019-2021 Jim Mason <jmason at ibinx dot com>.
 #
 # Adapted from original code Copyright (c) 2017, 2018 Oracle and/or its
 # affiliates. All rights reserved.
@@ -29,10 +29,10 @@ COMPILER=		gcc
 include ../../make-rules/shared-macros.mk
 
 COMPONENT_NAME=		smartmontools
-COMPONENT_VERSION=	7.1
+COMPONENT_VERSION=	7.2
 COMPONENT_PROJECT_URL=	https://www.smartmontools.org/
 COMPONENT_ARCHIVE_HASH=	\
-    sha256:3f734d2c99deb1e4af62b25d944c6252de70ca64d766c4c7294545a2e659b846
+    sha256:5cd98a27e6393168bc6aaea070d9e1cd551b0f898c52f66b2ff2e5d274118cd6
 COMPONENT_ARCHIVE_URL=	https://sourceforge.net/projects/$(COMPONENT_NAME)/files/$(COMPONENT_NAME)/$(COMPONENT_VERSION)/$(COMPONENT_ARCHIVE)
 COMPONENT_ANITYA_ID=	4835
 
