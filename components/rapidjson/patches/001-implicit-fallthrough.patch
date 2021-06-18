@@ -1,0 +1,11 @@
+--- rapidjson-1.1.0/CMakeLists.txt~	2016-08-25 08:59:05.000000000 +0000
++++ rapidjson-1.1.0/CMakeLists.txt	2021-06-18 12:52:54.736021207 +0000
+@@ -50,7 +50,7 @@
+ endif(CCACHE_FOUND)
+ 
+ if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
+-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -march=native -Wall -Wextra -Werror")
++    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -march=native -Wall -Wextra -Werror -Wno-implicit-fallthrough")
+     if (RAPIDJSON_BUILD_CXX11)
+         if (CMAKE_CXX_COMPILER_VERSION VERSION_LESS "4.7.0")
+             set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x")

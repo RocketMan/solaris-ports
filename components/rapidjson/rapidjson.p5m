@@ -1,0 +1,80 @@
+#
+# CDDL HEADER START
+#
+# The contents of this file are subject to the terms of the
+# Common Development and Distribution License (the "License").
+# You may not use this file except in compliance with the License.
+#
+# You can obtain a copy of the license at usr/src/OPENSOLARIS.LICENSE
+# or http://www.opensolaris.org/os/licensing.
+# See the License for the specific language governing permissions
+# and limitations under the License.
+#
+# When distributing Covered Code, include this CDDL HEADER in each
+# file and include the License file at usr/src/OPENSOLARIS.LICENSE.
+# If applicable, add the following below this CDDL HEADER, with the
+# fields enclosed by brackets "[]" replaced with your own identifying
+# information: Portions Copyright [yyyy] [name of copyright owner]
+#
+# CDDL HEADER END
+#
+
+#
+# Copyright (c) 2021 Jim Mason <jmason at ibinx dot com>.
+#
+
+<transform file path=usr.*/man/.+ -> \
+    default mangler.man.stability "pass-through volatile">
+set name=pkg.fmri \
+    value=pkg:/developer/rapidjson@$(IPS_COMPONENT_VERSION),$(BUILD_VERSION)
+set name=pkg.summary \
+    value="A fast JSON parser/generator for C++ with both SAX/DOM style API"
+set name=pkg.description \
+    value="RapidJSON is a JSON parser and generator for C++. It was inspired by RapidXml"
+set name=info.classification \
+    value=org.opensolaris.category.2008:Development/System
+set name=info.source-url value=$(COMPONENT_ARCHIVE_URL)
+set name=info.upstream-url value=$(COMPONENT_PROJECT_URL)
+set name=org.opensolaris.consolidation value=$(CONSOLIDATION)
+file path=usr/include/rapidjson/allocators.h
+file path=usr/include/rapidjson/document.h
+file path=usr/include/rapidjson/encodedstream.h
+file path=usr/include/rapidjson/encodings.h
+file path=usr/include/rapidjson/error/en.h
+file path=usr/include/rapidjson/error/error.h
+file path=usr/include/rapidjson/filereadstream.h
+file path=usr/include/rapidjson/filewritestream.h
+file path=usr/include/rapidjson/fwd.h
+file path=usr/include/rapidjson/internal/biginteger.h
+file path=usr/include/rapidjson/internal/diyfp.h
+file path=usr/include/rapidjson/internal/dtoa.h
+file path=usr/include/rapidjson/internal/ieee754.h
+file path=usr/include/rapidjson/internal/itoa.h
+file path=usr/include/rapidjson/internal/meta.h
+file path=usr/include/rapidjson/internal/pow10.h
+file path=usr/include/rapidjson/internal/regex.h
+file path=usr/include/rapidjson/internal/stack.h
+file path=usr/include/rapidjson/internal/strfunc.h
+file path=usr/include/rapidjson/internal/strtod.h
+file path=usr/include/rapidjson/internal/swap.h
+file path=usr/include/rapidjson/istreamwrapper.h
+file path=usr/include/rapidjson/memorybuffer.h
+file path=usr/include/rapidjson/memorystream.h
+file path=usr/include/rapidjson/msinttypes/inttypes.h
+file path=usr/include/rapidjson/msinttypes/stdint.h
+file path=usr/include/rapidjson/ostreamwrapper.h
+file path=usr/include/rapidjson/pointer.h
+file path=usr/include/rapidjson/prettywriter.h
+file path=usr/include/rapidjson/rapidjson.h
+file path=usr/include/rapidjson/reader.h
+file path=usr/include/rapidjson/schema.h
+file path=usr/include/rapidjson/stream.h
+file path=usr/include/rapidjson/stringbuffer.h
+file path=usr/include/rapidjson/writer.h
+file path=usr/lib/$(MACH64)/cmake/RapidJSON/RapidJSONConfig.cmake
+file path=usr/lib/$(MACH64)/cmake/RapidJSON/RapidJSONConfigVersion.cmake
+file path=usr/lib/$(MACH64)/pkgconfig/RapidJSON.pc
+file path=usr/lib/cmake/RapidJSON/RapidJSONConfig.cmake
+file path=usr/lib/cmake/RapidJSON/RapidJSONConfigVersion.cmake
+file path=usr/lib/pkgconfig/RapidJSON.pc
+license license.txt license="RapidJSON license"
