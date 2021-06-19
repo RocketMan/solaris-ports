@@ -1,0 +1,13 @@
+--- a/Makefile.in	2021-06-19 19:36:38.660558459 +0000
++++ b/Makefile.in	2021-06-19 19:37:02.968292401 +0000
+@@ -62,10 +62,6 @@
+ 	$(INSTALL) -m 644 tap $(DESTDIR)$(DRV_DIR)
+ 	$(INSTALL) -m 644 $(SRCDIR)/tun.conf $(DESTDIR)$(DRV_CONF_DIR)
+ 	$(INSTALL) -m 644 $(SRCDIR)/tap.conf $(DESTDIR)$(DRV_CONF_DIR)
+-	-[ -z "$(DESTDIR)" ]&& $(REM_DRV) tun >/dev/null 2>&1
+-	-[ -z "$(DESTDIR)" ]&& $(REM_DRV) tap >/dev/null 2>&1
+-	-[ -z "$(DESTDIR)" ]&& $(ADD_DRV) tun	
+-	-[ -z "$(DESTDIR)" ]&& $(ADD_DRV) tap
+ 
+ uninstall:
+ 	-[ -z "$(DESTDIR)" ]&& $(REM_DRV) tun >/dev/null 2>&1

@@ -1,0 +1,57 @@
+diff --git a/Makefile.in b/Makefile.in
+index 506746f..e89a13e 100755
+--- a/Makefile.in
++++ b/Makefile.in
+@@ -36,6 +36,7 @@ ADD_DRV = /usr/sbin/add_drv
+ REM_DRV = /usr/sbin/rem_drv
+ DRV_DIR = @DRV_DIR@
+ DRV_CONF_DIR = /usr/kernel/drv
++SRCDIR = @srcdir@
+ DESTDIR = @prefix@
+ 
+ INSTALL = @INSTALL@
+@@ -47,20 +48,20 @@ tun: tun.o
+ tap: tap.o
+ 	$(LD) $(LD_FLAGS) -r -o tap tap.o
+ 
+-tun.o: tun.c if_tun.h
+-	$(CC) $(KCFLAGS) -c tun.c -o tun.o -DTUNTAP_TUN
++tun.o: $(SRCDIR)/tun.c $(SRCDIR)/if_tun.h
++	$(CC) $(KCFLAGS) -c $(SRCDIR)/tun.c -o tun.o -DTUNTAP_TUN
+ 
+-tap.o: tun.c if_tun.h
+-	$(CC) $(KCFLAGS) -c tun.c -o tap.o -DTUNTAP_TAP
++tap.o: $(SRCDIR)/tun.c $(SRCDIR)/if_tun.h
++	$(CC) $(KCFLAGS) -c $(SRCDIR)/tun.c -o tap.o -DTUNTAP_TAP
+ 
+ install: tun tap
+-	$(INSTALL) -d -m 0755 -o root -g bin $(DESTDIR)/usr/include/net
+-	$(INSTALL) -d -m 0755 -o root -g sys $(DESTDIR)$(DRV_DIR)
+-	$(INSTALL) -m 644 -o root -g root if_tun.h $(DESTDIR)/usr/include/net 
+-	$(INSTALL) -m 644 -o root -g root tun $(DESTDIR)$(DRV_DIR)
+-	$(INSTALL) -m 644 -o root -g root tap $(DESTDIR)$(DRV_DIR)
+-	$(INSTALL) -m 644 -o root -g root tun.conf $(DESTDIR)$(DRV_CONF_DIR)
+-	$(INSTALL) -m 644 -o root -g root tap.conf $(DESTDIR)$(DRV_CONF_DIR)
++	$(INSTALL) -d -m 0755 $(DESTDIR)/usr/include/net
++	$(INSTALL) -d -m 0755 $(DESTDIR)$(DRV_DIR)
++	$(INSTALL) -m 644 $(SRCDIR)/if_tun.h $(DESTDIR)/usr/include/net 
++	$(INSTALL) -m 644 tun $(DESTDIR)$(DRV_DIR)
++	$(INSTALL) -m 644 tap $(DESTDIR)$(DRV_DIR)
++	$(INSTALL) -m 644 $(SRCDIR)/tun.conf $(DESTDIR)$(DRV_CONF_DIR)
++	$(INSTALL) -m 644 $(SRCDIR)/tap.conf $(DESTDIR)$(DRV_CONF_DIR)
+ 	-[ -z "$(DESTDIR)" ]&& $(REM_DRV) tun >/dev/null 2>&1
+ 	-[ -z "$(DESTDIR)" ]&& $(REM_DRV) tap >/dev/null 2>&1
+ 	-[ -z "$(DESTDIR)" ]&& $(ADD_DRV) tun	
+diff --git a/tun.c b/tun.c
+index ce68095..ade94bf 100755
+--- a/tun.c
++++ b/tun.c
+@@ -166,7 +166,7 @@ static struct tunstr *tun_str;
+ 
+ int _init(void)
+ {
+-  cmn_err(CE_CONT, "Universal TUN/TAP device driver ver %s "
++  cmn_err(CE_CONT, "?Universal TUN/TAP device driver ver %s "
+ 		   "(C) 1999-2000 Maxim Krasnyansky\n", TUN_VER);
+ 
+   DBG(CE_CONT,"tun: _init\n");
