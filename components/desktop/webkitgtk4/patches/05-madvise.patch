@@ -13,18 +13,66 @@
  #endif
 --- a/Source/bmalloc/bmalloc/VMAllocate.h	2020-07-15 19:21:07.536004242 +0000
 +++ b/Source/bmalloc/bmalloc/VMAllocate.h	2020-07-16 11:06:25.330777260 +0000
-@@ -52,6 +52,14 @@
- #define BMALLOC_NORESERVE 0
- #endif
+@@ -203,6 +203,8 @@
+     SYSCALL(madvise(p, vmSize, MADV_FREE_REUSABLE));
+ #elif BOS(FREEBSD)
+     SYSCALL(madvise(p, vmSize, MADV_FREE));
++#elif BOS(SOLARIS)
++    SYSCALL(posix_madvise(p, vmSize, POSIX_MADV_DONTNEED));
+ #else
+     SYSCALL(madvise(p, vmSize, MADV_DONTNEED));
+ #if BOS(LINUX)
+@@ -216,6 +218,8 @@
+     vmValidatePhysical(p, vmSize);
+ #if BOS(DARWIN)
+     SYSCALL(madvise(p, vmSize, MADV_FREE_REUSE));
++#elif BOS(SOLARIS)
++    SYSCALL(posix_madvise(p, vmSize, POSIX_MADV_NORMAL));
+ #else
+     SYSCALL(madvise(p, vmSize, MADV_NORMAL));
+ #if BOS(LINUX)
+--- a/Source/WTF/wtf/posix/OSAllocatorPOSIX.cpp	2020-11-06 11:48:12.000000000 +0000
++++ b/Source/WTF/wtf/posix/OSAllocatorPOSIX.cpp	2021-06-30 17:58:37.946388576 +0000
+@@ -141,7 +141,7 @@
  
-+#if BOS(SOLARIS)
-+// Signature of Solaris madvise() differs from that of other Unix.
-+inline int madvise(void* addr, size_t len, int advice)
-+{
-+    return ::madvise(static_cast<caddr_t>(addr), len, advice);
-+}
-+#endif
-+
- inline size_t vmPageSize()
+ void OSAllocator::commit(void* address, size_t bytes, bool writable, bool executable)
  {
-     static size_t cached;
+-#if OS(LINUX)
++#if OS(LINUX) || OS(SOLARIS)
+     int protection = PROT_READ;
+     if (writable)
+         protection |= PROT_WRITE;
+@@ -149,7 +149,11 @@
+         protection |= PROT_EXEC;
+     if (mprotect(address, bytes, protection))
+         CRASH();
++#if OS(SOLARIS)
++    posix_madvise(address, bytes, POSIX_MADV_WILLNEED);
++#else
+     madvise(address, bytes, MADV_WILLNEED);
++#endif
+ #elif HAVE(MADV_FREE_REUSE)
+     UNUSED_PARAM(writable);
+     UNUSED_PARAM(executable);
+@@ -169,6 +173,10 @@
+     madvise(address, bytes, MADV_DONTNEED);
+     if (mprotect(address, bytes, PROT_NONE))
+         CRASH();
++#elif OS(SOLARIS)
++    posix_madvise(address, bytes, POSIX_MADV_DONTNEED);
++    if (mprotect(address, bytes, PROT_NONE))
++        CRASH();
+ #elif HAVE(MADV_FREE_REUSE)
+     while (madvise(address, bytes, MADV_FREE_REUSABLE) == -1 && errno == EAGAIN) { }
+ #elif HAVE(MADV_FREE)
+@@ -183,7 +191,9 @@
+ 
+ void OSAllocator::hintMemoryNotNeededSoon(void* address, size_t bytes)
+ {
+-#if HAVE(MADV_DONTNEED)
++#if OS(SOLARIS)
++    while (posix_madvise(address, bytes, POSIX_MADV_DONTNEED) == -1 && errno == EAGAIN) { }
++#elif HAVE(MADV_DONTNEED)
+     while (madvise(address, bytes, MADV_DONTNEED) == -1 && errno == EAGAIN) { }
+ #else
+     UNUSED_PARAM(address);
