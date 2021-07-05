@@ -204,7 +204,20 @@
  #endif
 --- a/monitor.c	2018-08-09 20:00:25.351781647 +0000
 +++ b/monitor.c	2018-08-10 14:45:25.851794656 +0000
-@@ -630,12 +630,12 @@
+@@ -478,7 +478,11 @@
+ 
+ static bool
+ check_notsparse(const char *path)
+-#if HAVE_DECL_SEEK_HOLE
++#ifdef __sun
++{
++  return true;
++}
++#elif HAVE_DECL_SEEK_HOLE
+ {
+ 	int fd;
+ 	bool rv;
+@@ -641,12 +645,12 @@
  	if ( pollfds[0].fd < 0 )
  		DPRINTF(E_ERROR, L_INOTIFY, "inotify_init() failed!\n");
  
@@ -223,7 +236,7 @@
  	inotify_create_watches(pollfds[0].fd);
  	if (setpriority(PRIO_PROCESS, 0, 19) == -1)
  		DPRINTF(E_WARN, L_INOTIFY,  "Failed to reduce inotify thread priority\n");
-@@ -676,6 +676,12 @@
+@@ -687,6 +691,12 @@
  			buffer[BUF_LEN-1] = '\0';
  		}
  
@@ -234,9 +247,9 @@
 +		}
 +
  		i = 0;
- 		while( i < length )
+ 		while( !quitting && i < length )
  		{
-@@ -733,6 +739,7 @@
+@@ -744,6 +754,7 @@
  			}
  			i += EVENT_SIZE + event->len;
  		}
