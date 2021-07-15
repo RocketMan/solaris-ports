@@ -13,6 +13,15 @@
  #endif
 --- a/Source/bmalloc/bmalloc/VMAllocate.h	2020-07-15 19:21:07.536004242 +0000
 +++ b/Source/bmalloc/bmalloc/VMAllocate.h	2020-07-16 11:06:25.330777260 +0000
+@@ -46,7 +46,7 @@
+ #define BMALLOC_VM_TAG VM_TAG_FOR_TCMALLOC_MEMORY
+ #endif
+ 
+-#if BOS(LINUX)
++#if BOS(LINUX) || BOS(SOLARIS)
+ #define BMALLOC_NORESERVE MAP_NORESERVE
+ #else
+ #define BMALLOC_NORESERVE 0
 @@ -203,6 +203,8 @@
      SYSCALL(madvise(p, vmSize, MADV_FREE_REUSABLE));
  #elif BOS(FREEBSD)
@@ -33,7 +42,28 @@
  #if BOS(LINUX)
 --- a/Source/WTF/wtf/posix/OSAllocatorPOSIX.cpp	2020-11-06 11:48:12.000000000 +0000
 +++ b/Source/WTF/wtf/posix/OSAllocatorPOSIX.cpp	2021-06-30 17:58:37.946388576 +0000
-@@ -141,7 +141,7 @@
+@@ -47,7 +47,7 @@
+ 
+ void* OSAllocator::reserveUncommitted(size_t bytes, Usage usage, bool writable, bool executable, bool jitCageEnabled, bool includesGuardPages)
+ {
+-#if OS(LINUX)
++#if OS(LINUX) || OS(SOLARIS)
+     UNUSED_PARAM(usage);
+     UNUSED_PARAM(writable);
+     UNUSED_PARAM(executable);
+@@ -57,7 +57,11 @@
+     void* result = mmap(0, bytes, PROT_NONE, MAP_NORESERVE | MAP_PRIVATE | MAP_ANON, -1, 0);
+     if (result == MAP_FAILED)
+         CRASH();
++#if OS(SOLARIS)
++    posix_madvise(result, bytes, POSIX_MADV_DONTNEED);
++#else
+     madvise(result, bytes, MADV_DONTNEED);
++#endif
+ #else
+     void* result = reserveAndCommit(bytes, usage, writable, executable, jitCageEnabled, includesGuardPages);
+ #if HAVE(MADV_FREE_REUSE)
+@@ -141,7 +145,7 @@
  
  void OSAllocator::commit(void* address, size_t bytes, bool writable, bool executable)
  {
@@ -42,7 +72,7 @@
      int protection = PROT_READ;
      if (writable)
          protection |= PROT_WRITE;
-@@ -149,7 +149,11 @@
+@@ -149,7 +153,11 @@
          protection |= PROT_EXEC;
      if (mprotect(address, bytes, protection))
          CRASH();
@@ -54,7 +84,7 @@
  #elif HAVE(MADV_FREE_REUSE)
      UNUSED_PARAM(writable);
      UNUSED_PARAM(executable);
-@@ -169,6 +173,10 @@
+@@ -169,6 +177,10 @@
      madvise(address, bytes, MADV_DONTNEED);
      if (mprotect(address, bytes, PROT_NONE))
          CRASH();
@@ -65,7 +95,7 @@
  #elif HAVE(MADV_FREE_REUSE)
      while (madvise(address, bytes, MADV_FREE_REUSABLE) == -1 && errno == EAGAIN) { }
  #elif HAVE(MADV_FREE)
-@@ -183,7 +191,9 @@
+@@ -183,7 +195,9 @@
  
  void OSAllocator::hintMemoryNotNeededSoon(void* address, size_t bytes)
  {
