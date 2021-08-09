@@ -20,7 +20,7 @@
 #
 
 #
-# Copyright (c) 2020 Jim Mason <jmason at ibinx dot com>.  All rights reserved.
+# Copyright (c) 2020-2021 Jim Mason <jmason at ibinx dot com>.
 #
 
 # we have patched to use the nimbus gtk2 engine; discard the slimnimbus engine
@@ -510,6 +510,280 @@ link path=usr/share/themes/slim-nimbus-dark/gtk-3.0/settings.ini \
     target=../../slim-nimbus/gtk-3.0/settings.ini
 link path=usr/share/themes/slim-nimbus-dark/gtk-3.0/thumbnail.png \
     target=../../slim-nimbus/gtk-3.0/thumbnail.png
+link path=usr/share/themes/slim-nimbus-dark/gtk-4.0/assets/Makefile.am \
+    target=../../../slim-nimbus/gtk-4.0/assets/Makefile.am
+link \
+    path=usr/share/themes/slim-nimbus-dark/gtk-4.0/assets/checkbox-checked-active.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/checkbox-checked-active.png
+link \
+    path=usr/share/themes/slim-nimbus-dark/gtk-4.0/assets/checkbox-checked-active@2.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/checkbox-checked-active@2.png
+link \
+    path=usr/share/themes/slim-nimbus-dark/gtk-4.0/assets/checkbox-checked-insensitive-unfocused.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/checkbox-checked-insensitive-unfocused.png
+link \
+    path=usr/share/themes/slim-nimbus-dark/gtk-4.0/assets/checkbox-checked-insensitive-unfocused@2.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/checkbox-checked-insensitive-unfocused@2.png
+link \
+    path=usr/share/themes/slim-nimbus-dark/gtk-4.0/assets/checkbox-checked-insensitive.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/checkbox-checked-insensitive.png
+link \
+    path=usr/share/themes/slim-nimbus-dark/gtk-4.0/assets/checkbox-checked-insensitive@2.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/checkbox-checked-insensitive@2.png
+link \
+    path=usr/share/themes/slim-nimbus-dark/gtk-4.0/assets/checkbox-checked-over.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/checkbox-checked-over.png
+link \
+    path=usr/share/themes/slim-nimbus-dark/gtk-4.0/assets/checkbox-checked-over@2.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/checkbox-checked-over@2.png
+link \
+    path=usr/share/themes/slim-nimbus-dark/gtk-4.0/assets/checkbox-checked-unfocused.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/checkbox-checked-unfocused.png
+link \
+    path=usr/share/themes/slim-nimbus-dark/gtk-4.0/assets/checkbox-checked-unfocused@2.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/checkbox-checked-unfocused@2.png
+link \
+    path=usr/share/themes/slim-nimbus-dark/gtk-4.0/assets/checkbox-checked.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/checkbox-checked.png
+link \
+    path=usr/share/themes/slim-nimbus-dark/gtk-4.0/assets/checkbox-checked@2.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/checkbox-checked@2.png
+link \
+    path=usr/share/themes/slim-nimbus-dark/gtk-4.0/assets/checkbox-mixed-active.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/checkbox-mixed-active.png
+link \
+    path=usr/share/themes/slim-nimbus-dark/gtk-4.0/assets/checkbox-mixed-active@2.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/checkbox-mixed-active@2.png
+link \
+    path=usr/share/themes/slim-nimbus-dark/gtk-4.0/assets/checkbox-mixed-insensitive-unfocused.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/checkbox-mixed-insensitive-unfocused.png
+link \
+    path=usr/share/themes/slim-nimbus-dark/gtk-4.0/assets/checkbox-mixed-insensitive-unfocused@2.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/checkbox-mixed-insensitive-unfocused@2.png
+link \
+    path=usr/share/themes/slim-nimbus-dark/gtk-4.0/assets/checkbox-mixed-insensitive.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/checkbox-mixed-insensitive.png
+link \
+    path=usr/share/themes/slim-nimbus-dark/gtk-4.0/assets/checkbox-mixed-insensitive@2.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/checkbox-mixed-insensitive@2.png
+link \
+    path=usr/share/themes/slim-nimbus-dark/gtk-4.0/assets/checkbox-mixed-over.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/checkbox-mixed-over.png
+link \
+    path=usr/share/themes/slim-nimbus-dark/gtk-4.0/assets/checkbox-mixed-over@2.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/checkbox-mixed-over@2.png
+link \
+    path=usr/share/themes/slim-nimbus-dark/gtk-4.0/assets/checkbox-mixed-unfocused.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/checkbox-mixed-unfocused.png
+link \
+    path=usr/share/themes/slim-nimbus-dark/gtk-4.0/assets/checkbox-mixed-unfocused@2.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/checkbox-mixed-unfocused@2.png
+link path=usr/share/themes/slim-nimbus-dark/gtk-4.0/assets/checkbox-mixed.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/checkbox-mixed.png
+link \
+    path=usr/share/themes/slim-nimbus-dark/gtk-4.0/assets/checkbox-mixed@2.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/checkbox-mixed@2.png
+link \
+    path=usr/share/themes/slim-nimbus-dark/gtk-4.0/assets/checkbox-unchecked-active.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/checkbox-unchecked-active.png
+link \
+    path=usr/share/themes/slim-nimbus-dark/gtk-4.0/assets/checkbox-unchecked-active@2.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/checkbox-unchecked-active@2.png
+link \
+    path=usr/share/themes/slim-nimbus-dark/gtk-4.0/assets/checkbox-unchecked-insensitive-unfocused.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/checkbox-unchecked-insensitive-unfocused.png
+link \
+    path=usr/share/themes/slim-nimbus-dark/gtk-4.0/assets/checkbox-unchecked-insensitive-unfocused@2.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/checkbox-unchecked-insensitive-unfocused@2.png
+link \
+    path=usr/share/themes/slim-nimbus-dark/gtk-4.0/assets/checkbox-unchecked-insensitive.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/checkbox-unchecked-insensitive.png
+link \
+    path=usr/share/themes/slim-nimbus-dark/gtk-4.0/assets/checkbox-unchecked-insensitive@2.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/checkbox-unchecked-insensitive@2.png
+link \
+    path=usr/share/themes/slim-nimbus-dark/gtk-4.0/assets/checkbox-unchecked-over.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/checkbox-unchecked-over.png
+link \
+    path=usr/share/themes/slim-nimbus-dark/gtk-4.0/assets/checkbox-unchecked-over@2.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/checkbox-unchecked-over@2.png
+link \
+    path=usr/share/themes/slim-nimbus-dark/gtk-4.0/assets/checkbox-unchecked-unfocused.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/checkbox-unchecked-unfocused.png
+link \
+    path=usr/share/themes/slim-nimbus-dark/gtk-4.0/assets/checkbox-unchecked-unfocused@2.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/checkbox-unchecked-unfocused@2.png
+link \
+    path=usr/share/themes/slim-nimbus-dark/gtk-4.0/assets/checkbox-unchecked.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/checkbox-unchecked.png
+link \
+    path=usr/share/themes/slim-nimbus-dark/gtk-4.0/assets/checkbox-unchecked@2.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/checkbox-unchecked@2.png
+link path=usr/share/themes/slim-nimbus-dark/gtk-4.0/assets/close-active.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/close-active.png
+link path=usr/share/themes/slim-nimbus-dark/gtk-4.0/assets/close-backdrop.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/close-backdrop.png
+link path=usr/share/themes/slim-nimbus-dark/gtk-4.0/assets/close-hover.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/close-hover.png
+link path=usr/share/themes/slim-nimbus-dark/gtk-4.0/assets/close-normal.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/close-normal.png
+link path=usr/share/themes/slim-nimbus-dark/gtk-4.0/assets/maximize-active.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/maximize-active.png
+link \
+    path=usr/share/themes/slim-nimbus-dark/gtk-4.0/assets/maximize-backdrop.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/maximize-backdrop.png
+link path=usr/share/themes/slim-nimbus-dark/gtk-4.0/assets/maximize-hover.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/maximize-hover.png
+link path=usr/share/themes/slim-nimbus-dark/gtk-4.0/assets/maximize-normal.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/maximize-normal.png
+link path=usr/share/themes/slim-nimbus-dark/gtk-4.0/assets/minimize-active.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/minimize-active.png
+link \
+    path=usr/share/themes/slim-nimbus-dark/gtk-4.0/assets/minimize-backdrop.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/minimize-backdrop.png
+link path=usr/share/themes/slim-nimbus-dark/gtk-4.0/assets/minimize-hover.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/minimize-hover.png
+link path=usr/share/themes/slim-nimbus-dark/gtk-4.0/assets/minimize-normal.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/minimize-normal.png
+link \
+    path=usr/share/themes/slim-nimbus-dark/gtk-4.0/assets/radio-checked-active.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/radio-checked-active.png
+link \
+    path=usr/share/themes/slim-nimbus-dark/gtk-4.0/assets/radio-checked-active@2.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/radio-checked-active@2.png
+link \
+    path=usr/share/themes/slim-nimbus-dark/gtk-4.0/assets/radio-checked-insensitive-unfocused.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/radio-checked-insensitive-unfocused.png
+link \
+    path=usr/share/themes/slim-nimbus-dark/gtk-4.0/assets/radio-checked-insensitive-unfocused@2.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/radio-checked-insensitive-unfocused@2.png
+link \
+    path=usr/share/themes/slim-nimbus-dark/gtk-4.0/assets/radio-checked-insensitive.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/radio-checked-insensitive.png
+link \
+    path=usr/share/themes/slim-nimbus-dark/gtk-4.0/assets/radio-checked-insensitive@2.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/radio-checked-insensitive@2.png
+link \
+    path=usr/share/themes/slim-nimbus-dark/gtk-4.0/assets/radio-checked-over.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/radio-checked-over.png
+link \
+    path=usr/share/themes/slim-nimbus-dark/gtk-4.0/assets/radio-checked-over@2.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/radio-checked-over@2.png
+link \
+    path=usr/share/themes/slim-nimbus-dark/gtk-4.0/assets/radio-checked-unfocused.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/radio-checked-unfocused.png
+link \
+    path=usr/share/themes/slim-nimbus-dark/gtk-4.0/assets/radio-checked-unfocused@2.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/radio-checked-unfocused@2.png
+link path=usr/share/themes/slim-nimbus-dark/gtk-4.0/assets/radio-checked.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/radio-checked.png
+link path=usr/share/themes/slim-nimbus-dark/gtk-4.0/assets/radio-checked@2.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/radio-checked@2.png
+link \
+    path=usr/share/themes/slim-nimbus-dark/gtk-4.0/assets/radio-mixed-active.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/radio-mixed-active.png
+link \
+    path=usr/share/themes/slim-nimbus-dark/gtk-4.0/assets/radio-mixed-active@2.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/radio-mixed-active@2.png
+link \
+    path=usr/share/themes/slim-nimbus-dark/gtk-4.0/assets/radio-mixed-insensitive-unfocused.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/radio-mixed-insensitive-unfocused.png
+link \
+    path=usr/share/themes/slim-nimbus-dark/gtk-4.0/assets/radio-mixed-insensitive-unfocused@2.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/radio-mixed-insensitive-unfocused@2.png
+link \
+    path=usr/share/themes/slim-nimbus-dark/gtk-4.0/assets/radio-mixed-insensitive.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/radio-mixed-insensitive.png
+link \
+    path=usr/share/themes/slim-nimbus-dark/gtk-4.0/assets/radio-mixed-insensitive@2.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/radio-mixed-insensitive@2.png
+link \
+    path=usr/share/themes/slim-nimbus-dark/gtk-4.0/assets/radio-mixed-over.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/radio-mixed-over.png
+link \
+    path=usr/share/themes/slim-nimbus-dark/gtk-4.0/assets/radio-mixed-over@2.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/radio-mixed-over@2.png
+link \
+    path=usr/share/themes/slim-nimbus-dark/gtk-4.0/assets/radio-mixed-unfocused.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/radio-mixed-unfocused.png
+link \
+    path=usr/share/themes/slim-nimbus-dark/gtk-4.0/assets/radio-mixed-unfocused@2.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/radio-mixed-unfocused@2.png
+link path=usr/share/themes/slim-nimbus-dark/gtk-4.0/assets/radio-mixed.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/radio-mixed.png
+link path=usr/share/themes/slim-nimbus-dark/gtk-4.0/assets/radio-mixed@2.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/radio-mixed@2.png
+link \
+    path=usr/share/themes/slim-nimbus-dark/gtk-4.0/assets/radio-unchecked-active.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/radio-unchecked-active.png
+link \
+    path=usr/share/themes/slim-nimbus-dark/gtk-4.0/assets/radio-unchecked-active@2.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/radio-unchecked-active@2.png
+link \
+    path=usr/share/themes/slim-nimbus-dark/gtk-4.0/assets/radio-unchecked-insensitive-unfocused.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/radio-unchecked-insensitive-unfocused.png
+link \
+    path=usr/share/themes/slim-nimbus-dark/gtk-4.0/assets/radio-unchecked-insensitive-unfocused@2.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/radio-unchecked-insensitive-unfocused@2.png
+link \
+    path=usr/share/themes/slim-nimbus-dark/gtk-4.0/assets/radio-unchecked-insensitive.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/radio-unchecked-insensitive.png
+link \
+    path=usr/share/themes/slim-nimbus-dark/gtk-4.0/assets/radio-unchecked-insensitive@2.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/radio-unchecked-insensitive@2.png
+link \
+    path=usr/share/themes/slim-nimbus-dark/gtk-4.0/assets/radio-unchecked-over.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/radio-unchecked-over.png
+link \
+    path=usr/share/themes/slim-nimbus-dark/gtk-4.0/assets/radio-unchecked-over@2.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/radio-unchecked-over@2.png
+link \
+    path=usr/share/themes/slim-nimbus-dark/gtk-4.0/assets/radio-unchecked-unfocused.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/radio-unchecked-unfocused.png
+link \
+    path=usr/share/themes/slim-nimbus-dark/gtk-4.0/assets/radio-unchecked-unfocused@2.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/radio-unchecked-unfocused@2.png
+link path=usr/share/themes/slim-nimbus-dark/gtk-4.0/assets/radio-unchecked.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/radio-unchecked.png
+link \
+    path=usr/share/themes/slim-nimbus-dark/gtk-4.0/assets/radio-unchecked@2.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/radio-unchecked@2.png
+link path=usr/share/themes/slim-nimbus-dark/gtk-4.0/assets/restore-active.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/restore-active.png
+link \
+    path=usr/share/themes/slim-nimbus-dark/gtk-4.0/assets/restore-backdrop.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/restore-backdrop.png
+link path=usr/share/themes/slim-nimbus-dark/gtk-4.0/assets/restore-hover.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/restore-hover.png
+link path=usr/share/themes/slim-nimbus-dark/gtk-4.0/assets/restore-normal.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/restore-normal.png
+link \
+    path=usr/share/themes/slim-nimbus-dark/gtk-4.0/assets/scrollbar-slider-h.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/scrollbar-slider-h.png
+link \
+    path=usr/share/themes/slim-nimbus-dark/gtk-4.0/assets/scrollbar-slider-v.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/scrollbar-slider-v.png
+link path=usr/share/themes/slim-nimbus-dark/gtk-4.0/assets/stepper-down.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/stepper-down.png
+link path=usr/share/themes/slim-nimbus-dark/gtk-4.0/assets/stepper-left.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/stepper-left.png
+link path=usr/share/themes/slim-nimbus-dark/gtk-4.0/assets/stepper-right.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/stepper-right.png
+link path=usr/share/themes/slim-nimbus-dark/gtk-4.0/assets/stepper-up.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/stepper-up.png
+link path=usr/share/themes/slim-nimbus-dark/gtk-4.0/assets/trough-h.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/trough-h.png
+link path=usr/share/themes/slim-nimbus-dark/gtk-4.0/assets/trough-v.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/trough-v.png
+link path=usr/share/themes/slim-nimbus-dark/gtk-4.0/gtk-dark.css \
+    target=../../slim-nimbus/gtk-4.0/gtk-dark.css
+link path=usr/share/themes/slim-nimbus-dark/gtk-4.0/gtk-light.css \
+    target=../../slim-nimbus/gtk-4.0/gtk-light.css
+link path=usr/share/themes/slim-nimbus-dark/gtk-4.0/gtk.css target=gtk-dark.css
+link path=usr/share/themes/slim-nimbus-dark/gtk-4.0/settings.ini \
+    target=../../slim-nimbus/gtk-4.0/settings.ini
+link path=usr/share/themes/slim-nimbus-dark/gtk-4.0/thumbnail.png \
+    target=../../slim-nimbus/gtk-4.0/thumbnail.png
 file path=usr/share/themes/slim-nimbus-dark/index.theme
 link \
     path=usr/share/themes/slim-nimbus-dark/metacity-1/button-close-icon-prelight.png \
@@ -1047,6 +1321,287 @@ link path=usr/share/themes/slim-nimbus-light/gtk-3.0/settings.ini \
     target=../../slim-nimbus/gtk-3.0/settings.ini
 link path=usr/share/themes/slim-nimbus-light/gtk-3.0/thumbnail.png \
     target=../../slim-nimbus/gtk-3.0/thumbnail.png
+link path=usr/share/themes/slim-nimbus-light/gtk-4.0/assets/Makefile.am \
+    target=../../../slim-nimbus/gtk-4.0/assets/Makefile.am
+link \
+    path=usr/share/themes/slim-nimbus-light/gtk-4.0/assets/checkbox-checked-active.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/checkbox-checked-active.png
+link \
+    path=usr/share/themes/slim-nimbus-light/gtk-4.0/assets/checkbox-checked-active@2.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/checkbox-checked-active@2.png
+link \
+    path=usr/share/themes/slim-nimbus-light/gtk-4.0/assets/checkbox-checked-insensitive-unfocused.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/checkbox-checked-insensitive-unfocused.png
+link \
+    path=usr/share/themes/slim-nimbus-light/gtk-4.0/assets/checkbox-checked-insensitive-unfocused@2.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/checkbox-checked-insensitive-unfocused@2.png
+link \
+    path=usr/share/themes/slim-nimbus-light/gtk-4.0/assets/checkbox-checked-insensitive.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/checkbox-checked-insensitive.png
+link \
+    path=usr/share/themes/slim-nimbus-light/gtk-4.0/assets/checkbox-checked-insensitive@2.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/checkbox-checked-insensitive@2.png
+link \
+    path=usr/share/themes/slim-nimbus-light/gtk-4.0/assets/checkbox-checked-over.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/checkbox-checked-over.png
+link \
+    path=usr/share/themes/slim-nimbus-light/gtk-4.0/assets/checkbox-checked-over@2.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/checkbox-checked-over@2.png
+link \
+    path=usr/share/themes/slim-nimbus-light/gtk-4.0/assets/checkbox-checked-unfocused.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/checkbox-checked-unfocused.png
+link \
+    path=usr/share/themes/slim-nimbus-light/gtk-4.0/assets/checkbox-checked-unfocused@2.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/checkbox-checked-unfocused@2.png
+link \
+    path=usr/share/themes/slim-nimbus-light/gtk-4.0/assets/checkbox-checked.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/checkbox-checked.png
+link \
+    path=usr/share/themes/slim-nimbus-light/gtk-4.0/assets/checkbox-checked@2.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/checkbox-checked@2.png
+link \
+    path=usr/share/themes/slim-nimbus-light/gtk-4.0/assets/checkbox-mixed-active.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/checkbox-mixed-active.png
+link \
+    path=usr/share/themes/slim-nimbus-light/gtk-4.0/assets/checkbox-mixed-active@2.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/checkbox-mixed-active@2.png
+link \
+    path=usr/share/themes/slim-nimbus-light/gtk-4.0/assets/checkbox-mixed-insensitive-unfocused.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/checkbox-mixed-insensitive-unfocused.png
+link \
+    path=usr/share/themes/slim-nimbus-light/gtk-4.0/assets/checkbox-mixed-insensitive-unfocused@2.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/checkbox-mixed-insensitive-unfocused@2.png
+link \
+    path=usr/share/themes/slim-nimbus-light/gtk-4.0/assets/checkbox-mixed-insensitive.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/checkbox-mixed-insensitive.png
+link \
+    path=usr/share/themes/slim-nimbus-light/gtk-4.0/assets/checkbox-mixed-insensitive@2.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/checkbox-mixed-insensitive@2.png
+link \
+    path=usr/share/themes/slim-nimbus-light/gtk-4.0/assets/checkbox-mixed-over.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/checkbox-mixed-over.png
+link \
+    path=usr/share/themes/slim-nimbus-light/gtk-4.0/assets/checkbox-mixed-over@2.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/checkbox-mixed-over@2.png
+link \
+    path=usr/share/themes/slim-nimbus-light/gtk-4.0/assets/checkbox-mixed-unfocused.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/checkbox-mixed-unfocused.png
+link \
+    path=usr/share/themes/slim-nimbus-light/gtk-4.0/assets/checkbox-mixed-unfocused@2.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/checkbox-mixed-unfocused@2.png
+link path=usr/share/themes/slim-nimbus-light/gtk-4.0/assets/checkbox-mixed.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/checkbox-mixed.png
+link \
+    path=usr/share/themes/slim-nimbus-light/gtk-4.0/assets/checkbox-mixed@2.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/checkbox-mixed@2.png
+link \
+    path=usr/share/themes/slim-nimbus-light/gtk-4.0/assets/checkbox-unchecked-active.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/checkbox-unchecked-active.png
+link \
+    path=usr/share/themes/slim-nimbus-light/gtk-4.0/assets/checkbox-unchecked-active@2.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/checkbox-unchecked-active@2.png
+link \
+    path=usr/share/themes/slim-nimbus-light/gtk-4.0/assets/checkbox-unchecked-insensitive-unfocused.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/checkbox-unchecked-insensitive-unfocused.png
+link \
+    path=usr/share/themes/slim-nimbus-light/gtk-4.0/assets/checkbox-unchecked-insensitive-unfocused@2.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/checkbox-unchecked-insensitive-unfocused@2.png
+link \
+    path=usr/share/themes/slim-nimbus-light/gtk-4.0/assets/checkbox-unchecked-insensitive.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/checkbox-unchecked-insensitive.png
+link \
+    path=usr/share/themes/slim-nimbus-light/gtk-4.0/assets/checkbox-unchecked-insensitive@2.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/checkbox-unchecked-insensitive@2.png
+link \
+    path=usr/share/themes/slim-nimbus-light/gtk-4.0/assets/checkbox-unchecked-over.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/checkbox-unchecked-over.png
+link \
+    path=usr/share/themes/slim-nimbus-light/gtk-4.0/assets/checkbox-unchecked-over@2.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/checkbox-unchecked-over@2.png
+link \
+    path=usr/share/themes/slim-nimbus-light/gtk-4.0/assets/checkbox-unchecked-unfocused.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/checkbox-unchecked-unfocused.png
+link \
+    path=usr/share/themes/slim-nimbus-light/gtk-4.0/assets/checkbox-unchecked-unfocused@2.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/checkbox-unchecked-unfocused@2.png
+link \
+    path=usr/share/themes/slim-nimbus-light/gtk-4.0/assets/checkbox-unchecked.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/checkbox-unchecked.png
+link \
+    path=usr/share/themes/slim-nimbus-light/gtk-4.0/assets/checkbox-unchecked@2.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/checkbox-unchecked@2.png
+link path=usr/share/themes/slim-nimbus-light/gtk-4.0/assets/close-active.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/close-active.png
+link path=usr/share/themes/slim-nimbus-light/gtk-4.0/assets/close-backdrop.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/close-backdrop.png
+link path=usr/share/themes/slim-nimbus-light/gtk-4.0/assets/close-hover.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/close-hover.png
+link path=usr/share/themes/slim-nimbus-light/gtk-4.0/assets/close-normal.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/close-normal.png
+link \
+    path=usr/share/themes/slim-nimbus-light/gtk-4.0/assets/maximize-active.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/maximize-active.png
+link \
+    path=usr/share/themes/slim-nimbus-light/gtk-4.0/assets/maximize-backdrop.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/maximize-backdrop.png
+link path=usr/share/themes/slim-nimbus-light/gtk-4.0/assets/maximize-hover.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/maximize-hover.png
+link \
+    path=usr/share/themes/slim-nimbus-light/gtk-4.0/assets/maximize-normal.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/maximize-normal.png
+link \
+    path=usr/share/themes/slim-nimbus-light/gtk-4.0/assets/minimize-active.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/minimize-active.png
+link \
+    path=usr/share/themes/slim-nimbus-light/gtk-4.0/assets/minimize-backdrop.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/minimize-backdrop.png
+link path=usr/share/themes/slim-nimbus-light/gtk-4.0/assets/minimize-hover.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/minimize-hover.png
+link \
+    path=usr/share/themes/slim-nimbus-light/gtk-4.0/assets/minimize-normal.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/minimize-normal.png
+link \
+    path=usr/share/themes/slim-nimbus-light/gtk-4.0/assets/radio-checked-active.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/radio-checked-active.png
+link \
+    path=usr/share/themes/slim-nimbus-light/gtk-4.0/assets/radio-checked-active@2.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/radio-checked-active@2.png
+link \
+    path=usr/share/themes/slim-nimbus-light/gtk-4.0/assets/radio-checked-insensitive-unfocused.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/radio-checked-insensitive-unfocused.png
+link \
+    path=usr/share/themes/slim-nimbus-light/gtk-4.0/assets/radio-checked-insensitive-unfocused@2.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/radio-checked-insensitive-unfocused@2.png
+link \
+    path=usr/share/themes/slim-nimbus-light/gtk-4.0/assets/radio-checked-insensitive.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/radio-checked-insensitive.png
+link \
+    path=usr/share/themes/slim-nimbus-light/gtk-4.0/assets/radio-checked-insensitive@2.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/radio-checked-insensitive@2.png
+link \
+    path=usr/share/themes/slim-nimbus-light/gtk-4.0/assets/radio-checked-over.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/radio-checked-over.png
+link \
+    path=usr/share/themes/slim-nimbus-light/gtk-4.0/assets/radio-checked-over@2.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/radio-checked-over@2.png
+link \
+    path=usr/share/themes/slim-nimbus-light/gtk-4.0/assets/radio-checked-unfocused.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/radio-checked-unfocused.png
+link \
+    path=usr/share/themes/slim-nimbus-light/gtk-4.0/assets/radio-checked-unfocused@2.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/radio-checked-unfocused@2.png
+link path=usr/share/themes/slim-nimbus-light/gtk-4.0/assets/radio-checked.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/radio-checked.png
+link \
+    path=usr/share/themes/slim-nimbus-light/gtk-4.0/assets/radio-checked@2.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/radio-checked@2.png
+link \
+    path=usr/share/themes/slim-nimbus-light/gtk-4.0/assets/radio-mixed-active.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/radio-mixed-active.png
+link \
+    path=usr/share/themes/slim-nimbus-light/gtk-4.0/assets/radio-mixed-active@2.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/radio-mixed-active@2.png
+link \
+    path=usr/share/themes/slim-nimbus-light/gtk-4.0/assets/radio-mixed-insensitive-unfocused.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/radio-mixed-insensitive-unfocused.png
+link \
+    path=usr/share/themes/slim-nimbus-light/gtk-4.0/assets/radio-mixed-insensitive-unfocused@2.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/radio-mixed-insensitive-unfocused@2.png
+link \
+    path=usr/share/themes/slim-nimbus-light/gtk-4.0/assets/radio-mixed-insensitive.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/radio-mixed-insensitive.png
+link \
+    path=usr/share/themes/slim-nimbus-light/gtk-4.0/assets/radio-mixed-insensitive@2.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/radio-mixed-insensitive@2.png
+link \
+    path=usr/share/themes/slim-nimbus-light/gtk-4.0/assets/radio-mixed-over.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/radio-mixed-over.png
+link \
+    path=usr/share/themes/slim-nimbus-light/gtk-4.0/assets/radio-mixed-over@2.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/radio-mixed-over@2.png
+link \
+    path=usr/share/themes/slim-nimbus-light/gtk-4.0/assets/radio-mixed-unfocused.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/radio-mixed-unfocused.png
+link \
+    path=usr/share/themes/slim-nimbus-light/gtk-4.0/assets/radio-mixed-unfocused@2.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/radio-mixed-unfocused@2.png
+link path=usr/share/themes/slim-nimbus-light/gtk-4.0/assets/radio-mixed.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/radio-mixed.png
+link path=usr/share/themes/slim-nimbus-light/gtk-4.0/assets/radio-mixed@2.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/radio-mixed@2.png
+link \
+    path=usr/share/themes/slim-nimbus-light/gtk-4.0/assets/radio-unchecked-active.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/radio-unchecked-active.png
+link \
+    path=usr/share/themes/slim-nimbus-light/gtk-4.0/assets/radio-unchecked-active@2.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/radio-unchecked-active@2.png
+link \
+    path=usr/share/themes/slim-nimbus-light/gtk-4.0/assets/radio-unchecked-insensitive-unfocused.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/radio-unchecked-insensitive-unfocused.png
+link \
+    path=usr/share/themes/slim-nimbus-light/gtk-4.0/assets/radio-unchecked-insensitive-unfocused@2.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/radio-unchecked-insensitive-unfocused@2.png
+link \
+    path=usr/share/themes/slim-nimbus-light/gtk-4.0/assets/radio-unchecked-insensitive.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/radio-unchecked-insensitive.png
+link \
+    path=usr/share/themes/slim-nimbus-light/gtk-4.0/assets/radio-unchecked-insensitive@2.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/radio-unchecked-insensitive@2.png
+link \
+    path=usr/share/themes/slim-nimbus-light/gtk-4.0/assets/radio-unchecked-over.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/radio-unchecked-over.png
+link \
+    path=usr/share/themes/slim-nimbus-light/gtk-4.0/assets/radio-unchecked-over@2.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/radio-unchecked-over@2.png
+link \
+    path=usr/share/themes/slim-nimbus-light/gtk-4.0/assets/radio-unchecked-unfocused.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/radio-unchecked-unfocused.png
+link \
+    path=usr/share/themes/slim-nimbus-light/gtk-4.0/assets/radio-unchecked-unfocused@2.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/radio-unchecked-unfocused@2.png
+link \
+    path=usr/share/themes/slim-nimbus-light/gtk-4.0/assets/radio-unchecked.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/radio-unchecked.png
+link \
+    path=usr/share/themes/slim-nimbus-light/gtk-4.0/assets/radio-unchecked@2.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/radio-unchecked@2.png
+link path=usr/share/themes/slim-nimbus-light/gtk-4.0/assets/restore-active.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/restore-active.png
+link \
+    path=usr/share/themes/slim-nimbus-light/gtk-4.0/assets/restore-backdrop.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/restore-backdrop.png
+link path=usr/share/themes/slim-nimbus-light/gtk-4.0/assets/restore-hover.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/restore-hover.png
+link path=usr/share/themes/slim-nimbus-light/gtk-4.0/assets/restore-normal.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/restore-normal.png
+link \
+    path=usr/share/themes/slim-nimbus-light/gtk-4.0/assets/scrollbar-slider-h.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/scrollbar-slider-h.png
+link \
+    path=usr/share/themes/slim-nimbus-light/gtk-4.0/assets/scrollbar-slider-v.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/scrollbar-slider-v.png
+link path=usr/share/themes/slim-nimbus-light/gtk-4.0/assets/stepper-down.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/stepper-down.png
+link path=usr/share/themes/slim-nimbus-light/gtk-4.0/assets/stepper-left.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/stepper-left.png
+link path=usr/share/themes/slim-nimbus-light/gtk-4.0/assets/stepper-right.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/stepper-right.png
+link path=usr/share/themes/slim-nimbus-light/gtk-4.0/assets/stepper-up.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/stepper-up.png
+link path=usr/share/themes/slim-nimbus-light/gtk-4.0/assets/trough-h.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/trough-h.png
+link path=usr/share/themes/slim-nimbus-light/gtk-4.0/assets/trough-v.png \
+    target=../../../slim-nimbus/gtk-4.0/assets/trough-v.png
+link path=usr/share/themes/slim-nimbus-light/gtk-4.0/gtk-dark.css \
+    target=../../slim-nimbus/gtk-4.0/gtk-dark.css
+link path=usr/share/themes/slim-nimbus-light/gtk-4.0/gtk-light.css \
+    target=../../slim-nimbus/gtk-4.0/gtk-light.css
+link path=usr/share/themes/slim-nimbus-light/gtk-4.0/gtk.css \
+    target=gtk-light.css
+link path=usr/share/themes/slim-nimbus-light/gtk-4.0/settings.ini \
+    target=../../slim-nimbus/gtk-4.0/settings.ini
+link path=usr/share/themes/slim-nimbus-light/gtk-4.0/thumbnail.png \
+    target=../../slim-nimbus/gtk-4.0/thumbnail.png
 file path=usr/share/themes/slim-nimbus-light/index.theme
 link \
     path=usr/share/themes/slim-nimbus-light/metacity-1/button-close-icon-prelight.png \
@@ -1306,6 +1861,108 @@ file path=usr/share/themes/slim-nimbus/gtk-3.0/gtk-light.css
 file path=usr/share/themes/slim-nimbus/gtk-3.0/gtk.css
 file path=usr/share/themes/slim-nimbus/gtk-3.0/settings.ini
 file path=usr/share/themes/slim-nimbus/gtk-3.0/thumbnail.png
+file path=usr/share/themes/slim-nimbus/gtk-4.0/assets/Makefile.am
+file path=usr/share/themes/slim-nimbus/gtk-4.0/assets/checkbox-checked-active.png
+file path=usr/share/themes/slim-nimbus/gtk-4.0/assets/checkbox-checked-active@2.png
+file path=usr/share/themes/slim-nimbus/gtk-4.0/assets/checkbox-checked-insensitive-unfocused.png
+file path=usr/share/themes/slim-nimbus/gtk-4.0/assets/checkbox-checked-insensitive-unfocused@2.png
+file path=usr/share/themes/slim-nimbus/gtk-4.0/assets/checkbox-checked-insensitive.png
+file path=usr/share/themes/slim-nimbus/gtk-4.0/assets/checkbox-checked-insensitive@2.png
+file path=usr/share/themes/slim-nimbus/gtk-4.0/assets/checkbox-checked-over.png
+file path=usr/share/themes/slim-nimbus/gtk-4.0/assets/checkbox-checked-over@2.png
+file path=usr/share/themes/slim-nimbus/gtk-4.0/assets/checkbox-checked-unfocused.png
+file path=usr/share/themes/slim-nimbus/gtk-4.0/assets/checkbox-checked-unfocused@2.png
+file path=usr/share/themes/slim-nimbus/gtk-4.0/assets/checkbox-checked.png
+file path=usr/share/themes/slim-nimbus/gtk-4.0/assets/checkbox-checked@2.png
+file path=usr/share/themes/slim-nimbus/gtk-4.0/assets/checkbox-mixed-active.png
+file path=usr/share/themes/slim-nimbus/gtk-4.0/assets/checkbox-mixed-active@2.png
+file path=usr/share/themes/slim-nimbus/gtk-4.0/assets/checkbox-mixed-insensitive-unfocused.png
+file path=usr/share/themes/slim-nimbus/gtk-4.0/assets/checkbox-mixed-insensitive-unfocused@2.png
+file path=usr/share/themes/slim-nimbus/gtk-4.0/assets/checkbox-mixed-insensitive.png
+file path=usr/share/themes/slim-nimbus/gtk-4.0/assets/checkbox-mixed-insensitive@2.png
+file path=usr/share/themes/slim-nimbus/gtk-4.0/assets/checkbox-mixed-over.png
+file path=usr/share/themes/slim-nimbus/gtk-4.0/assets/checkbox-mixed-over@2.png
+file path=usr/share/themes/slim-nimbus/gtk-4.0/assets/checkbox-mixed-unfocused.png
+file path=usr/share/themes/slim-nimbus/gtk-4.0/assets/checkbox-mixed-unfocused@2.png
+file path=usr/share/themes/slim-nimbus/gtk-4.0/assets/checkbox-mixed.png
+file path=usr/share/themes/slim-nimbus/gtk-4.0/assets/checkbox-mixed@2.png
+file path=usr/share/themes/slim-nimbus/gtk-4.0/assets/checkbox-unchecked-active.png
+file path=usr/share/themes/slim-nimbus/gtk-4.0/assets/checkbox-unchecked-active@2.png
+file path=usr/share/themes/slim-nimbus/gtk-4.0/assets/checkbox-unchecked-insensitive-unfocused.png
+file path=usr/share/themes/slim-nimbus/gtk-4.0/assets/checkbox-unchecked-insensitive-unfocused@2.png
+file path=usr/share/themes/slim-nimbus/gtk-4.0/assets/checkbox-unchecked-insensitive.png
+file path=usr/share/themes/slim-nimbus/gtk-4.0/assets/checkbox-unchecked-insensitive@2.png
+file path=usr/share/themes/slim-nimbus/gtk-4.0/assets/checkbox-unchecked-over.png
+file path=usr/share/themes/slim-nimbus/gtk-4.0/assets/checkbox-unchecked-over@2.png
+file path=usr/share/themes/slim-nimbus/gtk-4.0/assets/checkbox-unchecked-unfocused.png
+file path=usr/share/themes/slim-nimbus/gtk-4.0/assets/checkbox-unchecked-unfocused@2.png
+file path=usr/share/themes/slim-nimbus/gtk-4.0/assets/checkbox-unchecked.png
+file path=usr/share/themes/slim-nimbus/gtk-4.0/assets/checkbox-unchecked@2.png
+file path=usr/share/themes/slim-nimbus/gtk-4.0/assets/close-active.png
+file path=usr/share/themes/slim-nimbus/gtk-4.0/assets/close-backdrop.png
+file path=usr/share/themes/slim-nimbus/gtk-4.0/assets/close-hover.png
+file path=usr/share/themes/slim-nimbus/gtk-4.0/assets/close-normal.png
+file path=usr/share/themes/slim-nimbus/gtk-4.0/assets/maximize-active.png
+file path=usr/share/themes/slim-nimbus/gtk-4.0/assets/maximize-backdrop.png
+file path=usr/share/themes/slim-nimbus/gtk-4.0/assets/maximize-hover.png
+file path=usr/share/themes/slim-nimbus/gtk-4.0/assets/maximize-normal.png
+file path=usr/share/themes/slim-nimbus/gtk-4.0/assets/minimize-active.png
+file path=usr/share/themes/slim-nimbus/gtk-4.0/assets/minimize-backdrop.png
+file path=usr/share/themes/slim-nimbus/gtk-4.0/assets/minimize-hover.png
+file path=usr/share/themes/slim-nimbus/gtk-4.0/assets/minimize-normal.png
+file path=usr/share/themes/slim-nimbus/gtk-4.0/assets/radio-checked-active.png
+file path=usr/share/themes/slim-nimbus/gtk-4.0/assets/radio-checked-active@2.png
+file path=usr/share/themes/slim-nimbus/gtk-4.0/assets/radio-checked-insensitive-unfocused.png
+file path=usr/share/themes/slim-nimbus/gtk-4.0/assets/radio-checked-insensitive-unfocused@2.png
+file path=usr/share/themes/slim-nimbus/gtk-4.0/assets/radio-checked-insensitive.png
+file path=usr/share/themes/slim-nimbus/gtk-4.0/assets/radio-checked-insensitive@2.png
+file path=usr/share/themes/slim-nimbus/gtk-4.0/assets/radio-checked-over.png
+file path=usr/share/themes/slim-nimbus/gtk-4.0/assets/radio-checked-over@2.png
+file path=usr/share/themes/slim-nimbus/gtk-4.0/assets/radio-checked-unfocused.png
+file path=usr/share/themes/slim-nimbus/gtk-4.0/assets/radio-checked-unfocused@2.png
+file path=usr/share/themes/slim-nimbus/gtk-4.0/assets/radio-checked.png
+file path=usr/share/themes/slim-nimbus/gtk-4.0/assets/radio-checked@2.png
+file path=usr/share/themes/slim-nimbus/gtk-4.0/assets/radio-mixed-active.png
+file path=usr/share/themes/slim-nimbus/gtk-4.0/assets/radio-mixed-active@2.png
+file path=usr/share/themes/slim-nimbus/gtk-4.0/assets/radio-mixed-insensitive-unfocused.png
+file path=usr/share/themes/slim-nimbus/gtk-4.0/assets/radio-mixed-insensitive-unfocused@2.png
+file path=usr/share/themes/slim-nimbus/gtk-4.0/assets/radio-mixed-insensitive.png
+file path=usr/share/themes/slim-nimbus/gtk-4.0/assets/radio-mixed-insensitive@2.png
+file path=usr/share/themes/slim-nimbus/gtk-4.0/assets/radio-mixed-over.png
+file path=usr/share/themes/slim-nimbus/gtk-4.0/assets/radio-mixed-over@2.png
+file path=usr/share/themes/slim-nimbus/gtk-4.0/assets/radio-mixed-unfocused.png
+file path=usr/share/themes/slim-nimbus/gtk-4.0/assets/radio-mixed-unfocused@2.png
+file path=usr/share/themes/slim-nimbus/gtk-4.0/assets/radio-mixed.png
+file path=usr/share/themes/slim-nimbus/gtk-4.0/assets/radio-mixed@2.png
+file path=usr/share/themes/slim-nimbus/gtk-4.0/assets/radio-unchecked-active.png
+file path=usr/share/themes/slim-nimbus/gtk-4.0/assets/radio-unchecked-active@2.png
+file path=usr/share/themes/slim-nimbus/gtk-4.0/assets/radio-unchecked-insensitive-unfocused.png
+file path=usr/share/themes/slim-nimbus/gtk-4.0/assets/radio-unchecked-insensitive-unfocused@2.png
+file path=usr/share/themes/slim-nimbus/gtk-4.0/assets/radio-unchecked-insensitive.png
+file path=usr/share/themes/slim-nimbus/gtk-4.0/assets/radio-unchecked-insensitive@2.png
+file path=usr/share/themes/slim-nimbus/gtk-4.0/assets/radio-unchecked-over.png
+file path=usr/share/themes/slim-nimbus/gtk-4.0/assets/radio-unchecked-over@2.png
+file path=usr/share/themes/slim-nimbus/gtk-4.0/assets/radio-unchecked-unfocused.png
+file path=usr/share/themes/slim-nimbus/gtk-4.0/assets/radio-unchecked-unfocused@2.png
+file path=usr/share/themes/slim-nimbus/gtk-4.0/assets/radio-unchecked.png
+file path=usr/share/themes/slim-nimbus/gtk-4.0/assets/radio-unchecked@2.png
+file path=usr/share/themes/slim-nimbus/gtk-4.0/assets/restore-active.png
+file path=usr/share/themes/slim-nimbus/gtk-4.0/assets/restore-backdrop.png
+file path=usr/share/themes/slim-nimbus/gtk-4.0/assets/restore-hover.png
+file path=usr/share/themes/slim-nimbus/gtk-4.0/assets/restore-normal.png
+file path=usr/share/themes/slim-nimbus/gtk-4.0/assets/scrollbar-slider-h.png
+file path=usr/share/themes/slim-nimbus/gtk-4.0/assets/scrollbar-slider-v.png
+file path=usr/share/themes/slim-nimbus/gtk-4.0/assets/stepper-down.png
+file path=usr/share/themes/slim-nimbus/gtk-4.0/assets/stepper-left.png
+file path=usr/share/themes/slim-nimbus/gtk-4.0/assets/stepper-right.png
+file path=usr/share/themes/slim-nimbus/gtk-4.0/assets/stepper-up.png
+file path=usr/share/themes/slim-nimbus/gtk-4.0/assets/trough-h.png
+file path=usr/share/themes/slim-nimbus/gtk-4.0/assets/trough-v.png
+file path=usr/share/themes/slim-nimbus/gtk-4.0/gtk-dark.css
+file path=usr/share/themes/slim-nimbus/gtk-4.0/gtk-light.css
+file path=usr/share/themes/slim-nimbus/gtk-4.0/gtk.css
+file path=usr/share/themes/slim-nimbus/gtk-4.0/settings.ini
+file path=usr/share/themes/slim-nimbus/gtk-4.0/thumbnail.png
 file path=usr/share/themes/slim-nimbus/index.theme
 file path=usr/share/themes/slim-nimbus/light-index.theme
 file path=usr/share/themes/slim-nimbus/metacity-1/button-close-icon-prelight.png
