@@ -133,7 +133,7 @@ Backport of https://gitlab.com/compiz/compiz-core/-/commit/567f21555d7a62ecb402d
  	    }
  	}
 +
-+	if (w)
++	if (w && d->focused_window != w)
 +	{
 +	    if (d->focused_window)
 +		changeWindowState (d->focused_window, d->focused_window->state & ~CompWindowStateFocusedMask);
