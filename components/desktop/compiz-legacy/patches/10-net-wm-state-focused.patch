@@ -1,0 +1,148 @@
+Add support for _NET_WM_STATE_FOCUSED
+
+Backport of https://gitlab.com/compiz/compiz-core/-/commit/567f21555d7a62ecb402d766d67c80e0a8b4ab1b plus subsequent refinements
+
+
+--- compiz-core-compiz-0.8.4/include/compiz-core.h.~3~	2021-08-22 17:01:37.094290208 +0000
++++ compiz-core-compiz-0.8.4/include/compiz-core.h	2021-08-22 17:04:29.115761417 +0000
+@@ -128,7 +128,8 @@
+ #define NO_FOCUS_MASK (CompWindowTypeDesktopMask | \
+ 		       CompWindowTypeDockMask    | \
+ 		       CompWindowTypeSplashMask)
+-
++#define APPEAR_FOCUSED_MASK (CompWindowTypeDockMask | \
++		       CompWindowTypeSplashMask)
+ #define CompWindowStateModalMask	    (1 <<  0)
+ #define CompWindowStateStickyMask	    (1 <<  1)
+ #define CompWindowStateMaximizedVertMask    (1 <<  2)
+@@ -142,6 +143,7 @@
+ #define CompWindowStateBelowMask	    (1 << 10)
+ #define CompWindowStateDemandsAttentionMask (1 << 11)
+ #define CompWindowStateDisplayModalMask	    (1 << 12)
++#define CompWindowStateFocusedMask	    (1 << 13)
+ 
+ #define MAXIMIZE_STATE (CompWindowStateMaximizedHorzMask | \
+ 			CompWindowStateMaximizedVertMask)
+@@ -1062,6 +1064,10 @@
+     LogMessageProc logMessage;
+ 
+     Atom gtkFrameExtentsAtom;
++  
++    Atom winStateFocusedAtom;
++    CompWindow *focused_window;
++  
+     void *reserved;
+ };
+ 
+--- compiz-core-compiz-0.8.4/src/display.c.~2~	2021-08-22 17:01:37.094901583 +0000
++++ compiz-core-compiz-0.8.4/src/display.c	2021-08-22 17:04:29.116159295 +0000
+@@ -1875,6 +1875,8 @@
+     d->autoRaiseHandle = 0;
+     d->autoRaiseWindow = None;
+ 
++    d->focused_window = NULL;
++
+     d->display = dpy = XOpenDisplay (name);
+     if (!d->display)
+     {
+@@ -1963,6 +1965,8 @@
+     d->winStateAtom		    = XInternAtom (dpy, "_NET_WM_STATE", 0);
+     d->winStateModalAtom	    =
+ 	XInternAtom (dpy, "_NET_WM_STATE_MODAL", 0);
++    d->winStateFocusedAtom	    =
++	XInternAtom (dpy, "_NET_WM_STATE_FOCUSED", 0);
+     d->winStateStickyAtom	    =
+ 	XInternAtom (dpy, "_NET_WM_STATE_STICKY", 0);
+     d->winStateMaximizedVertAtom    =
+--- compiz-core-compiz-0.8.4/src/screen.c.~2~	2021-08-22 23:29:05.733556491 +0000
++++ compiz-core-compiz-0.8.4/src/screen.c	2021-08-23 10:19:06.916843773 +0000
+@@ -1234,6 +1234,7 @@
+ 
+     atoms[count++] = d->winStateAtom;
+     atoms[count++] = d->winStateModalAtom;
++    atoms[count++] = d->winStateFocusedAtom;
+     atoms[count++] = d->winStateStickyAtom;
+     atoms[count++] = d->winStateMaximizedVertAtom;
+     atoms[count++] = d->winStateMaximizedHorzAtom;
+--- compiz-core-compiz-0.8.4/src/window.c.~2~	2021-08-22 19:11:50.594278351 +0000
++++ compiz-core-compiz-0.8.4/src/window.c	2021-08-22 19:43:10.599860805 +0000
+@@ -631,6 +631,8 @@
+ 	return CompWindowStateDemandsAttentionMask;
+     else if (state == display->winStateDisplayModalAtom)
+ 	return CompWindowStateDisplayModalMask;
++    else if (state == display->winStateFocusedAtom)
++	return CompWindowStateFocusedMask;
+ 
+     return 0;
+ }
+@@ -640,6 +642,8 @@
+ {
+     if (strcasecmp (str, "modal") == 0)
+ 	return CompWindowStateModalMask;
++    else if (strcasecmp (str, "focused") == 0)
++	return CompWindowStateFocusedMask;
+     else if (strcasecmp (str, "sticky") == 0)
+ 	return CompWindowStateStickyMask;
+     else if (strcasecmp (str, "maxvert") == 0)
+@@ -703,6 +707,8 @@
+ 
+     if (state & CompWindowStateModalMask)
+ 	data[i++] = display->winStateModalAtom;
++    if (state & CompWindowStateFocusedMask)
++	data[i++] = display->winStateFocusedAtom;
+     if (state & CompWindowStateStickyMask)
+ 	data[i++] = display->winStateStickyAtom;
+     if (state & CompWindowStateMaximizedVertMask)
+@@ -743,6 +749,11 @@
+     if (w->state == newState)
+ 	return;
+ 
++    /* Don't let anything remove
++     * appearance of focus from docks or panels */
++    if (w->type & APPEAR_FOCUSED_MASK)
++	newState |= CompWindowStateFocusedMask;
++
+     oldState = w->state;
+     w->state = newState;
+ 
+@@ -2438,6 +2449,9 @@
+ 	    showOutputWindow (w->screen);
+     }
+ 
++    if (w->screen->display->focused_window == w)
++	w->screen->display->focused_window = NULL;
++
+     (*core.objectRemove) (&w->screen->base, &w->base);
+ 
+     objectFiniPlugins (&w->base);
+--- compiz-core-compiz-0.8.4/src/event.c.~3~	2021-08-22 17:04:29.116643552 +0000
++++ compiz-core-compiz-0.8.4/src/event.c	2021-08-22 17:11:30.755735047 +0000
+@@ -2191,9 +2191,9 @@
+     case CirculateRequest:
+ 	break;
+     case FocusIn:
++	w = findTopLevelWindowAtDisplay (d, event->xfocus.window);
+ 	if (event->xfocus.mode != NotifyGrab)
+ 	{
+-	    w = findTopLevelWindowAtDisplay (d, event->xfocus.window);
+ 	    if (w && w->managed)
+ 	    {
+ 		unsigned int state = w->state;
+@@ -2215,6 +2215,17 @@
+ 		changeWindowState (w, state);
+ 	    }
+ 	}
++
++	if (w)
++	{
++	    if (d->focused_window)
++		changeWindowState (d->focused_window, d->focused_window->state & ~CompWindowStateFocusedMask);
++
++	    /* Set the focused window state atom */
++	    changeWindowState (w, w->state | CompWindowStateFocusedMask);
++	    d->focused_window = w;
++	}
++
+ 	break;
+     case EnterNotify:
+ 	s = findScreenAtDisplay (d, event->xcrossing.root);

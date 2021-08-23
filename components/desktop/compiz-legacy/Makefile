@@ -21,7 +21,7 @@ include ../../../make-rules/shared-macros.mk
 
 COMPONENT_NAME=		compiz
 COMPONENT_VERSION=	0.8.4
-IPS_COMPONENT_VERSION=	0.8.4.1
+IPS_COMPONENT_VERSION=	0.8.4.2
 COMPONENT_FMRI=		desktop/compiz
 COMPONENT_PROJECT_URL=	http://www.northfield.ws/
 COMPONENT_SRC=		compiz-core-$(COMPONENT_NAME)-$(COMPONENT_VERSION)
@@ -64,9 +64,9 @@ REQUIRED_PACKAGES += gnome/config/gconf
 REQUIRED_PACKAGES += gnome/gnome-panel
 REQUIRED_PACKAGES += gnome/preferences/control-center
 REQUIRED_PACKAGES += gnome/window-manager/metacity
-REQUIRED_PACKAGES += image/library/libpng
+REQUIRED_PACKAGES += image/library/libpng14
 REQUIRED_PACKAGES += image/library/libpng16
-REQUIRED_PACKAGES += image/library/librsvg
+REQUIRED_PACKAGES += image/library/librsvg-32
 REQUIRED_PACKAGES += library/desktop/atk
 REQUIRED_PACKAGES += library/desktop/cairo
 REQUIRED_PACKAGES += library/desktop/gdk-pixbuf
