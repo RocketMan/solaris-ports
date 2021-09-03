@@ -1,0 +1,29 @@
+Environment variables are passed in from the gateway makefile
+
+
+--- pciutils-3.7.0/Makefile.~1~	2020-05-30 23:17:26.000000000 +0000
++++ pciutils-3.7.0/Makefile	2021-09-03 15:42:44.612339173 +0000
+@@ -1,9 +1,6 @@
+ # Makefile for The PCI Utilities
+ # (c) 1998--2020 Martin Mares <mj@ucw.cz>
+ 
+-OPT=-O2
+-CFLAGS=$(OPT) -Wall -W -Wno-parentheses -Wstrict-prototypes -Wmissing-prototypes
+-
+ VERSION=3.7.0
+ DATE=2020-05-31
+ 
+@@ -32,13 +29,10 @@
+ ABI_VERSION=.3
+ 
+ # Installation directories
+-PREFIX=/usr/local
+-SBINDIR=$(PREFIX)/sbin
+ SHAREDIR=$(PREFIX)/share
+ IDSDIR=$(SHAREDIR)
+ MANDIR:=$(shell if [ -d $(PREFIX)/share/man ] ; then echo $(PREFIX)/share/man ; else echo $(PREFIX)/man ; fi)
+ INCDIR=$(PREFIX)/include
+-LIBDIR=$(PREFIX)/lib
+ PKGCFDIR=$(LIBDIR)/pkgconfig
+ 
+ # Commands

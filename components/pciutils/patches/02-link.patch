@@ -1,0 +1,25 @@
+The 11.3 linker does not support --version-script
+
+
+--- pciutils-3.7.0/lib/Makefile.~1~	2020-01-25 19:22:27.000000000 +0000
++++ pciutils-3.7.0/lib/Makefile	2021-09-03 15:16:40.524535359 +0000
+@@ -67,7 +67,7 @@
+  ifdef PCI_HAVE_PM_DARWIN_DEVICE
+ 	$(CC) -shared $(LDFLAGS) $(SONAME) -Wl,-install_name,$(LIBDIR)/$(PCILIB) -o $@ $^ $(LIB_LDLIBS)
+  else
+-	$(CC) -shared $(LDFLAGS) $(SONAME) -Wl,--version-script=libpci.ver -o $@ $^ $(LIB_LDLIBS)
++	$(CC) -shared $(LDFLAGS) $(SONAME) -o $@ $^ $(LIB_LDLIBS)
+  endif
+ endif
+ 
+--- pciutils-3.7.0/lib/internal.h-	2020-05-26 17:11:35.000000000 +0000
++++ pciutils-3.7.0/lib/internal.h	2021-09-03 15:15:59.769656214 +0000
+@@ -19,7 +19,7 @@
+ #define DEFINE_ALIAS(_decl, _for)
+ #define SYMBOL_VERSION(_int, _ext)
+ #else
+-#define STATIC_ALIAS(_decl, _for)
++#define STATIC_ALIAS(_decl, _for) _decl { return _for; }
+ #define DEFINE_ALIAS(_decl, _for) extern _decl __attribute__((alias(#_for)))
+ #define SYMBOL_VERSION(_int, _ext) asm(".symver " #_int "," #_ext)
+ #endif
