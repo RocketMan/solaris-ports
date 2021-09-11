@@ -1,58 +1,58 @@
 This flips the ordering of the pages to Daily first, then Hourly.
 
---- gnome-weather-40.0/data/weather-widget.ui~	2021-03-20 23:24:49.000000000 +0000
-+++ gnome-weather-40.0/data/weather-widget.ui	2021-03-29 18:31:18.305198078 +0000
-@@ -161,13 +161,13 @@
-                         <property name="can_focus">False</property>
-                         <property name="transition_type">crossfade</property>
-                         <child>
--                          <object class="GtkScrolledWindow" id="forecast-hourly">
-+                          <object class="GtkScrolledWindow" id="forecast-daily">
-                             <property name="visible">True</property>
-                             <property name="can_focus">True</property>
-                             <property name="vscrollbar_policy">never</property>
-                             <property name="min_content_width">308</property>
+--- gnome-weather-40.1/data/weather-widget.ui~	2021-08-10 19:01:18.000000000 +0000
++++ gnome-weather-40.1/data/weather-widget.ui	2021-09-11 12:11:22.913536759 +0000
+@@ -167,13 +167,13 @@
+                             <property name="can_focus">False</property>
+                             <property name="transition_type">crossfade</property>
                              <child>
--                              <object class="GtkViewport" id="forecast-hourly-viewport">
-+                              <object class="GtkViewport" id="forecast-daily-viewport">
+-                              <object class="GtkScrolledWindow" id="forecast-hourly">
++                              <object class="GtkScrolledWindow" id="forecast-daily">
                                  <property name="visible">True</property>
-                                 <property name="can_focus">False</property>
-                                 <property name="hscroll_policy">natural</property>
-@@ -176,19 +176,19 @@
+                                 <property name="can_focus">True</property>
+                                 <property name="vscrollbar_policy">never</property>
+                                 <property name="min_content_width">308</property>
+                                 <child>
+-                                  <object class="GtkViewport" id="forecast-hourly-viewport">
++                                  <object class="GtkViewport" id="forecast-daily-viewport">
+                                     <property name="visible">True</property>
+                                     <property name="can_focus">False</property>
+                                     <property name="hscroll_policy">natural</property>
+@@ -182,19 +182,19 @@
+                                 </child>
+                               </object>
+                               <packing>
+-                                <property name="name">hourly</property>
+-                                <property name="title" translatable="yes">Hourly</property>
+-                                <property name="icon-name">preferences-system-time-symbolic</property>
++                                <property name="name">daily</property>
++                                <property name="title" translatable="yes">Daily</property>
++                                <property name="icon-name">x-office-calendar-symbolic</property>
+                               </packing>
+                             </child>
+                             <child>
+-                              <object class="GtkScrolledWindow" id="forecast-daily">
++                              <object class="GtkScrolledWindow" id="forecast-hourly">
+                                 <property name="visible">True</property>
+                                 <property name="can_focus">True</property>
+                                 <property name="vscrollbar_policy">never</property>
+                                 <property name="min_content_width">308</property>
+                                 <child>
+-                                  <object class="GtkViewport" id="forecast-daily-viewport">
++                                  <object class="GtkViewport" id="forecast-hourly-viewport">
+                                     <property name="visible">True</property>
+                                     <property name="can_focus">False</property>
+                                     <property name="hscroll_policy">natural</property>
+@@ -203,9 +203,9 @@
+                                 </child>
+                               </object>
+                               <packing>
+-                                <property name="name">daily</property>
+-                                <property name="title" translatable="yes">Daily</property>
+-                                <property name="icon-name">x-office-calendar-symbolic</property>
++                                <property name="name">hourly</property>
++                                <property name="title" translatable="yes">Hourly</property>
++                                <property name="icon-name">preferences-system-time-symbolic</property>
+                               </packing>
                              </child>
                            </object>
-                           <packing>
--                            <property name="name">hourly</property>
--                            <property name="title" translatable="yes">Hourly</property>
--                            <property name="icon-name">preferences-system-time-symbolic</property>
-+                            <property name="name">daily</property>
-+                            <property name="title" translatable="yes">Daily</property>
-+                            <property name="icon-name">x-office-calendar-symbolic</property>
-                           </packing>
-                         </child>
-                         <child>
--                          <object class="GtkScrolledWindow" id="forecast-daily">
-+                          <object class="GtkScrolledWindow" id="forecast-hourly">
-                             <property name="visible">True</property>
-                             <property name="can_focus">True</property>
-                             <property name="vscrollbar_policy">never</property>
-                             <property name="min_content_width">308</property>
-                             <child>
--                              <object class="GtkViewport" id="forecast-daily-viewport">
-+                              <object class="GtkViewport" id="forecast-hourly-viewport">
-                                 <property name="visible">True</property>
-                                 <property name="can_focus">False</property>
-                                 <property name="hscroll_policy">natural</property>
-@@ -197,9 +197,9 @@
-                             </child>
-                           </object>
-                           <packing>
--                            <property name="name">daily</property>
--                            <property name="title" translatable="yes">Daily</property>
--                            <property name="icon-name">x-office-calendar-symbolic</property>
-+                            <property name="name">hourly</property>
-+                            <property name="title" translatable="yes">Hourly</property>
-+                            <property name="icon-name">preferences-system-time-symbolic</property>
-                           </packing>
-                         </child>
-                       </object>

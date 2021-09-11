@@ -122,5 +122,5 @@ file path=usr/share/org.gnome.Weather/org.gnome.Weather.src.gresource
 license COPYING license=GPLv2
 depend type=require fmri=pkg:/library/desktop/geoclue
 depend type=require fmri=pkg:/library/desktop/geocode-glib
-depend type=require fmri=pkg:/library/desktop/libgweather@3.24.0
+depend type=require fmri=pkg:/library/desktop/libgweather@40.0
 depend type=require fmri=pkg:/library/gnome/gnome-desktop
