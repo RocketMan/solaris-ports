@@ -1,0 +1,56 @@
+This restores the original GIO-based moveFile that was removed by:
+
+https://bugs.webkit.org/show_bug.cgi?id=225255
+
+APIContentRuleListStore uses moveFile to move/copy the compiled
+adfilter file.  The new implementation of moveFile calls
+std::filesystem::copy, which is failing on Solaris with EAGAIN
+'Resource temporarily unavailable'.
+
+The patch is not suitable for upstream, as we should figure out why
+std::filesystem::copy is not working and fix that.
+
+
+--- webkit/Source/WTF/wtf/glib/FileSystemGlib.cpp~	2021-06-07 12:49:35.000000000 +0000
++++ webkit/Source/WTF/wtf/glib/FileSystemGlib.cpp	2021-06-29 20:16:25.097495852 +0000
+@@ -236,6 +236,22 @@
+     return -1;
+ }
+ 
++bool moveFile(const String& oldPath, const String& newPath)
++{
++    auto oldFilename = fileSystemRepresentation(oldPath);
++    if (!validRepresentation(oldFilename))
++        return false;
++
++    auto newFilename = fileSystemRepresentation(newPath);
++    if (!validRepresentation(newFilename))
++        return false;
++
++    GRefPtr<GFile> oldFile = adoptGRef(g_file_new_for_path(oldFilename.data()));
++    GRefPtr<GFile> newFile = adoptGRef(g_file_new_for_path(newFilename.data()));
++
++    return g_file_move(oldFile.get(), newFile.get(), G_FILE_COPY_OVERWRITE, nullptr, nullptr, nullptr, nullptr);
++}
++
+ std::optional<int32_t> getFileDeviceId(const CString& fsFile)
+ {
+     GRefPtr<GFile> file = adoptGRef(g_file_new_for_path(fsFile.data()));
+--- webkit/Source/WTF/wtf/FileSystem.cpp.~2~	2021-06-30 10:09:41.068587606 +0000
++++ webkit/Source/WTF/wtf/FileSystem.cpp	2021-06-30 10:16:33.672149297 +0000
+@@ -549,6 +549,7 @@
+     return std::filesystem::remove(fsPath, ec);
+ }
+ 
++#if !USE(GLIB)
+ bool moveFile(const String& oldPath, const String& newPath)
+ {
+     auto fsOldPath = toStdFileSystemPath(oldPath);
+@@ -566,6 +567,7 @@
+         return false;
+     return std::filesystem::remove_all(fsOldPath, ec);
+ }
++#endif
+ 
+ std::optional<uint64_t> fileSize(const String& path)
+ {

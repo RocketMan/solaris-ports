@@ -50,7 +50,7 @@ https://bugs.webkit.org/show_bug.cgi?id=176341
  #define HAVE_DLADDR 1
  #endif
  
-@@ -328,7 +328,7 @@
+@@ -339,7 +339,7 @@
  #define HAVE_URL_FORMATTING 1
  #endif
  

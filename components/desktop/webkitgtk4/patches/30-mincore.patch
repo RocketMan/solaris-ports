@@ -1,0 +1,13 @@
+Solaris mincore(2) uses caddr_t instead of void*.
+
+--- a/Source/JavaScriptCore/heap/BlockDirectory.cpp	2021-05-25 19:57:12.000000000 +0000
++++ b/Source/JavaScriptCore/heap/BlockDirectory.cpp	2021-07-01 16:42:21.224277579 +0000
+@@ -79,7 +79,7 @@
+         auto markedBlockSizeInBytes = static_cast<size_t>(reinterpret_cast<char*>(handle->end()) - reinterpret_cast<char*>(handle->start()));
+         RELEASE_ASSERT(markedBlockSizeInBytes / pageSize <= numberOfPagesInMarkedBlock);
+         // We could cache this in bulk (e.g. 25 MB chunks) but we haven't seen any data that it actually matters.
+-        auto result = mincore(handle->start(), markedBlockSizeInBytes, pagedBits);
++        auto result = mincore(static_cast<caddr_t>(handle->start()), markedBlockSizeInBytes, pagedBits);
+         RELEASE_ASSERT(!result);
+         constexpr unsigned pageIsResidentAndNotCompressed = 1;
+         for (unsigned i = 0; i < numberOfPagesInMarkedBlock; ++i)

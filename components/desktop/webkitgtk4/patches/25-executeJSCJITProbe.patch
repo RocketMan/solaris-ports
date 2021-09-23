@@ -1,0 +1,20 @@
+Sun linker bails with:
+
+    text relocation remains against symbol `executeJSCJITProbe`
+
+See https://bugs.webkit.org/show_bug.cgi?id=229618
+
+Backported fix from r281911 https://trac.webkit.org/changeset/281911/webkit
+
+
+--- webkitgtk-2.34.0/Source/JavaScriptCore/assembler/ProbeContext.h~	2021-09-01 10:16:46.000000000 +0000
++++ webkitgtk-2.34.0/Source/JavaScriptCore/assembler/ProbeContext.h	2021-09-23 13:27:34.923683657 +0000
+@@ -249,7 +249,7 @@
+     friend JS_EXPORT_PRIVATE void* probeStateForContext(Context&); // Not for general use. This should only be for writing tests.
+ };
+ 
+-extern "C" void executeJSCJITProbe(State*);
++extern "C" void executeJSCJITProbe(State*) REFERENCED_FROM_ASM WTF_INTERNAL;
+ 
+ } // namespace Probe
+ } // namespace JSC
