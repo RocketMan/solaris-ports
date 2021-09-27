@@ -29,6 +29,7 @@ include ../../../make-rules/shared-macros.mk
 
 COMPONENT_NAME=		gnome-maps
 COMPONENT_VERSION=	40.5
+COMPONENT_REVISION=	1
 COMPONENT_SRC=		$(COMPONENT_NAME)-$(COMPONENT_VERSION)
 COMPONENT_ARCHIVE_URL=	$(GIT_REPO)/archive/$(GIT_COMMIT_ID).tar.gz
 GIT_REPO=		https://github.com/GNOME/$(COMPONENT_NAME)
@@ -46,8 +47,11 @@ LDFLAGS += -lm -lsocket -lnsl
 CONFIGURE_OPTIONS += --localedir=/usr/share/locale
 
 
+REQUIRED_PACKAGES += library/desktop/geocode-glib
 REQUIRED_PACKAGES += library/desktop/gjs
 REQUIRED_PACKAGES += library/desktop/libchamplain
+REQUIRED_PACKAGES += library/desktop/libgee
 REQUIRED_PACKAGES += library/desktop/librest
 REQUIRED_PACKAGES += library/glib2
+REQUIRED_PACKAGES += library/gnome/folks
 REQUIRED_PACKAGES += library/libxml2
