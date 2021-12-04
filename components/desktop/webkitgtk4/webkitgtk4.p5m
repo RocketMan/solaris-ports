@@ -119,6 +119,7 @@ file path=usr/include/webkitgtk-4.0/webkit2/WebKitSettings.h
 file path=usr/include/webkitgtk-4.0/webkit2/WebKitURIRequest.h
 file path=usr/include/webkitgtk-4.0/webkit2/WebKitURIResponse.h
 file path=usr/include/webkitgtk-4.0/webkit2/WebKitURISchemeRequest.h
+file path=usr/include/webkitgtk-4.0/webkit2/WebKitURISchemeResponse.h
 file path=usr/include/webkitgtk-4.0/webkit2/WebKitURIUtilities.h
 file path=usr/include/webkitgtk-4.0/webkit2/WebKitUserContent.h
 file path=usr/include/webkitgtk-4.0/webkit2/WebKitUserContentFilterStore.h
