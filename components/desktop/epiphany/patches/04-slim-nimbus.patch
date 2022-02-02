@@ -9,7 +9,7 @@
  </gresources>
 --- /dev/null	2021-03-28 12:20:24.662567944 +0000
 +++ epiphany-40.0/src/resources/themes/slim-nimbus.css	2021-03-28 12:27:27.191238804 +0000
-@@ -0,0 +1,191 @@
+@@ -0,0 +1,197 @@
 +.incognito-mode headerbar {
 +  background: transparent -gtk-icontheme("user-not-tracked-symbolic") 160px 0/64px 64px no-repeat, linear-gradient(to top, #a5b1bd, #c5cdd5 2px, #cbd2d9 3px);
 +  box-shadow: none;
@@ -139,6 +139,12 @@
 +.entry_icon_box > button { box-shadow: none; border: transparent; background: transparent; padding: 0px; -gtk-icon-shadow: none; outline-offset: -1px; }
 +
 +.entry_icon_box > button:hover:not(:backdrop) .entry_icon { opacity: 1; }
++
++.incognito-mode .entry_icon_box > button,
++.incognito-mode .entry_icon_box > button:hover,
++.incognito-mode .entry_icon_box > button:active,
++.incognito-mode .entry_icon_box > button:backdrop,
++.incognito-mode .entry_icon_box > button:disabled { background-image: none; }
 +
 +.entry_icon { color: @theme_fg_color; margin: 0 4px; opacity: .8; }
 +
