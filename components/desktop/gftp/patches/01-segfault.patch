@@ -1,0 +1,18 @@
+Fixes segmentation fault.
+
+See https://github.com/masneyb/gftp/issues/144
+
+
+--- gftp-2.9.0b/lib/socket-connect.c.~1~	2022-02-12 16:04:17.287098093 +0000
++++ gftp-2.9.0b/lib/socket-connect.c	2022-02-12 16:05:06.798735148 +0000
+@@ -109,7 +109,9 @@
+   memset (&hints, 0, sizeof (hints));
+   hints.ai_flags  = AI_CANONNAME;
+ 
+-  if (strcmp(ip_version, "ipv4") == 0) {
++  if (!ip_version || !*ip_version) {
++      hints.ai_family = PF_UNSPEC;
++  } else if (strcmp(ip_version, "ipv4") == 0) {
+       hints.ai_family = AF_INET;
+   } else if (strcmp(ip_version, "ipv6") == 0) {
+       hints.ai_family = AF_INET6;
