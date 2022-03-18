@@ -20,7 +20,7 @@
 #
 
 #
-# Copyright (c) 2018-2021 Jim Mason <jmason at ibinx dot com>.
+# Copyright (c) 2018-2022 Jim Mason <jmason at ibinx dot com>.
 #
 
 BUILD_BITS =            64
@@ -29,12 +29,12 @@ include ../../../make-rules/shared-macros.mk
 GCC_ROOT = 		/usr/gcc/10
 
 COMPONENT_NAME=		epiphany
-COMPONENT_VERSION=	41.3
+COMPONENT_VERSION=	42.0
 COMPONENT_REVISION=	0
 COMPONENT_SRC=		$(COMPONENT_NAME)-$(COMPONENT_VERSION)
 COMPONENT_ARCHIVE_URL=	https://github.com/GNOME/epiphany/archive/refs/tags/$(COMPONENT_VERSION).tar.gz
 COMPONENT_ARCHIVE_HASH= \
-	sha256:7ffe644beaaa23a7a5b5551a3e8402bbcc0760bd3da4bb0256a60d3a511f22a9
+	sha256:bd39bf554b4720c7f7ccb3ec4a8e6cfe24d10693fd4ece2a40542d6db1c12784
 COMPONENT_PROJECT_URL=	https://wiki.gnome.org/Apps/Web
 COMPONENT_ANITYA_ID=	10903
 
