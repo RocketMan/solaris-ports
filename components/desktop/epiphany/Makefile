@@ -44,6 +44,14 @@ include $(WS_MAKE_RULES)/common.mk
 CFLAGS += -Wno-deprecated-declarations
 LDFLAGS += -lm -lsocket -lnsl
 
+# To enable Safe Browsing, create a file `GoogleApiKey.mk` with
+# the following contents:
+#
+#    CONFIGURE_OPTIONS += -Dgsb_api_key=<your Google API key here>
+#
+# Per Google TOS, this key must be kept secret; do not add to source control.
+-include GoogleApiKey.mk
+
 CONFIGURE_OPTIONS += -Dlibportal=disabled
 
 REQUIRED_PACKAGES += database/sqlite-3
