@@ -1,0 +1,14 @@
+--- a/gidocgen/gir/parser.py	2022-04-04 10:27:20.204557991 +0000
++++ b/gidocgen/gir/parser.py	2022-04-04 12:30:42.249602731 +0000
+@@ -287,7 +287,10 @@
+ 
+         content = child.text or ""
+ 
+-        return ast.Doc(content=content, filename=child.attrib['filename'], line=int(child.attrib['line']))
++        try:
++            return ast.Doc(content=content, filename=child.attrib['filename'], line=int(child.attrib['line']))
++        except KeyError:
++            return None
+ 
+     def _maybe_parse_source_position(self, node: ET.Element) -> T.Optional[ast.SourcePosition]:
+         child = node.find('core:source-position', GI_NAMESPACES)
