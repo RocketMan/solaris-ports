@@ -20,7 +20,7 @@
 #
 
 #
-# Copyright (c) 2018-2021 Jim Mason <jmason at ibinx dot com>.
+# Copyright (c) 2018-2022 Jim Mason <jmason at ibinx dot com>.
 #
 # Adapted from original code Copyright (c) 2015, 2018, Oracle and/or its
 # affiliates. All rights reserved.
@@ -38,12 +38,12 @@ BUILD_STYLE=meson
 # newest version which has no backwards API compatibility and we likely need to
 # ship both, hence the odd name.
 COMPONENT_NAME=		gstreamer
-COMPONENT_VERSION=	1.18.4
+COMPONENT_VERSION=	1.20.1
 COMPONENT_PROJECT_URL=	https://gstreamer.freedesktop.org/
 COMPONENT_SRC=		$(COMPONENT_NAME)-$(COMPONENT_VERSION)
 COMPONENT_ARCHIVE=	$(COMPONENT_SRC).tar.xz
 COMPONENT_ARCHIVE_HASH= \
-	sha256:9aeec99b38e310817012aa2d1d76573b787af47f8a725a65b833880a094dfbc5
+	sha256:de094a404a3ad8f4977829ea87edf695a4da0b5c8f613ebe54ab414bac89f031
 COMPONENT_ARCHIVE_URL=	https://gstreamer.freedesktop.org/src/$(COMPONENT_NAME)/$(COMPONENT_ARCHIVE)
 COMPONENT_ANITYA_ID=	1263
 

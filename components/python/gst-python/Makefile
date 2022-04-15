@@ -20,7 +20,7 @@
 #
 
 #
-# Copyright (c) 2019-2021 Jim Mason <jmason at ibinx dot com>.
+# Copyright (c) 2019-2022 Jim Mason <jmason at ibinx dot com>.
 #
 
 BUILD_BITS =            64
@@ -30,16 +30,16 @@ include ../../../make-rules/shared-macros.mk
 BUILD_STYLE=meson
 
 COMPONENT_NAME=		gst-python
-COMPONENT_VERSION=	1.18.4
+COMPONENT_VERSION=	1.20.1
 COMPONENT_PROJECT_URL=	https://gstreamer.freedesktop.org/modules/gst-python.html
 COMPONENT_ARCHIVE=	$(COMPONENT_SRC).tar.xz
 COMPONENT_ARCHIVE_HASH= \
-	sha256:cb68e08a7e825e08b83a12a22dcd6e4f1b328a7b02a7ac84f42f68f4ddc7098e
+	sha256:ba6cd59faa3db3981d8c6982351c239d823c0b8e80b1acf58d2997b050289422
 COMPONENT_ARCHIVE_URL=	https://gstreamer.freedesktop.org/src/$(COMPONENT_NAME)/$(COMPONENT_ARCHIVE)
 
 TEST_TARGET= $(SKIP_TEST)
 
-PYTHON_VERSIONS = $(PYTHON3.7_READY)
+PYTHON_VERSIONS = $(PYTHON3_VERSIONS)
 
 CONFIGURE_32 = $(PYTHON2_VERSIONS:%=$(BUILD_DIR)/$(MACH32)-%/.configured)
 CONFIGURE_64 = $(PYTHON_VERSIONS:%=$(BUILD_DIR)/$(MACH64)-%/.configured)

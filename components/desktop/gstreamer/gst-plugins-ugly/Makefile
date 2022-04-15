@@ -20,7 +20,7 @@
 #
 
 #
-# Copyright (c) 2018-2020 Jim Mason <jmason at ibinx dot com>.
+# Copyright (c) 2018-2022 Jim Mason <jmason at ibinx dot com>.
 #
 # Adapted from original code Copyright (c) 2015, 2018, Oracle and/or its
 # affiliates. All rights reserved.
@@ -35,11 +35,11 @@ include ../../../../make-rules/shared-macros.mk
 BUILD_STYLE=meson
 
 COMPONENT_NAME=		gst-plugins-ugly
-COMPONENT_VERSION=	1.18.4
+COMPONENT_VERSION=	1.20.1
 COMPONENT_PROJECT_URL=	https://gstreamer.freedesktop.org/
 COMPONENT_ARCHIVE=	$(COMPONENT_SRC).tar.xz
 COMPONENT_ARCHIVE_HASH= \
-	sha256:218df0ce0d31e8ca9cdeb01a3b0c573172cc9c21bb3d41811c7820145623d13c
+	sha256:42035145e29983308d2828207bb4ef933ed0407bb587fb3a569738c6a57fdb19
 COMPONENT_ARCHIVE_URL=	https://gstreamer.freedesktop.org/src/$(COMPONENT_NAME)/$(COMPONENT_ARCHIVE)
 COMPONENT_ANITYA_ID=	1263
 
@@ -48,8 +48,7 @@ COMPONENT_ANITYA_ID=	1263
 TEST_TARGET= $(SKIP_TEST)
 
 # Supports Python 3.x only.
-PYTHON_VERSION= 3.5
-PYTHON_VERSIONS= $(PYTHON_VERSION)
+PYTHON_VERSIONS= $(PYTHON3_VERSIONS)
 
 include $(WS_MAKE_RULES)/common.mk
 
@@ -77,6 +76,8 @@ CONFIGURE_ENV += am_cv_python_pyexecdir=$(PYTHON_VENDOR_PACKAGES)
 
 # Use GNU grep during configure
 CONFIGURE_ENV += PATH=$(GNUBIN):$(PATH)
+
+CONFIGURE_OPTIONS += -Dgpl=enabled
 
 REQUIRED_PACKAGES += codec/flac
 REQUIRED_PACKAGES += codec/libogg

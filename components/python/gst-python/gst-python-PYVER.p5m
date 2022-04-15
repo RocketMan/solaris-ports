@@ -20,7 +20,7 @@
 #
 
 #
-# Copyright (c) 2019-2020 Jim Mason <jmason at ibinx dot com>.
+# Copyright (c) 2019-2022 Jim Mason <jmason at ibinx dot com>.
 #
 
 <transform file path=usr/lib/python3.(5|7)/.*/64/.* -> drop>
@@ -38,6 +38,8 @@ set name=info.source-url value=$(COMPONENT_ARCHIVE_URL)
 set name=info.upstream-url value=$(COMPONENT_PROJECT_URL)
 set name=org.opensolaris.consolidation value=$(CONSOLIDATION)
 file path=usr/lib/python$(PYVER)/vendor-packages/gi/overrides/Gst.py
+file path=usr/lib/python$(PYVER)/vendor-packages/gi/overrides/GstAudio.py
 file path=usr/lib/python$(PYVER)/vendor-packages/gi/overrides/GstPbutils.py
+file path=usr/lib/python$(PYVER)/vendor-packages/gi/overrides/GstVideo.py
 file path=usr/lib/python$(PYVER)/vendor-packages/gi/overrides/_gi_gst.so
 license COPYING license=LGPLv2.1

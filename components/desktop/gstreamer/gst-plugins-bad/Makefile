@@ -20,7 +20,7 @@
 #
 
 #
-# Copyright (c) 2018-2020 Jim Mason <jmason at ibinx dot com>.
+# Copyright (c) 2018-2022 Jim Mason <jmason at ibinx dot com>.
 #
 # Adapted from original code Copyright (c) 2015, 2018, Oracle and/or its
 # affiliates. All rights reserved.
@@ -35,11 +35,11 @@ include ../../../../make-rules/shared-macros.mk
 BUILD_STYLE=meson
 
 COMPONENT_NAME=		gst-plugins-bad
-COMPONENT_VERSION=	1.18.4
+COMPONENT_VERSION=	1.20.1
 COMPONENT_PROJECT_URL=	https://gstreamer.freedesktop.org/
 COMPONENT_ARCHIVE=	$(COMPONENT_SRC).tar.xz
 COMPONENT_ARCHIVE_HASH= \
-	sha256:74e806bc5595b18c70e9ca93571e27e79dfb808e5d2e7967afa952b52e99c85f
+	sha256:09d3c2cf5911f0bc7da6bf557a55251779243d3de216b6a26cc90c445b423848
 COMPONENT_ARCHIVE_URL=	https://gstreamer.freedesktop.org/src/$(COMPONENT_NAME)/$(COMPONENT_ARCHIVE)
 COMPONENT_ANITYA_ID=	1263
 
@@ -48,8 +48,7 @@ COMPONENT_ANITYA_ID=	1263
 TEST_TARGET= $(SKIP_TEST)
 
 # Supports Python 3.x only.
-PYTHON_VERSION= 3.5
-PYTHON_VERSIONS= $(PYTHON_VERSION)
+PYTHON_VERSIONS= $(PYTHON3_VERSION)
 
 # Use GNU grep
 PATH=/usr/gnu/bin:/usr/bin
@@ -83,6 +82,7 @@ CONFIGURE_ENV += am_cv_python_pyexecdir=$(PYTHON_VENDOR_PACKAGES)
 CONFIGURE_OPTIONS += -Dlibexecdir=$(CONFIGURE_LIBDIR.$(BITS))
 CONFIGURE_OPTIONS += -Dopenjpeg=disabled
 CONFIGURE_OPTIONS += -Dipcpipeline=disabled
+CONFIGURE_OPTIONS += -Dgpl=enabled
 
 REQUIRED_PACKAGES += codec/flac
 REQUIRED_PACKAGES += codec/libogg

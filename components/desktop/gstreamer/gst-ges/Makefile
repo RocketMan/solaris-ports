@@ -20,7 +20,7 @@
 #
 
 #
-# Copyright (c) 2019-2021 Jim Mason <jmason at ibinx dot com>.
+# Copyright (c) 2019-2022 Jim Mason <jmason at ibinx dot com>.
 #
 
 BUILD_BITS =            64
@@ -30,11 +30,11 @@ include ../../../../make-rules/shared-macros.mk
 BUILD_STYLE=meson
 
 COMPONENT_NAME=		gst-editing-services
-COMPONENT_VERSION=	1.18.4
+COMPONENT_VERSION=	1.20.1
 COMPONENT_PROJECT_URL=	https://gstreamer.freedesktop.org/
 COMPONENT_ARCHIVE=	$(COMPONENT_SRC).tar.xz
 COMPONENT_ARCHIVE_HASH= \
-	sha256:4687b870a7de18aebf50f45ff572ad9e0138020e3479e02a6f056a0c4c7a1d04
+	sha256:6ace1b21b58e0110b7dadd469f79b77e2f47d6207604231492531ae9fd4148df
 COMPONENT_ARCHIVE_URL=	https://gstreamer.freedesktop.org/src/$(COMPONENT_NAME)/$(COMPONENT_ARCHIVE)
 
 # Supports Python 3.x only.

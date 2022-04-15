@@ -9,12 +9,12 @@
         description: 'Enable GstValidate integration.')
 --- a/meson.build	2020-09-10 13:03:42.900117047 +0000
 +++ b/meson.build	2020-09-10 13:00:16.405575384 +0000
-@@ -242,7 +242,7 @@
+@@ -262,7 +262,7 @@
    endif
  endforeach
  
 -python3 = import('python').find_installation()
 +python3 = import('python').find_installation(get_option('py-target'))
- configinc = include_directories('.')
- subdir('ges')
- subdir('plugins')
+ pkgconfig = import('pkgconfig')
+ pkgconfig_subdirs = ['gstreamer-1.0']
+ 
