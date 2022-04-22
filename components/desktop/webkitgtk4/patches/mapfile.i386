@@ -11,14 +11,12 @@
  # Temporary workaround to allow the build to succeed.
 --- a/Source/WebKit/webkitglib-symbols.map	2020-02-12 15:23:31.000000000 +0000
 +++ b/Source/WebKit/webkitglib-symbols.map	2020-02-12 16:11:14.137301145 +0000
-@@ -1,16 +1,5 @@
+@@ -1,14 +1,5 @@
  {
  global:
 -  jsc_*;
 -  webkit_*;
 -  extern "C++" {
--    "bmalloc::PerThreadStorage<bmalloc::PerHeapKind<bmalloc::Cache> >::s_didInitialize";
--    "bmalloc::PerThreadStorage<bmalloc::PerHeapKind<bmalloc::Cache> >::s_key";
 -    "bmalloc::vmPageSize()::cached";
 -    "WebKit::NetworkProcessMain(int, char**)";
 -    "WebKit::WebKitExtensionManager::initialize(WebKit::InjectedBundle*, API::Object*)";
