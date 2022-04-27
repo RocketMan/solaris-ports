@@ -1,0 +1,53 @@
+#
+# CDDL HEADER START
+#
+# The contents of this file are subject to the terms of the
+# Common Development and Distribution License (the "License").
+# You may not use this file except in compliance with the License.
+#
+# You can obtain a copy of the license at usr/src/OPENSOLARIS.LICENSE
+# or http://www.opensolaris.org/os/licensing.
+# See the License for the specific language governing permissions
+# and limitations under the License.
+#
+# When distributing Covered Code, include this CDDL HEADER in each
+# file and include the License file at usr/src/OPENSOLARIS.LICENSE.
+# If applicable, add the following below this CDDL HEADER, with the
+# fields enclosed by brackets "[]" replaced with your own identifying
+# information: Portions Copyright [yyyy] [name of copyright owner]
+#
+# CDDL HEADER END
+#
+
+#
+# Copyright (c) 2022 Jim Mason <jmason at ibinx dot com>.
+#
+
+<transform file path=usr.*/man/.+ -> default mangler.man.stability uncommitted>
+set name=pkg.fmri \
+    value=pkg:/library/glew@$(IPS_COMPONENT_VERSION),$(BUILD_VERSION)
+set name=pkg.summary \
+    value="GLEW is a cross-platform open-source C/C++ extension loading library"
+set name=pkg.description \
+    value="The OpenGL Extension Wrangler Library (GLEW) is a cross-platform open-source C/C++ extension loading library. GLEW provides efficient run-time mechanisms for determining which OpenGL extensions are supported on the target platform. OpenGL core and extension functionality is exposed in a single header file."
+set name=pkg.depend.bypass-generate value=libEGL\.so\.1 value=libGL\.so\.1
+set name=info.archive-url value=$(COMPONENT_ARCHIVE_URL)
+set name=info.classification \
+    value="org.opensolaris.category.2008:System/Multimedia Libraries"
+set name=info.upstream-url value=$(COMPONENT_PROJECT_URL)
+set name=org.opensolaris.consolidation value=$(CONSOLIDATION)
+file path=usr/include/GL/glew.h
+file path=usr/include/GL/glxew.h
+file path=usr/include/GL/wglew.h
+file path=usr/lib/$(MACH64)/libGLEW.a
+link path=usr/lib/$(MACH64)/libGLEW.so target=libGLEW.so.2.2.0
+link path=usr/lib/$(MACH64)/libGLEW.so.2.2 target=libGLEW.so.2.2.0
+file path=usr/lib/$(MACH64)/libGLEW.so.2.2.0
+file path=usr/lib/libGLEW.a
+link path=usr/lib/libGLEW.so target=libGLEW.so.2.2.0
+link path=usr/lib/libGLEW.so.2.2 target=libGLEW.so.2.2.0
+file path=usr/lib/libGLEW.so.2.2.0
+file path=usr/lib/pkgconfig/glew.pc
+license LICENSE.txt license="glew license"
+depend type=require fmri=__TBD pkg.debug.depend.file=usr/lib/mesa/libEGL.so.1
+depend type=require fmri=__TBD pkg.debug.depend.file=usr/lib/mesa/libGL.so.1

@@ -1,0 +1,21 @@
+--- glew-2.2.0/config/Makefile.solaris-gcc.~1~	2020-03-15 11:53:59.000000000 +0000
++++ glew-2.2.0/config/Makefile.solaris-gcc	2022-04-27 12:03:46.593186433 +0000
+@@ -1,9 +1,8 @@
+ NAME = $(GLEW_NAME)
+-CC = gcc
+-LD = ld
+-CFLAGS.EXTRA = -I/usr/openwin/include -fPIC
++LD = $(CC)
++CFLAGS.EXTRA = -m$(BITS) -fPIC
+ LDFLAGS.SO = -G
+-LDFLAGS.EXTRA = -L/usr/openwin/lib
++LDFLAGS.EXTRA = -m$(BITS)
+ LDFLAGS.GL = -lGL -lX11
+ NAME = GLEW
+ BIN.SUFFIX =
+@@ -12,4 +11,4 @@
+ LIB.DEVLNK    = lib$(NAME).so
+ LIB.SHARED    = lib$(NAME).so.$(SO_VERSION)
+ LIB.STATIC    = lib$(NAME).a
+-LDFLAGS.SO    = -shared -Wl,-soname=$(LIB.SONAME)
++LDFLAGS.SO    = -shared -Wl,-soname,$(LIB.SONAME)
