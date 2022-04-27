@@ -1,0 +1,52 @@
+#
+# CDDL HEADER START
+#
+# The contents of this file are subject to the terms of the
+# Common Development and Distribution License (the "License").
+# You may not use this file except in compliance with the License.
+#
+# You can obtain a copy of the license at usr/src/OPENSOLARIS.LICENSE
+# or http://www.opensolaris.org/os/licensing.
+# See the License for the specific language governing permissions
+# and limitations under the License.
+#
+# When distributing Covered Code, include this CDDL HEADER in each
+# file and include the License file at usr/src/OPENSOLARIS.LICENSE.
+# If applicable, add the following below this CDDL HEADER, with the
+# fields enclosed by brackets "[]" replaced with your own identifying
+# information: Portions Copyright [yyyy] [name of copyright owner]
+#
+# CDDL HEADER END
+#
+
+#
+# Copyright (c) 2022 Jim Mason <jmason at ibinx dot com>.
+#
+
+<transform file path=usr.*/man/.+ -> default mangler.man.stability uncommitted>
+set name=pkg.fmri \
+    value=pkg:/library/media/sdl-mixer@$(IPS_COMPONENT_VERSION),$(BUILD_VERSION)
+set name=pkg.summary \
+    value="SDL_mixer is a sample multi-channel audio mixer library"
+set name=pkg.description \
+    value="SDL_mixer is a sample multi-channel audio mixer library.  It supports any number of simultaneously playing channels of 16 bit stereo audio, plus a single channel of music, mixed by the popular FLAC, MikMod MOD, Timidity MIDI, Ogg Vorbis, and SMPEG MP3 libraries."
+set name=info.archive-url value=$(COMPONENT_ARCHIVE_URL)
+set name=info.classification \
+    value="org.opensolaris.category.2008:System/Multimedia Libraries"
+set name=info.upstream-url value=$(COMPONENT_PROJECT_URL)
+set name=org.opensolaris.consolidation value=$(CONSOLIDATION)
+file path=usr/include/SDL2/SDL_mixer.h
+link path=usr/lib/$(MACH64)/libSDL2_mixer-2.0.so.0 \
+    target=libSDL2_mixer-2.0.so.0.2.2
+file path=usr/lib/$(MACH64)/libSDL2_mixer-2.0.so.0.2.2
+file path=usr/lib/$(MACH64)/libSDL2_mixer.a
+file path=usr/lib/$(MACH64)/libSDL2_mixer.la
+link path=usr/lib/$(MACH64)/libSDL2_mixer.so target=libSDL2_mixer-2.0.so.0.2.2
+file path=usr/lib/$(MACH64)/pkgconfig/SDL2_mixer.pc
+link path=usr/lib/libSDL2_mixer-2.0.so.0 target=libSDL2_mixer-2.0.so.0.2.2
+file path=usr/lib/libSDL2_mixer-2.0.so.0.2.2
+file path=usr/lib/libSDL2_mixer.a
+file path=usr/lib/libSDL2_mixer.la
+link path=usr/lib/libSDL2_mixer.so target=libSDL2_mixer-2.0.so.0.2.2
+file path=usr/lib/pkgconfig/SDL2_mixer.pc
+license COPYING.txt license="sdl2_mixer license"
