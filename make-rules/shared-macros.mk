@@ -20,7 +20,7 @@
 #
 
 #
-# Copyright (c) 2019 Jim Mason <jmason at ibinx dot com>.  All rights reserved.
+# Copyright (c) 2019-2022 Jim Mason <jmason at ibinx dot com>.
 #
 # Adapted from original code Copyright (c) 2010, 2019, Oracle and/or its
 # affiliates. All rights reserved.
@@ -795,12 +795,11 @@ COMPONENT_POST_INSTALL_ACTION += $(PERL_SCRIPTS_PROCESS)
 PHP_TOP_DIR = $(WS_COMPONENTS)/php
 
 # All versions of PHP for building extension packages.
-PHP_VERSIONS = 7.1 7.4 8.0
+PHP_VERSIONS = 7.4 8.0 8.1
 
-PHP.7.1 = /usr/php/7.1/bin/php
-PHP.7.3 = /usr/php/7.3/bin/php
 PHP.7.4 = /usr/php/7.4/bin/php
 PHP.8.0 = /usr/php/8.0/bin/php
+PHP.8.1 = /usr/php/8.1/bin/php
 
 # This is the default BUILD version of tcl
 # Not necessarily the system's default version, i.e. /usr/bin/tclsh

@@ -20,7 +20,7 @@
 #
 
 #
-# Copyright (c) 2020 Jim Mason <jmason at ibinx dot com>.  All rights reserved.
+# Copyright (c) 2020-2022 Jim Mason <jmason at ibinx dot com>.
 #
 
 BUILD_TARGET ?= $(PHP_VERSIONS:%=$(BUILD_DIR)/php-%/.built)
@@ -29,10 +29,9 @@ TEST_TARGET ?= $(NO_TESTS)
 
 include $(WS_MAKE_RULES)/configure.mk
 
-$(BUILD_DIR)/%-7.1/.configured:	PHP_VERSION=7.1
-$(BUILD_DIR)/%-7.3/.configured:	PHP_VERSION=7.3
 $(BUILD_DIR)/%-7.4/.configured:	PHP_VERSION=7.4
 $(BUILD_DIR)/%-8.0/.configured:	PHP_VERSION=8.0
+$(BUILD_DIR)/%-8.1/.configured:	PHP_VERSION=8.1
 
 PHP_BINDIR = /usr/php/$(PHP_VERSION)/bin
 
@@ -53,7 +52,6 @@ CONFIGURE_OPTIONS += --with-php-config=$(PHP_BINDIR)/php-config
 
 COMPONENT_INSTALL_ENV += INSTALL_ROOT=$(PROTO_DIR)
 
-REQUIRED_PACKAGES += web/php-71
-REQUIRED_PACKAGES += web/php-73
 REQUIRED_PACKAGES += web/php-74
 REQUIRED_PACKAGES += web/php-80
+REQUIRED_PACKAGES += web/php-81
