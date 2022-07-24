@@ -37,11 +37,11 @@ include ../../../make-rules/shared-macros.mk
 GCC_ROOT= /usr/gcc/10
 
 COMPONENT_NAME=		webkitgtk
-COMPONENT_VERSION=	2.36.3
+COMPONENT_VERSION=	2.36.4
 COMPONENT_PROJECT_URL=	https://webkitgtk.org
 COMPONENT_ARCHIVE=	$(COMPONENT_SRC).tar.xz
 COMPONENT_ARCHIVE_HASH= \
-	sha256:732fcf8c4ec644b8ed28b46ebbd7c1ebab9d9e0afea9bdf5e5d12786afc478d1
+	sha256:b6bebe1f85a479d968c19e44a4704622ef8cef61636ad1b2406b77d16ae2e2a8
 COMPONENT_ARCHIVE_URL=	https://webkitgtk.org/releases/$(COMPONENT_ARCHIVE)
 COMPONENT_ANITYA_ID=	5355
 
@@ -57,9 +57,6 @@ CXXFLAGS += -Wno-unused-variable
 CXXFLAGS += -fpermissive
 
 $(SOLARIS_11_3_ONLY)LDFLAGS += -lsocket  -lnsl
-
-# Uncomment this line if you are using the icu-gcc from this repo:
-#$(SOLARIS_11_3_ONLY)LDFLAGS += -licuuc_gcc
 
 # We don't have JHbuild needed for tests
 TEST_TARGET= $(NO_TESTS)
