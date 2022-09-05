@@ -1,5 +1,5 @@
---- openvpn-2.5.2/doc/openvpn.8.rst~	2021-04-20 13:50:41.000000000 +0000
-+++ openvpn-2.5.2/doc/openvpn.8.rst	2021-05-13 16:32:47.462775394 +0000
+--- openvpn-2.5.6/doc/openvpn.8.rst.~1~	2022-03-16 09:03:20.000000000 +0000
++++ openvpn-2.5.6/doc/openvpn.8.rst	2022-09-05 17:45:17.710115574 +0000
 @@ -5,7 +5,7 @@
   Secure IP tunnel daemon
  -------------------------
@@ -10,9 +10,9 @@
  
  
 @@ -134,10 +134,10 @@
- SEE ALSO
  ========
  
+ ``openvpn-examples``\(5),
 -``dhcpcd``\(8),
 -``ifconfig``\(8),
 -``openssl``\(1),
