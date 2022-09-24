@@ -35,7 +35,7 @@ index a51809445086..a0d1e06a9508 100644
  #else
          memcpy(m_storage.data(), bitwise_cast<uint8_t*>(&value) + (sizeof(void*) - storageSize), storageSize);
  #endif
-+        ASSERT(get() == passedValue);
++        BASSERT(get() == passedValue);
      }
  
      void clear()
