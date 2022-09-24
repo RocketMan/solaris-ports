@@ -26,12 +26,12 @@ https://bugs.webkit.org/show_bug.cgi?id=176341
      || defined(__unix__)
 --- a/Source/WTF/wtf/PlatformHave.h	2021-12-30 19:20:54.000000000 +0000
 +++ b/Source/WTF/wtf/PlatformHave.h	2021-12-30 19:59:15.595151783 +0000
-@@ -222,19 +222,19 @@
+@@ -229,19 +229,19 @@
  #define HAVE_HOSTED_CORE_ANIMATION 1
  #endif
  
--#if OS(DARWIN) || OS(FUCHSIA) || ((OS(FREEBSD) || OS(OPENBSD) || OS(LINUX)) && (CPU(X86) || CPU(X86_64) || CPU(ARM) || CPU(ARM64) || CPU(MIPS) || CPU(RISCV64)))
-+#if OS(DARWIN) || OS(FUCHSIA) || OS(SOLARIS) || ((OS(FREEBSD) || OS(OPENBSD) || OS(LINUX)) && (CPU(X86) || CPU(X86_64) || CPU(ARM) || CPU(ARM64) || CPU(MIPS) || CPU(RISCV64)))
+-#if OS(DARWIN) || OS(FUCHSIA) || ((OS(FREEBSD) || OS(NETBSD) || OS(OPENBSD) || OS(LINUX)) && (CPU(X86) || CPU(X86_64) || CPU(ARM) || CPU(ARM64) || CPU(MIPS) || CPU(RISCV64)))
++#if OS(DARWIN) || OS(FUCHSIA) || OS(SOLARIS) || ((OS(FREEBSD) || OS(NETBSD) || OS(OPENBSD) || OS(LINUX)) && (CPU(X86) || CPU(X86_64) || CPU(ARM) || CPU(ARM64) || CPU(MIPS) || CPU(RISCV64)))
  #define HAVE_MACHINE_CONTEXT 1
  #endif
  
@@ -50,7 +50,7 @@ https://bugs.webkit.org/show_bug.cgi?id=176341
  #define HAVE_DLADDR 1
  #endif
  
-@@ -363,7 +363,7 @@
+@@ -378,7 +378,7 @@
  #define HAVE_URL_FORMATTING 1
  #endif
  
@@ -234,11 +234,11 @@ https://bugs.webkit.org/show_bug.cgi?id=176341
 +    // If the user agent is being masqueraded, then change the platform
 +    // also, as some sites rely on this (e.g., dslreports speed test)
 +    const String& agent = userAgent();
-+    if(agent.find("Linux", 0) != notFound)
++    if(agent.find("Linux"_s, 0) != notFound)
 +        return "Linux"_s;
-+    else if(agent.find("Windows", 0) != notFound)
++    else if(agent.find("Windows"_s, 0) != notFound)
 +        return "Win32"_s;
-+    else if(agent.find("Intel Mac", 0) != notFound)
++    else if(agent.find("Intel Mac"_s, 0) != notFound)
 +        return "MacIntel"_s;
 +    else
 +        return "SunOS"_s;
@@ -286,85 +286,3 @@ https://bugs.webkit.org/show_bug.cgi?id=176341
  #define ERR() ANGLE_LOG(ERR)
  
  // A macro to log a performance event around a scope.
---- a/Source/WTF/wtf/unix/MemoryPressureHandlerUnix.cpp	2021-08-11 15:31:00.000000000 +0000
-+++ b/Source/WTF/wtf/unix/MemoryPressureHandlerUnix.cpp	2021-11-04 14:28:28.333831350 +0000
-@@ -41,6 +41,9 @@
- #include <sys/sysctl.h>
- #include <sys/types.h>
- #include <sys/user.h>
-+#elif OS(SOLARIS)
-+#include <procfs.h>
-+#include <unistd.h>
- #endif
- 
- namespace WTF {
-@@ -127,6 +130,23 @@
-         return 0;
- 
-     return static_cast<size_t>(info.ki_rssize - info.ki_tsize) * pageSize;
-+#elif OS(SOLARIS)
-+    psinfo_t psinfo;
-+
-+    FILE *fd = fopen("/proc/self/psinfo", "r");
-+    if (!fd)
-+        return 0;
-+
-+    if (!fread(&psinfo, sizeof(psinfo), 1, fd)) {
-+        fclose(fd);
-+        return 0;
-+    }
-+
-+    fclose(fd);
-+
-+    // we return total RSS, as we do not have an efficient way to
-+    // determine and subtract out shared memory usage on Solaris
-+    return psinfo.pr_rssize * 1024;
- #else
- #error "Missing a platform specific way of determining the memory usage"
- #endif
---- a/Source/WTF/wtf/PlatformGTK.cmake	2021-11-04 14:29:20.800797192 +0000
-+++ b/Source/WTF/wtf/PlatformGTK.cmake	2021-11-04 14:32:05.102201263 +0000
-@@ -64,6 +64,12 @@
- 
-         unix/MemoryPressureHandlerUnix.cpp
-     )
-+elseif (CMAKE_SYSTEM_NAME MATCHES "SunOS")
-+    list(APPEND WTF_SOURCES
-+        generic/MemoryFootprintGeneric.cpp
-+
-+        unix/MemoryPressureHandlerUnix.cpp
-+    )
- else ()
-     list(APPEND WTF_SOURCES
-         generic/MemoryFootprintGeneric.cpp
---- a/Source/WTF/wtf/MemoryPressureHandler.h	2021-08-26 12:41:37.000000000 +0000
-+++ b/Source/WTF/wtf/MemoryPressureHandler.h	2021-11-04 14:37:02.987214921 +0000
-@@ -69,7 +69,7 @@
- 
-     WTF_EXPORT_PRIVATE void setShouldUsePeriodicMemoryMonitor(bool);
- 
--#if OS(LINUX) || OS(FREEBSD)
-+#if OS(LINUX) || OS(FREEBSD) || OS(SOLARIS)
-     WTF_EXPORT_PRIVATE void triggerMemoryPressureEvent(bool isCritical);
- #endif
- 
-@@ -263,7 +263,7 @@
-     Win32Handle m_lowMemoryHandle;
- #endif
- 
--#if OS(LINUX) || OS(FREEBSD)
-+#if OS(LINUX) || OS(FREEBSD) || OS(SOLARIS)
-     RunLoop::Timer<MemoryPressureHandler> m_holdOffTimer;
-     void holdOffTimerFired();
- #endif
---- a/Source/WTF/wtf/MemoryPressureHandler.cpp	2021-08-11 15:31:01.000000000 +0000
-+++ b/Source/WTF/wtf/MemoryPressureHandler.cpp	2021-11-04 14:40:06.680782584 +0000
-@@ -56,7 +56,7 @@
- }
- 
- MemoryPressureHandler::MemoryPressureHandler()
--#if OS(LINUX) || OS(FREEBSD)
-+#if OS(LINUX) || OS(FREEBSD) || OS(SOLARIS)
-     : m_holdOffTimer(RunLoop::main(), this, &MemoryPressureHandler::holdOffTimerFired)
- #elif OS(WINDOWS)
-     : m_windowsMeasurementTimer(RunLoop::main(), this, &MemoryPressureHandler::windowsMeasurementTimerFired)

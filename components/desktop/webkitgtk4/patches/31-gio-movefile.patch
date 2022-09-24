@@ -13,7 +13,7 @@ std::filesystem::copy is not working and fix that.
 
 --- webkit/Source/WTF/wtf/glib/FileSystemGlib.cpp~	2021-06-07 12:49:35.000000000 +0000
 +++ webkit/Source/WTF/wtf/glib/FileSystemGlib.cpp	2021-06-29 20:16:25.097495852 +0000
-@@ -236,6 +236,22 @@
+@@ -247,6 +247,22 @@
      return -1;
  }
  
@@ -33,12 +33,12 @@ std::filesystem::copy is not working and fix that.
 +    return g_file_move(oldFile.get(), newFile.get(), G_FILE_COPY_OVERWRITE, nullptr, nullptr, nullptr, nullptr);
 +}
 +
- std::optional<int32_t> getFileDeviceId(const CString& fsFile)
+ std::optional<int32_t> getFileDeviceId(const String& path)
  {
-     GRefPtr<GFile> file = adoptGRef(g_file_new_for_path(fsFile.data()));
+     auto fsFile = fileSystemRepresentation(path);
 --- webkit/Source/WTF/wtf/FileSystem.cpp.~2~	2021-06-30 10:09:41.068587606 +0000
 +++ webkit/Source/WTF/wtf/FileSystem.cpp	2021-06-30 10:16:33.672149297 +0000
-@@ -618,7 +618,7 @@
+@@ -612,7 +618,7 @@
      return std::filesystem::remove(fsPath, ec);
  }
  

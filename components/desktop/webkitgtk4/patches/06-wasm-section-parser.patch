@@ -1,15 +1,15 @@
---- a/Source/JavaScriptCore/wasm/WasmSectionParser.cpp	2021-03-14 12:03:35.910324762 +0000
-+++ b/Source/JavaScriptCore/wasm/WasmSectionParser.cpp	2021-03-14 12:05:11.225958977 +0000
-@@ -53,7 +53,7 @@
-         Vector<Type> argumentTypes;
+--- webkitgtk-2.38.0/Source/JavaScriptCore/wasm/WasmSectionParser.cpp-	2022-08-31 08:59:51.862493300 +0000
++++ webkitgtk-2.38.0/Source/JavaScriptCore/wasm/WasmSectionParser.cpp	2022-09-24 15:41:25.633956876 +0000
+@@ -64,7 +64,7 @@
+             break;
+         }
+         default:
+-            return fail(i, "th Type is non-Func ", typeKind);
++            return fail(i, "th Type is non-Func ", (signed char)typeKind);
+         }
  
-         WASM_PARSER_FAIL_IF(!parseInt7(type), "can't get ", i, "th Type's type");
--        WASM_PARSER_FAIL_IF(type != static_cast<int8_t>(TypeKind::Func), i, "th Type is non-Func ", type);
-+        WASM_PARSER_FAIL_IF(type != static_cast<int8_t>(TypeKind::Func), i, "th Type is non-Func ", (signed char)type);
-         WASM_PARSER_FAIL_IF(!parseVarUInt32(argumentCount), "can't get ", i, "th Type's argument count");
-         WASM_PARSER_FAIL_IF(argumentCount > maxFunctionParams, i, "th argument count is too big ", argumentCount, " maximum ", maxFunctionParams);
-         Vector<Type> arguments;
-@@ -206,7 +206,7 @@
+         WASM_PARSER_FAIL_IF(!signature, "can't allocate enough memory for Type section's ", i, "th signature");
+@@ -211,7 +211,7 @@
  
      int8_t type;
      WASM_PARSER_FAIL_IF(!parseInt7(type), "can't parse Table type");
@@ -17,4 +17,4 @@
 +    WASM_PARSER_FAIL_IF(type != static_cast<int8_t>(TypeKind::Funcref) && type != static_cast<int8_t>(TypeKind::Externref), "Table type should be funcref or anyref, got ", (signed char)type);
  
      uint32_t initial;
-     Optional<uint32_t> maximum;
+     std::optional<uint32_t> maximum;

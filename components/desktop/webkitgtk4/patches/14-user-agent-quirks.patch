@@ -7,7 +7,7 @@
 +#if OS(SOLARIS)
 +    // The speed test at dslreports does not recognize the SunOS platform,
 +    // so we masquerade as Macintosh.
-+    if (baseDomain == "dslreports.com" || baseDomain == "dslr.com")
++    if (baseDomain == "dslreports.com"_s || baseDomain == "dslr.com"_s)
 +        return true;
 +#endif
 +

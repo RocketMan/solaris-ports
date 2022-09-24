@@ -49,59 +49,52 @@
 -#if OS(LINUX)
 +#if OS(LINUX) || OS(SOLARIS)
      UNUSED_PARAM(usage);
-     UNUSED_PARAM(writable);
-     UNUSED_PARAM(executable);
-@@ -126,7 +126,11 @@
+     UNUSED_PARAM(jitCageEnabled);
+     UNUSED_PARAM(includesGuardPages);
+@@ -129,7 +129,11 @@
      if (result == MAP_FAILED)
          result = nullptr;
      if (result)
 +#if OS(SOLARIS)
 +        posix_madvise(result, bytes, POSIX_MADV_DONTNEED);
 +#else
-         madvise(result, bytes, MADV_DONTNEED);
+         while (madvise(result, bytes, MADV_DONTNEED) == -1 && errno == EAGAIN) { }
 +#endif
  #else
      void* result = tryReserveAndCommit(bytes, usage, writable, executable, jitCageEnabled, includesGuardPages);
  #if HAVE(MADV_FREE_REUSE)
-@@ -207,7 +211,7 @@
+@@ -232,10 +236,14 @@
  
  void OSAllocator::commit(void* address, size_t bytes, bool writable, bool executable)
  {
 -#if OS(LINUX)
 +#if OS(LINUX) || OS(SOLARIS)
-     int protection = PROT_READ;
-     if (writable)
-         protection |= PROT_WRITE;
-@@ -215,7 +219,11 @@
-         protection |= PROT_EXEC;
-     if (mprotect(address, bytes, protection))
-         CRASH();
+     UNUSED_PARAM(writable);
+     UNUSED_PARAM(executable);
 +#if OS(SOLARIS)
 +    posix_madvise(address, bytes, POSIX_MADV_WILLNEED);
 +#else
-     madvise(address, bytes, MADV_WILLNEED);
+     while (madvise(address, bytes, MADV_WILLNEED) == -1 && errno == EAGAIN) { }
 +#endif
  #elif HAVE(MADV_FREE_REUSE)
      UNUSED_PARAM(writable);
      UNUSED_PARAM(executable);
-@@ -235,6 +243,10 @@
-     madvise(address, bytes, MADV_DONTNEED);
-     if (mprotect(address, bytes, PROT_NONE))
-         CRASH();
+@@ -253,6 +261,8 @@
+ {
+ #if OS(LINUX)
+     while (madvise(address, bytes, MADV_DONTNEED) == -1 && errno == EAGAIN) { }
 +#elif OS(SOLARIS)
 +    posix_madvise(address, bytes, POSIX_MADV_DONTNEED);
-+    if (mprotect(address, bytes, PROT_NONE))
-+        CRASH();
  #elif HAVE(MADV_FREE_REUSE)
      while (madvise(address, bytes, MADV_FREE_REUSABLE) == -1 && errno == EAGAIN) { }
  #elif HAVE(MADV_FREE)
-@@ -249,7 +261,9 @@
+@@ -267,7 +277,9 @@
  
  void OSAllocator::hintMemoryNotNeededSoon(void* address, size_t bytes)
  {
 -#if HAVE(MADV_DONTNEED)
 +#if OS(SOLARIS)
-+    while (posix_madvise(address, bytes, POSIX_MADV_DONTNEED) == -1 && errno == EAGAIN) { }
++    posix_madvise(address, bytes, POSIX_MADV_DONTNEED);
 +#elif HAVE(MADV_DONTNEED)
      while (madvise(address, bytes, MADV_DONTNEED) == -1 && errno == EAGAIN) { }
  #else
