@@ -30,11 +30,11 @@ include ../../../../make-rules/shared-macros.mk
 BUILD_STYLE=meson
 
 COMPONENT_NAME=		gst-libav
-COMPONENT_VERSION=	1.20.1
+COMPONENT_VERSION=	1.20.4
 COMPONENT_PROJECT_URL=	https://gstreamer.freedesktop.org/
 COMPONENT_ARCHIVE=	$(COMPONENT_SRC).tar.xz
 COMPONENT_ARCHIVE_HASH= \
-	sha256:91a71fb633b75e1bd52e22a457845cb0ba563a2972ba5954ec88448f443a9fc7
+	sha256:04ccbdd58fb31dd94098da599209834a0e7661638c5703381dd0a862c56fc532
 COMPONENT_ARCHIVE_URL=	https://gstreamer.freedesktop.org/src/$(COMPONENT_NAME)/$(COMPONENT_ARCHIVE)
 COMPONENT_BUGDB=	gnome/multimedia
 

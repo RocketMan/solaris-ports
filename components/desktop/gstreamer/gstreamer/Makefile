@@ -38,12 +38,12 @@ BUILD_STYLE=meson
 # newest version which has no backwards API compatibility and we likely need to
 # ship both, hence the odd name.
 COMPONENT_NAME=		gstreamer
-COMPONENT_VERSION=	1.20.1
+COMPONENT_VERSION=	1.20.4
 COMPONENT_PROJECT_URL=	https://gstreamer.freedesktop.org/
 COMPONENT_SRC=		$(COMPONENT_NAME)-$(COMPONENT_VERSION)
 COMPONENT_ARCHIVE=	$(COMPONENT_SRC).tar.xz
 COMPONENT_ARCHIVE_HASH= \
-	sha256:de094a404a3ad8f4977829ea87edf695a4da0b5c8f613ebe54ab414bac89f031
+	sha256:67c1edf8c3c339cda5dde85f4f7b953bb9607c2d13ae970e2491c5c4c055ef5f
 COMPONENT_ARCHIVE_URL=	https://gstreamer.freedesktop.org/src/$(COMPONENT_NAME)/$(COMPONENT_ARCHIVE)
 COMPONENT_ANITYA_ID=	1263
 
