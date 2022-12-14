@@ -1,6 +1,6 @@
---- a/upnphttp.c	2017-08-24 18:28:25.000000000 +0000
-+++ b/upnphttp.c	2018-08-16 17:47:33.480652193 +0000
-@@ -848,6 +848,8 @@
+--- a/upnphttp.c	2022-08-30 06:42:54.000000000 +0000
++++ b/upnphttp.c	2022-12-14 16:36:34.306308174 +0000
+@@ -875,6 +875,8 @@
  		}
  	}
  
@@ -9,15 +9,15 @@
  	ParseHttpHeaders(h);
  
  	/* see if we need to wait for remaining data */
-@@ -886,7 +888,6 @@
+@@ -913,7 +915,6 @@
  		h->state = 100;
  	}
  
 -	DPRINTF(E_DEBUG, L_HTTP, "HTTP REQUEST: %.*s\n", h->req_buflen, h->req_buf);
- 	if(strcmp("POST", HttpCommand) == 0)
- 	{
- 		h->req_command = EPost;
-@@ -1994,20 +1995,21 @@
+ 	if(h->req_Host && h->req_HostLen > 0) {
+ 		const char *port = memchr(h->req_Host, ':', h->req_HostLen);
+ 		size_t ip_sz = port ? (port - h->req_Host) : h->req_HostLen;
+@@ -2055,20 +2056,21 @@
  
  	if( h->reqflags & FLAG_RANGE )
  	{

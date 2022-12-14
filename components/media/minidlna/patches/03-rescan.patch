@@ -1,6 +1,6 @@
---- a/minidlna.c	2020-11-24 18:53:50.000000000 +0000
-+++ b/minidlna.c	2020-12-10 17:02:23.779417190 +0000
-@@ -205,7 +205,6 @@
+--- a/minidlna.c	2022-08-30 06:42:54.000000000 +0000
++++ b/minidlna.c	2022-12-14 16:26:55.113392628 +0000
+@@ -204,7 +204,6 @@
  static void
  sigusr1(int sig)
  {
@@ -8,7 +8,7 @@
  	DPRINTF(E_WARN, L_GENERAL, "received signal %d, clear cache\n", sig);
  
  	memset(&clients, '\0', sizeof(clients));
-@@ -214,11 +213,7 @@
+@@ -213,11 +212,7 @@
  static void
  sighup(int sig)
  {
@@ -21,32 +21,7 @@
  }
  
  /* record the startup time */
-@@ -350,6 +345,24 @@
- 	int i, rows = 0;
- 	int ret;
- 
-+#ifdef HAVE_INOTIFY
-+	/*
-+	 * On startup, check_db is called before the inotify thread
-+	 * is started, so we are guaranteed to acquire the lock first.
-+	 *
-+	 * On subsequent rescan attempts, if we cannot acquire the lock
-+	 * (because an inotify event is in progress), we simply return;
-+	 * in this case, the main event thread will try again later, as
-+	 * RESCAN_MASK will continue to be set.
-+	 *
-+	 * Return if we cannot acquire the lock.  The lock will be released
-+	 * in the main event thread when the scan/rescan is performed
-+	 * in a child process.
-+	 */
-+	if(pthread_mutex_trylock(&inotify_lock))
-+		return;
-+#endif /* HAVE_INOTIFY */
-+
- 	if (!new_db)
- 	{
- 		/* Check if any new media dirs appeared */
-@@ -412,12 +425,18 @@
+@@ -411,12 +406,18 @@
  	}
  	if (ret || GETFLAG(RESCAN_MASK))
  	{
@@ -65,30 +40,24 @@
  			start_scanner();
  			sqlite3_close(db);
  			log_close();
-@@ -428,12 +447,22 @@
+@@ -427,12 +428,16 @@
  		else if (*scanner_pid < 0)
  		{
  			start_scanner();
 +			CLEARFLAG(SCANNING_MASK);
 +			CLEARFLAG(RESCAN_MASK);
-+#ifdef HAVE_INOTIFY
-+			pthread_mutex_unlock(&inotify_lock);
-+#endif /* HAVE_INOTIFY */
  		}
  		else
  			SETFLAG(SCANNING_MASK);
  #else
  		start_scanner();
 +		CLEARFLAG(RESCAN_MASK);
-+#ifdef HAVE_INOTIFY
-+		pthread_mutex_unlock(&inotify_lock);
-+#endif /* HAVE_INOTIFY */
  #endif
 +		pthread_sigmask(SIG_UNBLOCK, &mask, NULL);
  	}
  }
  
-@@ -1046,11 +1075,13 @@
+@@ -1045,11 +1050,13 @@
  		DPRINTF(E_FATAL, L_GENERAL, "Failed to set %s handler. EXITING.\n", "SIGINT");
  	if (signal(SIGPIPE, SIG_IGN) == SIG_ERR)
  		DPRINTF(E_FATAL, L_GENERAL, "Failed to set %s handler. EXITING.\n", "SIGPIPE");
@@ -104,32 +73,28 @@
  	sa.sa_handler = process_handle_child_termination;
  	if (sigaction(SIGCHLD, &sa, NULL))
  		DPRINTF(E_FATAL, L_GENERAL, "Failed to set %s handler. EXITING.\n", "SIGCHLD");
-@@ -1273,7 +1304,11 @@
- #endif
- 
- 		if (GETFLAG(SCANNING_MASK) && kill(scanner_pid, 0) != 0) {
-+#ifdef HAVE_INOTIFY
-+			pthread_mutex_unlock(&inotify_lock);
-+#endif /* HAVE_INOTIFY */
- 			CLEARFLAG(SCANNING_MASK);
-+			CLEARFLAG(RESCAN_MASK);
- 			if (_get_dbtime() != lastdbtime)
- 				updateID++;
- #ifdef HAVE_KQUEUE
-@@ -1282,6 +1317,12 @@
- #endif /* HAVE_KQUEUE */
+@@ -1273,6 +1280,7 @@
+ 			if (kill(scanner_pid, 0) != 0) {
+ 				DPRINTF(E_INFO, L_GENERAL, "Scanner exited\n");
+ 				CLEARFLAG(SCANNING_MASK);
++				CLEARFLAG(RESCAN_MASK);
+ 				if (_get_dbtime() != lastdbtime)
+ 					updateID++;
+ #ifdef HAVE_WATCH
+@@ -1283,6 +1291,12 @@
+ 				tv.tv_sec = 1;
  		}
  
 +		if (GETFLAG(RESCAN_MASK) &&
 +				!GETFLAG(SCANNING_MASK))
 +		{
 +			check_db(db, -1, &scanner_pid);
-+ 		}
++		}
 +
- 		event_module.process(timeout);
+ 		event_module.process(&tv);
  		if (quitting)
  			goto shutdown;
-@@ -1324,7 +1365,7 @@
+@@ -1328,7 +1342,7 @@
  
  shutdown:
  	/* kill the scanner */
@@ -138,16 +103,23 @@
  		kill(scanner_pid, SIGKILL);
  
  	/* close out open sockets */
-@@ -1355,6 +1396,7 @@
- 	{
- 		pthread_kill(inotify_thread, SIGCHLD);
- 		pthread_join(inotify_thread, NULL);
-+		pthread_mutex_destroy(&inotify_lock);
- 	}
+--- a/monitor.c	2022-08-30 06:42:54.000000000 +0000
++++ b/monitor.c	2022-12-14 16:31:14.606604832 +0000
+@@ -267,7 +267,11 @@
  
- 	/* kill other child processes */
---- a/process.c	2020-12-10 17:04:57.262472070 +0000
-+++ b/process.c	2020-12-10 17:07:57.770297810 +0000
+ static bool
+ check_notsparse(const char *path)
+-#if HAVE_DECL_SEEK_HOLE
++#ifdef __sun
++{
++	return true;
++}
++#elif HAVE_DECL_SEEK_HOLE
+ {
+ 	int fd;
+ 	bool rv;
+--- a/process.c	2022-08-30 06:42:54.000000000 +0000
++++ b/process.c	2022-12-14 16:28:46.859212590 +0000
 @@ -94,17 +94,27 @@
  		return -1;
  	}
@@ -161,7 +133,7 @@
  	if (pid > 0)
  	{
 +		pthread_sigmask(SIG_UNBLOCK, &mask, NULL);
-+		
++
  		if (client)
  			client->connections++;
  		add_process_info(pid, client);
@@ -178,82 +150,3 @@
  
  	return pid;
  }
---- a/upnpglobalvars.c	2017-08-24 18:28:25.000000000 +0000
-+++ b/upnpglobalvars.c	2018-08-09 19:41:52.693512392 +0000
-@@ -88,3 +88,4 @@
- volatile short int quitting = 0;
- volatile uint32_t updateID = 0;
- const char *force_sort_criteria = NULL;
-+pthread_mutex_t inotify_lock = PTHREAD_MUTEX_INITIALIZER;
---- a/upnpglobalvars.h	2017-08-24 18:28:25.000000000 +0000
-+++ b/upnpglobalvars.h	2018-08-09 19:41:30.185739408 +0000
-@@ -56,6 +56,7 @@
- #include "config.h"
- 
- #include <sqlite3.h>
-+#include <pthread.h>
- 
- #define MINIDLNA_VERSION "1.2.1"
- 
-@@ -234,5 +235,6 @@
- extern volatile short int quitting;
- extern volatile uint32_t updateID;
- extern const char *force_sort_criteria;
-+extern pthread_mutex_t inotify_lock;
- 
- #endif
---- a/monitor.c	2018-08-09 20:00:25.351781647 +0000
-+++ b/monitor.c	2018-08-10 14:45:25.851794656 +0000
-@@ -478,7 +478,11 @@
- 
- static bool
- check_notsparse(const char *path)
--#if HAVE_DECL_SEEK_HOLE
-+#ifdef __sun
-+{
-+  return true;
-+}
-+#elif HAVE_DECL_SEEK_HOLE
- {
- 	int fd;
- 	bool rv;
-@@ -641,12 +645,12 @@
- 	if ( pollfds[0].fd < 0 )
- 		DPRINTF(E_ERROR, L_INOTIFY, "inotify_init() failed!\n");
- 
--	while( GETFLAG(SCANNING_MASK) )
--	{
--		if( quitting )
--			goto quitting;
--		sleep(1);
--	}
-+	/*
-+	 * before proceeding, ensure the initial database build has completed
-+	 */
-+	pthread_mutex_lock(&inotify_lock);
-+	pthread_mutex_unlock(&inotify_lock);
-+	
- 	inotify_create_watches(pollfds[0].fd);
- 	if (setpriority(PRIO_PROCESS, 0, 19) == -1)
- 		DPRINTF(E_WARN, L_INOTIFY,  "Failed to reduce inotify thread priority\n");
-@@ -687,6 +691,12 @@
- 			buffer[BUF_LEN-1] = '\0';
- 		}
- 
-+		if (pthread_mutex_trylock(&inotify_lock))
-+		{
-+			DPRINTF(E_WARN, L_INOTIFY, "Ignoring inotify during rescan.\n");
-+			continue;
-+		}
-+
- 		i = 0;
- 		while( !quitting && i < length )
- 		{
-@@ -744,6 +754,7 @@
- 			}
- 			i += EVENT_SIZE + event->len;
- 		}
-+		pthread_mutex_unlock(&inotify_lock);
- 	}
- 	inotify_remove_watches(pollfds[0].fd);
- quitting:
