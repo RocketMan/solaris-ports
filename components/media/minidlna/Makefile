@@ -29,6 +29,7 @@ include ../../../make-rules/shared-macros.mk
 
 COMPONENT_NAME=		minidlna
 COMPONENT_VERSION=	1.3.2
+COMPONENT_REVISION=	1
 COMPONENT_ARCHIVE=	$(COMPONENT_NAME)-$(COMPONENT_VERSION).tar.gz
 COMPONENT_PROJECT_URL=	https://sourceforge.net/projects/minidlna/
 COMPONENT_ARCHIVE_URL=	https://netix.dl.sourceforge.net/project/minidlna/$(COMPONENT_NAME)/$(COMPONENT_VERSION)/$(COMPONENT_ARCHIVE)
