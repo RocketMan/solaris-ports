@@ -9,7 +9,7 @@
  </gresources>
 --- /dev/null	2021-03-28 12:20:24.662567944 +0000
 +++ epiphany-40.0/src/resources/themes/slim-nimbus.css	2021-03-28 12:27:27.191238804 +0000
-@@ -0,0 +1,199 @@
+@@ -0,0 +1,195 @@
 +.incognito-mode headerbar {
 +  background: transparent -gtk-icontheme("user-not-tracked-symbolic") 160px 0/64px 64px no-repeat, linear-gradient(to top, #a5b1bd, #c5cdd5 2px, #cbd2d9 3px);
 +  box-shadow: none;
@@ -121,6 +121,8 @@
 +
 +    viewswitcher { margin: 2px 0; }
 +
++    #title-box-container progress { background-color: orange; background-image: none; border: none; margin: 22px -8px -5px -8px; border-radius: 0; }
++
 +    /* rest is copied from shared.css */
 +.floating-bar { background-color: @theme_base_color; border-width: 1px; border-style: solid solid none; border-color: @borders; border-radius: 3px 3px 0 0; }
 +
@@ -173,12 +175,6 @@
 +.bookmark-tag-widget-selected image, .bookmark-tag-widget-selected label, .bookmark-tag-widget-selected button:hover image { color: @theme_selected_fg_color; }
 +
 +#fullscreen-popup { padding: 12px; border-radius: 18px; background: rgba(0, 0, 0, 0.65); color: white; }
-+
-+.url_progress { border: none; background-color: transparent; background-image: none; padding-top: 0px; padding-bottom: 0px; margin-top: 0px; margin-bottom: 6px; }
-+
-+.url_progress progress { background-color: @theme_selected_bg_color; background-image: none; border: none; min-height: 2px; }
-+
-+.url_progress trough { border: none; background-color: transparent; background-image: none; }
 +
 +.tab-attention { background-image: -gtk-gradient(radial, center center, 0, center center, 0.5, to(@theme_selected_bg_color), to(transparent)); background-size: 6px 6px; background-repeat: no-repeat; background-position: center bottom; }
 +
