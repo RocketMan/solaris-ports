@@ -15,3 +15,5 @@ In addition, as of WebKitGTK 2.40.0, there is support for WebGL2!
 ![screenshot](https://raw.githubusercontent.com/RocketMan/solaris-ports/master/components/desktop/webkitgtk4/screenshot2.png "Epiphany/WebKitGTK")
 
 ![screenshot](https://raw.githubusercontent.com/RocketMan/solaris-ports/master/components/desktop/webkitgtk4/screenshot3.png "Epiphany/WebKitGTK")
+
+![screenshot](https://raw.githubusercontent.com/RocketMan/solaris-ports/master/components/desktop/webkitgtk4/screenshot4.png "Epiphany/WebKitGTK")
