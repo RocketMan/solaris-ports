@@ -20,7 +20,7 @@
 #
 
 #
-# Copyright (c) 2020-2022 Jim Mason <jmason at ibinx dot com>.
+# Copyright (c) 2020-2023 Jim Mason <jmason at ibinx dot com>.
 #
 # Adapted from original code Copyright (c) 2016, 2018, Oracle and/or its
 # affiliates. All rights reserved.
@@ -37,13 +37,19 @@ include ../../../make-rules/shared-macros.mk
 GCC_ROOT= /usr/gcc/10
 
 COMPONENT_NAME=		webkitgtk
-COMPONENT_VERSION=	2.38.5
+COMPONENT_VERSION=	2.40.0
 COMPONENT_PROJECT_URL=	https://webkitgtk.org
 COMPONENT_ARCHIVE=	$(COMPONENT_SRC).tar.xz
 COMPONENT_ARCHIVE_HASH= \
-	sha256:40c20c43022274df5893f22b1054fa894c3eea057389bb08aee08c5b0bb0c1a7
+	sha256:a4607ea1bf89669e89b1cb2c63faaec513f93de09b6ae60cc71d6a8aab7ab393
 COMPONENT_ARCHIVE_URL=	https://webkitgtk.org/releases/$(COMPONENT_ARCHIVE)
 COMPONENT_ANITYA_ID=	5355
+
+UNIFDEF_VER=2.12
+UNIFDEF_DIR=unifdef-$(UNIFDEF_VER)
+UNIFDEF_ARCHIVE=$(UNIFDEF_DIR).tar.gz
+UNIFDEF_URL=https://dotat.at/prog/unifdef/$(UNIFDEF_ARCHIVE)
+UNIFDEF_HASH=sha256:fba564a24db7b97ebe9329713ac970627b902e5e9e8b14e19e024eb6e278d10b
 
 # Use project's own optimization flags instead.
 gcc_OPT=
@@ -92,6 +98,8 @@ CMAKE_OPTIONS += -DENABLE_MINIBROWSER=OFF
 CMAKE_OPTIONS += -DENABLE_INTROSPECTION=ON
 CMAKE_OPTIONS += -DPORT=GTK
 CMAKE_OPTIONS += -DUSE_OPENGL_ES=OFF
+CMAKE_OPTIONS += -DUSE_GBM=OFF
+CMAKE_OPTIONS += -DUSE_AVIF=OFF
 CMAKE_OPTIONS += -DENABLE_GAMEPAD=OFF
 CMAKE_OPTIONS += -DUSE_GSTREAMER_GL=ON
 CMAKE_OPTIONS += -DENABLE_ENCRYPTED_MEDIA=ON
@@ -118,14 +126,26 @@ endif
 # Tell g-ir-scanner not to cache results in homedir of user running the build
 COMPONENT_BUILD_ENV += GI_SCANNER_DISABLE_CACHE=""
 
-# Expects GNU versions of utilities to be found in PATH (e.g. xgettext).
-COMPONENT_BUILD_ENV += PATH="$(GNUBIN):$(PATH)"
+# Fresh version of unifdef must be used instead of the system one
+COMPONENT_BUILD_ENV += PATH="$(COMPONENT_DIR)/$(UNIFDEF_DIR):$(GNUBIN):$(PATH)"
 
 # Ensure cmake finds the matching 32/64-bit version of dependencies.
 COMPONENT_BUILD_ENV += PKG_CONFIG_PATH="$(PKG_CONFIG_PATH)"
 
 # Ensure gir finds 64-bit dependencies
 COMPONENT_INSTALL_ENV += PKG_CONFIG_PATH="$(PKG_CONFIG_PATH)"
+
+download:: $(UNIFDEF_DIR)/unifdef
+
+$(UNIFDEF_ARCHIVE):
+	$(FETCH) --file $(UNIFDEF_ARCHIVE) --url $(UNIFDEF_URL) --hash $(UNIFDEF_HASH)
+
+$(UNIFDEF_DIR)/unifdef: $(UNIFDEF_ARCHIVE)
+	$(TAR) xzf $(UNIFDEF_ARCHIVE)
+	( cd $(UNIFDEF_DIR); CC=$(CC) gmake )
+	test -x $(UNIFDEF_DIR)/unifdef || exit 1
+
+CLEAN_PATHS += $(UNIFDEF_DIR)
 
 REQUIRED_PACKAGES += database/sqlite-3
 REQUIRED_PACKAGES += developer/build/cmake
@@ -145,6 +165,7 @@ REQUIRED_PACKAGES += library/desktop/geoclue
 REQUIRED_PACKAGES += library/desktop/geocode-glib
 REQUIRED_PACKAGES += library/desktop/gstreamer-1
 REQUIRED_PACKAGES += library/desktop/gstreamer-1/gst-plugins-base
+REQUIRED_PACKAGES += library/desktop/gstreamer-1/gst-plugins-bad
 REQUIRED_PACKAGES += library/desktop/gtk2
 REQUIRED_PACKAGES += library/desktop/gtk3
 REQUIRED_PACKAGES += library/desktop/harfbuzz
@@ -174,6 +195,8 @@ REQUIRED_PACKAGES += system/library/gcc/gcc-c++-runtime
 REQUIRED_PACKAGES += system/library/gcc/gcc-c-runtime
 REQUIRED_PACKAGES += system/library/math
 REQUIRED_PACKAGES += system/library/security/libgcrypt
+REQUIRED_PACKAGES += x11/library/libepoxy
+REQUIRED_PACKAGES += x11/library/libdrm
 REQUIRED_PACKAGES += x11/library/libx11
 REQUIRED_PACKAGES += x11/library/libxcomposite
 REQUIRED_PACKAGES += x11/library/libxdamage

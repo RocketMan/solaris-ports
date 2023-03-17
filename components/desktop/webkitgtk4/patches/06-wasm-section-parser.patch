@@ -1,15 +1,15 @@
---- webkitgtk-2.38.0/Source/JavaScriptCore/wasm/WasmSectionParser.cpp-	2022-08-31 08:59:51.862493300 +0000
-+++ webkitgtk-2.38.0/Source/JavaScriptCore/wasm/WasmSectionParser.cpp	2022-09-24 15:41:25.633956876 +0000
-@@ -64,7 +64,7 @@
+--- a/Source/JavaScriptCore/wasm/WasmSectionParser.cpp	2023-01-13 16:06:34.000000000 +0000
++++ b/Source/JavaScriptCore/wasm/WasmSectionParser.cpp	2023-01-13 16:54:26.511527201 +0000
+@@ -92,7 +92,7 @@
              break;
          }
          default:
--            return fail(i, "th Type is non-Func ", typeKind);
-+            return fail(i, "th Type is non-Func ", (signed char)typeKind);
+-            return fail(i, "th Type is non-Func, non-Struct, and non-Array ", typeKind);
++            return fail(i, "th Type is non-Func, non-Struct, and non-Array ", (signed char)typeKind);
          }
  
          WASM_PARSER_FAIL_IF(!signature, "can't allocate enough memory for Type section's ", i, "th signature");
-@@ -211,7 +211,7 @@
+@@ -264,7 +264,7 @@
  
      int8_t type;
      WASM_PARSER_FAIL_IF(!parseInt7(type), "can't parse Table type");
@@ -18,3 +18,30 @@
  
      uint32_t initial;
      std::optional<uint32_t> maximum;
+@@ -795,7 +795,7 @@
+         packedType = static_cast<PackedType>(kind);
+         return { };
+     }
+-    return fail("expected a packed type but got ", kind);
++    return fail("expected a packed type but got ", (signed char)kind);
+ }
+ 
+ auto SectionParser::parseStorageType(StorageType& storageType) -> PartialResult
+@@ -898,7 +898,7 @@
+             break;
+         }
+         default:
+-            return fail(i, "th Type is non-Func, non-Struct, and non-Array ", typeKind);
++            return fail(i, "th Type is non-Func, non-Struct, and non-Array ", (signed char)typeKind);
+         }
+ 
+         WASM_PARSER_FAIL_IF(!signature, "can't allocate enough memory for recursion group's ", i, "th signature");
+@@ -1055,7 +1055,7 @@
+         break;
+     }
+     default:
+-        return fail("invalid structural type definition for subtype ", typeKind);
++        return fail("invalid structural type definition for subtype ", (signed char)typeKind);
+     }
+ 
+     // When no supertypes are specified, we will normalize type definitions to

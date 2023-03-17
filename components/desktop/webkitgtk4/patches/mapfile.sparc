@@ -37,8 +37,8 @@ file upstream bug after resolving issues documented above
 -  extern "C++" {
 -    "WebKit::GPUProcessMain(int, char**)";
 -    "WebKit::NetworkProcessMain(int, char**)";
--    "WebKit::WebKitExtensionManager::initialize(WebKit::InjectedBundle*, API::Object*)";
--    "WebKit::WebKitExtensionManager::singleton()";
+-    "WebKit::WebProcessExtensionManager::initialize(WebKit::InjectedBundle*, API::Object*)";
+-    "WebKit::WebProcessExtensionManager::singleton()";
 -    "WebKit::WebProcessMain(int, char**)";
 -  };
 -local:

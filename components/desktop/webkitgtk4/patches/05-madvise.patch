@@ -56,7 +56,7 @@
          result = nullptr;
      if (result)
 +#if OS(SOLARIS)
-+        posix_madvise(result, bytes, POSIX_MADV_DONTNEED);
++        while (posix_madvise(result, bytes, POSIX_MADV_DONTNEED) == EAGAIN) { }
 +#else
          while (madvise(result, bytes, MADV_DONTNEED) == -1 && errno == EAGAIN) { }
 +#endif
@@ -72,7 +72,7 @@
      UNUSED_PARAM(writable);
      UNUSED_PARAM(executable);
 +#if OS(SOLARIS)
-+    posix_madvise(address, bytes, POSIX_MADV_WILLNEED);
++    while (posix_madvise(address, bytes, POSIX_MADV_WILLNEED) == EAGAIN) { }
 +#else
      while (madvise(address, bytes, MADV_WILLNEED) == -1 && errno == EAGAIN) { }
 +#endif
@@ -84,7 +84,7 @@
  #if OS(LINUX)
      while (madvise(address, bytes, MADV_DONTNEED) == -1 && errno == EAGAIN) { }
 +#elif OS(SOLARIS)
-+    posix_madvise(address, bytes, POSIX_MADV_DONTNEED);
++    while (posix_madvise(address, bytes, POSIX_MADV_DONTNEED) == EAGAIN) { }
  #elif HAVE(MADV_FREE_REUSE)
      while (madvise(address, bytes, MADV_FREE_REUSABLE) == -1 && errno == EAGAIN) { }
  #elif HAVE(MADV_FREE)
@@ -94,7 +94,7 @@
  {
 -#if HAVE(MADV_DONTNEED)
 +#if OS(SOLARIS)
-+    posix_madvise(address, bytes, POSIX_MADV_DONTNEED);
++    while (posix_madvise(address, bytes, POSIX_MADV_DONTNEED) == EAGAIN) { }
 +#elif HAVE(MADV_DONTNEED)
      while (madvise(address, bytes, MADV_DONTNEED) == -1 && errno == EAGAIN) { }
  #else
