@@ -79,7 +79,6 @@ file path=usr/lib/$(MACH64)/gstreamer-1.0/libgstnavigationtest.so
 file path=usr/lib/$(MACH64)/gstreamer-1.0/libgstoss4.so
 file path=usr/lib/$(MACH64)/gstreamer-1.0/libgstossaudio.so
 file path=usr/lib/$(MACH64)/gstreamer-1.0/libgstpng.so
-file path=usr/lib/$(MACH64)/gstreamer-1.0/libgstpulseaudio.so
 file path=usr/lib/$(MACH64)/gstreamer-1.0/libgstreplaygain.so
 file path=usr/lib/$(MACH64)/gstreamer-1.0/libgstrtp.so
 file path=usr/lib/$(MACH64)/gstreamer-1.0/libgstrtpmanager.so

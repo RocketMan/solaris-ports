@@ -91,7 +91,7 @@ CONFIGURE_OPTIONS += -Djpeg=disabled
 CONFIGURE_OPTIONS += -Dpng=enabled
 CONFIGURE_OPTIONS += -Doss=enabled
 CONFIGURE_OPTIONS += -Doss4=enabled
-CONFIGURE_OPTIONS += -Dpulse=enabled
+CONFIGURE_OPTIONS += -Dpulse=disabled
 CONFIGURE_OPTIONS += -Dsoup=enabled
 CONFIGURE_OPTIONS += -Dspeex=enabled
 CONFIGURE_OPTIONS += -Dtaglib=disabled
