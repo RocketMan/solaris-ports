@@ -37,11 +37,11 @@ include ../../../make-rules/shared-macros.mk
 GCC_ROOT= /usr/gcc/10
 
 COMPONENT_NAME=		webkitgtk
-COMPONENT_VERSION=	2.40.2
+COMPONENT_VERSION=	2.40.3
 COMPONENT_PROJECT_URL=	https://webkitgtk.org
 COMPONENT_ARCHIVE=	$(COMPONENT_SRC).tar.xz
 COMPONENT_ARCHIVE_HASH= \
-	sha256:96898870d994da406ee7a632816dcde9a3bb395ee5f344fcb3f3b8cc8a77e000
+	sha256:cc0aa83f40dbc64c1c6ae42ec6b85af4be2a9dbf524cfcb95f89a367fb5098dd
 COMPONENT_ARCHIVE_URL=	https://webkitgtk.org/releases/$(COMPONENT_ARCHIVE)
 COMPONENT_ANITYA_ID=	5355
 
