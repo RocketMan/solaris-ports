@@ -269,8 +269,8 @@ file path=usr/lib/$(MACH64)/jsc mode=0555
 link path=usr/lib/$(MACH64)/libjavascriptcoregtk-4.0.so \
     target=libjavascriptcoregtk-4.0.so.18
 link path=usr/lib/$(MACH64)/libjavascriptcoregtk-4.0.so.18 \
-    target=libjavascriptcoregtk-4.0.so.18.22.12
-file path=usr/lib/$(MACH64)/libjavascriptcoregtk-4.0.so.18.22.12
+    target=libjavascriptcoregtk-4.0.so.18.22.13
+file path=usr/lib/$(MACH64)/libjavascriptcoregtk-4.0.so.18.22.13
 link path=usr/lib/$(MACH64)/libwebkit2gtk-4.0.so target=libwebkit2gtk-4.0.so.37
 link path=usr/lib/$(MACH64)/libwebkit2gtk-4.0.so.37 \
     target=libwebkit2gtk-4.0.so.37.63.4
