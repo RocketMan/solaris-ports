@@ -28,12 +28,12 @@ COMPILER =		gcc
 include ../../../make-rules/shared-macros.mk
 
 COMPONENT_NAME=		ffmpeg
-COMPONENT_VERSION=	4.1.6
+COMPONENT_VERSION=	4.1.11
 COMPONENT_ARCHIVE=	$(COMPONENT_NAME)-$(COMPONENT_VERSION).tar.bz2
 COMPONENT_PROJECT_URL=	https://www.ffmpeg.org/
 COMPONENT_ARCHIVE_URL=	https://ffmpeg.org/releases/$(COMPONENT_ARCHIVE)
 COMPONENT_ARCHIVE_HASH=	\
-    sha256:9fa49ea887c0a735b82a357172d07e973f4dc221fd4eb489b69a21eda0440811
+    sha256:d649115b7e8b5175de5ccf02f0e1bde7af885e3e0a907379a555670bd57bbffd
 
 CFLAGS += -I/usr/X11/include
 CFLAGS += $(CPP_LARGEFILES)
@@ -104,6 +104,7 @@ REQUIRED_PACKAGES += library/media/libcdio-paranoia
 REQUIRED_PACKAGES += library/media/libfdk-aac
 REQUIRED_PACKAGES += library/media/libopus
 REQUIRED_PACKAGES += library/media/libx264
+REQUIRED_PACKAGES += library/sdl
 REQUIRED_PACKAGES += library/security/openssl
 REQUIRED_PACKAGES += library/zlib
 REQUIRED_PACKAGES += media/lame

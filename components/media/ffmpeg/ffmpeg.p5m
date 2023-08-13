@@ -9,6 +9,7 @@ set name=info.source-url value=$(COMPONENT_ARCHIVE_URL)
 set name=info.upstream-url value=$(COMPONENT_PROJECT_URL)
 set name=org.opensolaris.consolidation value=$(CONSOLIDATION)
 file path=usr/bin/ffmpeg
+file path=usr/bin/ffplay
 file path=usr/bin/ffprobe
 file path=usr/include/libavcodec/ac3_parser.h
 file path=usr/include/libavcodec/adts_parser.h
@@ -229,6 +230,8 @@ file path=usr/share/man/man1/ffmpeg-resampler.1
 file path=usr/share/man/man1/ffmpeg-scaler.1
 file path=usr/share/man/man1/ffmpeg-utils.1
 file path=usr/share/man/man1/ffmpeg.1
+file path=usr/share/man/man1/ffplay-all.1
+file path=usr/share/man/man1/ffplay.1
 file path=usr/share/man/man1/ffprobe-all.1
 file path=usr/share/man/man1/ffprobe.1
 file path=usr/share/man/man3/libavcodec.3
