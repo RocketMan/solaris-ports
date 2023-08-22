@@ -30,7 +30,7 @@ GCC_ROOT = 		/usr/gcc/10
 
 COMPONENT_NAME=		epiphany
 COMPONENT_VERSION=	42.5
-COMPONENT_REVISION=	1
+COMPONENT_REVISION=	2
 COMPONENT_SRC=		$(COMPONENT_NAME)-$(COMPONENT_VERSION)
 COMPONENT_ARCHIVE_URL=	https://github.com/GNOME/epiphany/archive/refs/tags/$(COMPONENT_VERSION).tar.gz
 COMPONENT_ARCHIVE_HASH= \
@@ -53,6 +53,7 @@ LDFLAGS += -lm -lsocket -lnsl
 -include GoogleApiKey.mk
 
 CONFIGURE_OPTIONS += -Dlibportal=disabled
+CONFIGURE_OPTIONS += -Dsoup2=disabled
 
 REQUIRED_PACKAGES += database/sqlite-3
 REQUIRED_PACKAGES += gnome/gnome-shell
@@ -65,7 +66,7 @@ REQUIRED_PACKAGES += library/desktop/libhandy
 REQUIRED_PACKAGES += library/desktop/libnotify
 REQUIRED_PACKAGES += library/desktop/libwnck3
 REQUIRED_PACKAGES += library/desktop/pango
-REQUIRED_PACKAGES += library/desktop/webkitgtk4
+REQUIRED_PACKAGES += library/desktop/webkitgtk41
 REQUIRED_PACKAGES += library/glib2
 REQUIRED_PACKAGES += library/gmp
 REQUIRED_PACKAGES += library/gnome/libsecret
@@ -73,7 +74,7 @@ REQUIRED_PACKAGES += library/gnome/gcr
 REQUIRED_PACKAGES += library/icu
 REQUIRED_PACKAGES += library/json-glib
 REQUIRED_PACKAGES += library/libarchive
-REQUIRED_PACKAGES += library/libsoup
+REQUIRED_PACKAGES += library/libsoup3
 REQUIRED_PACKAGES += library/libxml2
 REQUIRED_PACKAGES += library/libxslt
 REQUIRED_PACKAGES += library/nspr
