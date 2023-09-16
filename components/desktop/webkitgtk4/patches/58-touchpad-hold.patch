@@ -1,0 +1,19 @@
+GDK_TOUCHPAD_HOLD is available in GTK 4.6 and later only.
+
+--- webkitgtk-2.42.0/Source/WebKit/UIProcess/API/gtk/WebKitWebViewBase.cpp-	2023-08-18 07:06:04.445455300 +0000
++++ webkitgtk-2.42.0/Source/WebKit/UIProcess/API/gtk/WebKitWebViewBase.cpp	2023-09-17 15:06:49.851627695 +0000
+@@ -1008,7 +1008,13 @@
+ #if USE(GTK4)
+     if (!event || webViewBase->priv->wheelEventsToPropagate.isEmpty())
+         return false;
+-    if (gdk_event_get_event_type(event) != GDK_TOUCHPAD_HOLD) {
++    if (
++#ifdef GDK_TOUCHPAD_HOLD
++            gdk_event_get_event_type(event) != GDK_TOUCHPAD_HOLD
++#else
++            true
++#endif
++    ) {
+         // Some events that were meant for delayed propagation may have been coalesced/compressed by GDK into the current event:
+         // https://docs.gtk.org/gtk4/migrating-3to4.html#adapt-to-gdkevent-api-changes
+         // There's no way to both propagate and stop the current event, so just clear out these obsolete events from the to-be-propagated vector.

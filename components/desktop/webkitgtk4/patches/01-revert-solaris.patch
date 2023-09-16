@@ -24,9 +24,9 @@ https://bugs.webkit.org/show_bug.cgi?id=176341
      || defined(unix)        \
      || defined(__unix)      \
      || defined(__unix__)
---- a/Source/WTF/wtf/PlatformHave.h	2021-12-30 19:20:54.000000000 +0000
-+++ b/Source/WTF/wtf/PlatformHave.h	2021-12-30 19:59:15.595151783 +0000
-@@ -229,19 +229,19 @@
+--- a/Source/WTF/wtf/PlatformHave.h	2023-08-09 09:49:39.320119000 +0000
++++ b/Source/WTF/wtf/PlatformHave.h	2023-09-15 17:23:45.181778479 +0000
+@@ -229,16 +229,16 @@
  #define HAVE_HOSTED_CORE_ANIMATION 1
  #endif
  
@@ -38,10 +38,6 @@ https://bugs.webkit.org/show_bug.cgi?id=176341
 -#if OS(DARWIN) || (OS(LINUX) && defined(__GLIBC__) && !defined(__UCLIBC__) && !CPU(MIPS))
 +#if OS(DARWIN) || OS(SOLARIS) || (OS(LINUX) && defined(__GLIBC__) && !defined(__UCLIBC__) && !CPU(MIPS))
  #define HAVE_BACKTRACE 1
- #endif
- 
--#if (OS(DARWIN) || OS(LINUX)) && (PLATFORM(GTK) || PLATFORM(WPE)) && defined(__GLIBC__) && !defined(__UCLIBC__) && !CPU(MIPS)
-+#if (OS(DARWIN) || OS(LINUX)) && (PLATFORM(GTK) || PLATFORM(WPE)) && defined(__GLIBC__) && !defined(__UCLIBC__) && !CPU(MIPS) || OS(SOLARIS)
  #define HAVE_BACKTRACE_SYMBOLS 1
  #endif
  
@@ -50,7 +46,7 @@ https://bugs.webkit.org/show_bug.cgi?id=176341
  #define HAVE_DLADDR 1
  #endif
  
-@@ -378,7 +378,7 @@
+@@ -376,7 +376,7 @@
  #define HAVE_URL_FORMATTING 1
  #endif
  

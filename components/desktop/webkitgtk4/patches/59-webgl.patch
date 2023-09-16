@@ -1,0 +1,53 @@
+This patch fixes several issues with WebGL on NVIDIA/X11:
+
+    * Disable EGL_CONTEXT_VIRTUALIZATION_GROUP_ANGLE, as some
+      NVIDIA/X11 drivers appear to lack the capabilities to support it;
+
+    * Fix segmentation fault with libepoxy;
+
+    * Set m_anglePlatform for X11.
+
+--- webkitgtk-2.42.0/Source/WebCore/platform/graphics/texmap/GraphicsContextGLTextureMapperANGLE.cpp~	2023-08-18 15:45:24.183736800 +0000
++++ webkitgtk-2.42.0/Source/WebCore/platform/graphics/texmap/GraphicsContextGLTextureMapperANGLE.cpp	2023-09-24 19:21:09.515158049 +0000
+@@ -236,7 +236,7 @@
+     // WebGL doesn't allow implicit creation of objects on bind.
+     eglContextAttributes.append(EGL_CONTEXT_BIND_GENERATES_RESOURCE_CHROMIUM);
+     eglContextAttributes.append(EGL_FALSE);
+-#if USE(NICOSIA)
++#if USE(NICOSIA) && !PLATFORM(X11)
+     eglContextAttributes.append(EGL_CONTEXT_VIRTUALIZATION_GROUP_ANGLE);
+     eglContextAttributes.append(0);
+ #endif
+--- webkitgtk-2.42.0/Source/WebCore/platform/graphics/texmap/GraphicsContextGLTextureMapperANGLENicosia.cpp~	2023-09-26 10:51:52.915360944 +0000
++++ webkitgtk-2.42.0/Source/WebCore/platform/graphics/texmap/GraphicsContextGLTextureMapperANGLENicosia.cpp	2023-09-26 10:52:08.999307697 +0000
+@@ -27,7 +27,7 @@
+ #include "GraphicsContextGLTextureMapperANGLE.h"
+ 
+ #if ENABLE(WEBGL) && USE(TEXTURE_MAPPER) && USE(NICOSIA)
+-#include <epoxy/gl.h>
++#include <GL/gl.h>
+ 
+ namespace WebCore {
+ 
+--- webkitgtk-2.42.0/Source/WebCore/platform/graphics/x11/PlatformDisplayX11.cpp-	2023-09-26 12:55:29.301613100 +0000
++++ webkitgtk-2.42.0/Source/WebCore/platform/graphics/x11/PlatformDisplayX11.cpp	2023-09-26 12:53:59.971122612 +0000
+@@ -69,6 +69,9 @@
+ PlatformDisplayX11::PlatformDisplayX11(Display* display)
+     : m_display(display)
+ {
++#if ENABLE(WEBGL)
++    m_anglePlatform = EGL_PLATFORM_X11_KHR;
++#endif
+ }
+ 
+ #if PLATFORM(GTK)
+@@ -76,6 +79,9 @@
+     : PlatformDisplay(display)
+     , m_display(display ? GDK_DISPLAY_XDISPLAY(display) : nullptr)
+ {
++#if ENABLE(WEBGL)
++    m_anglePlatform = EGL_PLATFORM_X11_KHR;
++#endif
+ }
+ #endif
+ 

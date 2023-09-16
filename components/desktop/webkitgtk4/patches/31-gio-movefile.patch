@@ -11,10 +11,18 @@ The patch is not suitable for upstream, as we should figure out why
 std::filesystem::copy is not working and fix that.
 
 
---- webkit/Source/WTF/wtf/glib/FileSystemGlib.cpp~	2021-06-07 12:49:35.000000000 +0000
-+++ webkit/Source/WTF/wtf/glib/FileSystemGlib.cpp	2021-06-29 20:16:25.097495852 +0000
-@@ -247,6 +247,22 @@
-     return -1;
+--- a/Source/WTF/wtf/glib/FileSystemGlib.cpp	2023-09-15 17:57:18.515282502 +0000
++++ b/Source/WTF/wtf/glib/FileSystemGlib.cpp	2023-09-15 18:01:35.464496442 +0000
+@@ -23,6 +23,7 @@
+ #include "config.h"
+ #include <wtf/FileSystem.h>
+ 
++#include <wtf/glib/GRefPtr.h>
+ #include <wtf/glib/GUniquePtr.h>
+ #include <wtf/text/CString.h>
+ #include <wtf/text/WTFString.h>
+@@ -116,5 +117,21 @@
+     return stringFromFileSystemRepresentation(g_get_user_data_dir());
  }
  
 +bool moveFile(const String& oldPath, const String& newPath)
@@ -33,9 +41,8 @@ std::filesystem::copy is not working and fix that.
 +    return g_file_move(oldFile.get(), newFile.get(), G_FILE_COPY_OVERWRITE, nullptr, nullptr, nullptr, nullptr);
 +}
 +
- std::optional<int32_t> getFileDeviceId(const String& path)
- {
-     auto fsFile = fileSystemRepresentation(path);
+ } // namespace FileSystemImpl
+ } // namespace WTF
 --- webkit/Source/WTF/wtf/FileSystem.cpp.~2~	2021-06-30 10:09:41.068587606 +0000
 +++ webkit/Source/WTF/wtf/FileSystem.cpp	2021-06-30 10:16:33.672149297 +0000
 @@ -612,7 +618,7 @@

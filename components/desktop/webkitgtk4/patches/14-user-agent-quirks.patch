@@ -1,5 +1,5 @@
---- a/Source/WebCore/platform/UserAgentQuirks.cpp	2021-03-02 21:43:53.541837668 +0000
-+++ b/Source/WebCore/platform/UserAgentQuirks.cpp	2021-03-02 23:11:21.761743664 +0000
+--- a/Source/WebCore/platform/glib/UserAgentQuirks.cpp	2021-03-02 21:43:53.541837668 +0000
++++ b/Source/WebCore/platform/glib/UserAgentQuirks.cpp	2021-03-02 23:11:21.761743664 +0000
 @@ -120,6 +120,13 @@
          || domain == "exchange.tu-berlin.de")
          return true;
