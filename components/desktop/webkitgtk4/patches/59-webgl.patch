@@ -1,23 +1,32 @@
 This patch fixes several issues with WebGL on NVIDIA/X11:
 
-    * Fix eglGetCurrentContext issue in ANGLE with NVIDIA driver
+    * Work around issue with WebKit-supplied external context
       See https://bugs.webkit.org/show_bug.cgi?id=261653
 
     * Fix segmentation fault with libepoxy;
 
     * Set m_anglePlatform for X11.
 
---- webkitgtk-2.42.0/Source/ThirdParty/ANGLE/src/libANGLE/renderer/gl/egl/DisplayEGL.cpp~	2023-08-09 09:49:33.615939600 +0000
-+++ webkitgtk-2.42.0/Source/ThirdParty/ANGLE/src/libANGLE/renderer/gl/egl/DisplayEGL.cpp	2023-09-30 12:58:47.043872685 +0000
-@@ -945,7 +945,7 @@
-         ASSERT(!makeNewContextCurrent);
-         // TODO(penghuang): Should we consider creating a share context to avoid querying and
-         // restoring GL context state? http://anglebug.com/5509
--        context = mEGL->getCurrentContext();
-+        context = mCurrentNativeContexts[angle::GetCurrentThreadUniqueId()].context;
-         ASSERT(context != EGL_NO_CONTEXT);
-         // TODO(penghuang): get the version from the current context. http://anglebug.com/5509
-         attribs = {EGL_CONTEXT_MAJOR_VERSION, 2, EGL_CONTEXT_MINOR_VERSION, 0, EGL_NONE};
+--- webkitgtk-2.42.0/Source/WebCore/platform/graphics/angle/PlatformDisplayANGLE.cpp~	2023-08-09 09:49:45.616316800 +0000
++++ webkitgtk-2.42.0/Source/WebCore/platform/graphics/angle/PlatformDisplayANGLE.cpp	2023-10-01 19:33:34.270286923 +0000
+@@ -74,9 +74,6 @@
+         return m_angleSharingGLContext;
+ 
+     ASSERT(m_angleEGLDisplay != EGL_NO_DISPLAY);
+-    auto sharingContext = sharingGLContext();
+-    if (!sharingContext)
+-        return EGL_NO_CONTEXT;
+ 
+     EGLint configAttributes[] = {
+         EGL_RENDERABLE_TYPE, EGL_OPENGL_ES2_BIT,
+@@ -95,7 +92,6 @@
+     if (numberConfigsReturned != 1)
+         return EGL_NO_CONTEXT;
+ 
+-    GLContext::ScopedGLContextCurrent scopedCurrent(*sharingContext);
+     EGLint contextAttributes[] = {
+         EGL_CONTEXT_CLIENT_VERSION, 2,
+         EGL_EXTERNAL_CONTEXT_ANGLE, EGL_TRUE,
 --- webkitgtk-2.42.0/Source/WebCore/platform/graphics/texmap/GraphicsContextGLTextureMapperANGLENicosia.cpp~	2023-09-26 10:51:52.915360944 +0000
 +++ webkitgtk-2.42.0/Source/WebCore/platform/graphics/texmap/GraphicsContextGLTextureMapperANGLENicosia.cpp	2023-09-26 10:52:08.999307697 +0000
 @@ -27,7 +27,7 @@
