@@ -1,0 +1,17 @@
+Revert CORS semantics for blob URLs to that of 2.42.0.
+
+Fixes loading of Unity apps.
+
+See: https://bugs.webkit.org/show_bug.cgi?id=262777
+
+--- a/Source/WebCore/fileapi/BlobURL.cpp	2023-09-27 08:38:55.676452200 +0000
++++ b/Source/WebCore/fileapi/BlobURL.cpp	2023-10-07 11:58:10.481643447 +0000
+@@ -80,7 +80,7 @@
+             return document->isSecureContext();
+     }
+ 
+-    return false;
++    return SecurityOrigin::isSecure(getOriginURL(url));
+ }
+ 
+ URL BlobURL::createBlobURL(StringView originString)
