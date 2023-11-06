@@ -30,8 +30,7 @@ TEST_TARGET ?= $(NO_TESTS)
 include $(WS_MAKE_RULES)/configure.mk
 
 $(BUILD_DIR)/%-7.4/.configured:	PHP_VERSION=7.4
-$(BUILD_DIR)/%-8.0/.configured:	PHP_VERSION=8.0
-$(BUILD_DIR)/%-8.1/.configured:	PHP_VERSION=8.1
+$(BUILD_DIR)/%-8.2/.configured:	PHP_VERSION=8.2
 
 PHP_BINDIR = /usr/php/$(PHP_VERSION)/bin
 
@@ -53,5 +52,4 @@ CONFIGURE_OPTIONS += --with-php-config=$(PHP_BINDIR)/php-config
 COMPONENT_INSTALL_ENV += INSTALL_ROOT=$(PROTO_DIR)
 
 REQUIRED_PACKAGES += web/php-74
-REQUIRED_PACKAGES += web/php-80
-REQUIRED_PACKAGES += web/php-81
+REQUIRED_PACKAGES += web/php-82
