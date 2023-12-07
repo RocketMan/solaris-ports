@@ -31,6 +31,7 @@ include $(WS_MAKE_RULES)/configure.mk
 
 $(BUILD_DIR)/%-7.4/.configured:	PHP_VERSION=7.4
 $(BUILD_DIR)/%-8.2/.configured:	PHP_VERSION=8.2
+$(BUILD_DIR)/%-8.3/.configured:	PHP_VERSION=8.3
 
 PHP_BINDIR = /usr/php/$(PHP_VERSION)/bin
 
