@@ -26,15 +26,7 @@
 # affiliates. All rights reserved.
 #
 
-# parfait is a bit unhappy (24796572)
-export PARFAIT_BUILD=no
-
-BUILD_BITS= 64
-# For now, all things built for C++11 require gcc; the cmake files for this
-# project already specify the required -std.
-COMPILER= gcc
-include ../../../make-rules/shared-macros.mk
-GCC_ROOT= /usr/gcc/10
+include ../webkitgtk-common.mk
 
 COMPONENT_NAME=		webkitgtk
 COMPONENT_VERSION=	2.42.3
@@ -44,12 +36,6 @@ COMPONENT_ARCHIVE_HASH= \
 	sha256:0a1a4630045628b3a6fe95da72dc47852cff20d66be1ac6fd0d669c88c13d8e2
 COMPONENT_ARCHIVE_URL=	https://webkitgtk.org/releases/$(COMPONENT_ARCHIVE)
 COMPONENT_ANITYA_ID=	5355
-
-UNIFDEF_VER=2.12
-UNIFDEF_DIR=unifdef-$(UNIFDEF_VER)
-UNIFDEF_ARCHIVE=$(UNIFDEF_DIR).tar.gz
-UNIFDEF_URL=https://dotat.at/prog/unifdef/$(UNIFDEF_ARCHIVE)
-UNIFDEF_HASH=sha256:fba564a24db7b97ebe9329713ac970627b902e5e9e8b14e19e024eb6e278d10b
 
 # Use project's own optimization flags instead.
 gcc_OPT=
@@ -69,20 +55,13 @@ TEST_TARGET= $(NO_TESTS)
 
 BUILD_STYLE= cmake-ninja
 
-# webkitgtk4 and webkitgtk41 share the same patches
-PATCH_DIR=patches
-CLEAN_PATHS += $(PATCH_DIR)
-COPY_COMMON_FILES_1:= $(shell mkdir -p $(PATCH_DIR))
-COPY_COMMON_FILES_2:= \
-    $(shell /usr/bin/rsync -ac ../webkitgtk4/patches/* $(PATCH_DIR))
-
 # Once 27639813 is figured out this can be removed along with the change
 # in prep-patch.mk for ADDITIONAL_PATCHES
 ifeq ($(MACH), sparc)
-ADDITIONAL_PATCHES += patches/mapfile.$(MACH)
+ADDITIONAL_PATCHES += patches-all/mapfile.$(MACH)
 endif
 ifeq ($(MACH), i386)
-ADDITIONAL_PATCHES += patches/mapfile.$(MACH)
+ADDITIONAL_PATCHES += patches-all/mapfile.$(MACH)
 endif
 
 include $(WS_MAKE_RULES)/common.mk
@@ -133,26 +112,11 @@ endif
 # Tell g-ir-scanner not to cache results in homedir of user running the build
 COMPONENT_BUILD_ENV += GI_SCANNER_DISABLE_CACHE=""
 
-# Fresh version of unifdef must be used instead of the system one
-COMPONENT_BUILD_ENV += PATH="$(COMPONENT_DIR)/$(UNIFDEF_DIR):$(GNUBIN):$(PATH)"
-
 # Ensure cmake finds the matching 32/64-bit version of dependencies.
 COMPONENT_BUILD_ENV += PKG_CONFIG_PATH="$(PKG_CONFIG_PATH)"
 
 # Ensure gir finds 64-bit dependencies
 COMPONENT_INSTALL_ENV += PKG_CONFIG_PATH="$(PKG_CONFIG_PATH)"
-
-download:: $(UNIFDEF_DIR)/unifdef
-
-$(UNIFDEF_ARCHIVE):
-	$(FETCH) --file $(UNIFDEF_ARCHIVE) --url $(UNIFDEF_URL) --hash $(UNIFDEF_HASH)
-
-$(UNIFDEF_DIR)/unifdef: $(UNIFDEF_ARCHIVE)
-	$(TAR) xzf $(UNIFDEF_ARCHIVE)
-	( cd $(UNIFDEF_DIR); CC=$(CC) gmake )
-	test -x $(UNIFDEF_DIR)/unifdef || exit 1
-
-CLEAN_PATHS += $(UNIFDEF_DIR)
 
 REQUIRED_PACKAGES += database/sqlite-3
 REQUIRED_PACKAGES += developer/build/cmake

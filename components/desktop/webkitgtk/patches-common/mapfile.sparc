@@ -1,0 +1,47 @@
+Two issues worked around here.  First is that Solaris linker expects -M for
+mapfiles, not the GNU ld --version-script option.  Ideally, CMakeLists.txt
+or some other appropriate CMake file would be changed to detect that the
+version-script option is not supported and then if not, check if SunOS, and
+if so, use -M instead.
+
+The second is a temporary workaround for the fact that the Solaris linker
+doesn't currently support arbitrary globbing of symbols via '*'.  For now,
+this is worked around with a manual definition of all of the symbols that
+should be exported by the relevant library.  The right fix is probably to
+detect whether we're using the GNU linker, and if not, use a combination of
+perl, sed, etc. to generate the mapfile at build time.
+
+Why setting LDFLAGS += -Wl,-zgnu-version-script-compat doesn't work is a
+mystery that needs to be eventually figured out.
+
+file upstream bug after resolving issues documented above
+
+--- a/Source/WebKit/PlatformGTK.cmake	2018-06-11 09:16:31.000000000 +0000
++++ b/Source/WebKit/PlatformGTK.cmake	2018-09-15 23:32:16.907900295 +0000
+@@ -25,7 +25,7 @@
+ add_definitions(-DDATADIR="${CMAKE_INSTALL_FULL_DATADIR}")
+ 
+ if (NOT DEVELOPER_MODE AND NOT CMAKE_SYSTEM_NAME MATCHES "Darwin")
+-    WEBKIT_ADD_TARGET_PROPERTIES(WebKit LINK_FLAGS "-Wl,--version-script,${CMAKE_CURRENT_SOURCE_DIR}/webkitglib-symbols.map")
++    WEBKIT_ADD_TARGET_PROPERTIES(WebKit LINK_FLAGS "-Wl,-M,${CMAKE_CURRENT_SOURCE_DIR}/webkitglib-symbols.map")
+ endif ()
+ 
+ # Temporary workaround to allow the build to succeed.
+--- a/Source/WebKit/webkitglib-symbols.map	2019-11-16 15:03:56.000000000 +0000
++++ b/Source/WebKit/webkitglib-symbols.map	2019-11-17 15:39:23.135196559 +0000
+@@ -1,14 +1,5 @@
+ {
+ global:
+-  jsc_*;
+-  webkit_*;
+-  extern "C++" {
+-    "WebKit::GPUProcessMain(int, char**)";
+-    "WebKit::NetworkProcessMain(int, char**)";
+-    "WebKit::WebProcessExtensionManager::initialize(WebKit::InjectedBundle*, API::Object*)";
+-    "WebKit::WebProcessExtensionManager::singleton()";
+-    "WebKit::WebProcessMain(int, char**)";
+-  };
+-local:
+   *;
++local:
+ };
