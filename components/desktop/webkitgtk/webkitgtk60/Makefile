@@ -29,11 +29,11 @@
 include ../webkitgtk-common.mk
 
 COMPONENT_NAME=		webkitgtk
-COMPONENT_VERSION=	2.42.3
+COMPONENT_VERSION=	2.42.5
 COMPONENT_PROJECT_URL=	https://webkitgtk.org
 COMPONENT_ARCHIVE=	$(COMPONENT_SRC).tar.xz
 COMPONENT_ARCHIVE_HASH= \
-	sha256:0a1a4630045628b3a6fe95da72dc47852cff20d66be1ac6fd0d669c88c13d8e2
+	sha256:b64278c1f20b8cfdbfb5ff573c37d871aba74a1db26d9b39f74e8953fe61e749
 COMPONENT_ARCHIVE_URL=	https://webkitgtk.org/releases/$(COMPONENT_ARCHIVE)
 COMPONENT_ANITYA_ID=	5355
 
@@ -45,6 +45,8 @@ CXXFLAGS += -Wno-deprecated-declarations
 CXXFLAGS += -Wno-undef
 CXXFLAGS += -Wno-unused-parameter
 CXXFLAGS += -Wno-unused-variable
+CXXFLAGS += -Wno-unused-but-set-variable
+CXXFLAGS += -Wno-char-subscripts
 
 CXXFLAGS += -fpermissive
 
