@@ -45,6 +45,8 @@ CXXFLAGS += -Wno-deprecated-declarations
 CXXFLAGS += -Wno-undef
 CXXFLAGS += -Wno-unused-parameter
 CXXFLAGS += -Wno-unused-variable
+CXXFLAGS += -Wno-unused-but-set-variable
+CXXFLAGS += -Wno-char-subscripts
 
 CXXFLAGS += -fpermissive
 

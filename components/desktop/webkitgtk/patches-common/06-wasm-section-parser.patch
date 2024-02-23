@@ -5,7 +5,7 @@
          }
          default:
 -            return fail(i, "th Type is non-Func, non-Struct, and non-Array ", typeKind);
-+            return fail(i, "th Type is non-Func, non-Struct, and non-Array ", (signed char)typeKind);
++            return fail(i, "th Type is non-Func, non-Struct, and non-Array ", static_cast<signed char>(typeKind));
          }
  
          WASM_PARSER_FAIL_IF(!signature, "can't allocate enough memory for Type section's ", i, "th signature");
@@ -14,7 +14,7 @@
          return { };
      }
 -    return fail("expected a packed type but got ", kind);
-+    return fail("expected a packed type but got ", (signed char)kind);
++    return fail("expected a packed type but got ", static_cast<signed char>(kind));
  }
  
  auto SectionParser::parseStorageType(StorageType& storageType) -> PartialResult
@@ -23,7 +23,7 @@
          }
          default:
 -            return fail(i, "th Type is non-Func, non-Struct, and non-Array ", typeKind);
-+            return fail(i, "th Type is non-Func, non-Struct, and non-Array ", (signed char)typeKind);
++            return fail(i, "th Type is non-Func, non-Struct, and non-Array ", static_cast<signed char>(typeKind));
          }
  
          WASM_PARSER_FAIL_IF(!signature, "can't allocate enough memory for recursion group's ", i, "th signature");
@@ -32,7 +32,7 @@
      }
      default:
 -        return fail("invalid structural type definition for subtype ", typeKind);
-+        return fail("invalid structural type definition for subtype ", (signed char)typeKind);
++        return fail("invalid structural type definition for subtype ", static_cast<signed char>(typeKind));
      }
  
      // When no supertypes are specified, we will normalize type definitions to

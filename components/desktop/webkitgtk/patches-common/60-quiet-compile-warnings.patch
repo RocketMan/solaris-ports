@@ -1,0 +1,35 @@
+WebKitGTK needs macro "LITTLE_ENDIAN" defined #7462
+
+From https://github.com/haikuports/haikuports/issues/7462
+
+
+--- webkitgtk-2.42.5/Source/ThirdParty/xdgmime/CMakeLists.txt~	2023-09-19 09:27:48.959710600 +0000
++++ webkitgtk-2.42.5/Source/ThirdParty/xdgmime/CMakeLists.txt	2024-02-23 16:01:39.971250687 +0000
+@@ -16,8 +16,10 @@
+     ${XDGMIME_DIR}/src/xdgmimeglob.c
+ )
+ 
++set(XDGMIME_BYTE_ORDER $<STREQUAL:${CMAKE_C_BYTE_ORDER},LITTLE_ENDIAN>)
++
+ include_directories("${XDGMIME_INCLUDE_DIRECTORIES}")
+-add_definitions(-DXDG_PREFIX=_wk_xdg)
++add_definitions(-DXDG_PREFIX=_wk_xdg -DLITTLE_ENDIAN=${XDGMIME_BYTE_ORDER})
+ add_library(xdgmime STATIC ${XDGMIME_SOURCES})
+ 
+ if (COMPILER_IS_GCC_OR_CLANG)
+
+==========================================================================
+
+Suppress a compile-time warning about cast from unsigned char** to char**.
+
+--- webkitgtk-2.42.5/Source/WebCore/platform/image-decoders/png/PNGImageDecoder.cpp-	2023-09-19 09:27:49.895691200 +0000
++++ webkitgtk-2.42.5/Source/WebCore/platform/image-decoders/png/PNGImageDecoder.cpp	2024-02-23 17:34:40.957878814 +0000
+@@ -400,7 +400,7 @@
+         unsigned char* iccProfileData;
+         png_uint_32 iccProfileDataSize;
+         int compressionType;
+-        if (png_get_iCCP(png, info, &iccProfileTitle, &compressionType, &iccProfileData, &iccProfileDataSize)) {
++        if (png_get_iCCP(png, info, &iccProfileTitle, &compressionType, reinterpret_cast<png_charpp>(&iccProfileData), &iccProfileDataSize)) {
+             auto iccProfile = LCMSProfilePtr(cmsOpenProfileFromMem(iccProfileData, iccProfileDataSize));
+             if (iccProfile) {
+                 auto* displayProfile = PlatformDisplay::sharedDisplay().colorProfile();
