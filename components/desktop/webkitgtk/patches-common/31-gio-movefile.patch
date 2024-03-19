@@ -11,8 +11,8 @@ The patch is not suitable for upstream, as we should figure out why
 std::filesystem::copy is not working and fix that.
 
 
---- a/Source/WTF/wtf/glib/FileSystemGlib.cpp	2023-09-15 17:57:18.515282502 +0000
-+++ b/Source/WTF/wtf/glib/FileSystemGlib.cpp	2023-09-15 18:01:35.464496442 +0000
+--- webkit/Source/WTF/wtf/glib/FileSystemGlib.cpp.~1~	2023-09-19 13:10:35.549961053 +0000
++++ webkit/Source/WTF/wtf/glib/FileSystemGlib.cpp	2023-09-19 13:11:25.569151150 +0000
 @@ -23,6 +23,7 @@
  #include "config.h"
  #include <wtf/FileSystem.h>
