@@ -37,6 +37,8 @@ set name=pkg.depend.bypass-generate value=libEGL\.so\.1 value=libGL\.so\.1
 # pkgdepend needs help to follow the runtime generated symlinks to libGL
 set name=pkg.depend.runpath \
     value=$PKGDEPEND_RUNPATH:usr/lib/mesa:usr/lib/mesa/$(MACH64)
+# pkg.linted.userland.action001.3 needed for /usr/lib/xorg/amd64
+set name=pkg.linted.userland.action001.3 value=true
 set name=info.classification \
     value="org.opensolaris.category.2008:Desktop (GNOME)/Libraries"
 set name=info.source-url value=$(COMPONENT_ARCHIVE_URL)
@@ -145,12 +147,12 @@ file path=usr/lib/$(MACH64)/girepository-1.0/WebKitWebProcessExtension-6.0.typel
 link path=usr/lib/$(MACH64)/libjavascriptcoregtk-6.0.so \
     target=libjavascriptcoregtk-6.0.so.1
 link path=usr/lib/$(MACH64)/libjavascriptcoregtk-6.0.so.1 \
-    target=libjavascriptcoregtk-6.0.so.1.1.14
-file path=usr/lib/$(MACH64)/libjavascriptcoregtk-6.0.so.1.1.14
+    target=libjavascriptcoregtk-6.0.so.1.2.4
+file path=usr/lib/$(MACH64)/libjavascriptcoregtk-6.0.so.1.2.4
 link path=usr/lib/$(MACH64)/libwebkitgtk-6.0.so target=libwebkitgtk-6.0.so.4
 link path=usr/lib/$(MACH64)/libwebkitgtk-6.0.so.4 \
-    target=libwebkitgtk-6.0.so.4.4.8
-file path=usr/lib/$(MACH64)/libwebkitgtk-6.0.so.4.4.8
+    target=libwebkitgtk-6.0.so.4.5.4
+file path=usr/lib/$(MACH64)/libwebkitgtk-6.0.so.4.5.4
 file path=usr/lib/$(MACH64)/pkgconfig/javascriptcoregtk-6.0.pc
 file path=usr/lib/$(MACH64)/pkgconfig/webkitgtk-6.0.pc
 file path=usr/lib/$(MACH64)/pkgconfig/webkitgtk-web-process-extension-6.0.pc

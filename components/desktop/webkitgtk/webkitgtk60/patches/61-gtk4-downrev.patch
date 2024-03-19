@@ -1,0 +1,14 @@
+Temporarily allow older gtk4
+
+
+--- webkitgtk-2.44.0/Source/cmake/OptionsGTK.cmake.~2~	2024-03-19 10:51:25.175766188 +0000
++++ webkitgtk-2.44.0/Source/cmake/OptionsGTK.cmake	2024-03-19 15:52:51.787564558 +0000
+@@ -152,7 +152,7 @@
+ WEBKIT_OPTION_END()
+ 
+ if (USE_GTK4)
+-    set(GTK_MINIMUM_VERSION 4.6.0)
++    set(GTK_MINIMUM_VERSION 4.4.0)
+     set(GTK_PC_NAME gtk4)
+ else ()
+     set(GTK_MINIMUM_VERSION 3.22.0)

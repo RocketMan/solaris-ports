@@ -20,7 +20,7 @@
 #
 
 #
-# Copyright (c) 2020-2023 Jim Mason <jmason at ibinx dot com>.
+# Copyright (c) 2020-2024 Jim Mason <jmason at ibinx dot com>.
 #
 # Adapted from original code Copyright (c) 2016, 2018, Oracle and/or its
 # affiliates. All rights reserved.
@@ -29,11 +29,11 @@
 include ../webkitgtk-common.mk
 
 COMPONENT_NAME=		webkitgtk
-COMPONENT_VERSION=	2.42.5
+COMPONENT_VERSION=	2.44.0
 COMPONENT_PROJECT_URL=	https://webkitgtk.org
 COMPONENT_ARCHIVE=	$(COMPONENT_SRC).tar.xz
 COMPONENT_ARCHIVE_HASH= \
-	sha256:b64278c1f20b8cfdbfb5ff573c37d871aba74a1db26d9b39f74e8953fe61e749
+	sha256:c66530e41ba59b1edba4ee89ef20b2188e273bed0497e95084729e3cfbe30c87
 COMPONENT_ARCHIVE_URL=	https://webkitgtk.org/releases/$(COMPONENT_ARCHIVE)
 COMPONENT_ANITYA_ID=	5355
 
@@ -41,14 +41,18 @@ COMPONENT_ANITYA_ID=	5355
 gcc_OPT=
 
 # Quiet known warnings in the build
+CFLAGS += -Wno-char-subscripts
+
 CXXFLAGS += -Wno-deprecated-declarations
 CXXFLAGS += -Wno-undef
 CXXFLAGS += -Wno-unused-parameter
 CXXFLAGS += -Wno-unused-variable
 CXXFLAGS += -Wno-unused-but-set-variable
-CXXFLAGS += -Wno-char-subscripts
 
 CXXFLAGS += -fpermissive
+
+# ensure drm can be found at runtime
+LDFLAGS += -L/usr/lib/xorg/amd64 -R/usr/lib/xorg/amd64
 
 $(SOLARIS_11_3_ONLY)LDFLAGS += -lsocket  -lnsl
 
@@ -93,12 +97,12 @@ CMAKE_OPTIONS += -DENABLE_ENCRYPTED_MEDIA=ON
 CMAKE_OPTIONS += -DUSE_LIBHYPHEN=OFF
 CMAKE_OPTIONS += -DUSE_WOFF2=OFF
 CMAKE_OPTIONS += -DENABLE_JIT=ON
-CMAKE_OPTIONS += -DUSE_WPE_RENDERER=OFF
 CMAKE_OPTIONS += -DUSE_SOUP2=OFF
 CMAKE_OPTIONS += -DUSE_GTK4=ON
 CMAKE_OPTIONS += -DUSE_GSTREAMER_WEBRTC=OFF
 CMAKE_OPTIONS += -DUSE_JPEGXL=OFF
 CMAKE_OPTIONS += -DENABLE_JOURNALD_LOG=OFF
+CMAKE_OPTIONS += -DUSE_LIBBACKTRACE=OFF
 
 CMAKE_OPTIONS += -DLIB_INSTALL_DIR="$(USRLIB)"
 CMAKE_OPTIONS += -DLIBEXEC_INSTALL_DIR="$(USRLIB)/WebKit60"
