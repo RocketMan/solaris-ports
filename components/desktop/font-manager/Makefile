@@ -29,11 +29,11 @@ include ../../../make-rules/shared-macros.mk
 GCC_ROOT =		/usr/gcc/10
 
 COMPONENT_NAME=		font-manager
-COMPONENT_VERSION=	0.8.8
+COMPONENT_VERSION=	0.8.9
 COMPONENT_SRC=		$(COMPONENT_NAME)-$(GIT_COMMIT_ID)
 COMPONENT_ARCHIVE_URL=	$(GIT_REPO)/archive/$(GIT_COMMIT_ID).tar.gz
 GIT_REPO=		https://github.com/FontManager/font-manager
-GIT_COMMIT_ID=		0.8.8
+GIT_COMMIT_ID=		0.8.9
 COMPONENT_PROJECT_URL=	https://fontmanager.github.io/
 COMPONENT_ANITYA_ID=	15389
 

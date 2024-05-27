@@ -1,0 +1,149 @@
+The changes to support webkitgtk4.1 / libsoup3 are causing an unexpected
+runtime error:
+
+    Gtk-ERROR **: GTK+ 2.x symbols detected. Using GTK+ 2.x and GTK+ 3 in the same process is not supported
+
+Note that webkitgtk4.1 and libsoup3 do not cause problems elsewhere;
+we should investigate why this is happening here and resolve the
+underlying issue.
+
+As an interim solution, this patch reverts changes from the following commit:
+
+https://github.com/FontManager/font-manager/commit/5cbec5eab33f6e64c27ead07cdee0098431ad6b9
+
+There should be no functional changes as a result of this patch.
+
+
+diff --exclude '*.orig' -Naur font-manager-0.8.9/meson.build font-manager-0.8.9.ok/meson.build
+--- font-manager-0.8.9/meson.build	2024-05-23 01:12:47.000000000 +0000
++++ font-manager-0.8.9.ok/meson.build	2024-05-27 16:04:17.577249759 +0000
+@@ -30,8 +30,8 @@
+ xml = dependency('libxml-2.0', version: '>= 2.9')
+ 
+ if get_option('webkit')
+-    soup = dependency('libsoup-3.0', version: '>= 3.0')
+-    webkit = dependency('webkit2gtk-4.1', version: '>= 2.42')
++    soup = dependency('libsoup-2.4', version: '>= 2.62')
++    webkit = dependency('webkit2gtk-4.0', version: '>= 2.24')
+     add_global_arguments('-D', 'HAVE_WEBKIT', language: 'vala')
+ endif
+ 
+diff --exclude '*.orig' -Naur font-manager-0.8.9/src/font-manager/web/google/GoogleFonts.vala font-manager-0.8.9.ok/src/font-manager/web/google/GoogleFonts.vala
+--- font-manager-0.8.9/src/font-manager/web/google/GoogleFonts.vala	2024-05-23 01:12:47.000000000 +0000
++++ font-manager-0.8.9.ok/src/font-manager/web/google/GoogleFonts.vala	2024-05-27 16:04:17.577498756 +0000
+@@ -179,33 +179,35 @@
+             foreach (var entry in order) {
+                 string filename = "gfc-%s.json".printf(entry);
+                 var message = new Soup.Message(GET, WEBFONTS.printf(GFC_API_KEY, entry));
+-                try {
+-                    Bytes? bytes = session.send_and_read(message, null);
+-                    assert(bytes != null);
++                if (session.send_message(message) == Soup.Status.OK) {
+                     string filepath = Path.build_filename(get_package_cache_directory(), filename);
+-                    File cache_file = File.new_for_path(filepath);
+-                    if (cache_file.query_exists())
+-                        cache_file.delete();
+-                    FileOutputStream stream = cache_file.create(FileCreateFlags.PRIVATE);
+-                    stream.write_bytes_async.begin(bytes, Priority.DEFAULT, null, (obj, res) => {
+-                        try {
+-                            stream.write_bytes_async.end(res);
+-                            stream.close();
+-                        } catch (Error e) {
+-                            warning("Failed to write data for : %s :: %i : %s", filename, e.code, e.message);
+-                            return;
+-                        }
+-                    });
+-                } catch (Error e) {
++                    try {
++                        Bytes bytes = message.response_body.flatten().get_as_bytes();
++                        File cache_file = File.new_for_path(filepath);
++                        if (cache_file.query_exists())
++                            cache_file.delete();
++                        FileOutputStream stream = cache_file.create(FileCreateFlags.PRIVATE);
++                        stream.write_bytes_async.begin(bytes, Priority.DEFAULT, null, (obj, res) => {
++                            try {
++                                stream.write_bytes_async.end(res);
++                                stream.close();
++                            } catch (Error e) {
++                                warning("Failed to write data for : %s :: %i : %s", filename, e.code, e.message);
++                                return;
++                            }
++                        });
++                    } catch (Error e) {
++                        warning("Failed to write data for : %s :: %i : %s", filename, e.code, e.message);
++                        return;
++                    }
++                    Idle.add(update_font_list_cache.callback);
++                    yield;
++                } else {
+                     http_status = message.status_code;
+                     status_message = message.reason_phrase;
+                     warning("Failed to download data for : %s :: %i", filename, (int) message.status_code);
+                     return;
+                 }
+-                http_status = message.status_code;
+-                status_message = message.reason_phrase;
+-                Idle.add(update_font_list_cache.callback);
+-                yield;
+             }
+         }
+ 
+diff --exclude '*.orig' -Naur font-manager-0.8.9/src/font-manager/web/google/WebFont.vala font-manager-0.8.9.ok/src/font-manager/web/google/WebFont.vala
+--- font-manager-0.8.9/src/font-manager/web/google/WebFont.vala	2024-05-23 01:12:47.000000000 +0000
++++ font-manager-0.8.9.ok/src/font-manager/web/google/WebFont.vala	2024-05-27 16:04:17.577651348 +0000
+@@ -42,30 +42,35 @@
+             string filename = font.get_filename();
+             string filepath = Path.build_filename(font_dir, filename);
+             var message = new Soup.Message(GET, font.url);
+-            try {
+-                Bytes? bytes = session.send_and_read(message, null);
+-                assert(bytes != null);
+-                File font_file = File.new_for_path(filepath);
+-                // File.create errors out if file already exists regardless of flags
+-                if (font_file.query_exists())
+-                    font_file.delete();
+-                FileOutputStream stream = font_file.create(FileCreateFlags.PRIVATE);
++            if (session.send_message(message) == Soup.Status.OK) {
+                 try {
+-                    stream.write_bytes(bytes);
+-                    stream.close();
++                    Bytes bytes = message.response_body.flatten().get_as_bytes();
++                    File font_file = File.new_for_path(filepath);
++                    if (font_file.query_exists())
++                        font_file.delete();
++                    FileOutputStream stream = font_file.create(FileCreateFlags.PRIVATE);
++                    stream.write_bytes_async.begin(bytes, Priority.DEFAULT, null, (obj, res) => {
++                        try {
++                            stream.write_bytes_async.end(res);
++                            stream.close();
++                        } catch (Error e) {
++                            warning("Failed to write data for : %s :: %i : %s", filename, e.code, e.message);
++                            retval = false;
++                            return;
++                        }
++                    });
++                    if (!retval)
++                        return false;
+                 } catch (Error e) {
+-                    retval = false;
+-                    warning("Failed to write data to file : %s : %s", filepath, e.message);
++                    warning("Failed to write data for : %s :: %i : %s", filename, e.code, e.message);
++                    return false;
+                 }
+-            } catch (Error e) {
+-                retval = false;
+-                warning("Failed to read data for : %s :: %i :: %s",
+-                        filename,
+-                        (int) message.status_code,
+-                        e.message);
++                Idle.add(download_font_files.callback);
++                yield;
++            } else {
++                warning("Failed to download data for : %s :: %i", filename, (int) message.status_code);
++                return false;
+             }
+-            Idle.add(download_font_files.callback);
+-            yield;
+         }
+         return retval;
+     }
