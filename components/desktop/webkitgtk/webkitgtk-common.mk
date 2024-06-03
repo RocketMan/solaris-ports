@@ -68,3 +68,10 @@ CLEAN_PATHS += $(UNIFDEF_DIR)
 
 # use fresh version of unifdef instead of the system one
 COMPONENT_BUILD_ENV += PATH="$(COMPONENT_DIR)/$(UNIFDEF_DIR):$(GNUBIN):$(PATH)"
+
+# optionally build static woff2 libraries
+ENABLE_STATIC_WOFF2 ?= OFF
+
+ifneq ($(ENABLE_STATIC_WOFF2), OFF)
+include ../webkitgtk-woff2.mk
+endif
