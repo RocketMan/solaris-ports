@@ -20,13 +20,13 @@
 #
 
 #
-# Copyright (c) 2020-2023 Jim Mason <jmason at ibinx dot com>.
+# Copyright (c) 2020-2024 Jim Mason <jmason at ibinx dot com>.
 #
 
 export PARFAIT_BUILD=no
 
 BUILD_BITS=64
-COMPILER=gcc
+COMPILER=clang
 
 # paths are relative to the variant subdirectory
 include ../../../../make-rules/shared-macros.mk
@@ -68,6 +68,14 @@ CLEAN_PATHS += $(UNIFDEF_DIR)
 
 # use fresh version of unifdef instead of the system one
 COMPONENT_BUILD_ENV += PATH="$(COMPONENT_DIR)/$(UNIFDEF_DIR):$(GNUBIN):$(PATH)"
+
+ifeq ($(COMPILER), clang)
+CFLAGS += -Wno-expansion-to-defined
+CXXFLAGS += -Wno-expansion-to-defined
+CXXFLAGS += -Wno-gnu-include-next
+CXXFLAGS += -Wno-sign-compare
+CXXFLAGS += -Wno-unused-lambda-capture
+endif
 
 # optionally build static woff2 libraries
 ENABLE_STATIC_WOFF2 ?= OFF

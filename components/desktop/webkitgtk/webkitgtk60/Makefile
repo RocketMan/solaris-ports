@@ -46,6 +46,7 @@ gcc_OPT=
 # Quiet known warnings in the build
 CFLAGS += -Wno-char-subscripts
 
+CXXFLAGS += -Wno-char-subscripts
 CXXFLAGS += -Wno-deprecated-declarations
 CXXFLAGS += -Wno-undef
 CXXFLAGS += -Wno-unused-parameter
