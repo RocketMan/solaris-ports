@@ -201,9 +201,8 @@ endif
 
 # The default version should go last.
 PYTHON_VERSION =	3.7
-PYTHON2_VERSIONS =	2.7
-PYTHON3_VERSIONS =	3.7 3.9
-PYTHON_VERSIONS =	$(PYTHON3_VERSIONS) $(PYTHON2_VERSIONS)
+PYTHON3_VERSIONS =	3.7 3.9 3.11
+PYTHON_VERSIONS =	$(PYTHON3_VERSIONS)
 
 PYTHON3.7_READY = $(PYTHON3_VERSIONS)
 
@@ -646,27 +645,28 @@ RUBY_SCRIPT_FIX_FUNC = \
         '1s%^\#! */usr/bin/env ruby%\#!/usr/ruby/$(RUBY_VERSION)/bin/ruby%' \
         \{\}
 
-PYTHON.2.7.VENDOR_PACKAGES.32 = /usr/lib/python2.7/vendor-packages
-PYTHON.2.7.VENDOR_PACKAGES.64 = /usr/lib/python2.7/vendor-packages/64
-PYTHON.2.7.VENDOR_PACKAGES = $(PYTHON.2.7.VENDOR_PACKAGES.$(BITS))
-
-PYTHON.3.5.VENDOR_PACKAGES.64 = /usr/lib/python3.5/vendor-packages
-PYTHON.3.5.VENDOR_PACKAGES = $(PYTHON.3.5.VENDOR_PACKAGES.$(BITS))
-
+PYTHON.3.7.VENDOR_PACKAGES.32 =
 PYTHON.3.7.VENDOR_PACKAGES.64 = /usr/lib/python3.7/vendor-packages
-PYTHON.3.7.VENDOR_PACKAGES = $(PYTHON.3.7.VENDOR_PACKAGES.$(BITS))
+PYTHON.3.7.VENDOR_PACKAGES = $(PYTHON.3.7.VENDOR_PACKAGES.64)
 
+PYTHON.3.9.VENDOR_PACKAGES.32 =
 PYTHON.3.9.VENDOR_PACKAGES.64 = /usr/lib/python3.9/vendor-packages
-PYTHON.3.9.VENDOR_PACKAGES = $(PYTHON.3.9.VENDOR_PACKAGES.$(BITS))
+PYTHON.3.9.VENDOR_PACKAGES = $(PYTHON.3.9.VENDOR_PACKAGES.64)
+
+PYTHON.3.11.VENDOR_PACKAGES.32 =
+PYTHON.3.11.VENDOR_PACKAGES.64 = /usr/lib/python3.11/vendor-packages
+PYTHON.3.11.VENDOR_PACKAGES = $(PYTHON.3.11.VENDOR_PACKAGES.64)
+
+# Base path to vendor packages shared between all Python versions
+PYTHON_VENDOR_PACKAGES_BASE = /usr/lib/python$(PYTHON_VERSION)/vendor-packages
 
 PYTHON_VENDOR_PACKAGES.32 = $(PYTHON.$(PYTHON_VERSION).VENDOR_PACKAGES.32)
 PYTHON_VENDOR_PACKAGES.64 = $(PYTHON.$(PYTHON_VERSION).VENDOR_PACKAGES.64)
-PYTHON_VENDOR_PACKAGES = $(PYTHON_VENDOR_PACKAGES.$(BITS))
+PYTHON_VENDOR_PACKAGES = $(PYTHON.$(PYTHON_VERSION).VENDOR_PACKAGES)
 
-PYTHON.2.7.TEST = /usr/lib/python2.7/test
-PYTHON.3.5.TEST = /usr/lib/python3.5/test
 PYTHON.3.7.TEST = /usr/lib/python3.7/test
 PYTHON.3.9.TEST = /usr/lib/python3.9/test
+PYTHON.3.11.TEST = /usr/lib/python3.11/test
 
 USRBIN.32 =	/usr/bin
 USRBIN.64 =	/usr/bin/$(MACH64)
@@ -676,18 +676,10 @@ USRLIB.32 =	$(USRLIBDIR)
 USRLIB.64 =	$(USRLIBDIR64)
 USRLIB =	$(USRLIB.$(BITS))
 
-PYTHON.2.7.32 =	$(USRBIN.32)/python2.7
-PYTHON.2.7.64 =	$(USRBIN.64)/python2.7
-PYTHON.2.7 =	$(USRBIN)/python2.7
-
 # Although we build Python 3 64-bit only, the BUILD_NO_ARCH macro is written
 # in such a way that we still need the .32 macro below.  And since we build
 # 64-bit only, we stick it directly in usr/bin (i.e., the 32-bit path) rather
 # than the 64-bit path.
-PYTHON.3.5.32 =	$(USRBIN.32)/python3.5
-PYTHON.3.5.64 =	$(USRBIN.32)/python3.5
-PYTHON.3.5 =	$(USRBIN.32)/python3.5
-
 PYTHON.3.7.32 =	$(USRBIN.32)/python3.7
 PYTHON.3.7.64 =	$(USRBIN.32)/python3.7
 PYTHON.3.7 =	$(USRBIN.32)/python3.7
@@ -695,6 +687,10 @@ PYTHON.3.7 =	$(USRBIN.32)/python3.7
 PYTHON.3.9.32 =	$(USRBIN.32)/python3.9
 PYTHON.3.9.64 =	$(USRBIN.32)/python3.9
 PYTHON.3.9 =	$(USRBIN.32)/python3.9
+
+PYTHON.3.11.32 =	$(USRBIN.32)/python3.11
+PYTHON.3.11.64 =	$(USRBIN.32)/python3.11
+PYTHON.3.11 =	$(USRBIN.32)/python3.11
 
 PYTHON.32 =	$(PYTHON.$(PYTHON_VERSION).32)
 PYTHON.64 =	$(PYTHON.$(PYTHON_VERSION).64)
@@ -719,7 +715,8 @@ PYTHON_SCRIPT_SHEBANG_FIX_FUNC = \
 		-e '1s@/usr/bin/python[[:digit:]]*$$@$(PYTHON)@' \
 		-e '1s@/usr/bin/python[[:digit:]]*\ @$(PYTHON) @' \
 		-e '1s@/usr/bin/env\ $(PYTHON)@$(PYTHON)@' \
-		-e '1s@/usr/bin/env\ python[[:digit:]]*@$(PYTHON)@' $(1);
+		-e '1s@/usr/bin/env\ python[23]@$(PYTHON)@' \
+		-e '1s@/usr/bin/env\ python@$(PYTHON)@' $(1);
 
 # PYTHON_SCRIPTS is a list of files from the calling Makefile.
 PYTHON_SCRIPTS_PROCESS= \
