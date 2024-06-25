@@ -20,7 +20,10 @@
 #
 
 #
-# Copyright (c) 2010, 2018, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2019-2024 Jim Mason <jmason at ibinx dot com>.
+#
+# Adapted from original code Copyright (c) 2010, 2018, Oracle and/or its
+# affiliates. All rights reserved.
 #
 
 # $ (foreach suffix,$(VERSIONS),$(eval include $(WS_MAKE_RULES)/python-$(suffix).mk))
@@ -97,7 +100,7 @@ INSTALL_32_and_64 = $(INSTALL_64)
 endif
 
 PYTHON_ENV =	CC="$(CC)"
-ifeq ($(COMPILER),gcc)
+ifneq (,$(filter $(COMPILER),gcc clang))
 PYTHON_ENV +=	CXX="$(CXX)"
 PYTHON_ENV +=	LDSHARED="$(CC) -shared"
 PYTHON_ENV +=	LDCXXSHARED="$(CXX) -shared"

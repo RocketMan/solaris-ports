@@ -20,7 +20,7 @@
 #
 
 #
-# Copyright (c) 2019-2022 Jim Mason <jmason at ibinx dot com>.
+# Copyright (c) 2019-2024 Jim Mason <jmason at ibinx dot com>.
 #
 # Adapted from original code Copyright (c) 2010, 2019, Oracle and/or its
 # affiliates. All rights reserved.
@@ -605,6 +605,12 @@ CXX.gcc.32 =	$(GCC_ROOT)/bin/g++
 CC.gcc.64 =	$(GCC_ROOT)/bin/gcc
 CXX.gcc.64 =	$(GCC_ROOT)/bin/g++
 
+CC.clang.32 =	/usr/bin/clang
+CXX.clang.32 =	/usr/bin/clang++
+
+CC.clang.64 =	/usr/bin/clang
+CXX.clang.64 =	/usr/bin/clang++
+
 lint.32 =	$(SPRO_VROOT)/bin/lint -m32
 lint.64 =	$(SPRO_VROOT)/bin/lint -m64
 
@@ -1077,6 +1083,17 @@ CFLAGS.gcc +=	$(gcc_XREGS)
 # configure environment.
 CXXFLAGS.gcc +=		$(gcc_OPT)
 CXXFLAGS.gcc +=		$(gcc_XREGS)
+
+# Default clang to use gcc flags
+clang_PIC +=		$(gcc_PIC)
+CFLAGS.clang +=		$(CFLAGS.gcc)
+CXXFLAGS.clang +=	$(CXXFLAGS.gcc)
+
+# If you have not built llvm from this repo or from
+# https://github.com/RocketMan/solaris-userland-legacy,
+# you may need these as well:
+#CFLAGS.clang += -fno-use-cxa-atexit -Wa,-mrelax-relocations=no
+#CXXFLAGS.clang += -fno-use-cxa-atexit -Wa,-mrelax-relocations=no
 
 # Build 32 or 64 bit objects.
 CFLAGS +=	$(CC_BITS)
