@@ -1,0 +1,17 @@
+There were several problems with the upstream version of this code
+which have been fixed here for 11.3:
+
+1. __cxa_atexit and __cxa_finalize need to be visibility("default") so
+they can be referenced by the DSOs.  They need to link only to the
+application.
+
+2. __attribute((destructor)) __do_cleanup needs to be pulled out into
+a separate file to be linked to each DSO, so it will be called when
+that DSO unloads.  We do this in the new cxa_cleanup_*.  __do_cleanup
+for the application invokes all remaining destructors.
+
+3. The magic symbol __dso_handle doesn't seem to work correctly on
+11.3, as its value is not initialized to its address as expected.
+
+Problems 1 and 2 are easily resolved.  To work around problem 3, we
+call __cxa_finalize using the address rather than relying on the value.

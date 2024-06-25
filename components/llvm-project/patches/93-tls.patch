@@ -1,0 +1,30 @@
+On Solaris 11.3, exporting the TLS variable llvm::parallel::threadIndex
+yields the following ld error:
+
+    symbol '_ZN4llvm8parallel11threadIndexE' in file ../../lib/amd64/libLLVM-16.so (STT_TLS), is defined in a non-SHF_TLS section
+
+This patch applies the same strategy as WIN32; namely, it keeps the
+TLS variable local and exposes it via a wrapper function.
+
+--- llvm-17.0.6/llvm/include/llvm/Support/Parallel.h.~1~	2024-02-12 09:57:54.293586225 +0000
++++ llvm-17.0.6/llvm/include/llvm/Support/Parallel.h	2024-02-12 09:59:00.158791590 +0000
+@@ -38,7 +38,7 @@
+          "ThreadPoolExecutor");                                                \
+   return threadIndex;
+ 
+-#ifdef _WIN32
++#if defined(_WIN32) || defined(__sun)
+ // Direct access to thread_local variables from a different DLL isn't
+ // possible with Windows Native TLS.
+ unsigned getThreadIndex();
+--- llvm-17.0.6/llvm/lib/Support/Parallel.cpp.~1~	2024-02-12 09:57:54.294160217 +0000
++++ llvm-17.0.6/llvm/lib/Support/Parallel.cpp	2024-02-12 09:59:34.729776894 +0000
+@@ -23,7 +23,7 @@
+ namespace parallel {
+ #if LLVM_ENABLE_THREADS
+ 
+-#ifdef _WIN32
++#if defined(_WIN32) || defined(__sun)
+ static thread_local unsigned threadIndex = UINT_MAX;
+ 
+ unsigned getThreadIndex() { GET_THREAD_INDEX_IMPL; }

@@ -1,0 +1,333 @@
+#
+# CDDL HEADER START
+#
+# The contents of this file are subject to the terms of the
+# Common Development and Distribution License (the "License").
+# You may not use this file except in compliance with the License.
+#
+# You can obtain a copy of the license at usr/src/OPENSOLARIS.LICENSE
+# or http://www.opensolaris.org/os/licensing.
+# See the License for the specific language governing permissions
+# and limitations under the License.
+#
+# When distributing Covered Code, include this CDDL HEADER in each
+# file and include the License file at usr/src/OPENSOLARIS.LICENSE.
+# If applicable, add the following below this CDDL HEADER, with the
+# fields enclosed by brackets "[]" replaced with your own identifying
+# information: Portions Copyright [yyyy] [name of copyright owner]
+#
+# CDDL HEADER END
+#
+
+#
+# Copyright (c) 2015, 2023, Oracle and/or its affiliates.
+#
+
+<transform file path=usr.*/man/.+ -> default mangler.man.stability uncommitted>
+set name=pkg.fmri \
+    value=pkg:/developer/llvm/clang@$(IPS_COMPONENT_VERSION),$(BUILD_VERSION)
+set name=pkg.summary \
+    value="clang $(COMPONENT_VERSION) runtime - The clang LLVM Compiler"
+set name=pkg.linted.userland.action001.3 value=true
+set name=com.oracle.info.description \
+    value="clang - The C/C++/Objective-C/Objective-C++ compiler based on the LLVM Compiler Infrastructure Framework"
+set name=info.classification value=org.opensolaris.category.2008:Development/C \
+    value=org.opensolaris.category.2008:Development/C++ \
+    value=org.opensolaris.category.2008:Development/GNU \
+    value="org.opensolaris.category.2008:Development/Objective C"
+set name=info.source-url value=$(COMPONENT_ARCHIVE_URL)
+set name=info.upstream-url value=$(COMPONENT_PROJECT_URL)
+set name=org.opensolaris.arc-caseid value=PSARC/2013/188 value=PSARC/2021/058
+set name=org.opensolaris.consolidation value=$(CONSOLIDATION)
+file path=usr/bin/analyze-build
+file path=usr/bin/arcmt-test
+file path=usr/bin/c-arcmt-test
+file path=usr/bin/c-index-test
+link path=usr/bin/clang target=clang-18
+link path=usr/bin/clang++ target=clang
+file path=usr/bin/clang-18
+file path=usr/bin/clang-check
+link path=usr/bin/clang-cl target=clang
+link path=usr/bin/clang-cpp target=clang
+file path=usr/bin/clang-extdef-mapping
+file path=usr/bin/clang-format
+file path=usr/bin/clang-linker-wrapper
+file path=usr/bin/clang-offload-bundler
+file path=usr/bin/clang-offload-packager
+file path=usr/bin/clang-refactor
+file path=usr/bin/clang-rename
+file path=usr/bin/clang-repl
+file path=usr/bin/clang-scan-deps
+file path=usr/bin/clang-tblgen
+file path=usr/bin/diagtool
+file path=usr/bin/git-clang-format
+file path=usr/bin/hmaptool
+file path=usr/bin/intercept-build
+file path=usr/bin/scan-build
+file path=usr/bin/scan-build-py
+file path=usr/bin/scan-view pkg.depend.bypass-generate=.*
+file path=usr/lib/$(MACH64)/clang/18/include/__clang_cuda_builtin_vars.h
+file path=usr/lib/$(MACH64)/clang/18/include/__clang_cuda_cmath.h
+file path=usr/lib/$(MACH64)/clang/18/include/__clang_cuda_complex_builtins.h
+file path=usr/lib/$(MACH64)/clang/18/include/__clang_cuda_device_functions.h
+file path=usr/lib/$(MACH64)/clang/18/include/__clang_cuda_intrinsics.h
+file path=usr/lib/$(MACH64)/clang/18/include/__clang_cuda_libdevice_declares.h
+file path=usr/lib/$(MACH64)/clang/18/include/__clang_cuda_math.h
+file path=usr/lib/$(MACH64)/clang/18/include/__clang_cuda_math_forward_declares.h
+file path=usr/lib/$(MACH64)/clang/18/include/__clang_cuda_runtime_wrapper.h
+file path=usr/lib/$(MACH64)/clang/18/include/__clang_cuda_texture_intrinsics.h
+file path=usr/lib/$(MACH64)/clang/18/include/__clang_hip_cmath.h
+file path=usr/lib/$(MACH64)/clang/18/include/__clang_hip_libdevice_declares.h
+file path=usr/lib/$(MACH64)/clang/18/include/__clang_hip_math.h
+file path=usr/lib/$(MACH64)/clang/18/include/__clang_hip_runtime_wrapper.h
+file path=usr/lib/$(MACH64)/clang/18/include/__clang_hip_stdlib.h
+file path=usr/lib/$(MACH64)/clang/18/include/__stdarg___gnuc_va_list.h
+file path=usr/lib/$(MACH64)/clang/18/include/__stdarg___va_copy.h
+file path=usr/lib/$(MACH64)/clang/18/include/__stdarg_va_arg.h
+file path=usr/lib/$(MACH64)/clang/18/include/__stdarg_va_copy.h
+file path=usr/lib/$(MACH64)/clang/18/include/__stdarg_va_list.h
+file path=usr/lib/$(MACH64)/clang/18/include/__stddef_max_align_t.h
+file path=usr/lib/$(MACH64)/clang/18/include/__stddef_null.h
+file path=usr/lib/$(MACH64)/clang/18/include/__stddef_nullptr_t.h
+file path=usr/lib/$(MACH64)/clang/18/include/__stddef_offsetof.h
+file path=usr/lib/$(MACH64)/clang/18/include/__stddef_ptrdiff_t.h
+file path=usr/lib/$(MACH64)/clang/18/include/__stddef_rsize_t.h
+file path=usr/lib/$(MACH64)/clang/18/include/__stddef_size_t.h
+file path=usr/lib/$(MACH64)/clang/18/include/__stddef_unreachable.h
+file path=usr/lib/$(MACH64)/clang/18/include/__stddef_wchar_t.h
+file path=usr/lib/$(MACH64)/clang/18/include/__stddef_wint_t.h
+file path=usr/lib/$(MACH64)/clang/18/include/__wmmintrin_aes.h
+file path=usr/lib/$(MACH64)/clang/18/include/__wmmintrin_pclmul.h
+file path=usr/lib/$(MACH64)/clang/18/include/adcintrin.h
+file path=usr/lib/$(MACH64)/clang/18/include/adxintrin.h
+file path=usr/lib/$(MACH64)/clang/18/include/altivec.h
+file path=usr/lib/$(MACH64)/clang/18/include/ammintrin.h
+file path=usr/lib/$(MACH64)/clang/18/include/amxcomplexintrin.h
+file path=usr/lib/$(MACH64)/clang/18/include/amxfp16intrin.h
+file path=usr/lib/$(MACH64)/clang/18/include/amxintrin.h
+file path=usr/lib/$(MACH64)/clang/18/include/arm64intr.h
+file path=usr/lib/$(MACH64)/clang/18/include/arm_acle.h
+file path=usr/lib/$(MACH64)/clang/18/include/arm_cmse.h
+file path=usr/lib/$(MACH64)/clang/18/include/arm_neon_sve_bridge.h
+file path=usr/lib/$(MACH64)/clang/18/include/armintr.h
+file path=usr/lib/$(MACH64)/clang/18/include/avx2intrin.h
+file path=usr/lib/$(MACH64)/clang/18/include/avx512bf16intrin.h
+file path=usr/lib/$(MACH64)/clang/18/include/avx512bitalgintrin.h
+file path=usr/lib/$(MACH64)/clang/18/include/avx512bwintrin.h
+file path=usr/lib/$(MACH64)/clang/18/include/avx512cdintrin.h
+file path=usr/lib/$(MACH64)/clang/18/include/avx512dqintrin.h
+file path=usr/lib/$(MACH64)/clang/18/include/avx512erintrin.h
+file path=usr/lib/$(MACH64)/clang/18/include/avx512fintrin.h
+file path=usr/lib/$(MACH64)/clang/18/include/avx512fp16intrin.h
+file path=usr/lib/$(MACH64)/clang/18/include/avx512ifmaintrin.h
+file path=usr/lib/$(MACH64)/clang/18/include/avx512ifmavlintrin.h
+file path=usr/lib/$(MACH64)/clang/18/include/avx512pfintrin.h
+file path=usr/lib/$(MACH64)/clang/18/include/avx512vbmi2intrin.h
+file path=usr/lib/$(MACH64)/clang/18/include/avx512vbmiintrin.h
+file path=usr/lib/$(MACH64)/clang/18/include/avx512vbmivlintrin.h
+file path=usr/lib/$(MACH64)/clang/18/include/avx512vlbf16intrin.h
+file path=usr/lib/$(MACH64)/clang/18/include/avx512vlbitalgintrin.h
+file path=usr/lib/$(MACH64)/clang/18/include/avx512vlbwintrin.h
+file path=usr/lib/$(MACH64)/clang/18/include/avx512vlcdintrin.h
+file path=usr/lib/$(MACH64)/clang/18/include/avx512vldqintrin.h
+file path=usr/lib/$(MACH64)/clang/18/include/avx512vlfp16intrin.h
+file path=usr/lib/$(MACH64)/clang/18/include/avx512vlintrin.h
+file path=usr/lib/$(MACH64)/clang/18/include/avx512vlvbmi2intrin.h
+file path=usr/lib/$(MACH64)/clang/18/include/avx512vlvnniintrin.h
+file path=usr/lib/$(MACH64)/clang/18/include/avx512vlvp2intersectintrin.h
+file path=usr/lib/$(MACH64)/clang/18/include/avx512vnniintrin.h
+file path=usr/lib/$(MACH64)/clang/18/include/avx512vp2intersectintrin.h
+file path=usr/lib/$(MACH64)/clang/18/include/avx512vpopcntdqintrin.h
+file path=usr/lib/$(MACH64)/clang/18/include/avx512vpopcntdqvlintrin.h
+file path=usr/lib/$(MACH64)/clang/18/include/avxifmaintrin.h
+file path=usr/lib/$(MACH64)/clang/18/include/avxintrin.h
+file path=usr/lib/$(MACH64)/clang/18/include/avxneconvertintrin.h
+file path=usr/lib/$(MACH64)/clang/18/include/avxvnniint16intrin.h
+file path=usr/lib/$(MACH64)/clang/18/include/avxvnniint8intrin.h
+file path=usr/lib/$(MACH64)/clang/18/include/avxvnniintrin.h
+file path=usr/lib/$(MACH64)/clang/18/include/bmi2intrin.h
+file path=usr/lib/$(MACH64)/clang/18/include/bmiintrin.h
+file path=usr/lib/$(MACH64)/clang/18/include/builtins.h
+file path=usr/lib/$(MACH64)/clang/18/include/cet.h
+file path=usr/lib/$(MACH64)/clang/18/include/cetintrin.h
+file path=usr/lib/$(MACH64)/clang/18/include/cldemoteintrin.h
+file path=usr/lib/$(MACH64)/clang/18/include/clflushoptintrin.h
+file path=usr/lib/$(MACH64)/clang/18/include/clwbintrin.h
+file path=usr/lib/$(MACH64)/clang/18/include/clzerointrin.h
+file path=usr/lib/$(MACH64)/clang/18/include/cmpccxaddintrin.h
+file path=usr/lib/$(MACH64)/clang/18/include/cpuid.h
+file path=usr/lib/$(MACH64)/clang/18/include/crc32intrin.h
+file path=usr/lib/$(MACH64)/clang/18/include/cuda_wrappers/algorithm
+file path=usr/lib/$(MACH64)/clang/18/include/cuda_wrappers/bits/basic_string.h
+file path=usr/lib/$(MACH64)/clang/18/include/cuda_wrappers/bits/basic_string.tcc
+file path=usr/lib/$(MACH64)/clang/18/include/cuda_wrappers/bits/shared_ptr_base.h
+file path=usr/lib/$(MACH64)/clang/18/include/cuda_wrappers/cmath
+file path=usr/lib/$(MACH64)/clang/18/include/cuda_wrappers/complex
+file path=usr/lib/$(MACH64)/clang/18/include/cuda_wrappers/new
+file path=usr/lib/$(MACH64)/clang/18/include/emmintrin.h
+file path=usr/lib/$(MACH64)/clang/18/include/enqcmdintrin.h
+file path=usr/lib/$(MACH64)/clang/18/include/f16cintrin.h
+file path=usr/lib/$(MACH64)/clang/18/include/float.h
+file path=usr/lib/$(MACH64)/clang/18/include/fma4intrin.h
+file path=usr/lib/$(MACH64)/clang/18/include/fmaintrin.h
+file path=usr/lib/$(MACH64)/clang/18/include/fxsrintrin.h
+file path=usr/lib/$(MACH64)/clang/18/include/gfniintrin.h
+file path=usr/lib/$(MACH64)/clang/18/include/hexagon_circ_brev_intrinsics.h
+file path=usr/lib/$(MACH64)/clang/18/include/hexagon_protos.h
+file path=usr/lib/$(MACH64)/clang/18/include/hexagon_types.h
+file path=usr/lib/$(MACH64)/clang/18/include/hresetintrin.h
+file path=usr/lib/$(MACH64)/clang/18/include/htmintrin.h
+file path=usr/lib/$(MACH64)/clang/18/include/htmxlintrin.h
+file path=usr/lib/$(MACH64)/clang/18/include/hvx_hexagon_protos.h
+file path=usr/lib/$(MACH64)/clang/18/include/ia32intrin.h
+file path=usr/lib/$(MACH64)/clang/18/include/immintrin.h
+file path=usr/lib/$(MACH64)/clang/18/include/intrin.h
+file path=usr/lib/$(MACH64)/clang/18/include/inttypes.h
+file path=usr/lib/$(MACH64)/clang/18/include/invpcidintrin.h
+file path=usr/lib/$(MACH64)/clang/18/include/iso646.h
+file path=usr/lib/$(MACH64)/clang/18/include/keylockerintrin.h
+file path=usr/lib/$(MACH64)/clang/18/include/larchintrin.h
+file path=usr/lib/$(MACH64)/clang/18/include/lasxintrin.h
+file path=usr/lib/$(MACH64)/clang/18/include/limits.h
+file path=usr/lib/$(MACH64)/clang/18/include/llvm_libc_wrappers/assert.h
+file path=usr/lib/$(MACH64)/clang/18/include/llvm_libc_wrappers/ctype.h
+file path=usr/lib/$(MACH64)/clang/18/include/llvm_libc_wrappers/inttypes.h
+file path=usr/lib/$(MACH64)/clang/18/include/llvm_libc_wrappers/stdio.h
+file path=usr/lib/$(MACH64)/clang/18/include/llvm_libc_wrappers/stdlib.h
+file path=usr/lib/$(MACH64)/clang/18/include/llvm_libc_wrappers/string.h
+file path=usr/lib/$(MACH64)/clang/18/include/llvm_libc_wrappers/time.h
+file path=usr/lib/$(MACH64)/clang/18/include/lsxintrin.h
+file path=usr/lib/$(MACH64)/clang/18/include/lwpintrin.h
+file path=usr/lib/$(MACH64)/clang/18/include/lzcntintrin.h
+file path=usr/lib/$(MACH64)/clang/18/include/mm3dnow.h
+file path=usr/lib/$(MACH64)/clang/18/include/mm_malloc.h
+file path=usr/lib/$(MACH64)/clang/18/include/mmintrin.h
+file path=usr/lib/$(MACH64)/clang/18/include/module.modulemap
+file path=usr/lib/$(MACH64)/clang/18/include/movdirintrin.h
+file path=usr/lib/$(MACH64)/clang/18/include/msa.h
+file path=usr/lib/$(MACH64)/clang/18/include/mwaitxintrin.h
+file path=usr/lib/$(MACH64)/clang/18/include/nmmintrin.h
+file path=usr/lib/$(MACH64)/clang/18/include/opencl-c-base.h
+file path=usr/lib/$(MACH64)/clang/18/include/opencl-c.h
+file path=usr/lib/$(MACH64)/clang/18/include/openmp_wrappers/__clang_openmp_device_functions.h
+file path=usr/lib/$(MACH64)/clang/18/include/openmp_wrappers/cmath
+file path=usr/lib/$(MACH64)/clang/18/include/openmp_wrappers/complex
+file path=usr/lib/$(MACH64)/clang/18/include/openmp_wrappers/complex.h
+file path=usr/lib/$(MACH64)/clang/18/include/openmp_wrappers/complex_cmath.h
+file path=usr/lib/$(MACH64)/clang/18/include/openmp_wrappers/math.h
+file path=usr/lib/$(MACH64)/clang/18/include/openmp_wrappers/new
+file path=usr/lib/$(MACH64)/clang/18/include/pconfigintrin.h
+file path=usr/lib/$(MACH64)/clang/18/include/pkuintrin.h
+file path=usr/lib/$(MACH64)/clang/18/include/pmmintrin.h
+file path=usr/lib/$(MACH64)/clang/18/include/popcntintrin.h
+file path=usr/lib/$(MACH64)/clang/18/include/ppc_wrappers/bmi2intrin.h
+file path=usr/lib/$(MACH64)/clang/18/include/ppc_wrappers/bmiintrin.h
+file path=usr/lib/$(MACH64)/clang/18/include/ppc_wrappers/emmintrin.h
+file path=usr/lib/$(MACH64)/clang/18/include/ppc_wrappers/immintrin.h
+file path=usr/lib/$(MACH64)/clang/18/include/ppc_wrappers/mm_malloc.h
+file path=usr/lib/$(MACH64)/clang/18/include/ppc_wrappers/mmintrin.h
+file path=usr/lib/$(MACH64)/clang/18/include/ppc_wrappers/nmmintrin.h
+file path=usr/lib/$(MACH64)/clang/18/include/ppc_wrappers/pmmintrin.h
+file path=usr/lib/$(MACH64)/clang/18/include/ppc_wrappers/smmintrin.h
+file path=usr/lib/$(MACH64)/clang/18/include/ppc_wrappers/tmmintrin.h
+file path=usr/lib/$(MACH64)/clang/18/include/ppc_wrappers/x86gprintrin.h
+file path=usr/lib/$(MACH64)/clang/18/include/ppc_wrappers/x86intrin.h
+file path=usr/lib/$(MACH64)/clang/18/include/ppc_wrappers/xmmintrin.h
+file path=usr/lib/$(MACH64)/clang/18/include/prfchiintrin.h
+file path=usr/lib/$(MACH64)/clang/18/include/prfchwintrin.h
+file path=usr/lib/$(MACH64)/clang/18/include/ptwriteintrin.h
+file path=usr/lib/$(MACH64)/clang/18/include/raointintrin.h
+file path=usr/lib/$(MACH64)/clang/18/include/rdpruintrin.h
+file path=usr/lib/$(MACH64)/clang/18/include/rdseedintrin.h
+file path=usr/lib/$(MACH64)/clang/18/include/riscv_bitmanip.h
+file path=usr/lib/$(MACH64)/clang/18/include/riscv_crypto.h
+file path=usr/lib/$(MACH64)/clang/18/include/riscv_ntlh.h
+file path=usr/lib/$(MACH64)/clang/18/include/rtmintrin.h
+file path=usr/lib/$(MACH64)/clang/18/include/s390intrin.h
+file path=usr/lib/$(MACH64)/clang/18/include/serializeintrin.h
+file path=usr/lib/$(MACH64)/clang/18/include/sgxintrin.h
+file path=usr/lib/$(MACH64)/clang/18/include/sha512intrin.h
+file path=usr/lib/$(MACH64)/clang/18/include/shaintrin.h
+file path=usr/lib/$(MACH64)/clang/18/include/sifive_vector.h
+file path=usr/lib/$(MACH64)/clang/18/include/sm3intrin.h
+file path=usr/lib/$(MACH64)/clang/18/include/sm4intrin.h
+file path=usr/lib/$(MACH64)/clang/18/include/smmintrin.h
+file path=usr/lib/$(MACH64)/clang/18/include/stdalign.h
+file path=usr/lib/$(MACH64)/clang/18/include/stdarg.h
+file path=usr/lib/$(MACH64)/clang/18/include/stdatomic.h
+file path=usr/lib/$(MACH64)/clang/18/include/stdbool.h
+file path=usr/lib/$(MACH64)/clang/18/include/stdckdint.h
+file path=usr/lib/$(MACH64)/clang/18/include/stddef.h
+file path=usr/lib/$(MACH64)/clang/18/include/stdint.h
+file path=usr/lib/$(MACH64)/clang/18/include/stdnoreturn.h
+file path=usr/lib/$(MACH64)/clang/18/include/tbmintrin.h
+file path=usr/lib/$(MACH64)/clang/18/include/tgmath.h
+file path=usr/lib/$(MACH64)/clang/18/include/tmmintrin.h
+file path=usr/lib/$(MACH64)/clang/18/include/tsxldtrkintrin.h
+file path=usr/lib/$(MACH64)/clang/18/include/uintrintrin.h
+file path=usr/lib/$(MACH64)/clang/18/include/unwind.h
+file path=usr/lib/$(MACH64)/clang/18/include/usermsrintrin.h
+file path=usr/lib/$(MACH64)/clang/18/include/vadefs.h
+file path=usr/lib/$(MACH64)/clang/18/include/vaesintrin.h
+file path=usr/lib/$(MACH64)/clang/18/include/varargs.h
+file path=usr/lib/$(MACH64)/clang/18/include/vecintrin.h
+file path=usr/lib/$(MACH64)/clang/18/include/velintrin.h
+file path=usr/lib/$(MACH64)/clang/18/include/velintrin_approx.h
+file path=usr/lib/$(MACH64)/clang/18/include/velintrin_gen.h
+file path=usr/lib/$(MACH64)/clang/18/include/vpclmulqdqintrin.h
+file path=usr/lib/$(MACH64)/clang/18/include/waitpkgintrin.h
+file path=usr/lib/$(MACH64)/clang/18/include/wasm_simd128.h
+file path=usr/lib/$(MACH64)/clang/18/include/wbnoinvdintrin.h
+file path=usr/lib/$(MACH64)/clang/18/include/wmmintrin.h
+file path=usr/lib/$(MACH64)/clang/18/include/x86gprintrin.h
+file path=usr/lib/$(MACH64)/clang/18/include/x86intrin.h
+file path=usr/lib/$(MACH64)/clang/18/include/xmmintrin.h
+file path=usr/lib/$(MACH64)/clang/18/include/xopintrin.h
+file path=usr/lib/$(MACH64)/clang/18/include/xsavecintrin.h
+file path=usr/lib/$(MACH64)/clang/18/include/xsaveintrin.h
+file path=usr/lib/$(MACH64)/clang/18/include/xsaveoptintrin.h
+file path=usr/lib/$(MACH64)/clang/18/include/xsavesintrin.h
+file path=usr/lib/$(MACH64)/clang/18/include/xtestintrin.h
+file path=usr/lib/clang/$(MACH64)/cxa_cleanup_pic.o
+file path=usr/lib/clang/$(MACH64)/cxa_finalize.o
+file path=usr/lib/clang/$(MACH64)/cxa_finalize_pic.o
+file path=usr/lib/clang/cxa_cleanup_pic.o
+file path=usr/lib/clang/cxa_finalize.o
+file path=usr/lib/clang/cxa_finalize_pic.o
+file path=usr/lib/python3.9/vendor-packages/libear/__init__.py
+file path=usr/lib/python3.9/vendor-packages/libear/config.h.in
+file path=usr/lib/python3.9/vendor-packages/libear/ear.c
+file path=usr/lib/python3.9/vendor-packages/libscanbuild/__init__.py
+file path=usr/lib/python3.9/vendor-packages/libscanbuild/analyze.py
+file path=usr/lib/python3.9/vendor-packages/libscanbuild/arguments.py
+file path=usr/lib/python3.9/vendor-packages/libscanbuild/clang.py
+file path=usr/lib/python3.9/vendor-packages/libscanbuild/compilation.py
+file path=usr/lib/python3.9/vendor-packages/libscanbuild/intercept.py
+file path=usr/lib/python3.9/vendor-packages/libscanbuild/report.py
+file path=usr/lib/python3.9/vendor-packages/libscanbuild/resources/scanview.css
+file path=usr/lib/python3.9/vendor-packages/libscanbuild/resources/selectable.js
+file path=usr/lib/python3.9/vendor-packages/libscanbuild/resources/sorttable.js
+file path=usr/lib/python3.9/vendor-packages/libscanbuild/shell.py
+file path=usr/share/clang/bash-autocomplete.sh
+file path=usr/share/clang/clang-format-bbedit.applescript
+file path=usr/share/clang/clang-format-diff.py
+file path=usr/share/clang/clang-format-sublime.py
+file path=usr/share/clang/clang-format.el
+file path=usr/share/clang/clang-format.py
+file path=usr/share/clang/clang-rename.el
+file path=usr/share/clang/clang-rename.py
+file path=usr/share/man/man1/scan-build.1
+file path=usr/share/scan-build/scanview.css
+file path=usr/share/scan-build/sorttable.js
+file path=usr/share/scan-view/Reporter.py
+file path=usr/share/scan-view/ScanView.py
+file path=usr/share/scan-view/bugcatcher.ico
+file path=usr/share/scan-view/startfile.py
+license llvm.license license="Apache License v2.0 with LLVM Exceptions"
+depend type=require fmri=pkg:/developer/gcc/gcc-c++
+depend type=require fmri=pkg:/developer/gnu-binutils
+# pkgdepend doesn't find the dependency on libiomp5 although
+# it is listed in REQUIRED_PACKAGES. So, we set it as an
+# explicit dependency here.
+depend type=require fmri=pkg:/library/libiomp5
+depend type=require fmri=pkg:/system/header

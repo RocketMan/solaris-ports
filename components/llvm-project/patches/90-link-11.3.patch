@@ -1,0 +1,84 @@
+Starting with llvm 16 on 11.3, the following error appears during
+build install:
+
+````
+CMake Error at tools/clang/tools/clang-shlib/cmake_install.cmake:50 (file):
+  file RPATH_CHANGE could not write new RPATH:
+
+    $ORIGIN/../lib/amd64
+
+  to the file:
+
+    /build/userland/components/llvm/build/prototype/i386/usr/lib/amd64/libclang-cpp.so.17
+
+  No valid ELF RPATH or RUNPATH entry exists in the file;
+Call Stack (most recent call first):
+  tools/clang/tools/cmake_install.cmake:122 (include)
+  tools/clang/cmake_install.cmake:72 (include)
+  tools/cmake_install.cmake:72 (include)
+  cmake_install.cmake:117 (include)
+````
+
+$ readelf -a build/prototype/i386/usr/lib/amd64/libclang-cpp.so.17|grep PATH
+ 0x000000000000001d (RUNPATH)            Library runpath: [/usr/gcc/10/lib/amd64:/build/userland/components/llvm/build/amd64/lib/amd64:]
+ 0x000000000000000f (RPATH)              Library rpath: [/usr/gcc/10/lib/amd64:/build/userland/components/llvm/build/amd64/lib/amd64:]
+
+$ patchelf --print-rpath build/prototype/i386/usr/lib/amd64/libclang-cpp.so.17
+Assertion failed: shstrtabIndex < shdrs.size(), file patchelf.cc, line 292
+
+$ /usr/bin/elfedit -e "dyn:runpath /usr/gcc/10/lib/amd64:\$ORIGIN/../lib/amd64" build/prototype/i386/usr/lib/amd64/libclang-cpp.so.17
+Segmentation Fault
+
+
+In other cases (such as rust), larger .so files resulted in the
+inclusion of Solaris .SUNW_ldynsym sections, which had presented
+similar problems; however, adding the -znoldynsym linker switch to
+suppress those sections did not clear the issue here.
+
+As a workaround, this patch adds NO_INSTALL_PATH to prevent patching
+the RPATH/RUNPATH.  CAUTION: This means the build directory will be
+left in the RPATH!
+
+
+--- llvm-18.1.7/clang/tools/clang-shlib/CMakeLists.txt.~1~	2024-06-05 22:56:32.000000000 +0000
++++ llvm-18.1.7/clang/tools/clang-shlib/CMakeLists.txt	2024-06-17 12:54:12.465514133 +0000
+@@ -42,7 +42,7 @@
+ endif()
+ 
+ add_clang_library(clang-cpp
+-                  SHARED
++                  SHARED NO_INSTALL_RPATH
+                   ${INSTALL_WITH_TOOLCHAIN}
+                   clang-shlib.cpp
+                   ${_OBJECTS}
+@@ -51,7 +51,8 @@
+ # Optimize function calls for default visibility definitions to avoid PLT and
+ # reduce dynamic relocations.
+ if (NOT APPLE AND NOT MINGW AND NOT LLVM_LINKER_IS_SOLARISLD_ILLUMOS)
+-  target_link_options(clang-cpp PRIVATE LINKER:-Bsymbolic-functions)
++  target_link_options(clang-cpp PRIVATE LINKER:-Bsymbolic)
++  target_link_options(clang-cpp PRIVATE LINKER:-znoldynsym)
+ endif()
+ if (MINGW OR CYGWIN)
+   # The clang-cpp DLL is supposed to export all symbols (except for ones
+--- llvm-16.0.6/llvm/tools/llvm-shlib/CMakeLists.txt.~1~	2023-06-10 23:58:16.000000000 +0000
++++ llvm-16.0.6/llvm/tools/llvm-shlib/CMakeLists.txt	2024-02-09 18:32:45.564636321 +0000
+@@ -36,7 +36,7 @@
+   if (WIN32)
+     add_llvm_library(LLVM SHARED DISABLE_LLVM_LINK_LLVM_DYLIB SONAME ${INSTALL_WITH_TOOLCHAIN} ${SOURCES})
+   else()
+-    add_llvm_library(LLVM SHARED DISABLE_LLVM_LINK_LLVM_DYLIB OUTPUT_NAME LLVM ${INSTALL_WITH_TOOLCHAIN} ${SOURCES})
++    add_llvm_library(LLVM SHARED DISABLE_LLVM_LINK_LLVM_DYLIB NO_INSTALL_RPATH OUTPUT_NAME LLVM ${INSTALL_WITH_TOOLCHAIN} ${SOURCES})
+     # Add symlink for backwards compatibility with old library name
+     llvm_install_library_symlink(LLVM-${LLVM_VERSION_MAJOR}${LLVM_VERSION_SUFFIX} $<TARGET_FILE_NAME:LLVM> SHARED FULL_DEST COMPONENT LLVM)
+   endif()
+@@ -56,7 +56,8 @@
+       # reduce dynamic relocations.
+       # Note: for -fno-pic default, the address of a function may be different from
+       # inside and outside libLLVM.so.
+-      target_link_options(LLVM PRIVATE LINKER:-Bsymbolic-functions)
++      target_link_options(LLVM PRIVATE LINKER:-Bsymbolic)
++      target_link_options(LLVM PRIVATE LINKER:-znoldynsym)
+     endif()
+   elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Darwin")
+     set(LIB_NAMES -Wl,-all_load ${LIB_NAMES})

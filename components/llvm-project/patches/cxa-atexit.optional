@@ -1,0 +1,49 @@
+--- llvm-project-18.1.8.src/clang/lib/Driver/ToolChains/Solaris.cpp.~2~	2024-06-28 15:37:52.038467376 +0000
++++ llvm-project-18.1.8.src/clang/lib/Driver/ToolChains/Solaris.cpp	2024-06-28 18:25:56.504849743 +0000
+@@ -287,6 +287,46 @@
+     CmdArgs.push_back(Args.MakeArgString(ToolChain.GetFilePath("crtn.o")));
+   }
+ 
++  if (D.CCCIsCXX() &&
++        Args.hasFlag(options::OPT_fuse_cxa_atexit,
++                     options::OPT_fno_use_cxa_atexit, false)) {
++    std::string ClangLibPath;
++    std::string CXAFinalize;
++
++    bool m32 = !!Args.getLastArg(options::OPT_m32);
++
++    if (m32)
++      ClangLibPath = "/usr/lib/clang/";
++    else switch (Arch) {
++    case llvm::Triple::x86:
++    case llvm::Triple::x86_64:
++      ClangLibPath = "/usr/lib/clang/amd64/";
++      break;
++    case llvm::Triple::sparc:
++    case llvm::Triple::sparcv9:
++      ClangLibPath = "/usr/lib/clang/sparcv9/";
++      break;
++    default:
++      ToolChain.getDriver().Diag(diag::err_target_unsupported_arch);
++      break;
++    }
++
++    if (Args.hasArg(options::OPT_shared)) {
++      CXAFinalize = ClangLibPath + "cxa_cleanup_pic.o";
++    } else {
++      if (IsPIE) {
++        CXAFinalize = ClangLibPath + "cxa_finalize_pic.o";
++      } else {
++        CXAFinalize = ClangLibPath + "cxa_finalize.o";
++      }
++    }
++
++    bool HasSystemCXAFinalize = llvm::sys::fs::exists(CXAFinalize.c_str());
++
++    if (HasSystemCXAFinalize)
++      CmdArgs.push_back(Args.MakeArgString(CXAFinalize.c_str()));
++  }
++
+   ToolChain.addProfileRTLibs(Args, CmdArgs);
+ 
+   const char *Exec = Args.MakeArgString(getLinkerPath(Args));

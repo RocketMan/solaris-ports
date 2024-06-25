@@ -1,0 +1,33 @@
+The project build with clang is throwing the same error reported in
+the 90-link-11.3 patch; namely, that RPATH_CHANGE failed due to no ELF
+RPATH or RUNPATH.  Like the other patch, there is an RPATH, but
+patchelf and elfedit suggest anomalies in the file that prevent proper
+behaviour.
+
+This is different to the component tarball build in userland with gcc,
+which does not have this problem with the tools.
+
+For now, we'll just leave the RPATH as-is.
+
+
+--- llvm-project-18.1.8.src/llvm/tools/CMakeLists.txt-	2024-06-15 18:21:32.000000000 +0000
++++ llvm-project-18.1.8.src/llvm/tools/CMakeLists.txt	2024-06-25 16:07:07.332240715 +0000
+@@ -5,6 +5,8 @@
+ # The only tools that need to be explicitly added are ones that have explicit
+ # ordering requirements.
+ 
++set(CMAKE_SKIP_INSTALL_RPATH TRUE)
++
+ # Iterates all the subdirectories to create CMake options to enable/disable
+ # traversing each directory.
+ create_llvm_tool_options()
+--- llvm-project-18.1.8.src/clang/tools/CMakeLists.txt-	2024-06-15 18:21:32.000000000 +0000
++++ llvm-project-18.1.8.src/clang/tools/CMakeLists.txt	2024-06-25 16:02:58.338262630 +0000
+@@ -1,5 +1,7 @@
+ create_subdirectory_options(CLANG TOOL)
+ 
++set(CMAKE_SKIP_INSTALL_RPATH TRUE)
++
+ add_clang_subdirectory(diagtool)
+ add_clang_subdirectory(driver)
+ add_clang_subdirectory(apinotes-test)

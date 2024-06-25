@@ -1,0 +1,45 @@
+--- llvm-project-18.1.8.src/clang/lib/Driver/ToolChains/Solaris.cpp.~1~	2024-06-15 18:21:32.000000000 +0000
++++ llvm-project-18.1.8.src/clang/lib/Driver/ToolChains/Solaris.cpp	2024-06-29 15:12:36.339483771 +0000
+@@ -190,11 +190,13 @@
+     CmdArgs.push_back(Args.MakeArgString(ToolChain.GetFilePath(values_xpg)));
+ 
+     const char *crtbegin = nullptr;
+-    if (Args.hasArg(options::OPT_shared) || IsPIE)
+-      crtbegin = "crtbeginS.o";
+-    else
++//  no crtbeginS.o with 11.3 gcc
++//  if (Args.hasArg(options::OPT_shared) || IsPIE)
++//    crtbegin = "crtbeginS.o";
++//  else
+       crtbegin = "crtbegin.o";
+     CmdArgs.push_back(Args.MakeArgString(ToolChain.GetFilePath(crtbegin)));
++
+     // Add crtfastmath.o if available and fast math is enabled.
+     ToolChain.addFastMathRuntimeIfAvailable(Args, CmdArgs);
+   }
+@@ -276,9 +278,10 @@
+   if (!Args.hasArg(options::OPT_nostdlib, options::OPT_nostartfiles,
+                    options::OPT_r)) {
+     const char *crtend = nullptr;
+-    if (Args.hasArg(options::OPT_shared) || IsPIE)
+-      crtend = "crtendS.o";
+-    else
++//  no crtendS.o with 11.3 gcc
++//  if (Args.hasArg(options::OPT_shared) || IsPIE)
++//    crtend = "crtendS.o";
++//  else
+       crtend = "crtend.o";
+     CmdArgs.push_back(Args.MakeArgString(ToolChain.GetFilePath(crtend)));
+     CmdArgs.push_back(Args.MakeArgString(ToolChain.GetFilePath("crtn.o")));
+@@ -363,6 +366,11 @@
+                                         ArgStringList &CC1Args) const {
+   const Driver &D = getDriver();
+ 
++  // Use `-fno-use-cxa-atexit` as default on 11.3
++  if (!DriverArgs.hasFlag(options::OPT_fuse_cxa_atexit,
++                          options::OPT_fno_use_cxa_atexit, false))
++    CC1Args.push_back("-fno-use-cxa-atexit");
++
+   if (DriverArgs.hasArg(clang::driver::options::OPT_nostdinc))
+     return;
+ 
