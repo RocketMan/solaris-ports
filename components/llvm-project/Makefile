@@ -51,8 +51,6 @@ COMPONENT_BAID=		134017
 CLONEY=/bin/true
 
 BUILD_STYLE = cmake-ninja
-# Building with debug info results in ~7GB of package data, so while preferred,
-# is not practical.
 CMAKE_BUILD_TYPE = Release
 TEST_TARGET=
 SYSTEM_TEST_TARGET=
@@ -69,6 +67,28 @@ $(SOLARIS_11_3_ONLY)INSTALL_CXA_ATEXIT = 1
 ifeq ($(INSTALL_CXA_ATEXIT),1)
 ADDITIONAL_PATCHES += patches/cxa-atexit.optional
 endif
+
+# Build and install libc++
+#
+# If you disable this, move these manifest files out of the way:
+#     clang-c++-devel.p5m
+#     clang-c++-runtime.p5m
+#
+ENABLE_LIBCXX = 1
+
+ifeq ($(ENABLE_LIBCXX),1)
+WANT_LIBCXX =
+else
+WANT_LIBCXX =\#
+endif
+
+# The LLVM_LIBDIR_SUFFIX option is not being passed to the runtimes
+COMPONENT_POST_UNPACK_ACTION += (\
+	$(GSED) -i "s|\$${LLVM_LIBDIR_SUFFIX}|/$(MACH64)|g" \
+	$(SOURCE_DIR)/libcxx/CMakeLists.txt \
+	$(SOURCE_DIR)/libcxxabi/CMakeLists.txt \
+	$(SOURCE_DIR)/libunwind/CMakeLists.txt \
+	)
 
 include $(WS_MAKE_RULES)/common.mk
 
@@ -98,6 +118,8 @@ ifeq ($(TOP_LEVEL_RUN),yes)
 # the full build to avoid waiting on this last job :-).
 COMPONENT_BUILD_ARGS += -j4
 endif
+
+$(WANT_LIBCXX)COMPONENT_BUILD_ARGS += runtimes
 
 # Because LLVM's install target doesn't install everything that
 # needs to be installed.
@@ -263,7 +285,7 @@ CXXFLAGS += -Wall -Wno-cast-align -Wno-long-long -Woverflow
 CXXFLAGS += -Wstack-protector -fkeep-static-consts
 CXXFLAGS += -std=c++11 -fdata-sections -ffunction-sections
 CXXFLAGS += -Wno-gnu-include-next -Wno-unused-command-line-argument
-CXXFLAGS += -Wno-invalid-noreturn -Wno-unused-variable
+CXXFLAGS += -Wno-invalid-noreturn -Wno-unused-variable -Wno-format-nonliteral
 CXXFLAGS += -Wl,-z -Wl,relax=common
 CXXFLAGS += -Wl,-z -Wl,relax=secadj
 CXXFLAGS += -Wl,-z -Wl,relax=transtls
@@ -310,12 +332,12 @@ LD_OPTIONS_SO = $(LD_Z_DEFS) $(LD_DEF_LIBS)
 ifeq ($(MACH),sparc)
   CMAKE_OPTIONS += -DLLVM_TARGETS_TO_BUILD:STRING="Sparc"
   CMAKE_OPTIONS += -DLLVM_DEFAULT_TARGET_TRIPLE:STRING="sparcv9-sun-solaris$(SOLARIS_VERSION)"
-#  CMAKE_OPTIONS += -DLLVM_RUNTIME_TARGETS:STRING="sparcv9-sun-solaris$(SOLARIS_VERSION)"
+  $(WANT_LIBCXX)CMAKE_OPTIONS += -DLLVM_RUNTIME_TARGETS:STRING="sparcv9-sun-solaris$(SOLARIS_VERSION)"
 endif
 ifeq ($(MACH),i386)
   CMAKE_OPTIONS += -DLLVM_TARGETS_TO_BUILD:STRING="X86"
   CMAKE_OPTIONS += -DLLVM_DEFAULT_TARGET_TRIPLE:STRING="x86_64-pc-solaris$(SOLARIS_VERSION)"
-#  CMAKE_OPTIONS += -DLLVM_RUNTIME_TARGETS:STRING="x86_64-pc-solaris$(SOLARIS_VERSION)"
+  $(WANT_LIBCXX)CMAKE_OPTIONS += -DLLVM_RUNTIME_TARGETS:STRING="x86_64-pc-solaris$(SOLARIS_VERSION)"
 endif
 
 #CMAKE_OPTIONS += -DCMAKE_ASM_COMPILER:STRING="/usr/gnu/bin/as"
@@ -326,13 +348,13 @@ $(SOLARIS_11_4_5_ONLY)CMAKE_OPTIONS += -DCMAKE_INSTALL_RPATH:STRING="$(LLVM_RUNP
 
 CMAKE_OPTIONS += -S $(SOURCE_DIR)/llvm -B $(BUILD_DIR_64)
 CMAKE_OPTIONS += -DLLVM_ENABLE_PROJECTS="clang"
-#CMAKE_OPTIONS += -DLLVM_ENABLE_RUNTIMES="libcxx;libcxxabi;libunwind"
+$(WANT_LIBCXX)CMAKE_OPTIONS += -DLLVM_ENABLE_RUNTIMES="libcxx;libcxxabi;libunwind"
 #CMAKE_OPTIONS += -DCLANG_DEFAULT_CXX_STDLIB="libc++"
 #CMAKE_OPTIONS += -DCLANG_DEFAULT_RTLIB="compiler-rt"
 
 CMAKE_OPTIONS += -DLLVM_BUILD_TOOLS:BOOL=ON
 CMAKE_OPTIONS += -DLLVM_INCLUDE_TOOLS:BOOL=ON
-#CMAKE_OPTIONS += -DLLVM_BUILD_TESTS:BOOL=OFF
+#CMAKE_OPTIONS += -DLLVM_BUILD_TESTS:BOOL=ON
 CMAKE_OPTIONS += -DLLVM_INCLUDE_TESTS:BOOL=OFF
 CMAKE_OPTIONS += -DLLVM_ENABLE_THREADS:BOOL=ON
 CMAKE_OPTIONS += -DLLVM_BUILD_32_BITS:BOOL=OFF
