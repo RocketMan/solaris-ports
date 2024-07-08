@@ -717,6 +717,7 @@ file path=usr/include/c++/v1/__support/musl/xlocale.h
 file path=usr/include/c++/v1/__support/newlib/xlocale.h
 file path=usr/include/c++/v1/__support/openbsd/xlocale.h
 file path=usr/include/c++/v1/__support/solaris/floatingpoint.h
+file path=usr/include/c++/v1/__support/solaris/locale_mgmt_solaris.h
 file path=usr/include/c++/v1/__support/solaris/wchar.h
 file path=usr/include/c++/v1/__support/solaris/xlocale.h
 file path=usr/include/c++/v1/__support/win32/locale_win32.h

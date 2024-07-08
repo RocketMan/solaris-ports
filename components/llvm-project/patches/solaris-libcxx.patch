@@ -548,6 +548,66 @@ diff -Naur llvm-project-18.1.8.src.orig/libcxx/include/__support/solaris/floatin
 +#include_next "floatingpoint.h"
 +#undef atof
 +#undef strtod
+diff -Naur llvm-project-18.1.8.src.orig/libcxx/include/__support/solaris/locale_mgmt_solaris.h llvm-project-18.1.8.src/libcxx/include/__support/solaris/locale_mgmt_solaris.h
+--- llvm-project-18.1.8.src.orig/libcxx/include/__support/solaris/locale_mgmt_solaris.h	2024-07-08 16:43:30.214127926 +0000
++++ llvm-project-18.1.8.src/libcxx/include/__support/solaris/locale_mgmt_solaris.h	2024-07-08 16:21:57.077664359 +0000
+@@ -0,0 +1,56 @@
++// -*- C++ -*-
++//===----------------------------------------------------------------------===//
++//
++// Part of the LLVM Project, under the Apache License v2.0 with LLVM Exceptions.
++// See https://llvm.org/LICENSE.txt for license information.
++// SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
++//
++//===----------------------------------------------------------------------===//
++
++#ifndef _LIBCPP___SUPPORT_LOCALE_MGMT_SOLARIS_H
++#define _LIBCPP___SUPPORT_LOCALE_MGMT_SOLARIS_H
++
++#if defined(__sun)
++
++#  include <locale.h>
++#  include <string>
++
++#  ifdef __cplusplus
++extern "C" {
++#  endif
++
++#  define _LC_MAX LC_MESSAGES /* highest real category */
++#  define _NCAT (_LC_MAX + 1) /* maximum + 1 */
++
++#  define _CATMASK(n) (1 << (n))
++#  define LC_COLLATE_MASK _CATMASK(LC_COLLATE)
++#  define LC_CTYPE_MASK _CATMASK(LC_CTYPE)
++#  define LC_MONETARY_MASK _CATMASK(LC_MONETARY)
++#  define LC_NUMERIC_MASK _CATMASK(LC_NUMERIC)
++#  define LC_TIME_MASK _CATMASK(LC_TIME)
++#  define LC_MESSAGES_MASK _CATMASK(LC_MESSAGES)
++#  define LC_ALL_MASK (_CATMASK(_NCAT) - 1)
++
++typedef struct locale_struct {
++  int category_mask;
++  std::string lc_collate;
++  std::string lc_ctype;
++  std::string lc_monetary;
++  std::string lc_numeric;
++  std::string lc_time;
++  std::string lc_messages;
++}* locale_t;
++
++// Solaris 11.3 does not have newlocale, freelocale and uselocale.
++// The functions below are workarounds in single thread mode.
++locale_t newlocale_internal(int category_mask, const char* locale, locale_t base);
++void freelocale_internal(locale_t locobj);
++locale_t uselocale_internal(locale_t newloc);
++
++#  ifdef __cplusplus
++}
++#  endif
++
++#endif // defined(__sun)
++
++#endif // _LIBCPP___SUPPORT_LOCALE_MGMT_SOLARIS_H
 diff -Naur llvm-project-18.1.8.src.orig/libcxx/include/__support/solaris/wchar.h llvm-project-18.1.8.src/libcxx/include/__support/solaris/wchar.h
 --- llvm-project-18.1.8.src.orig/libcxx/include/__support/solaris/wchar.h	1970-01-01 01:00:00.000000000 +0000
 +++ llvm-project-18.1.8.src/libcxx/include/__support/solaris/wchar.h	2024-06-30 19:23:46.508707975 +0000
@@ -599,9 +659,9 @@ diff -Naur llvm-project-18.1.8.src.orig/libcxx/include/__support/solaris/wchar.h
 +#undef wcwidth
 +#undef wctype
 diff -Naur llvm-project-18.1.8.src.orig/libcxx/include/__support/solaris/xlocale.h llvm-project-18.1.8.src/libcxx/include/__support/solaris/xlocale.h
---- llvm-project-18.1.8.src.orig/libcxx/include/__support/solaris/xlocale.h	1970-01-01 01:00:00.000000000 +0000
-+++ llvm-project-18.1.8.src/libcxx/include/__support/solaris/xlocale.h	2024-07-01 19:30:35.852999865 +0000
-@@ -0,0 +1,200 @@
+--- llvm-project-18.1.8.src.orig/libcxx/include/__support/solaris/xlocale.h	2024-07-06 15:39:10.012190762 +0000
++++ llvm-project-18.1.8.src/libcxx/include/__support/solaris/xlocale.h	2024-07-08 16:31:06.324061877 +0000
+@@ -0,0 +1,313 @@
 +//===----------------------------------------------------------------------===//
 +//
 +// Part of the LLVM Project, under the Apache License v2.0 with LLVM Exceptions.
@@ -619,86 +679,153 @@ diff -Naur llvm-project-18.1.8.src.orig/libcxx/include/__support/solaris/xlocale
 +
 +#include <string.h>
 +#include <stdlib.h>
-+#include <__support/xlocale/__nop_locale_mgmt.h>
++#include <stdarg.h>
++#include <__support/solaris/locale_mgmt_solaris.h>
 +#include <__support/xlocale/__posix_l_fallback.h>
-+#include <__support/xlocale/__strtonum_fallback.h>
 +#include <cstdlib>
 +#include <cwchar>
++#include <pthread.h>
 +
 +#ifdef __cplusplus
 +extern "C" {
 +#endif
-+  
-+int snprintf_l(char *__s, size_t __n, locale_t __l, const char *__format, ...);
-+int asprintf_l(char **__s, locale_t __l, const char *__format, ...);
 +
-+int sscanf_l(const char *__s, locale_t __l, const char *__format, ...);
++#pragma push_macro("FIX_LOCALE")
++#if defined(_LIBCXXABI_BUILDING_LIBRARY)
++// dummy __setAndRestore when building libcxxabi, to avoid
++// undefined references to internal locale shims
++#define FIX_LOCALE(__loc) (void)(__loc)
++#else
++namespace xlocale {
++struct __setAndRestore {
++  explicit __setAndRestore(locale_t locale) {
++    pthread_mutex_lock(&__mtx);
++    if (locale == (locale_t)0) {
++      __cloc   = newlocale_internal(LC_ALL_MASK, "C", /* base */ (locale_t)0);
++      __stored = uselocale_internal(__cloc);
++    } else {
++      __stored = uselocale_internal(locale);
++    }
++  }
 +
-+int toupper_l(int __c, locale_t __l);
-+int tolower_l(int __c, locale_t __l);
++  ~__setAndRestore() {
++    uselocale_internal(__stored);
++    if (__cloc)
++      freelocale_internal(__cloc);
++    pthread_mutex_unlock(&__mtx);
++  }
 +
-+struct lconv *localeconv(void);
-+struct lconv *localeconv_l(locale_t __l);
++private:
++  locale_t __stored = (locale_t)0;
++  locale_t __cloc   = (locale_t)0;
++  static pthread_mutex_t __mtx;
++};
 +
-+int snprintf_l(char *__s, size_t __n, locale_t __l, const char *__format, ...);
-+int asprintf_l(char **__s, locale_t __l, const char *__format, ...);
++} // namespace xlocale
++#define FIX_LOCALE(__loc) xlocale::__setAndRestore __newLoc(__loc)
++#endif
 +
-+int sscanf_l(const char *__s, locale_t __l, const char *__format, ...);
++#define MB_CUR_MAX_L(__loc) MB_CUR_MAX
 +
-+int toupper_l(int __c, locale_t __l);
-+int tolower_l(int __c, locale_t __l);
++inline _LIBCPP_HIDE_FROM_ABI locale_t
++newlocale(int category_mask, const char* locale, locale_t base) {
++  return newlocale_internal(category_mask, locale, base);
++}
 +
-+struct lconv *localeconv(void);
-+struct lconv *localeconv_l(locale_t __l);
++inline _LIBCPP_HIDE_FROM_ABI void
++freelocale(locale_t locobj) {
++  freelocale_internal(locobj);
++}
 +
-+#define MB_CUR_MAX_L(l) MB_CUR_MAX
++inline _LIBCPP_HIDE_FROM_ABI locale_t
++uselocale(locale_t newloc) {
++  return uselocale_internal(newloc);
++}
 +
 +inline _LIBCPP_HIDE_FROM_ABI int
 +mbtowc_l(wchar_t *pwc, const char *src, size_t n, locale_t __loc) {
-+  (void)(__loc); // unused param
++  FIX_LOCALE(__loc);
 +  return ::mbtowc(pwc, src, n);
 +}
 +  
 +inline _LIBCPP_HIDE_FROM_ABI size_t
 +wcrtomb_l(char *__nptr, wchar_t __endptr, mbstate_t *__base, locale_t __loc) {
-+  (void)(__loc); // unused param
++  FIX_LOCALE(__loc);
 +  return ::wcrtomb(__nptr, __endptr, __base);
 +}
 +  
 +inline _LIBCPP_HIDE_FROM_ABI int
 +iswctype_l(wint_t __nptr, wctype_t __endptr, locale_t __loc) {
-+  (void)(__loc); // unused param
++  FIX_LOCALE(__loc);
 +  return ::iswctype(__nptr, __endptr);
 +}
 +  
 +inline _LIBCPP_HIDE_FROM_ABI wint_t
 +btowc_l(int c, locale_t __loc) {
-+  (void)(__loc); // unused param
++  FIX_LOCALE(__loc);
 +  return ::btowc(c);
 +}
 +  
 +inline _LIBCPP_HIDE_FROM_ABI int
 +wctob_l(wint_t c, locale_t __loc) {
-+  (void)(__loc); // unused param
++  FIX_LOCALE(__loc);
 +  return ::wctob(c);
 +}
 +
 +inline _LIBCPP_HIDE_FROM_ABI size_t
 +mbrlen_l(const char *s, size_t n, mbstate_t *ps, locale_t __loc) {
-+  (void)(__loc); // unused param
++  FIX_LOCALE(__loc);
 +  return ::mbrlen(s, n, ps);
 +}
 +
 +inline _LIBCPP_HIDE_FROM_ABI size_t
 +mbsrtowcs_l(wchar_t *dst, const char **src, size_t len, mbstate_t* st, locale_t __loc) {
-+  (void)(__loc); // unused param
++  FIX_LOCALE(__loc);
 +  return ::mbsrtowcs(dst, src, len, st);
 +}
 +
 +inline _LIBCPP_HIDE_FROM_ABI size_t
 +mbrtowc_l(wchar_t *pwc, const char *s, size_t len, mbstate_t* st, locale_t __loc) {
-+  (void)(__loc); // unused param
++  FIX_LOCALE(__loc);
 +  return ::mbrtowc(pwc, s, len, st);
++}
++
++// The following are not POSIX routines.  These are quick-and-dirty hacks
++// to make things pretend to work
++inline _LIBCPP_HIDE_FROM_ABI long long strtoll_l(const char* __nptr, char** __endptr, int __base, locale_t __loc) {
++  FIX_LOCALE(__loc);
++  return ::strtoll(__nptr, __endptr, __base);
++}
++
++inline _LIBCPP_HIDE_FROM_ABI long strtol_l(const char* __nptr, char** __endptr, int __base, locale_t __loc) {
++  FIX_LOCALE(__loc);
++  return ::strtol(__nptr, __endptr, __base);
++}
++
++inline _LIBCPP_HIDE_FROM_ABI double strtod_l(const char* __nptr, char** __endptr, locale_t __loc) {
++  FIX_LOCALE(__loc);
++  return ::strtod(__nptr, __endptr);
++}
++
++inline _LIBCPP_HIDE_FROM_ABI float strtof_l(const char* __nptr, char** __endptr, locale_t __loc) {
++  FIX_LOCALE(__loc);
++  return ::strtof(__nptr, __endptr);
++}
++
++inline _LIBCPP_HIDE_FROM_ABI long double strtold_l(const char* __nptr, char** __endptr, locale_t __loc) {
++  FIX_LOCALE(__loc);
++  return ::strtold(__nptr, __endptr);
++}
++
++inline _LIBCPP_HIDE_FROM_ABI unsigned long long
++strtoull_l(const char* __nptr, char** __endptr, int __base, locale_t __loc) {
++  FIX_LOCALE(__loc);
++  return ::strtoull(__nptr, __endptr, __base);
++}
++
++inline _LIBCPP_HIDE_FROM_ABI unsigned long strtoul_l(const char* __nptr, char** __endptr, int __base, locale_t __loc) {
++  FIX_LOCALE(__loc);
++  return ::strtoul(__nptr, __endptr, __base);
 +}
 +
 +  /* adapted from
@@ -707,7 +834,7 @@ diff -Naur llvm-project-18.1.8.src.orig/libcxx/include/__support/solaris/xlocale
 +inline _LIBCPP_HIDE_FROM_ABI size_t
 +wcsnrtombs_l(char* dst, const wchar_t **wcs, size_t wn, size_t n, mbstate_t* st, locale_t __loc) {
 +  (void)(st);    // unused param
-+  (void)(__loc); // unused param
++  FIX_LOCALE(__loc);
 +  size_t l, cnt=0, n2;
 +  char *s, buf[256];
 +  const wchar_t *ws = *wcs;
@@ -749,7 +876,7 @@ diff -Naur llvm-project-18.1.8.src.orig/libcxx/include/__support/solaris/xlocale
 +   */
 +inline _LIBCPP_HIDE_FROM_ABI size_t
 +mbsnrtowcs_l(wchar_t *wcs, const char **src, size_t n, size_t wn, mbstate_t* st, locale_t __loc) {
-+  (void)(__loc); // unused param
++  FIX_LOCALE(__loc);
 +  size_t l, cnt=0, n2;
 +  wchar_t *ws, wbuf[256];
 +  const char *s = *src;
@@ -796,7 +923,53 @@ diff -Naur llvm-project-18.1.8.src.orig/libcxx/include/__support/solaris/xlocale
 +  if (wcs) *src = s;
 +  return cnt;
 +}
++
++// suppress 'warning: format string is not a string literal'
++#pragma GCC diagnostic push
++#pragma GCC diagnostic ignored "-Wformat-nonliteral"
 +  
++inline _LIBCPP_HIDE_FROM_ABI int vsnprintf_l(char* __s, size_t __n, locale_t __loc, const char* __format, va_list __va) {
++  FIX_LOCALE(__loc);
++  return vsnprintf(__s, __n, __format, __va);
++}
++
++inline _LIBCPP_HIDE_FROM_ABI int snprintf_l(char *__s, size_t __n, locale_t __loc, const char *__format, ...) {
++  va_list __va;
++  va_start(__va, __format);
++  int __res = vsnprintf_l(__s, __n , __loc, __format, __va);
++  va_end(__va);
++  return __res;
++}
++
++inline _LIBCPP_HIDE_FROM_ABI int asprintf_l(char **__s, locale_t __loc, const char *__format, ...) {
++  FIX_LOCALE(__loc);
++  va_list __va;
++  va_start(__va, __format);
++  // FIXME:
++  int __res = vasprintf(__s, __format, __va);
++  va_end(__va);
++  return __res;
++}
++
++inline _LIBCPP_HIDE_FROM_ABI int sscanf_l(const char *__s, locale_t __loc, const char *__format, ...) {
++  FIX_LOCALE(__loc);
++  va_list __va;
++  va_start(__va, __format);
++  // FIXME:
++  int __res = vsscanf(__s, __format, __va);
++  va_end(__va);
++  return __res;
++}
++
++#pragma GCC diagnostic pop
++
++inline _LIBCPP_HIDE_FROM_ABI struct lconv *localeconv_l(locale_t __loc) {
++  FIX_LOCALE(__loc);
++  return localeconv();
++}
++
++#pragma pop_macro("FIX_LOCALE")
++
 +#ifdef __cplusplus
 +}
 +#endif
@@ -804,12 +977,13 @@ diff -Naur llvm-project-18.1.8.src.orig/libcxx/include/__support/solaris/xlocale
 +#endif
 diff -Naur llvm-project-18.1.8.src.orig/libcxx/include/CMakeLists.txt llvm-project-18.1.8.src/libcxx/include/CMakeLists.txt
 --- llvm-project-18.1.8.src.orig/libcxx/include/CMakeLists.txt	2024-06-15 18:21:32.000000000 +0000
-+++ llvm-project-18.1.8.src/libcxx/include/CMakeLists.txt	2024-06-30 19:23:46.509177453 +0000
-@@ -675,6 +675,9 @@
++++ llvm-project-18.1.8.src/libcxx/include/CMakeLists.txt	2024-07-08 12:56:27.403537886 +0000
+@@ -675,6 +675,10 @@
    __support/musl/xlocale.h
    __support/newlib/xlocale.h
    __support/openbsd/xlocale.h
 +  __support/solaris/floatingpoint.h
++  __support/solaris/locale_mgmt_solaris.h
 +  __support/solaris/wchar.h
 +  __support/solaris/xlocale.h
    __support/win32/locale_win32.h
@@ -994,9 +1168,9 @@ diff -Naur llvm-project-18.1.8.src.orig/libcxx/src/support/solaris/README.txt ll
 +2-clause BSD license instead of the MIT/UUIC license that the rest of libc++ is
 +distributed under.
 diff -Naur llvm-project-18.1.8.src.orig/libcxx/src/support/solaris/xlocale.cpp llvm-project-18.1.8.src/libcxx/src/support/solaris/xlocale.cpp
---- llvm-project-18.1.8.src.orig/libcxx/src/support/solaris/xlocale.cpp	1970-01-01 01:00:00.000000000 +0000
-+++ llvm-project-18.1.8.src/libcxx/src/support/solaris/xlocale.cpp	2024-07-01 19:33:36.245747153 +0000
-@@ -0,0 +1,54 @@
+--- llvm-project-18.1.8.src.orig/libcxx/src/support/solaris/xlocale.cpp	2024-07-06 15:39:10.016588523 +0000
++++ llvm-project-18.1.8.src/libcxx/src/support/solaris/xlocale.cpp	2024-07-08 16:22:53.877975920 +0000
+@@ -0,0 +1,136 @@
 +//===----------------------------------------------------------------------===//
 +//
 +// Part of the LLVM Project, under the Apache License v2.0 with LLVM Exceptions.
@@ -1008,44 +1182,126 @@ diff -Naur llvm-project-18.1.8.src.orig/libcxx/src/support/solaris/xlocale.cpp l
 +#ifdef __sun__
 +
 +#include "__support/solaris/xlocale.h"
-+#include <stdarg.h>
 +#include <stdio.h>
++#include <errno.h>
++
++#include <sstream>
++#include <vector>
 +
 +extern "C" {
 +
-+// FIXME: This disregards the locale, which is Very Wrong
-+#define vsnprintf_l(__s, __n, __l, __format, __va)  \
-+    vsnprintf(__s, __n, __format, __va)
++#if !defined(_LIBCXXABI_BUILDING_LIBRARY)
++pthread_mutex_t xlocale::__setAndRestore::__mtx = PTHREAD_MUTEX_INITIALIZER;
++#endif
 +
-+int snprintf_l(char *__s, size_t __n, locale_t __l, const char *__format, ...)
-+{
-+  va_list __va;
-+  va_start(__va, __format);
-+  int __res = vsnprintf_l(__s, __n , __l, __format, __va);
-+  va_end(__va);
-+  return __res;
++locale_t newlocale_internal(int category_mask, const char* locale, locale_t base) {
++  // Maintain current locale name(s) to restore later.
++  std::string current_loc_name(setlocale(LC_ALL, 0));
++
++  // Check for errors.
++  if (category_mask == LC_ALL_MASK && setlocale(LC_ALL, locale) == NULL) {
++    errno = EINVAL;
++    return (locale_t)0;
++  } else {
++    for (int _Cat = 0; _Cat <= _LC_MAX; ++_Cat) {
++      if ((_CATMASK(_Cat) & category_mask) != 0 && setlocale(_Cat, locale) == NULL) {
++        setlocale(LC_ALL, current_loc_name.c_str());
++        errno = EINVAL;
++        return (locale_t)0;
++      }
++    }
++  }
++
++  // Create new locale.
++  locale_t newloc = new locale_struct();
++
++  if (base) {
++    if (category_mask != LC_ALL_MASK) {
++      // Copy base when it will not be overwritten.
++      memcpy(newloc, base, sizeof(locale_struct));
++      newloc->category_mask = category_mask | base->category_mask;
++    }
++    delete base;
++  } else {
++    newloc->category_mask = category_mask;
++  }
++
++  if (category_mask & LC_COLLATE_MASK)
++    newloc->lc_collate = locale;
++  if (category_mask & LC_CTYPE_MASK)
++    newloc->lc_ctype = locale;
++  if (category_mask & LC_MONETARY_MASK)
++    newloc->lc_monetary = locale;
++  if (category_mask & LC_NUMERIC_MASK)
++    newloc->lc_numeric = locale;
++  if (category_mask & LC_TIME_MASK)
++    newloc->lc_time = locale;
++  if (category_mask & LC_MESSAGES_MASK)
++    newloc->lc_messages = locale;
++
++  // Restore current locale.
++  setlocale(LC_ALL, current_loc_name.c_str());
++  return (locale_t)newloc;
 +}
 +
-+int asprintf_l(char **__s, locale_t __l, const char *__format, ...) {
-+  va_list __va;
-+  va_start(__va, __format);
-+  // FIXME:
-+  int __res = vasprintf(__s, __format, __va);
-+  va_end(__va);
-+  return __res;
-+}
++void freelocale_internal(locale_t locobj) { delete locobj; }
 +
-+int sscanf_l(const char *__s, locale_t __l, const char *__format, ...) {
-+  va_list __va;
-+  va_start(__va, __format);
-+  // FIXME:
-+  int __res = vsscanf(__s, __format, __va);
-+  va_end(__va);
-+  return __res;
-+}
++locale_t uselocale_internal(locale_t newloc) {
++  // Maintain current locale name(s).
++  std::string current_loc_name(setlocale(LC_ALL, 0));
 +
-+struct lconv *localeconv_l(locale_t __l) {
-+  return localeconv();
++  if (newloc) {
++    // Set locales and check for errors.
++    bool is_error =
++        (newloc->category_mask & LC_COLLATE_MASK && setlocale(LC_COLLATE, newloc->lc_collate.c_str()) == NULL) ||
++        (newloc->category_mask & LC_CTYPE_MASK && setlocale(LC_CTYPE, newloc->lc_ctype.c_str()) == NULL) ||
++        (newloc->category_mask & LC_MONETARY_MASK && setlocale(LC_MONETARY, newloc->lc_monetary.c_str()) == NULL) ||
++        (newloc->category_mask & LC_NUMERIC_MASK && setlocale(LC_NUMERIC, newloc->lc_numeric.c_str()) == NULL) ||
++        (newloc->category_mask & LC_TIME_MASK && setlocale(LC_TIME, newloc->lc_time.c_str()) == NULL) ||
++        (newloc->category_mask & LC_MESSAGES_MASK && setlocale(LC_MESSAGES, newloc->lc_messages.c_str()) == NULL);
++
++    if (is_error) {
++      setlocale(LC_ALL, current_loc_name.c_str());
++      errno = EINVAL;
++      return (locale_t)0;
++    }
++  }
++
++  // Construct and return previous locale.
++  locale_t previous_loc = new locale_struct();
++
++  // current_loc_name might be a comma-separated locale name list.
++  if (current_loc_name.find(',') != std::string::npos) {
++    // Tokenize locale name list.
++    const char delimiter = ',';
++    std::vector<std::string> tokenized;
++    std::stringstream ss(current_loc_name);
++    std::string s;
++
++    while (std::getline(ss, s, delimiter)) {
++      tokenized.push_back(s);
++    }
++
++    _LIBCPP_ASSERT_VALID_ELEMENT_ACCESS(tokenized.size() >= _NCAT, "locale-name list is too short");
++
++    previous_loc->lc_collate  = tokenized[LC_COLLATE];
++    previous_loc->lc_ctype    = tokenized[LC_CTYPE];
++    previous_loc->lc_monetary = tokenized[LC_MONETARY];
++    previous_loc->lc_numeric  = tokenized[LC_NUMERIC];
++    previous_loc->lc_time     = tokenized[LC_TIME];
++    // Skip LC_TOD.
++    previous_loc->lc_messages = tokenized[LC_MESSAGES];
++  } else {
++    previous_loc->lc_collate  = current_loc_name;
++    previous_loc->lc_ctype    = current_loc_name;
++    previous_loc->lc_monetary = current_loc_name;
++    previous_loc->lc_numeric  = current_loc_name;
++    previous_loc->lc_time     = current_loc_name;
++    previous_loc->lc_messages = current_loc_name;
++  }
++
++  previous_loc->category_mask = LC_ALL_MASK;
++  return previous_loc;
 +}
 +
 +}
