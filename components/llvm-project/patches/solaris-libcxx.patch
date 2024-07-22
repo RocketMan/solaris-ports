@@ -347,8 +347,8 @@ diff -Naur llvm-project-18.1.8.src.orig/libcxx/include/__math/solaris.h llvm-pro
 +#undef atof
 +#undef strtod
 diff -Naur llvm-project-18.1.8.src.orig/libcxx/include/__support/solaris/locale_mgmt_solaris.h llvm-project-18.1.8.src/libcxx/include/__support/solaris/locale_mgmt_solaris.h
---- llvm-project-18.1.8.src.orig/libcxx/include/__support/solaris/locale_mgmt_solaris.h	2024-07-08 16:43:30.214127926 +0000
-+++ llvm-project-18.1.8.src/libcxx/include/__support/solaris/locale_mgmt_solaris.h	2024-07-08 16:21:57.077664359 +0000
+--- llvm-project-18.1.8.src.orig/libcxx/include/__support/solaris/locale_mgmt_solaris.h	1970-01-01 01:00:00.000000000 +0000
++++ llvm-project-18.1.8.src/libcxx/include/__support/solaris/locale_mgmt_solaris.h	2024-07-22 16:04:38.157688461 +0000
 @@ -0,0 +1,56 @@
 +// -*- C++ -*-
 +//===----------------------------------------------------------------------===//
@@ -395,9 +395,9 @@ diff -Naur llvm-project-18.1.8.src.orig/libcxx/include/__support/solaris/locale_
 +
 +// Solaris 11.3 does not have newlocale, freelocale and uselocale.
 +// The functions below are workarounds in single thread mode.
-+locale_t newlocale_internal(int category_mask, const char* locale, locale_t base);
-+void freelocale_internal(locale_t locobj);
-+locale_t uselocale_internal(locale_t newloc);
++__attribute__((visibility("default"))) locale_t newlocale_internal(int category_mask, const char* locale, locale_t base);
++__attribute__((visibility("default"))) void freelocale_internal(locale_t locobj);
++__attribute__((visibility("default"))) locale_t uselocale_internal(locale_t newloc);
 +
 +#  ifdef __cplusplus
 +}
@@ -406,60 +406,10 @@ diff -Naur llvm-project-18.1.8.src.orig/libcxx/include/__support/solaris/locale_
 +#endif // defined(__sun)
 +
 +#endif // _LIBCPP___SUPPORT_LOCALE_MGMT_SOLARIS_H
-diff -Naur llvm-project-18.1.8.src.orig/libcxx/include/__support/solaris/wchar.h llvm-project-18.1.8.src/libcxx/include/__support/solaris/wchar.h
---- llvm-project-18.1.8.src.orig/libcxx/include/__support/solaris/wchar.h	1970-01-01 01:00:00.000000000 +0000
-+++ llvm-project-18.1.8.src/libcxx/include/__support/solaris/wchar.h	2024-06-30 19:23:46.508707975 +0000
-@@ -0,0 +1,46 @@
-+//===----------------------------------------------------------------------===//
-+//
-+// Part of the LLVM Project, under the Apache License v2.0 with LLVM Exceptions.
-+// See https://llvm.org/LICENSE.txt for license information.
-+// SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
-+//
-+//===----------------------------------------------------------------------===//
-+
-+#define iswalpha sun_iswalpha
-+#define iswupper sun_iswupper
-+#define iswlower sun_iswlower
-+#define iswdigit sun_iswdigit
-+#define iswxdigit sun_iswxdigit
-+#define iswalnum sun_iswalnum
-+#define iswspace sun_iswspace
-+#define iswpunct sun_iswpunct
-+#define iswprint sun_iswprint
-+#define iswgraph sun_iswgraph
-+#define iswcntrl sun_iswcntrl
-+#define iswctype sun_iswctype
-+#define towlower sun_towlower
-+#define towupper sun_towupper
-+#define wcswcs sun_wcswcs
-+#define wcswidth sun_wcswidth
-+#define wcwidth sun_wcwidth
-+#define wctype sun_wctype
-+#define _WCHAR_T 1
-+#include_next "wchar.h"
-+#undef iswalpha
-+#undef iswupper
-+#undef iswlower
-+#undef iswdigit
-+#undef iswxdigit
-+#undef iswalnum
-+#undef iswspace
-+#undef iswpunct
-+#undef iswprint
-+#undef iswgraph
-+#undef iswcntrl
-+#undef iswctype
-+#undef towlower
-+#undef towupper
-+#undef wcswcs
-+#undef wcswidth
-+#undef wcwidth
-+#undef wctype
 diff -Naur llvm-project-18.1.8.src.orig/libcxx/include/__support/solaris/xlocale.h llvm-project-18.1.8.src/libcxx/include/__support/solaris/xlocale.h
---- llvm-project-18.1.8.src.orig/libcxx/include/__support/solaris/xlocale.h	2024-07-06 15:39:10.012190762 +0000
-+++ llvm-project-18.1.8.src/libcxx/include/__support/solaris/xlocale.h	2024-07-08 16:31:06.324061877 +0000
-@@ -0,0 +1,313 @@
+--- llvm-project-18.1.8.src.orig/libcxx/include/__support/solaris/xlocale.h	1970-01-01 01:00:00.000000000 +0000
++++ llvm-project-18.1.8.src/libcxx/include/__support/solaris/xlocale.h	2024-07-22 15:50:38.190907207 +0000
+@@ -0,0 +1,482 @@
 +//===----------------------------------------------------------------------===//
 +//
 +// Part of the LLVM Project, under the Apache License v2.0 with LLVM Exceptions.
@@ -479,7 +429,6 @@ diff -Naur llvm-project-18.1.8.src.orig/libcxx/include/__support/solaris/xlocale
 +#include <stdlib.h>
 +#include <stdarg.h>
 +#include <__support/solaris/locale_mgmt_solaris.h>
-+#include <__support/xlocale/__posix_l_fallback.h>
 +#include <cstdlib>
 +#include <cwchar>
 +#include <pthread.h>
@@ -766,6 +715,176 @@ diff -Naur llvm-project-18.1.8.src.orig/libcxx/include/__support/solaris/xlocale
 +  return localeconv();
 +}
 +
++inline _LIBCPP_HIDE_FROM_ABI_C int isalnum_l(int __c, locale_t __loc) {
++  FIX_LOCALE(__loc);
++  return ::isalnum(__c);
++}
++
++inline _LIBCPP_HIDE_FROM_ABI_C int isalpha_l(int __c, locale_t __loc) {
++  FIX_LOCALE(__loc);
++  return ::isalpha(__c);
++}
++
++inline _LIBCPP_HIDE_FROM_ABI_C int isblank_l(int __c, locale_t __loc) {
++  FIX_LOCALE(__loc);
++  return ::isblank(__c);
++}
++
++inline _LIBCPP_HIDE_FROM_ABI_C int iscntrl_l(int __c, locale_t __loc) {
++  FIX_LOCALE(__loc);
++  return ::iscntrl(__c);
++}
++
++inline _LIBCPP_HIDE_FROM_ABI_C int isdigit_l(int __c, locale_t __loc) {
++  FIX_LOCALE(__loc);
++  return ::isdigit(__c);
++}
++
++inline _LIBCPP_HIDE_FROM_ABI_C int isgraph_l(int __c, locale_t __loc) {
++  FIX_LOCALE(__loc);
++  return ::isgraph(__c);
++}
++
++inline _LIBCPP_HIDE_FROM_ABI_C int islower_l(int __c, locale_t __loc) {
++  FIX_LOCALE(__loc);
++  return ::islower(__c);
++}
++
++inline _LIBCPP_HIDE_FROM_ABI_C int isprint_l(int __c, locale_t __loc) {
++  FIX_LOCALE(__loc);
++  return ::isprint(__c);
++}
++
++inline _LIBCPP_HIDE_FROM_ABI_C int ispunct_l(int __c, locale_t __loc) {
++  FIX_LOCALE(__loc);
++  return ::ispunct(__c);
++}
++
++inline _LIBCPP_HIDE_FROM_ABI_C int isspace_l(int __c, locale_t __loc) {
++  FIX_LOCALE(__loc);
++  return ::isspace(__c);
++}
++
++inline _LIBCPP_HIDE_FROM_ABI_C int isupper_l(int __c, locale_t __loc) {
++  FIX_LOCALE(__loc);
++  return ::isupper(__c);
++}
++
++inline _LIBCPP_HIDE_FROM_ABI_C int isxdigit_l(int __c, locale_t __loc) {
++  FIX_LOCALE(__loc);
++  return ::isxdigit(__c);
++}
++
++inline _LIBCPP_HIDE_FROM_ABI_C int toupper_l(int __c, locale_t __loc) {
++  FIX_LOCALE(__loc);
++  return ::toupper(__c);
++}
++
++inline _LIBCPP_HIDE_FROM_ABI_C int tolower_l(int __c, locale_t __loc) {
++  FIX_LOCALE(__loc);
++  return ::tolower(__c);
++}
++
++#ifndef _LIBCPP_HAS_NO_WIDE_CHARACTERS
++inline _LIBCPP_HIDE_FROM_ABI_C int iswalnum_l(wint_t __c, locale_t __loc) {
++  FIX_LOCALE(__loc);
++  return ::iswalnum(__c);
++}
++
++inline _LIBCPP_HIDE_FROM_ABI_C int iswalpha_l(wint_t __c, locale_t __loc) {
++  FIX_LOCALE(__loc);
++  return ::iswalpha(__c);
++}
++
++inline _LIBCPP_HIDE_FROM_ABI_C int iswblank_l(wint_t __c, locale_t __loc) {
++  FIX_LOCALE(__loc);
++  return ::iswblank(__c);
++}
++
++inline _LIBCPP_HIDE_FROM_ABI_C int iswcntrl_l(wint_t __c, locale_t __loc) {
++  FIX_LOCALE(__loc);
++  return ::iswcntrl(__c);
++}
++
++inline _LIBCPP_HIDE_FROM_ABI_C int iswdigit_l(wint_t __c, locale_t __loc) {
++  FIX_LOCALE(__loc);
++  return ::iswdigit(__c);
++}
++
++inline _LIBCPP_HIDE_FROM_ABI_C int iswgraph_l(wint_t __c, locale_t __loc) {
++  FIX_LOCALE(__loc);
++  return ::iswgraph(__c);
++}
++
++inline _LIBCPP_HIDE_FROM_ABI_C int iswlower_l(wint_t __c, locale_t __loc) {
++  FIX_LOCALE(__loc);
++  return ::iswlower(__c);
++}
++
++inline _LIBCPP_HIDE_FROM_ABI_C int iswprint_l(wint_t __c, locale_t __loc) {
++  FIX_LOCALE(__loc);
++  return ::iswprint(__c);
++}
++
++inline _LIBCPP_HIDE_FROM_ABI_C int iswpunct_l(wint_t __c, locale_t __loc) {
++  FIX_LOCALE(__loc);
++  return ::iswpunct(__c);
++}
++
++inline _LIBCPP_HIDE_FROM_ABI_C int iswspace_l(wint_t __c, locale_t __loc) {
++  FIX_LOCALE(__loc);
++  return ::iswspace(__c);
++}
++
++inline _LIBCPP_HIDE_FROM_ABI_C int iswupper_l(wint_t __c, locale_t __loc) {
++  FIX_LOCALE(__loc);
++  return ::iswupper(__c);
++}
++
++inline _LIBCPP_HIDE_FROM_ABI_C int iswxdigit_l(wint_t __c, locale_t __loc) {
++  FIX_LOCALE(__loc);
++  return ::iswxdigit(__c);
++}
++
++inline _LIBCPP_HIDE_FROM_ABI_C wint_t towupper_l(wint_t __c, locale_t __loc) {
++  FIX_LOCALE(__loc);
++  return ::towupper(__c);
++}
++
++inline _LIBCPP_HIDE_FROM_ABI_C wint_t towlower_l(wint_t __c, locale_t __loc) {
++  FIX_LOCALE(__loc);
++  return ::towlower(__c);
++}
++#endif // _LIBCPP_HAS_NO_WIDE_CHARACTERS
++
++inline _LIBCPP_HIDE_FROM_ABI_C int strcoll_l(const char* __s1, const char* __s2, locale_t __loc) {
++  FIX_LOCALE(__loc);
++  return ::strcoll(__s1, __s2);
++}
++
++inline _LIBCPP_HIDE_FROM_ABI_C size_t strxfrm_l(char* __dest, const char* __src, size_t __n, locale_t __loc) {
++  FIX_LOCALE(__loc);
++  return ::strxfrm(__dest, __src, __n);
++}
++
++inline _LIBCPP_HIDE_FROM_ABI_C size_t
++strftime_l(char* __s, size_t __max, const char* __format, const struct tm* __tm, locale_t __loc) {
++  FIX_LOCALE(__loc);
++  return ::strftime(__s, __max, __format, __tm);
++}
++
++#ifndef _LIBCPP_HAS_NO_WIDE_CHARACTERS
++inline _LIBCPP_HIDE_FROM_ABI_C int wcscoll_l(const wchar_t* __ws1, const wchar_t* __ws2, locale_t __loc) {
++  FIX_LOCALE(__loc);
++  return ::wcscoll(__ws1, __ws2);
++}
++
++inline _LIBCPP_HIDE_FROM_ABI_C size_t wcsxfrm_l(wchar_t* __dest, const wchar_t* __src, size_t __n, locale_t __loc) {
++  FIX_LOCALE(__loc);
++  return ::wcsxfrm(__dest, __src, __n);
++}
++#endif // _LIBCPP_HAS_NO_WIDE_CHARACTERS
++
 +#pragma pop_macro("FIX_LOCALE")
 +
 +#ifdef __cplusplus
@@ -784,13 +903,12 @@ diff -Naur llvm-project-18.1.8.src.orig/libcxx/include/CMakeLists.txt llvm-proje
    __math/traits.h
    __math/trigonometric_functions.h
    __mbstate_t.h
-@@ -675,6 +676,10 @@
+@@ -675,6 +676,9 @@
    __support/musl/xlocale.h
    __support/newlib/xlocale.h
    __support/openbsd/xlocale.h
 +  __support/solaris/floatingpoint.h
 +  __support/solaris/locale_mgmt_solaris.h
-+  __support/solaris/wchar.h
 +  __support/solaris/xlocale.h
    __support/win32/locale_win32.h
    __support/xlocale/__nop_locale_mgmt.h
