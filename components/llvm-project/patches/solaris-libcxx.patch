@@ -348,7 +348,7 @@ diff -Naur llvm-project-18.1.8.src.orig/libcxx/include/__math/solaris.h llvm-pro
 +#undef strtod
 diff -Naur llvm-project-18.1.8.src.orig/libcxx/include/__support/solaris/locale_mgmt_solaris.h llvm-project-18.1.8.src/libcxx/include/__support/solaris/locale_mgmt_solaris.h
 --- llvm-project-18.1.8.src.orig/libcxx/include/__support/solaris/locale_mgmt_solaris.h	1970-01-01 01:00:00.000000000 +0000
-+++ llvm-project-18.1.8.src/libcxx/include/__support/solaris/locale_mgmt_solaris.h	2024-07-23 18:31:28.770836676 +0000
++++ llvm-project-18.1.8.src/libcxx/include/__support/solaris/locale_mgmt_solaris.h	2024-07-24 09:50:46.960236158 +0000
 @@ -0,0 +1,58 @@
 +// -*- C++ -*-
 +//===----------------------------------------------------------------------===//
@@ -397,9 +397,9 @@ diff -Naur llvm-project-18.1.8.src.orig/libcxx/include/__support/solaris/locale_
 +
 +// Solaris 11.3 does not have newlocale, freelocale and uselocale.
 +// The functions below are workarounds in single thread mode.
-+locale_t newlocale_internal(int category_mask, const char* locale, locale_t base);
-+void freelocale_internal(locale_t locobj);
-+locale_t uselocale_internal(locale_t newloc);
++_LIBCPP_EXPORTED_FROM_ABI locale_t newlocale_internal(int category_mask, const char* locale, locale_t base);
++_LIBCPP_EXPORTED_FROM_ABI void freelocale_internal(locale_t locobj);
++_LIBCPP_EXPORTED_FROM_ABI locale_t uselocale_internal(locale_t newloc);
 +
 +#  ifdef __cplusplus
 +}
@@ -1216,7 +1216,7 @@ diff -Naur llvm-project-18.1.8.src.orig/libcxx/src/support/solaris/README.txt ll
 +distributed under.
 diff -Naur llvm-project-18.1.8.src.orig/libcxx/src/support/solaris/xlocale.cpp llvm-project-18.1.8.src/libcxx/src/support/solaris/xlocale.cpp
 --- llvm-project-18.1.8.src.orig/libcxx/src/support/solaris/xlocale.cpp	2024-07-06 15:39:10.016588523 +0000
-+++ llvm-project-18.1.8.src/libcxx/src/support/solaris/xlocale.cpp	2024-07-23 18:34:13.493572254 +0000
++++ llvm-project-18.1.8.src/libcxx/src/support/solaris/xlocale.cpp	2024-07-24 09:43:18.950179177 +0000
 @@ -0,0 +1,115 @@
 +//===----------------------------------------------------------------------===//
 +//
@@ -1270,7 +1270,7 @@ diff -Naur llvm-project-18.1.8.src.orig/libcxx/src/support/solaris/xlocale.cpp l
 +    if (category_mask != LC_ALL_MASK) {
 +      // Copy base when it will not be overwritten.
 +      *newloc = *base;
-+      newloc->category_mask |= base->category_mask;
++      newloc->category_mask |= category_mask;
 +    }
 +
 +    delete base;
@@ -1301,16 +1301,16 @@ diff -Naur llvm-project-18.1.8.src.orig/libcxx/src/support/solaris/xlocale.cpp l
 +}
 +
 +locale_t uselocale_internal(locale_t newloc) {
-+  // Maintain current locale name(s).
-+  std::string current_loc_name(setlocale(LC_ALL, 0));
-+
 +  locale_t previous_loc = __curloc;
 +  if (newloc == LC_GLOBAL_LOCALE) {
 +    setlocale(LC_ALL, "C");
 +    __curloc = newloc;
 +  } else if (newloc) {
++    // Maintain current locale name(s).
++    std::string current_loc_name(setlocale(LC_ALL, 0));
++
 +    // Set locales and check for errors.
-+    bool is_error =
++    bool is_error = newloc->category_mask == LC_ALL_MASK ? setlocale(LC_ALL, newloc->lc_collate.c_str()) == NULL :
 +        (newloc->category_mask & LC_COLLATE_MASK && setlocale(LC_COLLATE, newloc->lc_collate.c_str()) == NULL) ||
 +        (newloc->category_mask & LC_CTYPE_MASK && setlocale(LC_CTYPE, newloc->lc_ctype.c_str()) == NULL) ||
 +        (newloc->category_mask & LC_MONETARY_MASK && setlocale(LC_MONETARY, newloc->lc_monetary.c_str()) == NULL) ||
