@@ -1048,7 +1048,9 @@ CXXFLAGS.studio +=	$(studio_OPT) $(studio_XBITS) $(studio_XREGS) \
 # and may segv on instructions like MOVAPS that require correct alignment,
 # so we override the gcc defaults until gcc fixes - see Oracle bug 21393975
 # or upstream bug https://gcc.gnu.org/bugzilla/show_bug.cgi?id=62281
+ifeq ($(COMPILER),gcc)
 gcc_STACK_ALIGN.i386.32 += -mincoming-stack-boundary=2
+endif
 
 # GCC Compiler optimization flag
 gcc_OPT.sparc.32 ?=	-O3
