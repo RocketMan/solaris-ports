@@ -27,11 +27,15 @@
 #
 
 export PARFAIT_BUILD=no
-BUILD_BITS=64
+BUILD_BITS=64_and_32
 COMPILER=clang
 
 include ../../make-rules/shared-macros.mk
 GCC_ROOT=/usr/gcc/13
+
+# llvm-libcxx shares tarballs and patches with llvm-project
+USERLAND_ARCHIVES = ../llvm-project/
+PATCH_DIR = $(USERLAND_ARCHIVES)patches
 
 COMPONENT_NAME=		llvm-project
 COMPONENT_VERSION=	18.1.8
@@ -58,40 +62,6 @@ SYSTEM_TEST_TARGET=
 # Later or never
 CC_PIC_MODE = $(CC_PIC_DISABLE)
 LD_Z_PIE_MODE = $(LD_Z_PIE_DISABLE)
-
-# This patch provides shims to support __cxa_atexit in absence of libc support.
-# Note that in any event, -fno-use-cxa-atexit is the default.
-INSTALL_CXA_ATEXIT := 0
-$(SOLARIS_11_3_ONLY)INSTALL_CXA_ATEXIT = 1
-
-ifeq ($(INSTALL_CXA_ATEXIT),1)
-ADDITIONAL_PATCHES += patches/cxa-atexit.optional
-endif
-
-# Build and install libc++
-#
-# If you need only 64-bit libc++, this is a good option.  If you need
-# both 32- and 64-bit libc++, then disable this and build llvm-libcxx.
-#
-# If you disable this, move these manifest files out of the way:
-#     clang-c++-devel.p5m
-#     clang-c++-runtime.p5m
-#
-ENABLE_LIBCXX = 1
-
-ifeq ($(ENABLE_LIBCXX),1)
-WANT_LIBCXX =
-else
-WANT_LIBCXX =\#
-endif
-
-# The LLVM_LIBDIR_SUFFIX option is not being passed to the runtimes
-COMPONENT_POST_UNPACK_ACTION += (\
-	$(GSED) -i "s|\$${LLVM_LIBDIR_SUFFIX}|/$(MACH64)|g" \
-	$(SOURCE_DIR)/libcxx/CMakeLists.txt \
-	$(SOURCE_DIR)/libcxxabi/CMakeLists.txt \
-	$(SOURCE_DIR)/libunwind/CMakeLists.txt \
-	)
 
 include $(WS_MAKE_RULES)/common.mk
 
@@ -121,76 +91,6 @@ ifeq ($(TOP_LEVEL_RUN),yes)
 # the full build to avoid waiting on this last job :-).
 COMPONENT_BUILD_ARGS += -j4
 endif
-
-$(WANT_LIBCXX)COMPONENT_BUILD_ARGS += runtimes
-
-# Because LLVM's install target doesn't install everything that
-# needs to be installed.
-EXTRA_INSTALL_BITS= llvm-lto arcmt-test c-arcmt-test c-index-test diagtool
-LLVM_INSTALL_BINDIR=$(PROTOUSRBINDIR)
-LLVM_BINDIR=$(BUILD_DIR_$(BITS))/bin
-
-SCAN_VIEW_FILES=Reporter.py ScanView.py
-SCAN_BUILD_LIBS=libear libscanbuild
-CLANG_FORMAT_FILES=clang-format-diff.py clang-format-sublime.py \
-		   clang-format.py clang-rename.py
-LLVM_MAN_FILES=FileCheck.1 bugpoint.1 clang.1 lit.1 llc.1 lli.1 \
-	       llvm-ar.1 llvm-as.1 llvm-bcanalyzer.1 llvm-build.1 \
-	       llvm-config.1 llvm-cov.1 llvm-diff.1 llvm-dis.1 \
-	       llvm-dwarfdump.1 llvm-extract.1 llvm-lib.1 llvm-link.1 \
-	       llvm-nm.1 llvm-profdata.1 llvm-readobj.1 llvm-stress.1 \
-	       llvm-symbolizer.1 opt.1 tblgen.1
-
-COMPONENT_POST_BUILD_ACTION = \
-      if test -d $(COMPONENT_DIR)/cxa_finalize ; then \
-      gmake -C $(COMPONENT_DIR)/cxa_finalize build ; \
-      fi
-
-COMPONENT_POST_INSTALL_ACTION += \
-	if test -d $(COMPONENT_DIR)/cxa_finalize ; then \
-	gmake -C $(COMPONENT_DIR)/cxa_finalize install ; \
-	fi;
-
-COMPONENT_POST_INSTALL_ACTION += \
-	list1='$(EXTRA_INSTALL_BITS)' ; for f in $$list1 ; do \
-	    $(INSTALL) --mode=755 $(LLVM_BINDIR)/$$f \
-			$(LLVM_INSTALL_BINDIR)/$$f ; \
-	done ;
-
-COMPONENT_POST_INSTALL_ACTION += \
-	$(MKDIR) \
-	  $(PROTOUSRLIBDIR)/python$(PYTHON_VERSION)/vendor-packages ; \
-	list2='$(SCAN_VIEW_FILES)' ; for f in $$list2 ; do \
-	$(INSTALL) --mode=644 $(PROTOUSRSHAREDIR)/scan-view/$$f \
-	  $(PROTOUSRLIBDIR)/python$(PYTHON_VERSION)/vendor-packages/$$f ; \
-	done ;
-
-COMPONENT_POST_INSTALL_ACTION += \
-	list3='$(CLANG_FORMAT_FILES)' ; for f in $$list3 ; do \
-	  $(INSTALL) --mode=644 $(PROTOUSRSHAREDIR)/clang/$$f \
-	    $(PROTOUSRLIBDIR)/python$(PYTHON_VERSION)/vendor-packages/$$f ; \
-	done ;
-
-COMPONENT_POST_INSTALL_ACTION += \
-	list4='$(SCAN_BUILD_LIBS)' ; for f in $$list4 ; do \
-	  $(RM) -r $(PROTOUSRLIBDIR)/python$(PYTHON_VERSION)/vendor-packages/$$f ; \
-	  $(MV) $(PROTOUSRLIBDIR64)/$$f $(PROTOUSRLIBDIR)/python$(PYTHON_VERSION)/vendor-packages ; \
-	done ;
-
-COMPONENT_POST_INSTALL_ACTION += \
-	cd $(PROTOUSRLIBDIR) ; \
-	$(PYTHON) -m compileall . ; \
-	cd $(PROTOUSRSHAREDIR) ; \
-	$(PYTHON) -m compileall . ;
-
-# This is erroring out on the project build with clang.
-# See the related `patches/91-link-tools-11.3.patch`
-#
-# Remove RPATH pointing to build area
-#COMPONENT_POST_INSTALL_ACTION += \
-#	for f in arcmt-test c-index-test c-arcmt-test diagtool llvm-lto; do \
-#	$(ELFEDIT) -e "dyn:runpath $(LLVM_RUNPATH_64)" \
-#	  $(PROTOUSRBINDIR)/$$f; done
 
 # The component uses check target for unit tests.
 COMPONENT_TEST_TARGETS = check
@@ -334,13 +234,19 @@ LD_OPTIONS_SO = $(LD_Z_DEFS) $(LD_DEF_LIBS)
 # include the OS release (e.g. --target=sparcv9-sun-solaris2.11).
 ifeq ($(MACH),sparc)
   CMAKE_OPTIONS += -DLLVM_TARGETS_TO_BUILD:STRING="Sparc"
-  CMAKE_OPTIONS += -DLLVM_DEFAULT_TARGET_TRIPLE:STRING="sparcv9-sun-solaris$(SOLARIS_VERSION)"
-  $(WANT_LIBCXX)CMAKE_OPTIONS += -DLLVM_RUNTIME_TARGETS:STRING="sparcv9-sun-solaris$(SOLARIS_VERSION)"
+  gcc_OPT.sparc.32 += -m32
+  CMAKE_OPTIONS.32 += -DLLVM_DEFAULT_TARGET_TRIPLE:STRING="sparc-sun-solaris$(SOLARIS_VERSION)"
+  CMAKE_OPTIONS.32 += -DLLVM_RUNTIME_TARGETS:STRING="sparc-sun-solaris$(SOLARIS_VERSION)"
+  CMAKE_OPTIONS.64 += -DLLVM_DEFAULT_TARGET_TRIPLE:STRING="sparcv9-sun-solaris$(SOLARIS_VERSION)"
+  CMAKE_OPTIONS.64 += -DLLVM_RUNTIME_TARGETS:STRING="sparcv9-sun-solaris$(SOLARIS_VERSION)"
 endif
 ifeq ($(MACH),i386)
   CMAKE_OPTIONS += -DLLVM_TARGETS_TO_BUILD:STRING="X86"
-  CMAKE_OPTIONS += -DLLVM_DEFAULT_TARGET_TRIPLE:STRING="x86_64-pc-solaris$(SOLARIS_VERSION)"
-  $(WANT_LIBCXX)CMAKE_OPTIONS += -DLLVM_RUNTIME_TARGETS:STRING="x86_64-pc-solaris$(SOLARIS_VERSION)"
+  gcc_OPT.i386.32 += -m32
+  CMAKE_OPTIONS.32 += -DLLVM_DEFAULT_TARGET_TRIPLE:STRING="x86-pc-solaris$(SOLARIS_VERSION)"
+  CMAKE_OPTIONS.32 += -DLLVM_RUNTIME_TARGETS:STRING="x86-pc-solaris$(SOLARIS_VERSION)"
+  CMAKE_OPTIONS.64 += -DLLVM_DEFAULT_TARGET_TRIPLE:STRING="x86_64-pc-solaris$(SOLARIS_VERSION)"
+  CMAKE_OPTIONS.64 += -DLLVM_RUNTIME_TARGETS:STRING="x86_64-pc-solaris$(SOLARIS_VERSION)"
 endif
 
 #CMAKE_OPTIONS += -DCMAKE_ASM_COMPILER:STRING="/usr/gnu/bin/as"
@@ -349,18 +255,8 @@ endif
 # LLVM_RUNPATH is already present in the RPATH, so we just leave it alone.
 $(SOLARIS_11_4_5_ONLY)CMAKE_OPTIONS += -DCMAKE_INSTALL_RPATH:STRING="$(LLVM_RUNPATH)"
 
-CMAKE_OPTIONS += -S $(SOURCE_DIR)/llvm -B $(BUILD_DIR_64)
-CMAKE_OPTIONS += -DLLVM_ENABLE_PROJECTS="clang"
-$(WANT_LIBCXX)CMAKE_OPTIONS += -DLLVM_ENABLE_RUNTIMES="libcxx;libcxxabi;libunwind"
-#CMAKE_OPTIONS += -DCLANG_DEFAULT_CXX_STDLIB="libc++"
-#CMAKE_OPTIONS += -DCLANG_DEFAULT_RTLIB="compiler-rt"
-
-CMAKE_OPTIONS += -DLLVM_BUILD_TOOLS:BOOL=ON
-CMAKE_OPTIONS += -DLLVM_INCLUDE_TOOLS:BOOL=ON
-#CMAKE_OPTIONS += -DLLVM_BUILD_TESTS:BOOL=ON
-CMAKE_OPTIONS += -DLLVM_INCLUDE_TESTS:BOOL=OFF
-CMAKE_OPTIONS += -DLLVM_ENABLE_THREADS:BOOL=ON
-CMAKE_OPTIONS += -DLLVM_BUILD_32_BITS:BOOL=OFF
+CMAKE_OPTIONS += -S $(SOURCE_DIR)/runtimes -B $(BUILD_DIR_$(BITS))
+CMAKE_OPTIONS += -DLLVM_ENABLE_RUNTIMES="libcxx;libcxxabi;libunwind"
 
 # CMake tries really hard to be too smart for its own good.
 ifeq ($(DEBUG_BUILD),1)
@@ -410,7 +306,7 @@ CMAKE_OPTIONS += -DCMAKE_VERBOSE_MAKEFILE:BOOL=OFF
 
 CMAKE_OPTIONS += -DLLVM_COMPILER_IS_GCC_COMPATIBLE:BOOL=ON
 
-CMAKE_OPTIONS += -DLLVM_LIBDIR_SUFFIX="/$(MACH64)"
+CMAKE_OPTIONS.64 += -DLLVM_LIBDIR_SUFFIX="/$(MACH64)"
 
 CMAKE_OPTIONS += -DLLVM_INCLUDE_BENCHMARKS=OFF
 
@@ -429,65 +325,12 @@ COMPONENT_BUILD_ENV += LD_EXEC_OPTIONS="-zaslr=disable"
 # fails
 #COMPONENT_INSTALL_ARGS += SHELL=/bin/bash
 
-clean::
-		cd cxa_finalize; gmake clean
-
 test:		$(TEST_64)
 
 system-test:    $(SYSTEM_TESTS_NOT_IMPLEMENTED)
 
-PERL_SCRIPTS += $(PROTO_DIR)/usr/libexec/ccc-analyzer
-PERL_SCRIPTS += $(PROTO_DIR)/usr/libexec/c++-analyzer
-PERL_SCRIPTS += $(PROTO_DIR)/usr/bin/scan-build
-PYTHON_SCRIPTS += $(PROTO_DIR)/usr/bin/analyze-build
-PYTHON_SCRIPTS += $(PROTO_DIR)/usr/bin/git-clang-format
-PYTHON_SCRIPTS += $(PROTO_DIR)/usr/bin/intercept-build
-PYTHON_SCRIPTS += $(PROTO_DIR)/usr/bin/hmaptool
-PYTHON_SCRIPTS += $(PROTO_DIR)/usr/bin/scan-build
-PYTHON_SCRIPTS += $(PROTO_DIR)/usr/bin/scan-build-py
-PYTHON_SCRIPTS += $(PROTO_DIR)/usr/bin/scan-view
-PYTHON_SCRIPTS += $(PROTO_DIR)/usr/lib/analyze-c++
-PYTHON_SCRIPTS += $(PROTO_DIR)/usr/lib/analyze-cc
-PYTHON_SCRIPTS += $(PROTO_DIR)/usr/lib/intercept-c++
-PYTHON_SCRIPTS += $(PROTO_DIR)/usr/lib/intercept-cc
-PYTHON_SCRIPTS += $(PROTO_DIR)/usr/libexec/analyze-c++
-PYTHON_SCRIPTS += $(PROTO_DIR)/usr/libexec/analyze-cc
-PYTHON_SCRIPTS += $(PROTO_DIR)/usr/libexec/intercept-c++
-PYTHON_SCRIPTS += $(PROTO_DIR)/usr/libexec/intercept-cc
-PYTHON_SCRIPTS += $(PROTO_DIR)/usr/lib/python$(PYTHON_VERSION)/vendor-packages/clang-format-diff.py
-PYTHON_SCRIPTS += $(PROTO_DIR)/usr/lib/python$(PYTHON_VERSION)/vendor-packages/Reporter.py
-PYTHON_SCRIPTS += $(PROTO_DIR)/usr/share/clang/clang-format-diff.py
-PYTHON_SCRIPTS += $(PROTO_DIR)/usr/share/scan-view/Reporter.py
-PYTHON_SCRIPTS += $(PROTO_DIR)/usr/share/scan-view/startfile.py
-PYTHON_SCRIPTS += $(PROTO_DIR)/usr/share/opt-viewer/opt-diff.py
-PYTHON_SCRIPTS += $(PROTO_DIR)/usr/share/opt-viewer/optrecord.py
-PYTHON_SCRIPTS += $(PROTO_DIR)/usr/share/opt-viewer/opt-stats.py
-PYTHON_SCRIPTS += $(PROTO_DIR)/usr/share/opt-viewer/opt-viewer.py
-
 # LLVM ships some static libraries (.a).
 MANIFEST_CLEANUP_TRANSFORM=
 
-REQUIRED_PACKAGES += developer/build/cmake
-REQUIRED_PACKAGES += developer/build/pkg-config
-REQUIRED_PACKAGES += developer/documentation-tool/sphinx
-REQUIRED_PACKAGES += developer/gnu-binutils
-REQUIRED_PACKAGES += library/libedit
-REQUIRED_PACKAGES += library/libffi
-REQUIRED_PACKAGES += library/libiomp5
-REQUIRED_PACKAGES += library/libxml2
-REQUIRED_PACKAGES += library/zlib
-REQUIRED_PACKAGES += $(PERL_PKG)
-REQUIRED_PACKAGES += library/perl-5/xml-libxml
-REQUIRED_PACKAGES += library/perl-5/xml-namespacesupport
-REQUIRED_PACKAGES += library/perl-5/xml-parser
-REQUIRED_PACKAGES += library/perl-5/xml-sax
-REQUIRED_PACKAGES += library/perl-5/xml-sax-base
-REQUIRED_PACKAGES += library/perl-5/xml-simple
-REQUIRED_PACKAGES += runtime/python-39
-REQUIRED_PACKAGES += system/core-os
-REQUIRED_PACKAGES += system/header
-REQUIRED_PACKAGES += system/library/gcc/gcc-runtime-13
-REQUIRED_PACKAGES += system/library/gcc/gcc-c++-runtime-13
 REQUIRED_PACKAGES += system/library/gcc/gcc-c-runtime-13
-REQUIRED_PACKAGES += system/library/gcc/gcc-gobjc-runtime-13
 REQUIRED_PACKAGES += system/library/math
