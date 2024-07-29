@@ -52,4 +52,3 @@ link path=usr/lib/$(MACH64)/libunwind.so target=libunwind.so.1
 link path=usr/lib/$(MACH64)/libunwind.so.1 target=libunwind.so.1.0
 file path=usr/lib/$(MACH64)/libunwind.so.1.0
 license llvm.license license="Apache License v2.0 with LLVM Exceptions"
-depend type=require fmri=pkg:/developer/llvm/clang
