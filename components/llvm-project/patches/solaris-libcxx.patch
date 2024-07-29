@@ -1085,25 +1085,24 @@ diff -Naur llvm-project-18.1.8.src.orig/libcxx/include/math.h llvm-project-18.1.
  
 diff -Naur llvm-project-18.1.8.src.orig/libcxx/include/stdlib.h llvm-project-18.1.8.src/libcxx/include/stdlib.h
 --- llvm-project-18.1.8.src.orig/libcxx/include/stdlib.h	2024-06-15 18:21:32.000000000 +0000
-+++ llvm-project-18.1.8.src/libcxx/include/stdlib.h	2024-06-30 19:23:46.509490516 +0000
-@@ -109,13 +109,14 @@
- #    endif
++++ llvm-project-18.1.8.src/libcxx/include/stdlib.h	2024-07-29 17:15:27.408802149 +0000
+@@ -110,12 +110,15 @@
  
  // MSVCRT already has the correct prototype in <stdlib.h> if __cplusplus is defined
--#    if !defined(_LIBCPP_MSVCRT)
-+#    if !defined(_LIBCPP_MSVCRT) && !defined(__sun__)
+ #    if !defined(_LIBCPP_MSVCRT)
++#      if !defined(__sun__)
  _LIBCPP_NODISCARD_EXT inline _LIBCPP_HIDE_FROM_ABI long abs(long __x) _NOEXCEPT { return __builtin_labs(__x); }
++#      endif // !defined(__sun__)
  _LIBCPP_NODISCARD_EXT inline _LIBCPP_HIDE_FROM_ABI long long abs(long long __x) _NOEXCEPT {
    return __builtin_llabs(__x);
  }
--#    endif // !defined(_LIBCPP_MSVCRT)
-+#    endif // !defined(_LIBCPP_MSVCRT) && !defined(__sun__)
+ #    endif // !defined(_LIBCPP_MSVCRT)
  
 +#if !defined(__sun__)
  _LIBCPP_NODISCARD_EXT inline _LIBCPP_HIDE_FROM_ABI float abs(float __lcpp_x) _NOEXCEPT {
    return __builtin_fabsf(__lcpp_x); // Use builtins to prevent needing math.h
  }
-@@ -127,6 +128,7 @@
+@@ -127,6 +130,7 @@
  _LIBCPP_NODISCARD_EXT inline _LIBCPP_HIDE_FROM_ABI long double abs(long double __lcpp_x) _NOEXCEPT {
    return __builtin_fabsl(__lcpp_x);
  }
@@ -1111,21 +1110,16 @@ diff -Naur llvm-project-18.1.8.src.orig/libcxx/include/stdlib.h llvm-project-18.
  
  // div
  
-@@ -141,12 +143,12 @@
- #    endif
+@@ -142,7 +146,9 @@
  
  // MSVCRT already has the correct prototype in <stdlib.h> if __cplusplus is defined
--#    if !defined(_LIBCPP_MSVCRT)
-+#    if !defined(_LIBCPP_MSVCRT) && !defined(__sun__)
+ #    if !defined(_LIBCPP_MSVCRT)
++#      if !defined(__sun__)
  inline _LIBCPP_HIDE_FROM_ABI ldiv_t div(long __x, long __y) _NOEXCEPT { return ::ldiv(__x, __y); }
++#      endif // !defined(__sun__)
  #      if !(defined(__FreeBSD__) && !defined(__LONG_LONG_SUPPORTED))
  inline _LIBCPP_HIDE_FROM_ABI lldiv_t div(long long __x, long long __y) _NOEXCEPT { return ::lldiv(__x, __y); }
  #      endif
--#    endif // _LIBCPP_MSVCRT
-+#    endif // _LIBCPP_MSVCRT / __sun__
- } // extern "C++"
- #  endif   // __cplusplus
- 
 diff -Naur llvm-project-18.1.8.src.orig/libcxx/include/string.h llvm-project-18.1.8.src/libcxx/include/string.h
 --- llvm-project-18.1.8.src.orig/libcxx/include/string.h	2024-06-15 18:21:32.000000000 +0000
 +++ llvm-project-18.1.8.src/libcxx/include/string.h	2024-06-30 19:23:46.509754671 +0000
