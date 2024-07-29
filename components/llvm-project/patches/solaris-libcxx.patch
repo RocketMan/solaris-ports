@@ -410,8 +410,8 @@ diff -Naur llvm-project-18.1.8.src.orig/libcxx/include/__support/solaris/locale_
 +#endif // _LIBCPP___SUPPORT_LOCALE_MGMT_SOLARIS_H
 diff -Naur llvm-project-18.1.8.src.orig/libcxx/include/__support/solaris/xlocale.h llvm-project-18.1.8.src/libcxx/include/__support/solaris/xlocale.h
 --- llvm-project-18.1.8.src.orig/libcxx/include/__support/solaris/xlocale.h	1970-01-01 01:00:00.000000000 +0000
-+++ llvm-project-18.1.8.src/libcxx/include/__support/solaris/xlocale.h	2024-07-22 15:50:38.190907207 +0000
-@@ -0,0 +1,482 @@
++++ llvm-project-18.1.8.src/libcxx/include/__support/solaris/xlocale.h	2024-07-29 18:55:58.281676399 +0000
+@@ -0,0 +1,476 @@
 +//===----------------------------------------------------------------------===//
 +//
 +// Part of the LLVM Project, under the Apache License v2.0 with LLVM Exceptions.
@@ -440,11 +440,6 @@ diff -Naur llvm-project-18.1.8.src.orig/libcxx/include/__support/solaris/xlocale
 +#endif
 +
 +#pragma push_macro("FIX_LOCALE")
-+#if defined(_LIBCXXABI_BUILDING_LIBRARY)
-+// dummy __setAndRestore when building libcxxabi, to avoid
-+// undefined references to internal locale shims
-+#define FIX_LOCALE(__loc) (void)(__loc)
-+#else
 +namespace xlocale {
 +struct __setAndRestore {
 +  explicit __setAndRestore(locale_t locale) {
@@ -472,7 +467,6 @@ diff -Naur llvm-project-18.1.8.src.orig/libcxx/include/__support/solaris/xlocale
 +
 +} // namespace xlocale
 +#define FIX_LOCALE(__loc) xlocale::__setAndRestore __newLoc(__loc)
-+#endif
 +
 +#define MB_CUR_MAX_L(__loc) MB_CUR_MAX
 +
@@ -1218,8 +1212,8 @@ diff -Naur llvm-project-18.1.8.src.orig/libcxx/src/support/solaris/README.txt ll
 +distributed under.
 diff -Naur llvm-project-18.1.8.src.orig/libcxx/src/support/solaris/xlocale.cpp llvm-project-18.1.8.src/libcxx/src/support/solaris/xlocale.cpp
 --- llvm-project-18.1.8.src.orig/libcxx/src/support/solaris/xlocale.cpp	2024-07-06 15:39:10.016588523 +0000
-+++ llvm-project-18.1.8.src/libcxx/src/support/solaris/xlocale.cpp	2024-07-24 09:43:18.950179177 +0000
-@@ -0,0 +1,115 @@
++++ llvm-project-18.1.8.src/libcxx/src/support/solaris/xlocale.cpp	2024-07-29 18:56:34.345309844 +0000
+@@ -0,0 +1,113 @@
 +//===----------------------------------------------------------------------===//
 +//
 +// Part of the LLVM Project, under the Apache License v2.0 with LLVM Exceptions.
@@ -1239,9 +1233,7 @@ diff -Naur llvm-project-18.1.8.src.orig/libcxx/src/support/solaris/xlocale.cpp l
 +
 +extern "C" {
 +
-+#if !defined(_LIBCXXABI_BUILDING_LIBRARY)
 +pthread_mutex_t xlocale::__setAndRestore::__mtx = PTHREAD_MUTEX_INITIALIZER;
-+#endif
 +
 +static locale_t __curloc = LC_GLOBAL_LOCALE;
 +
@@ -1369,18 +1361,6 @@ diff -Naur llvm-project-18.1.8.src.orig/libcxxabi/src/demangle/ItaniumDemangle.h
  #ifdef _LIBCXXABI_COMPILER_CLANG
  #pragma clang diagnostic push
  #pragma clang diagnostic ignored "-Wunused-template"
-diff -Naur llvm-project-18.1.8.src.orig/libcxxabi/src/demangle/Utility.h llvm-project-18.1.8.src/libcxxabi/src/demangle/Utility.h
---- llvm-project-18.1.8.src.orig/libcxxabi/src/demangle/Utility.h	2024-06-15 18:21:32.000000000 +0000
-+++ llvm-project-18.1.8.src/libcxxabi/src/demangle/Utility.h	2024-07-01 11:22:08.763389153 +0000
-@@ -134,7 +134,7 @@
-   OutputBuffer &operator<<(char C) { return (*this += C); }
- 
-   OutputBuffer &operator<<(long long N) {
--    return writeUnsigned(static_cast<unsigned long long>(std::abs(N)), N < 0);
-+    return writeUnsigned(static_cast<unsigned long long>(std::abs((double)N)), N < 0);
-   }
- 
-   OutputBuffer &operator<<(unsigned long long N) {
 --- llvm-project-18.1.8.src/libcxx/src/filesystem/operations.cpp-	2024-06-15 18:21:32.000000000 +0000
 +++ llvm-project-18.1.8.src/libcxx/src/filesystem/operations.cpp	2024-07-03 12:59:38.589570578 +0000
 @@ -186,7 +186,14 @@
