@@ -937,16 +937,21 @@ diff -Naur llvm-project-18.1.8.src.orig/libcxx/include/locale llvm-project-18.1.
    if (__grouping.empty()) {
 diff -Naur llvm-project-18.1.8.src.orig/libcxx/include/math.h llvm-project-18.1.8.src/libcxx/include/math.h
 --- llvm-project-18.1.8.src.orig/libcxx/include/math.h	2024-06-15 18:21:32.000000000 +0000
-+++ llvm-project-18.1.8.src/libcxx/include/math.h	2024-07-25 00:01:55.861105568 +0000
-@@ -292,6 +292,7 @@
- */
++++ llvm-project-18.1.8.src/libcxx/include/math.h	2024-07-31 17:49:00.116458266 +0000
+@@ -293,6 +293,12 @@
  
  #  include <__config>
-+#  include <cstddef>
  
++#  ifdef __cplusplus
++extern "C++" {
++#    include <cstddef>
++}
++#  endif
++
  #  if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
  #    pragma GCC system_header
-@@ -355,6 +356,9 @@
+ #  endif
+@@ -355,6 +361,9 @@
  #      undef isunordered
  #    endif
  
@@ -956,7 +961,7 @@ diff -Naur llvm-project-18.1.8.src.orig/libcxx/include/math.h llvm-project-18.1.
  #    include <__math/abs.h>
  #    include <__math/copysign.h>
  #    include <__math/error_functions.h>
-@@ -374,11 +378,13 @@
+@@ -374,11 +383,13 @@
  #    include <__math/rounding_functions.h>
  #    include <__math/traits.h>
  #    include <__math/trigonometric_functions.h>
@@ -970,7 +975,7 @@ diff -Naur llvm-project-18.1.8.src.orig/libcxx/include/math.h llvm-project-18.1.
  // fpclassify relies on implementation-defined constants, so we can't move it to a detail header
  _LIBCPP_BEGIN_NAMESPACE_STD
  
-@@ -412,10 +418,10 @@
+@@ -412,10 +423,10 @@
  _LIBCPP_END_NAMESPACE_STD
  
  using std::__math::fpclassify;
@@ -984,7 +989,7 @@ diff -Naur llvm-project-18.1.8.src.orig/libcxx/include/math.h llvm-project-18.1.
  using std::__math::isfinite;
  using std::__math::isgreater;
  using std::__math::isgreaterequal;
-@@ -426,7 +432,7 @@
+@@ -426,7 +437,7 @@
  using std::__math::isnan;
  using std::__math::isnormal;
  using std::__math::isunordered;
@@ -993,7 +998,7 @@ diff -Naur llvm-project-18.1.8.src.orig/libcxx/include/math.h llvm-project-18.1.
  
  // abs
  //
-@@ -442,38 +448,47 @@
+@@ -442,38 +453,47 @@
  // will only be selected when the C library doesn't provide one.
  
  using std::__math::acos;
@@ -1054,7 +1059,7 @@ diff -Naur llvm-project-18.1.8.src.orig/libcxx/include/math.h llvm-project-18.1.
  using std::__math::log1p;
  using std::__math::log2;
  using std::__math::logb;
-@@ -483,7 +498,6 @@
+@@ -483,7 +503,6 @@
  using std::__math::nearbyint;
  using std::__math::nextafter;
  using std::__math::nexttoward;
@@ -1062,7 +1067,7 @@ diff -Naur llvm-project-18.1.8.src.orig/libcxx/include/math.h llvm-project-18.1.
  using std::__math::remainder;
  using std::__math::remquo;
  using std::__math::rint;
-@@ -491,13 +505,9 @@
+@@ -491,13 +510,9 @@
  using std::__math::scalbln;
  using std::__math::scalbn;
  using std::__math::signbit;
