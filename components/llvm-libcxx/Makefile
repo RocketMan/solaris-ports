@@ -93,7 +93,7 @@ COMPONENT_BUILD_ARGS += -j4
 endif
 
 # The component uses check target for unit tests.
-COMPONENT_TEST_TARGETS = check
+COMPONENT_TEST_TARGETS = check-cxx check-cxxabi check-unwind
 
 # Results output is slightly different on Intel vs. SPARC.
 COMPONENT_TEST_MASTER = \
