@@ -346,6 +346,20 @@ diff -Naur llvm-project-18.1.8.src.orig/libcxx/include/__math/solaris.h llvm-pro
 +#include_next "floatingpoint.h"
 +#undef atof
 +#undef strtod
+diff -Naur llvm-project-18.1.8.src.orig/libcxx/include/__random/log2.h llvm-project-18.1.8.src/libcxx/include/__random/log2.h
+--- llvm-project-18.1.8.src.orig/libcxx/include/__random/log2.h	2024-06-15 18:21:32.000000000 +0000
++++ llvm-project-18.1.8.src/libcxx/include/__random/log2.h	2024-08-01 10:33:55.725217228 +0000
+@@ -13,6 +13,10 @@
+ #include <__type_traits/conditional.h>
+ #include <cstddef>
+ 
++#if defined(__sun)
++#define __log2(x) __builtin_log2(x)
++#endif
++
+ #if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
+ #  pragma GCC system_header
+ #endif
 diff -Naur llvm-project-18.1.8.src.orig/libcxx/include/__support/solaris/locale_mgmt_solaris.h llvm-project-18.1.8.src/libcxx/include/__support/solaris/locale_mgmt_solaris.h
 --- llvm-project-18.1.8.src.orig/libcxx/include/__support/solaris/locale_mgmt_solaris.h	1970-01-01 01:00:00.000000000 +0000
 +++ llvm-project-18.1.8.src/libcxx/include/__support/solaris/locale_mgmt_solaris.h	2024-07-24 09:50:46.960236158 +0000
