@@ -1415,6 +1415,28 @@ diff -Naur llvm-project-18.1.8.src.orig/libcxxabi/src/demangle/ItaniumDemangle.h
  
  // On Windows the TLS storage for locales needs to be initialized before we create
  // the standard streams, otherwise it may not be alive during program termination
+--- llvm-project-18.1.8.src/libcxx/test/configs/llvm-libc++-shared.cfg.in~	2024-06-15 18:21:32.000000000 +0000
++++ llvm-project-18.1.8.src/libcxx/test/configs/llvm-libc++-shared.cfg.in	2024-08-01 16:32:55.012124409 +0000
+@@ -10,7 +10,7 @@
+     '-nostdinc++ -I %{include} -I %{target-include} -I %{libcxx}/test/support'
+ ))
+ config.substitutions.append(('%{link_flags}',
+-    '-nostdlib++ -L %{lib} -Wl,-rpath,%{lib} -lc++'
++    '-nostdlib++ -L %{lib} -Wl,-rpath,%{lib} -lc++ -lsocket -lnsl'
+ ))
+ config.substitutions.append(('%{exec}',
+     '%{executor} --execdir %T -- '
+--- llvm-project-18.1.8.src/libcxx/test/configs/llvm-libc++-static.cfg.in~	2024-06-15 18:21:32.000000000 +0000
++++ llvm-project-18.1.8.src/libcxx/test/configs/llvm-libc++-static.cfg.in	2024-08-01 16:33:07.660809156 +0000
+@@ -10,7 +10,7 @@
+     '-nostdinc++ -I %{include} -I %{target-include} -I %{libcxx}/test/support'
+ ))
+ config.substitutions.append(('%{link_flags}',
+-    '-nostdlib++ -L %{lib} -lc++ -lc++abi'
++    '-nostdlib++ -L %{lib} -lc++ -lc++abi -lsocket -lnsl'
+ ))
+ config.substitutions.append(('%{exec}',
+     '%{executor} --execdir %T -- '
 --- llvm-project-18.1.8.src/libcxx/test/std/utilities/memory/util.smartptr/util.smartptr.weak/util.smartptr.ownerless/owner_less.pass.cpp~	2024-06-15 18:21:32.000000000 +0000
 +++ llvm-project-18.1.8.src/libcxx/test/std/utilities/memory/util.smartptr/util.smartptr.weak/util.smartptr.ownerless/owner_less.pass.cpp	2024-07-31 15:34:01.185155554 +0000
 @@ -52,6 +52,11 @@
