@@ -36,7 +36,6 @@ set name=info.source-url value=$(COMPONENT_ARCHIVE_URL)
 set name=info.upstream-url value=$(COMPONENT_PROJECT_URL)
 set name=org.opensolaris.arc-caseid value=PSARC/2013/188
 set name=org.opensolaris.consolidation value=$(CONSOLIDATION)
-file path=usr/include/__libunwind_config.h
 file path=usr/include/c++/v1/__algorithm/adjacent_find.h
 file path=usr/include/c++/v1/__algorithm/all_of.h
 file path=usr/include/c++/v1/__algorithm/any_of.h
@@ -1039,12 +1038,5 @@ file path=usr/include/c++/v1/vector
 file path=usr/include/c++/v1/version
 file path=usr/include/c++/v1/wchar.h
 file path=usr/include/c++/v1/wctype.h
-file path=usr/include/libunwind.h
-file path=usr/include/libunwind.modulemap
-file path=usr/include/mach-o/compact_unwind_encoding.h
-file path=usr/include/mach-o/compact_unwind_encoding.modulemap
-file path=usr/include/unwind.h
-file path=usr/include/unwind_arm_ehabi.h
-file path=usr/include/unwind_itanium.h
 license llvm.license license="Apache License v2.0 with LLVM Exceptions"
 depend type=require fmri=pkg:/system/library/llvm/clang-c++-runtime

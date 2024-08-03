@@ -256,7 +256,7 @@ endif
 $(SOLARIS_11_4_5_ONLY)CMAKE_OPTIONS += -DCMAKE_INSTALL_RPATH:STRING="$(LLVM_RUNPATH)"
 
 CMAKE_OPTIONS += -S $(SOURCE_DIR)/runtimes -B $(BUILD_DIR_$(BITS))
-CMAKE_OPTIONS += -DLLVM_ENABLE_RUNTIMES="libcxx;libcxxabi;libunwind"
+CMAKE_OPTIONS += -DLLVM_ENABLE_RUNTIMES="libcxx;libcxxabi"
 
 # CMake tries really hard to be too smart for its own good.
 ifeq ($(DEBUG_BUILD),1)

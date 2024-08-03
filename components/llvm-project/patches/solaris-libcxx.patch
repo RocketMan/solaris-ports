@@ -34,12 +34,14 @@ diff -Naur llvm-project-18.1.8.src.orig/libcxx/CMakeLists.txt llvm-project-18.1.
  # Target options --------------------------------------------------------------
  option(LIBCXX_BUILD_32_BITS "Build 32 bit multilib libc++. This option is not supported anymore when building the runtimes. Please specify a full triple instead." ${LLVM_BUILD_32_BITS})
  if (LIBCXX_BUILD_32_BITS)
-@@ -477,7 +485,7 @@
+@@ -477,7 +485,9 @@
  # LIBCXX_LINK_FLAGS: Linker only flags.
  # LIBCXX_LIBRARIES: libraries libc++ is linked to.
  set(LIBCXX_COMPILE_FLAGS "")
 -set(LIBCXX_LINK_FLAGS "")
-+set(LIBCXX_LINK_FLAGS "-lsendfile")
++# libgcc_s before libc to pick up gcc unwinder
++# see https://gcc.gnu.org/bugzilla/show_bug.cgi?id=59788
++set(LIBCXX_LINK_FLAGS "-lsendfile -lgcc_s")
  set(LIBCXX_LIBRARIES "")
  set(LIBCXX_ADDITIONAL_COMPILE_FLAGS "" CACHE STRING
      "Additional Compile only flags which can be provided in cache")
@@ -1346,6 +1348,22 @@ diff -Naur llvm-project-18.1.8.src.orig/libcxx/src/support/solaris/xlocale.cpp l
 +}
 +
 +#endif // __sun__
+diff -Naur llvm-project-18.1.8.src.orig/libcxxabi/CMakeLists.txt llvm-project-18.1.8.src/libcxxabi/CMakeLists.txt
+--- llvm-project-18.1.8.src.orig/libcxxabi/CMakeLists.txt	2024-06-15 18:21:32.000000000 +0000
++++ llvm-project-18.1.8.src/libcxxabi/CMakeLists.txt	2024-08-03 20:03:38.933271529 +0000
+@@ -46,7 +46,11 @@
+ option(LIBCXXABI_ENABLE_ASSERTIONS "Enable assertions independent of build mode." ON)
+ option(LIBCXXABI_ENABLE_PEDANTIC "Compile with pedantic enabled." OFF)
+ option(LIBCXXABI_ENABLE_WERROR "Fail and stop if a warning is triggered." OFF)
+-option(LIBCXXABI_USE_LLVM_UNWINDER "Build and use the LLVM unwinder." ON)
++set(LIBCXXABI_USE_LLVM_UNWINDER_DEFAULT OFF)
++if ("libunwind" IN_LIST LLVM_ENABLE_RUNTIMES)
++  set(LIBCXXABI_USE_LLVM_UNWINDER_DEFAULT ON)
++endif()
++option(LIBCXXABI_USE_LLVM_UNWINDER "Build and use the LLVM unwinder." ${LIBCXXABI_USE_LLVM_UNWINDER_DEFAULT})
+ if (LIBCXXABI_USE_LLVM_UNWINDER AND NOT "libunwind" IN_LIST LLVM_ENABLE_RUNTIMES)
+   message(FATAL_ERROR "LIBCXXABI_USE_LLVM_UNWINDER is set to ON, but libunwind is not specified in LLVM_ENABLE_RUNTIMES.")
+ endif()
 diff -Naur llvm-project-18.1.8.src.orig/libcxxabi/src/cxa_exception.h llvm-project-18.1.8.src/libcxxabi/src/cxa_exception.h
 --- llvm-project-18.1.8.src.orig/libcxxabi/src/cxa_exception.h	2024-06-15 18:21:32.000000000 +0000
 +++ llvm-project-18.1.8.src/libcxxabi/src/cxa_exception.h	2024-07-01 10:14:22.407495348 +0000
