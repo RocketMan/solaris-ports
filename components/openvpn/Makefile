@@ -30,12 +30,12 @@ COMPILER=gcc
 include ../../make-rules/shared-macros.mk
 
 COMPONENT_NAME=		openvpn
-COMPONENT_VERSION=	2.5.6
-COMPONENT_ARCHIVE=	v$(COMPONENT_VERSION).tar.gz
-COMPONENT_ARCHIVE_URL=	https://github.com/OpenVPN/$(COMPONENT_NAME)/archive/$(COMPONENT_ARCHIVE)
-COMPONENT_PROJECT_URL=	https://openvpn.net/
+COMPONENT_VERSION=	2.6.12
+COMPONENT_ARCHIVE=	$(COMPONENT_NAME)-$(COMPONENT_VERSION).tar.gz
+COMPONENT_ARCHIVE_URL=	https://github.com/OpenVPN/openvpn/releases/download/v$(COMPONENT_VERSION)/$(COMPONENT_ARCHIVE)
+COMPONENT_PROJECT_URL=	http://openvpn.net/
 COMPONENT_ARCHIVE_HASH=	\
-    sha256:1061275433a48af24657228204718ac933519956ba09b30879267d3138678787
+    sha256:1c610fddeb686e34f1367c347e027e418e07523a10f4d8ce4a2c2af2f61a1929
 COMPONENT_ANITYA_ID=	2567
 
 COMPONENT_PREP_ACTION = \
@@ -47,14 +47,16 @@ include $(WS_MAKE_RULES)/common.mk
 CFLAGS +=	$(CPP_LARGEFILES)
 LDFLAGS +=	$(LD_Z_DEFS) $(LD_Z_TEXT) -lpthread
 
+PKG_CONFIG_PATHS += /usr/openssl/3/lib/64/pkgconfig
+
 CONFIGURE_OPTIONS += CPPFLAGS="$(CPPFLAGS)"
 CONFIGURE_OPTIONS += GREP=/usr/gnu/bin/grep
 CONFIGURE_OPTIONS += --disable-static
 CONFIGURE_OPTIONS += --enable-shared
+CONFIGURE_OPTIONS += --disable-lz4
 
 REQUIRED_PACKAGES += driver/network/tuntap
 REQUIRED_PACKAGES += library/lzo
-REQUIRED_PACKAGES += library/security/openssl
-REQUIRED_PACKAGES += library/security/openssl-11
+REQUIRED_PACKAGES += library/security/openssl-3
 REQUIRED_PACKAGES += system/core-os
 REQUIRED_PACKAGES += system/network
