@@ -22,7 +22,7 @@
 #
 # Copyright 2013 Adam Stevko. All rights reserved.
 # Copyright 2016 Jim Klimov
-# Copyright 2020-2021 Jim Mason <jmason at ibinx dot com>.
+# Copyright 2020-2024 Jim Mason <jmason at ibinx dot com>.
 #
 
 BUILD_BITS=64
@@ -37,10 +37,6 @@ COMPONENT_PROJECT_URL=	http://openvpn.net/
 COMPONENT_ARCHIVE_HASH=	\
     sha256:1c610fddeb686e34f1367c347e027e418e07523a10f4d8ce4a2c2af2f61a1929
 COMPONENT_ANITYA_ID=	2567
-
-COMPONENT_PREP_ACTION = \
-        (cd $(@D) ; \
-        autoreconf -f -i ; )
 
 include $(WS_MAKE_RULES)/common.mk
 
