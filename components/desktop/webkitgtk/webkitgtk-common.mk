@@ -25,16 +25,26 @@
 
 export PARFAIT_BUILD=no
 
-BUILD_BITS=64
-COMPILER=clang
+BUILD_BITS ?= 64
+COMPILER ?= clang
+
+# Set USE_LIBCXX=ON to use llvm libc++ rather than gcc libstdc++
+# (Available only for COMPILER=clang builds)
+USE_LIBCXX ?= ON
 
 # paths are relative to the variant subdirectory
 include ../../../../make-rules/shared-macros.mk
 
-GCC_ROOT=/usr/gcc/10
+GCC_ROOT=/usr/gcc/13
 
 # variants share downloaded archives
 USERLAND_ARCHIVES=../archives/
+
+ifeq ($(USE_LIBCXX), ON)
+WANT_LIBCXX =
+else
+WANT_LIBCXX =\#
+endif
 
 # unifdef shipped with the stock 11.3 base-developer-utilities is too old;
 # download, build, and use an up-to-date unifdef to build webkitgtk
@@ -75,6 +85,7 @@ CXXFLAGS += -Wno-expansion-to-defined
 CXXFLAGS += -Wno-gnu-include-next
 CXXFLAGS += -Wno-sign-compare
 CXXFLAGS += -Wno-unused-lambda-capture
+$(WANT_LIBCXX)CXXFLAGS += -stdlib=libc++
 endif
 
 # optionally build static woff2 libraries
@@ -83,3 +94,5 @@ ENABLE_STATIC_WOFF2 ?= OFF
 ifneq ($(ENABLE_STATIC_WOFF2), OFF)
 include ../webkitgtk-woff2.mk
 endif
+
+$(WANT_LIBCXX)REQUIRED_PACKAGES += system/library/llvm/clang-c++-runtime
