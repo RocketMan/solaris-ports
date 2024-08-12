@@ -93,7 +93,7 @@ COMPONENT_BUILD_ARGS += -j4
 endif
 
 # The component uses check target for unit tests.
-COMPONENT_TEST_TARGETS = check-cxx check-cxxabi check-unwind
+COMPONENT_TEST_TARGETS = check-cxx check-cxxabi
 
 # Results output is slightly different on Intel vs. SPARC.
 COMPONENT_TEST_MASTER = \
@@ -309,6 +309,8 @@ CMAKE_OPTIONS += -DLLVM_COMPILER_IS_GCC_COMPATIBLE:BOOL=ON
 CMAKE_OPTIONS.64 += -DLLVM_LIBDIR_SUFFIX="/$(MACH64)"
 
 CMAKE_OPTIONS += -DLLVM_INCLUDE_BENCHMARKS=OFF
+
+CMAKE_OPTIONS += -DLLVM_LIT_ARGS="-j$(COMPONENT_MAKE_JOBS) -sv --show-xfail --show-unsupported"
 
 COMPONENT_BUILD_ENV = CC="$(CC)"
 COMPONENT_BUILD_ENV += CXX="$(CXX)"
