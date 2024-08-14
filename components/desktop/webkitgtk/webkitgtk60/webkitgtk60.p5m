@@ -147,12 +147,12 @@ file path=usr/lib/$(MACH64)/girepository-1.0/WebKitWebProcessExtension-6.0.typel
 link path=usr/lib/$(MACH64)/libjavascriptcoregtk-6.0.so \
     target=libjavascriptcoregtk-6.0.so.1
 link path=usr/lib/$(MACH64)/libjavascriptcoregtk-6.0.so.1 \
-    target=libjavascriptcoregtk-6.0.so.1.2.6
-file path=usr/lib/$(MACH64)/libjavascriptcoregtk-6.0.so.1.2.6
+    target=libjavascriptcoregtk-6.0.so.1.2.7
+file path=usr/lib/$(MACH64)/libjavascriptcoregtk-6.0.so.1.2.7
 link path=usr/lib/$(MACH64)/libwebkitgtk-6.0.so target=libwebkitgtk-6.0.so.4
 link path=usr/lib/$(MACH64)/libwebkitgtk-6.0.so.4 \
-    target=libwebkitgtk-6.0.so.4.5.6
-file path=usr/lib/$(MACH64)/libwebkitgtk-6.0.so.4.5.6
+    target=libwebkitgtk-6.0.so.4.5.7
+file path=usr/lib/$(MACH64)/libwebkitgtk-6.0.so.4.5.7
 file path=usr/lib/$(MACH64)/pkgconfig/javascriptcoregtk-6.0.pc
 file path=usr/lib/$(MACH64)/pkgconfig/webkitgtk-6.0.pc
 file path=usr/lib/$(MACH64)/pkgconfig/webkitgtk-web-process-extension-6.0.pc
