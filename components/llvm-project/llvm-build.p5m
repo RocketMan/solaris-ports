@@ -20,7 +20,10 @@
 #
 
 #
-# Copyright (c) 2015, 2023, Oracle and/or its affiliates.
+# Copyright (c) 2024 Jim Mason <jmason at ibinx doc com>.
+#
+# Adapted from original code Copyright (c) 2015, 2023, Oracle and/or its
+# affiliates.
 #
 
 set name=pkg.fmri \
