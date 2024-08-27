@@ -27,7 +27,7 @@
 #
 
 # build with static woff2
-ENABLE_STATIC_WOFF2 := ON
+#ENABLE_STATIC_WOFF2 := ON
 
 include ../webkitgtk-common.mk
 
@@ -99,7 +99,6 @@ CMAKE_OPTIONS += -DENABLE_GAMEPAD=OFF
 CMAKE_OPTIONS += -DUSE_GSTREAMER_GL=ON
 CMAKE_OPTIONS += -DENABLE_ENCRYPTED_MEDIA=ON
 CMAKE_OPTIONS += -DUSE_LIBHYPHEN=OFF
-CMAKE_OPTIONS += -DUSE_WOFF2=$(ENABLE_STATIC_WOFF2)
 CMAKE_OPTIONS += -DENABLE_JIT=ON
 CMAKE_OPTIONS += -DUSE_SOUP2=OFF
 CMAKE_OPTIONS += -DUSE_GTK4=OFF
@@ -139,6 +138,7 @@ REQUIRED_PACKAGES += image/library/libpng
 REQUIRED_PACKAGES += image/library/libpng14
 REQUIRED_PACKAGES += image/library/libwebp
 REQUIRED_PACKAGES += image/library/openjpeg2
+REQUIRED_PACKAGES += library/brotli
 REQUIRED_PACKAGES += library/desktop/atk
 REQUIRED_PACKAGES += library/desktop/cairo
 REQUIRED_PACKAGES += library/desktop/gdk-pixbuf
@@ -165,6 +165,7 @@ REQUIRED_PACKAGES += library/libxml2
 REQUIRED_PACKAGES += library/libxslt
 REQUIRED_PACKAGES += library/security/libgpg-error
 REQUIRED_PACKAGES += library/spell-checking/enchant
+REQUIRED_PACKAGES += library/woff2
 REQUIRED_PACKAGES += library/zlib
 REQUIRED_PACKAGES += $(PERL_PKG)
 REQUIRED_PACKAGES += runtime/python-27
