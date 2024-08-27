@@ -20,25 +20,26 @@
 #
 
 #
-# Copyright (c) 2021 Jim Mason <jmason at ibinx dot com>.
+# Copyright (c) 2020 Jim Mason <jmason at ibinx dot com>.  All rights reserved.
 #
 
-BUILD_BITS =            64_and_32
+BUILD_BITS =		64_and_32
 COMPILER =		gcc
-include ../../make-rules/shared-macros.mk
+include ../../../make-rules/shared-macros.mk
 
-COMPONENT_NAME=		rapidjson
-COMPONENT_VERSION=	1.1.0
-COMPONENT_REVISION=	0
-COMPONENT_SRC=		$(COMPONENT_NAME)-$(COMPONENT_VERSION)
-COMPONENT_ARCHIVE_URL=	https://github.com/Tencent/rapidjson/archive/refs/tags/v$(COMPONENT_VERSION).tar.gz
-COMPONENT_ARCHIVE_HASH= \
-	sha256:bf7ced29704a1e696fbccf2a2b4ea068e7774fa37f6d7dd4039d0787f8bed98e
-COMPONENT_PROJECT_URL=	https://rapidjson.org/
-COMPONENT_ANITYA_ID=	7422
+COMPONENT_NAME=		libuuid
+COMPONENT_VERSION=	1.0.3
+COMPONENT_ARCHIVE=	$(COMPONENT_NAME)-$(COMPONENT_VERSION).tar.gz
+COMPONENT_PROJECT_URL=	https://sourceforge.net/projects/libuuid/
+COMPONENT_ARCHIVE_URL=	https://netix.dl.sourceforge.net/project/libuuid/$(COMPONENT_ARCHIVE)
+COMPONENT_ARCHIVE_HASH=	\
+    sha256:46af3275291091009ad7f1b899de3d0cea0252737550e7919d17237997db5644
 
-BUILD_STYLE = cmake
 include $(WS_MAKE_RULES)/common.mk
 
-CMAKE_OPTIONS += -DRAPIDJSON_BUILD_DOC=OFF
-CMAKE_OPTIONS += -DRAPIDJSON_BUILD_EXAMPLES=OFF
+CONFIGURE_OPTIONS += --enable-static=no
+
+# needs to co-exist with uuid deliverables from system/library
+CONFIGURE_OPTIONS += --includedir=$(USRINCDIR)/$(COMPONENT_NAME)-1/
+CONFIGURE_OPTIONS.32 += --libdir=$(USRLIBDIR)/$(COMPONENT_NAME)-1/
+CONFIGURE_OPTIONS.64 += --libdir=$(USRLIBDIR64)/$(COMPONENT_NAME)-1/

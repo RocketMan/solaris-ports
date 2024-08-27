@@ -25,22 +25,22 @@
 
 BUILD_BITS =            64_and_32
 COMPILER =		gcc
-include ../../make-rules/shared-macros.mk
+include ../../../make-rules/shared-macros.mk
 
-COMPONENT_NAME=		spdlog
-COMPONENT_VERSION=	1.8.5
+COMPONENT_NAME=		flatbuffers
+COMPONENT_VERSION=	2.0.0
 COMPONENT_REVISION=	0
 COMPONENT_SRC=		$(COMPONENT_NAME)-$(COMPONENT_VERSION)
-COMPONENT_ARCHIVE_URL=	https://github.com/gabime/spdlog/archive/refs/tags/v$(COMPONENT_VERSION).tar.gz
+COMPONENT_ARCHIVE_URL=	https://github.com/google/flatbuffers/archive/refs/tags/v$(COMPONENT_VERSION).tar.gz
 COMPONENT_ARCHIVE_HASH= \
-	sha256:944d0bd7c763ac721398dca2bb0f3b5ed16f67cef36810ede5061f35a543b4b8
-COMPONENT_PROJECT_URL=	https://spdlog.docsforge.com/
-COMPONENT_ANITYA_ID=	15599
+	sha256:9ddb9031798f4f8754d00fca2f1a68ecf9d0f83dfac7239af1311e4fd9a565c4
+COMPONENT_PROJECT_URL=	https://google.github.io/flatbuffers/
+COMPONENT_ANITYA_ID=	16642
 
 BUILD_STYLE = cmake
 include $(WS_MAKE_RULES)/common.mk
 
-CMAKE_OPTIONS += -DSPDLOG_BUILD_SHARED=ON
+CMAKE_OPTIONS += -DFLATBUFFERS_BUILD_SHAREDLIB=ON
 
 REQUIRED_PACKAGES += system/library/gcc/gcc-c-runtime
 REQUIRED_PACKAGES += system/library/gcc/gcc-c++-runtime

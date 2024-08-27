@@ -24,24 +24,21 @@
 #
 
 BUILD_BITS =            64_and_32
-COMPILER =		gcc
-include ../../make-rules/shared-macros.mk
+include ../../../make-rules/shared-macros.mk
 
-COMPONENT_NAME=		flatbuffers
-COMPONENT_VERSION=	2.0.0
+COMPONENT_NAME=		fstrcmp
+COMPONENT_VERSION=	0.7
 COMPONENT_REVISION=	0
-COMPONENT_SRC=		$(COMPONENT_NAME)-$(COMPONENT_VERSION)
-COMPONENT_ARCHIVE_URL=	https://github.com/google/flatbuffers/archive/refs/tags/v$(COMPONENT_VERSION).tar.gz
+COMPONENT_SRC=		fstrcmp-0.7.D001
+COMPONENT_ARCHIVE_URL=	http://fstrcmp.sourceforge.net/$(COMPONENT_SRC).tar.gz
 COMPONENT_ARCHIVE_HASH= \
-	sha256:9ddb9031798f4f8754d00fca2f1a68ecf9d0f83dfac7239af1311e4fd9a565c4
-COMPONENT_PROJECT_URL=	https://google.github.io/flatbuffers/
-COMPONENT_ANITYA_ID=	16642
+	sha256:e4018e850f80700acee8da296e56e15b1eef711ab15157e542e7d7e1237c3476
+COMPONENT_PROJECT_URL=	http://fstrcmp.sourceforge.net/
+COMPONENT_ANITYA_ID=	7320
 
-BUILD_STYLE = cmake
 include $(WS_MAKE_RULES)/common.mk
 
-CMAKE_OPTIONS += -DFLATBUFFERS_BUILD_SHAREDLIB=ON
+PATH=$(GNUBIN):$(USRBINDIR):$(SPRO_VROOT)/bin/
 
-REQUIRED_PACKAGES += system/library/gcc/gcc-c-runtime
-REQUIRED_PACKAGES += system/library/gcc/gcc-c++-runtime
-REQUIRED_PACKAGES += system/library/math
+COMPONENT_PRE_CONFIGURE_ACTION = ($(CLONEY) $(SOURCE_DIR) $(@D))
+

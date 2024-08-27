@@ -24,21 +24,21 @@
 #
 
 BUILD_BITS =            64_and_32
-include ../../make-rules/shared-macros.mk
+COMPILER =		gcc
+include ../../../make-rules/shared-macros.mk
 
-COMPONENT_NAME=		fstrcmp
-COMPONENT_VERSION=	0.7
+COMPONENT_NAME=		rapidjson
+COMPONENT_VERSION=	1.1.0
 COMPONENT_REVISION=	0
-COMPONENT_SRC=		fstrcmp-0.7.D001
-COMPONENT_ARCHIVE_URL=	http://fstrcmp.sourceforge.net/$(COMPONENT_SRC).tar.gz
+COMPONENT_SRC=		$(COMPONENT_NAME)-$(COMPONENT_VERSION)
+COMPONENT_ARCHIVE_URL=	https://github.com/Tencent/rapidjson/archive/refs/tags/v$(COMPONENT_VERSION).tar.gz
 COMPONENT_ARCHIVE_HASH= \
-	sha256:e4018e850f80700acee8da296e56e15b1eef711ab15157e542e7d7e1237c3476
-COMPONENT_PROJECT_URL=	http://fstrcmp.sourceforge.net/
-COMPONENT_ANITYA_ID=	7320
+	sha256:bf7ced29704a1e696fbccf2a2b4ea068e7774fa37f6d7dd4039d0787f8bed98e
+COMPONENT_PROJECT_URL=	https://rapidjson.org/
+COMPONENT_ANITYA_ID=	7422
 
+BUILD_STYLE = cmake
 include $(WS_MAKE_RULES)/common.mk
 
-PATH=$(GNUBIN):$(USRBINDIR):$(SPRO_VROOT)/bin/
-
-COMPONENT_PRE_CONFIGURE_ACTION = ($(CLONEY) $(SOURCE_DIR) $(@D))
-
+CMAKE_OPTIONS += -DRAPIDJSON_BUILD_DOC=OFF
+CMAKE_OPTIONS += -DRAPIDJSON_BUILD_EXAMPLES=OFF

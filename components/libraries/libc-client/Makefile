@@ -25,7 +25,7 @@
 
 BUILD_BITS =            64_and_32
 COMPILER =              gcc
-include ../../make-rules/shared-macros.mk
+include ../../../make-rules/shared-macros.mk
 
 COMPONENT_NAME=		libc-client
 COMPONENT_VERSION=	2007f

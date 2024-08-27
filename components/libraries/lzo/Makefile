@@ -20,28 +20,23 @@
 #
 
 #
-# Copyright (c) 2021 Jim Mason <jmason at ibinx dot com>.
+# Copyright (c) 2018 Jim Mason <jmason at ibinx dot com>.  All rights reserved.
 #
+BUILD_BITS=64_and_32
+COMPILER=gcc
+include ../../../make-rules/shared-macros.mk
 
-BUILD_BITS =            64_and_32
-COMPILER =		gcc
-include ../../make-rules/shared-macros.mk
+COMPONENT_NAME=		lzo
+COMPONENT_VERSION=	2.09
+IPS_COMPONENT_VERSION=	2.0.9
+COMPONENT_ARCHIVE=	$(COMPONENT_NAME)-$(COMPONENT_VERSION).tar.gz
+COMPONENT_ARCHIVE_URL=	http://www.oberhumer.com/opensource/$(COMPONENT_NAME)/download/$(COMPONENT_ARCHIVE)
+COMPONENT_PROJECT_URL=	http://www.oberhumer.com/opensource/$(COMPONENT_NAME)/
+COMPONENT_ARCHIVE_HASH=	\
+    sha256:f294a7ced313063c057c504257f437c8335c41bfeed23531ee4e6a2b87bcb34c
+COMPONENT_ANITYA_ID=	1868
 
-COMPONENT_NAME=		fmtlib
-COMPONENT_VERSION=	7.1.3
-COMPONENT_REVISION=	0
-COMPONENT_SRC=		fmt-$(COMPONENT_VERSION)
-COMPONENT_ARCHIVE_URL=	https://github.com/fmtlib/fmt/archive/refs/tags/$(COMPONENT_VERSION).tar.gz
-COMPONENT_ARCHIVE_HASH= \
-	sha256:5cae7072042b3043e12d53d50ef404bbb76949dad1de368d7f993a15c8c05ecc
-COMPONENT_PROJECT_URL=	https://github.com/fmtlib/fmt
-COMPONENT_ANITYA_ID=	11526
-
-BUILD_STYLE = cmake
 include $(WS_MAKE_RULES)/common.mk
 
-CMAKE_OPTIONS += -DBUILD_SHARED_LIBS=ON
-
-REQUIRED_PACKAGES += system/library/gcc/gcc-c-runtime
-REQUIRED_PACKAGES += system/library/gcc/gcc-c++-runtime
-REQUIRED_PACKAGES += system/library/math
+CONFIGURE_OPTIONS+=	--enable-static=no
+CONFIGURE_OPTIONS+=	--enable-shared

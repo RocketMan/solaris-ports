@@ -20,26 +20,28 @@
 #
 
 #
-# Copyright (c) 2020 Jim Mason <jmason at ibinx dot com>.  All rights reserved.
+# Copyright (c) 2021 Jim Mason <jmason at ibinx dot com>.
 #
 
-BUILD_BITS =		64_and_32
+BUILD_BITS =            64_and_32
 COMPILER =		gcc
-include ../../make-rules/shared-macros.mk
+include ../../../make-rules/shared-macros.mk
 
-COMPONENT_NAME=		libuuid
-COMPONENT_VERSION=	1.0.3
-COMPONENT_ARCHIVE=	$(COMPONENT_NAME)-$(COMPONENT_VERSION).tar.gz
-COMPONENT_PROJECT_URL=	https://sourceforge.net/projects/libuuid/
-COMPONENT_ARCHIVE_URL=	https://netix.dl.sourceforge.net/project/libuuid/$(COMPONENT_ARCHIVE)
-COMPONENT_ARCHIVE_HASH=	\
-    sha256:46af3275291091009ad7f1b899de3d0cea0252737550e7919d17237997db5644
+COMPONENT_NAME=		spdlog
+COMPONENT_VERSION=	1.8.5
+COMPONENT_REVISION=	0
+COMPONENT_SRC=		$(COMPONENT_NAME)-$(COMPONENT_VERSION)
+COMPONENT_ARCHIVE_URL=	https://github.com/gabime/spdlog/archive/refs/tags/v$(COMPONENT_VERSION).tar.gz
+COMPONENT_ARCHIVE_HASH= \
+	sha256:944d0bd7c763ac721398dca2bb0f3b5ed16f67cef36810ede5061f35a543b4b8
+COMPONENT_PROJECT_URL=	https://spdlog.docsforge.com/
+COMPONENT_ANITYA_ID=	15599
 
+BUILD_STYLE = cmake
 include $(WS_MAKE_RULES)/common.mk
 
-CONFIGURE_OPTIONS += --enable-static=no
+CMAKE_OPTIONS += -DSPDLOG_BUILD_SHARED=ON
 
-# needs to co-exist with uuid deliverables from system/library
-CONFIGURE_OPTIONS += --includedir=$(USRINCDIR)/$(COMPONENT_NAME)-1/
-CONFIGURE_OPTIONS.32 += --libdir=$(USRLIBDIR)/$(COMPONENT_NAME)-1/
-CONFIGURE_OPTIONS.64 += --libdir=$(USRLIBDIR64)/$(COMPONENT_NAME)-1/
+REQUIRED_PACKAGES += system/library/gcc/gcc-c-runtime
+REQUIRED_PACKAGES += system/library/gcc/gcc-c++-runtime
+REQUIRED_PACKAGES += system/library/math
