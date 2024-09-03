@@ -14,17 +14,10 @@ This project builds:
 
 * the llvm libraries
 * the clang compiler
-* the libc++ library
 
 ### libc++
 
-By default, clang++ will continue to use the gnu libstdc++ library; to
-use libc++ instead, specify:
-
-    clang++ ...options... -stdlib=libc++
-
-If you need both 32- and 64-bit libc++, instead build the project
-llvm-libcxx.  If you do this, you can disable libc++ in this project
-by setting ENABLE_LIBCXX=0 in the Makefile.  If you disable libc++ in
-this project, be sure to move the corresponding `clang-c++-devel.p5m`
-and `clang-c++-runtime.p5m` manifests out of the way.
+llvm supplies a c++ runtime library, libc++, as a replacement for the
+GNU c++ runtime, libstdc++.  If you want the llvm libc++ runtime,
+build the [llvm-libcxx](../llvm-libcxx) project which is provided
+separately in this repo.

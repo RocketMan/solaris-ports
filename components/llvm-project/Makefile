@@ -68,31 +68,6 @@ ifeq ($(INSTALL_CXA_ATEXIT),1)
 ADDITIONAL_PATCHES += patches/cxa-atexit.optional
 endif
 
-# Build and install libc++
-#
-# If you need only 64-bit libc++, this is a good option.  If you need
-# both 32- and 64-bit libc++, then disable this and build llvm-libcxx.
-#
-# If you disable this, move these manifest files out of the way:
-#     clang-c++-devel.p5m
-#     clang-c++-runtime.p5m
-#
-ENABLE_LIBCXX = 1
-
-ifeq ($(ENABLE_LIBCXX),1)
-WANT_LIBCXX =
-else
-WANT_LIBCXX =\#
-endif
-
-# The LLVM_LIBDIR_SUFFIX option is not being passed to the runtimes
-COMPONENT_POST_UNPACK_ACTION += (\
-	$(GSED) -i "s|\$${LLVM_LIBDIR_SUFFIX}|/$(MACH64)|g" \
-	$(SOURCE_DIR)/libcxx/CMakeLists.txt \
-	$(SOURCE_DIR)/libcxxabi/CMakeLists.txt \
-	$(SOURCE_DIR)/libunwind/CMakeLists.txt \
-	)
-
 include $(WS_MAKE_RULES)/common.mk
 
 PYTHON_VERSION = 3.9
@@ -121,8 +96,6 @@ ifeq ($(TOP_LEVEL_RUN),yes)
 # the full build to avoid waiting on this last job :-).
 COMPONENT_BUILD_ARGS += -j4
 endif
-
-$(WANT_LIBCXX)COMPONENT_BUILD_ARGS += runtimes
 
 # Because LLVM's install target doesn't install everything that
 # needs to be installed.
@@ -335,12 +308,10 @@ LD_OPTIONS_SO = $(LD_Z_DEFS) $(LD_DEF_LIBS)
 ifeq ($(MACH),sparc)
   CMAKE_OPTIONS += -DLLVM_TARGETS_TO_BUILD:STRING="Sparc"
   CMAKE_OPTIONS += -DLLVM_DEFAULT_TARGET_TRIPLE:STRING="sparcv9-sun-solaris$(SOLARIS_VERSION)"
-  $(WANT_LIBCXX)CMAKE_OPTIONS += -DLLVM_RUNTIME_TARGETS:STRING="sparcv9-sun-solaris$(SOLARIS_VERSION)"
 endif
 ifeq ($(MACH),i386)
   CMAKE_OPTIONS += -DLLVM_TARGETS_TO_BUILD:STRING="X86"
   CMAKE_OPTIONS += -DLLVM_DEFAULT_TARGET_TRIPLE:STRING="x86_64-pc-solaris$(SOLARIS_VERSION)"
-  $(WANT_LIBCXX)CMAKE_OPTIONS += -DLLVM_RUNTIME_TARGETS:STRING="x86_64-pc-solaris$(SOLARIS_VERSION)"
 endif
 
 #CMAKE_OPTIONS += -DCMAKE_ASM_COMPILER:STRING="/usr/gnu/bin/as"
@@ -351,7 +322,6 @@ $(SOLARIS_11_4_5_ONLY)CMAKE_OPTIONS += -DCMAKE_INSTALL_RPATH:STRING="$(LLVM_RUNP
 
 CMAKE_OPTIONS += -S $(SOURCE_DIR)/llvm -B $(BUILD_DIR_64)
 CMAKE_OPTIONS += -DLLVM_ENABLE_PROJECTS="clang"
-$(WANT_LIBCXX)CMAKE_OPTIONS += -DLLVM_ENABLE_RUNTIMES="libcxx;libcxxabi"
 #CMAKE_OPTIONS += -DCLANG_DEFAULT_CXX_STDLIB="libc++"
 #CMAKE_OPTIONS += -DCLANG_DEFAULT_RTLIB="compiler-rt"
 
