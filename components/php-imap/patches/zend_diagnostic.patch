@@ -1,0 +1,20 @@
+--- imap-1.0.2/php_imap.h~	2024-01-04 10:18:46.000000000 +0000
++++ imap-1.0.2/php_imap.h	2024-09-16 10:55:48.506224349 +0000
+@@ -46,6 +46,17 @@
+ #  undef ftruncate
+ # endif
+ 
++// PHP < 8.3 does not have ZEND_DIAGNOSTIC_IGNORED_{START,END}
++# ifndef _ZEND_DIAGNOSTIC_IGNORED_START
++#  define __ZEND_DO_PRAGMA(x) _Pragma(#x)
++#  define _ZEND_DO_PRAGMA(x) __ZEND_DO_PRAGMA(x)
++#  define ZEND_DIAGNOSTIC_IGNORED_START(warning) \
++	_Pragma("GCC diagnostic push") \
++	_ZEND_DO_PRAGMA(GCC diagnostic ignored warning)
++#  define ZEND_DIAGNOSTIC_IGNORED_END \
++	_Pragma("GCC diagnostic pop")
++# endif
++
+  /* these are used for quota support */
+  ZEND_DIAGNOSTIC_IGNORED_START("-Wstrict-prototypes")
+ # include "c-client.h"	/* includes mail.h and rfc822.h */

@@ -1,0 +1,11 @@
+--- imap-1.0.2/php_imap.c.~2~	2024-09-16 11:04:24.549174976 +0000
++++ imap-1.0.2/php_imap.c	2024-09-16 11:12:13.348780674 +0000
+@@ -3330,7 +3330,7 @@
+ 
+ 			if (Z_TYPE_P(data) != IS_ARRAY) {
+ 				zend_argument_type_error(2, "individual body must be of type array, %s given",
+-					zend_zval_value_name(data));
++					zend_zval_type_name(data));
+ 				goto done;
+ 			}
+ 			if (zend_hash_num_elements(Z_ARRVAL_P(data)) == 0) {

@@ -1,0 +1,15 @@
+--- imap-1.0.2/php_imap.c~	2024-01-04 10:18:46.000000000 +0000
++++ imap-1.0.2/php_imap.c	2024-09-11 16:47:09.908612181 +0000
+@@ -806,7 +806,11 @@
+ 
+ 		zend_string_release(regex);
+ 		php_pcre_match_impl(pce, internal_date, return_value, subpats, global,
+-			0, Z_L(0), Z_L(0));
++			0, Z_L(0)
++#if defined(PHP_82) || defined(PHP_83)
++			, Z_L(0)
++#endif
++		);
+ 
+ 		if (!Z_LVAL_P(return_value)) {
+ 			// TODO Promoto to error?

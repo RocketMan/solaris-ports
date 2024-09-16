@@ -20,7 +20,7 @@
 #
 
 #
-# Copyright (c) 2020-2022 Jim Mason <jmason at ibinx dot com>.
+# Copyright (c) 2020-2024 Jim Mason <jmason at ibinx dot com>.
 #
 
 BUILD_TARGET ?= $(PHP_VERSIONS:%=$(BUILD_DIR)/php-%/.built)
@@ -35,6 +35,8 @@ $(BUILD_DIR)/%-8.3/.configured:	PHP_VERSION=8.3
 
 PHP_BINDIR = /usr/php/$(PHP_VERSION)/bin
 
+CFLAGS += -DPHP_$(subst .,,$(PHP_VERSION))
+
 CLEAN_PATHS += package.xml
 
 CONFIGURE_ENV += CFLAGS="$(strip $(CFLAGS))"
@@ -43,7 +45,7 @@ CONFIGURE_ENV += LDFLAGS="$(strip $(LDFLAGS))"
 
 COMPONENT_PRE_CONFIGURE_ACTION = ($(CLONEY) $(SOURCE_DIR) $(@D) ; \
 		cd $(@D) ; \
-		$(PHP_BINDIR)/phpize)
+		$(PHP_BINDIR)/phpize) ;
 
 # configure script is in the build directory
 CONFIGURE_SCRIPT = $(@D)/configure
@@ -54,3 +56,4 @@ COMPONENT_INSTALL_ENV += INSTALL_ROOT=$(PROTO_DIR)
 
 REQUIRED_PACKAGES += web/php-74
 REQUIRED_PACKAGES += web/php-82
+REQUIRED_PACKAGES += web/php-83
