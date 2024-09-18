@@ -11,13 +11,12 @@
  # Temporary workaround to allow the build to succeed.
 --- a/Source/WebKit/webkitglib-symbols.map	2020-02-12 15:23:31.000000000 +0000
 +++ b/Source/WebKit/webkitglib-symbols.map	2020-02-12 16:11:14.137301145 +0000
-@@ -1,14 +1,5 @@
+@@ -1,13 +1,5 @@
  {
  global:
 -  jsc_*;
 -  webkit_*;
 -  extern "C++" {
--    "WebKit::GPUProcessMain(int, char**)";
 -    "WebKit::NetworkProcessMain(int, char**)";
 -    "WebKit::WebProcessExtensionManager::initialize(WebKit::InjectedBundle*, API::Object*)";
 -    "WebKit::WebProcessExtensionManager::singleton()";

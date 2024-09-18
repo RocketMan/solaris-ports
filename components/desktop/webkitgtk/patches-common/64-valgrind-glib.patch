@@ -1,0 +1,12 @@
+--- webkit/Source/WebKit/UIProcess/glib/WebProcessPoolGLib.cpp~	2024-08-16 19:15:12.000000000 +0000
++++ webkit/Source/WebKit/UIProcess/glib/WebProcessPoolGLib.cpp	2024-08-16 22:42:55.999071019 +0000
+@@ -201,6 +201,9 @@
+     }
+ 
+ #if !USE(SYSTEM_MALLOC)
++#ifndef RUNNING_ON_VALGRIND
++#define RUNNING_ON_VALGRIND 0
++#endif
+     if (RUNNING_ON_VALGRIND)
+         return;
+ #endif

@@ -1,16 +1,23 @@
---- a/Source/WebCore/platform/glib/UserAgentQuirks.cpp	2021-03-02 21:43:53.541837668 +0000
-+++ b/Source/WebCore/platform/glib/UserAgentQuirks.cpp	2021-03-02 23:11:21.761743664 +0000
-@@ -120,6 +120,13 @@
-         || domain == "exchange.tu-berlin.de")
-         return true;
+To be consistent with Firefox, Solaris identifies itself as Linux.
+Similarly, the platform architecture is always given as x86_64.
+
+See:
+	https://bugzilla.mozilla.org/show_bug.cgi?id=1861847
+	https://github.com/w3ctag/design-reviews/issues/640
+
+and `netwerk/protocol/http/nsHttpHandler.cpp` in the Firefox source.
+
+
+--- a/Source/WebCore/platform/glib/UserAgentGLib.cpp	2024-07-15 20:11:14.000000000 +0000
++++ b/Source/WebCore/platform/glib/UserAgentGLib.cpp	2024-08-28 11:01:51.662141029 +0000
+@@ -60,7 +60,9 @@
  
+ static const String platformVersionForUAString()
+ {
+-#if OS(UNIX)
 +#if OS(SOLARIS)
-+    // The speed test at dslreports does not recognize the SunOS platform,
-+    // so we masquerade as Macintosh.
-+    if (baseDomain == "dslreports.com"_s || baseDomain == "dslr.com"_s)
-+        return true;
-+#endif
-+
-     return false;
- }
++    return "Linux x86_64"_s;
++#elif OS(UNIX)
+     if (chassisType() == WTF::ChassisType::Mobile)
+         return "like Android 4.4"_s;
  

@@ -1,0 +1,44 @@
+Provide a shim for `gdk_texture_save_to_png_bytes` on GTK older than 4.6
+
+--- webkitgtk-2.46.0/Source/WebKit/UIProcess/Automation/gtk/WebAutomationSessionGtk.cpp-	2024-08-19 07:28:39.983254000 +0000
++++ webkitgtk-2.46.0/Source/WebKit/UIProcess/Automation/gtk/WebAutomationSessionGtk.cpp	2024-09-18 13:03:31.797183368 +0000
+@@ -34,6 +34,8 @@
+ #include <WebCore/GtkVersioning.h>
+ #include <WebCore/Scrollbar.h>
+ #include <wtf/text/Base64.h>
++#include <fstream>
++#include <vector>
+ 
+ namespace WebKit {
+ using namespace WebCore;
+@@ -339,6 +341,30 @@
+ #endif // ENABLE(WEBDRIVER_WHEEL_INTERACTIONS)
+ 
+ #if USE(GTK4)
++#if !GTK_CHECK_VERSION(4, 6, 0)
++static GBytes* gdk_texture_save_to_png_bytes (GdkTexture* texture)
++{
++  char temp_filename[] = "/tmp/textureXXXXXX.png";
++  int fd = mkstemps(temp_filename, 4);
++  if (fd == -1) {
++    g_warning("Failed to create temporary file");
++    return {};
++  }
++  close(fd);
++
++  if (!gdk_texture_save_to_png(texture, temp_filename)) {
++    g_warning("Failed to save texture to PNG");
++    return {};
++  }
++
++  std::ifstream file(temp_filename, std::ios::binary);
++  std::vector<guint8> png_bytes((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
++
++  remove(temp_filename);
++
++  return g_bytes_new(png_bytes.data(), png_bytes.size());
++}
++#endif
+ static std::optional<String> base64EncodedPNGData(GdkTexture* texture)
+ {
+     if (!texture)

@@ -1,0 +1,82 @@
+Revert commit c864765c693d31b70ece9a455e7b82b413041a6a
+
+    WebCore::XMLDocumentParserScope does not restore xmlStructuredErrorContext properly
+    <https://bugs.webkit.org/show_bug.cgi?id=273665>
+    <rdar://127468626>
+
+Due to the following compile error:
+
+Undefined			first referenced
+ symbol  			    in file
+__xmlStructuredErrorContext         Source/WebCore/CMakeFiles/WebCore.dir/./__/__/WebCore/DerivedSources/unified-sources/UnifiedSource-42f7b70e-5.cpp.o
+
+
+--- webkit/Source/WebCore/xml/parser/XMLDocumentParserScope.h-	2024-05-07 15:41:25.000000000 +0000
++++ webkit/Source/WebCore/xml/parser/XMLDocumentParserScope.h	2024-05-08 15:26:48.803734547 +0000
+@@ -47,7 +47,7 @@
+     static WeakPtr<CachedResourceLoader>& currentCachedResourceLoader();
+ 
+ #if ENABLE(XSLT)
+-    XMLDocumentParserScope(CachedResourceLoader*, xmlGenericErrorFunc, xmlStructuredErrorFunc = nullptr, void* genericErrorContext = nullptr, void* structuredErrorContext = nullptr);
++    XMLDocumentParserScope(CachedResourceLoader*, xmlGenericErrorFunc, xmlStructuredErrorFunc = nullptr, void* errorContext = nullptr);
+ #endif
+ 
+ private:
+@@ -57,8 +57,7 @@
+ #if ENABLE(XSLT)
+     xmlGenericErrorFunc m_oldGenericErrorFunc { nullptr };
+     xmlStructuredErrorFunc m_oldStructuredErrorFunc { nullptr };
+-    void* m_oldGenericErrorContext { nullptr };
+-    void* m_oldStructuredErrorContext { nullptr };
++    void* m_oldErrorContext { nullptr };
+ #endif
+ };
+ 
+--- webkit/Source/WebCore/xml/parser/XMLDocumentParserScope.cpp-	2024-05-07 15:41:25.000000000 +0000
++++ webkit/Source/WebCore/xml/parser/XMLDocumentParserScope.cpp	2024-05-08 15:26:48.803525403 +0000
+@@ -39,7 +39,7 @@
+ 
+ #if ENABLE(XSLT)
+ XMLDocumentParserScope::XMLDocumentParserScope(CachedResourceLoader* cachedResourceLoader)
+-    : XMLDocumentParserScope(cachedResourceLoader, xmlGenericError, xmlStructuredError, xmlGenericErrorContext, xmlStructuredErrorContext)
++    : XMLDocumentParserScope(cachedResourceLoader, xmlGenericError, xmlStructuredError, xmlGenericErrorContext)
+ {
+ }
+ #else
+@@ -54,21 +54,20 @@
+ #endif // ENABLE(XSLT)
+ 
+ #if ENABLE(XSLT)
+-XMLDocumentParserScope::XMLDocumentParserScope(CachedResourceLoader* cachedResourceLoader, xmlGenericErrorFunc genericErrorFunc, xmlStructuredErrorFunc structuredErrorFunc, void* genericErrorContext, void* structuredErrorContext)
++XMLDocumentParserScope::XMLDocumentParserScope(CachedResourceLoader* cachedResourceLoader, xmlGenericErrorFunc genericErrorFunc, xmlStructuredErrorFunc structuredErrorFunc, void* errorContext)
+     : m_oldCachedResourceLoader(currentCachedResourceLoader())
+     , m_oldGenericErrorFunc(xmlGenericError)
+     , m_oldStructuredErrorFunc(xmlStructuredError)
+-    , m_oldGenericErrorContext(xmlGenericErrorContext)
+-    , m_oldStructuredErrorContext(xmlStructuredErrorContext)
++    , m_oldErrorContext(xmlGenericErrorContext)
+ {
+     initializeXMLParser();
+     m_oldEntityLoader = xmlGetExternalEntityLoader();
+     currentCachedResourceLoader() = cachedResourceLoader;
+     xmlSetExternalEntityLoader(WebCore::externalEntityLoader);
+     if (genericErrorFunc)
+-        xmlSetGenericErrorFunc(genericErrorContext, genericErrorFunc);
++        xmlSetGenericErrorFunc(errorContext, genericErrorFunc);
+     if (structuredErrorFunc)
+-        xmlSetStructuredErrorFunc(structuredErrorContext ?: genericErrorContext, structuredErrorFunc);
++        xmlSetStructuredErrorFunc(errorContext, structuredErrorFunc);
+ }
+ #endif
+ 
+@@ -77,8 +76,8 @@
+     currentCachedResourceLoader() = m_oldCachedResourceLoader;
+     xmlSetExternalEntityLoader(m_oldEntityLoader);
+ #if ENABLE(XSLT)
+-    xmlSetGenericErrorFunc(m_oldGenericErrorContext, m_oldGenericErrorFunc);
+-    xmlSetStructuredErrorFunc(m_oldStructuredErrorContext, m_oldStructuredErrorFunc);
++    xmlSetGenericErrorFunc(m_oldErrorContext, m_oldGenericErrorFunc);
++    xmlSetStructuredErrorFunc(m_oldErrorContext, m_oldStructuredErrorFunc);
+ #endif
+ }
+ 

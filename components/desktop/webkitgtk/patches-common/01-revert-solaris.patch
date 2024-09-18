@@ -70,21 +70,19 @@ https://bugs.webkit.org/show_bug.cgi?id=176341
  #define USE_FOUNDATION 1
 --- a/Source/WTF/wtf/InlineASM.h	2024-03-14 12:45:49.000000000 +0000
 +++ b/Source/WTF/wtf/InlineASM.h	2024-03-14 16:57:06.895331109 +0000
-@@ -43,11 +43,11 @@
+@@ -43,9 +43,9 @@
  #define THUMB_FUNC_PARAM(name)
  #endif
  
 -#if (OS(LINUX) || OS(FREEBSD) || OS(QNX)) && CPU(X86_64)
 +#if (OS(LINUX) || OS(FREEBSD) || OS(SOLARIS) || OS(QNX)) && CPU(X86_64)
  #define GLOBAL_REFERENCE(name) #name "@plt"
- #elif CPU(X86) && COMPILER(MINGW)
- #define GLOBAL_REFERENCE(name) "@" #name "@4"
 -#elif OS(LINUX) && CPU(X86) && defined(__PIC__)
 +#elif (OS(LINUX) || OS(SOLARIS)) && CPU(X86) && defined(__PIC__)
  #define GLOBAL_REFERENCE(name) SYMBOL_STRING(name) "@plt"
  #else
  #define GLOBAL_REFERENCE(name) SYMBOL_STRING(name)
-@@ -69,6 +69,7 @@
+@@ -67,6 +67,7 @@
      || OS(FREEBSD)             \
      || OS(FUCHSIA)             \
      || OS(OPENBSD)             \
@@ -92,7 +90,7 @@ https://bugs.webkit.org/show_bug.cgi?id=176341
      || OS(HPUX)                \
      || OS(NETBSD)              \
      || OS(QNX)
-@@ -84,6 +85,7 @@
+@@ -82,6 +83,7 @@
  #if OS(DARWIN)
  #define LOCAL_LABEL_STRING(name) "L" #name
  #elif  OS(LINUX)               \
@@ -231,7 +229,7 @@ https://bugs.webkit.org/show_bug.cgi?id=176341
 +    // also, as some sites rely on this (e.g., dslreports speed test)
 +    const String& agent = userAgent();
 +    if(agent.find("Linux"_s, 0) != notFound)
-+        return "Linux"_s;
++        return "Linux x86_64"_s;
 +    else if(agent.find("Windows"_s, 0) != notFound)
 +        return "Win32"_s;
 +    else if(agent.find("Intel Mac"_s, 0) != notFound)
@@ -255,6 +253,27 @@ https://bugs.webkit.org/show_bug.cgi?id=176341
  namespace WTF::FileSystemImpl {
  
  #if HAVE(STD_FILESYSTEM) || HAVE(STD_EXPERIMENTAL_FILESYSTEM)
+--- webkit/Source/WTF/wtf/glib/FileSystemGlib.cpp.~2~	2024-04-07 23:02:21.909379687 +0000
++++ webkit/Source/WTF/wtf/glib/FileSystemGlib.cpp	2024-04-08 10:38:37.794531247 +0000
+@@ -74,6 +74,18 @@
+ {
+     return { };
+ }
++#elif OS(SOLARIS)
++CString currentExecutablePath()
++{
++    static char readLinkBuffer[PATH_MAX];
++    static char path[PATH_MAX];
++    sprintf(path, "/proc/%ld/path/a.out", (long)getpid());
++    ssize_t result = readlink(path, readLinkBuffer, PATH_MAX);
++    if (result == -1)
++        return { };
++    readLinkBuffer[result] = '\0';
++    return CString(readLinkBuffer);
++}
+ #elif OS(UNIX)
+ CString currentExecutablePath()
+ {
 --- a/Source/WebKit/Platform/IPC/unix/ConnectionUnix.cpp	2020-05-22 12:40:55.000000000 +0000
 +++ b/Source/WebKit/Platform/IPC/unix/ConnectionUnix.cpp	2020-05-22 13:59:58.928308413 +0000
 @@ -56,6 +56,11 @@
@@ -269,27 +288,3 @@ https://bugs.webkit.org/show_bug.cgi?id=176341
  namespace IPC {
  
  static const size_t messageMaxSize = 4096;
---- a/Source/ThirdParty/ANGLE/src/common/debug.h	2018-02-14 09:25:23.653561020 -0800
-+++ b/Source/ThirdParty/ANGLE/src/common/debug.h	2018-02-14 09:27:14.110989611 -0800
-@@ -204,6 +204,10 @@
- #endif
- 
- #define WARN() ANGLE_LOG(WARN)
-+#if defined(__sun) && defined(ERR)
-+// ERR conflicts with Solaris regset.h
-+#undef ERR
-+#endif
- #define ERR() ANGLE_LOG(ERR)
- 
- // A macro to log a performance event around a scope.
---- a/Source/WebKit/UIProcess/Launcher/glib/ProcessLauncherGLib.cpp	2023-01-25 17:30:14.000000000 +0000
-+++ b/Source/WebKit/UIProcess/Launcher/glib/ProcessLauncherGLib.cpp	2023-01-27 09:20:09.750651228 +0000
-@@ -91,7 +91,7 @@
- 
- static bool isSandboxEnabled(const ProcessLauncher::LaunchOptions& launchOptions)
- {
--#if !USE(SYSTEM_MALLOC)
-+#if !USE(SYSTEM_MALLOC) && !OS(SOLARIS)
-     if (RUNNING_ON_VALGRIND)
-         return false;
- #endif

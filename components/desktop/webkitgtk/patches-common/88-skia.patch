@@ -1,0 +1,88 @@
+--- webkit/Source/ThirdParty/skia/CMakeLists.txt.~1~	2024-08-16 19:15:09.000000000 +0000
++++ webkit/Source/ThirdParty/skia/CMakeLists.txt	2024-08-23 18:42:52.437617496 +0000
+@@ -845,6 +845,7 @@
+     src/sksl/transform/SkSLEliminateDeadGlobalVariables.cpp
+     src/sksl/transform/SkSLEliminateDeadLocalVariables.cpp
+     src/sksl/transform/SkSLEliminateEmptyStatements.cpp
++    src/sksl/transform/SkSLEliminateUnnecessaryBraces.cpp
+     src/sksl/transform/SkSLEliminateUnreachableCode.cpp
+     src/sksl/transform/SkSLFindAndDeclareBuiltinFunctions.cpp
+     src/sksl/transform/SkSLFindAndDeclareBuiltinStructs.cpp
+@@ -852,6 +853,7 @@
+     src/sksl/transform/SkSLHoistSwitchVarDeclarationsAtTopLevel.cpp
+     src/sksl/transform/SkSLRenamePrivateSymbols.cpp
+     src/sksl/transform/SkSLReplaceConstVarsWithLiterals.cpp
++    src/sksl/transform/SkSLReplaceSplatCastsWithSwizzles.cpp
+     src/sksl/transform/SkSLRewriteIndexedSwizzle.cpp
+ 
+     src/utils/SkCharToGlyphCache.cpp
+@@ -859,9 +861,11 @@
+     src/utils/SkCustomTypeface.cpp
+     src/utils/SkDashPath.cpp
+     src/utils/SkFloatToDecimal.cpp
++    src/utils/SkJSON.cpp
+     src/utils/SkJSONWriter.cpp
+     src/utils/SkMatrix22.cpp
+     src/utils/SkNWayCanvas.cpp
++    src/utils/SkParse.cpp
+     src/utils/SkPatchUtils.cpp
+     src/utils/SkPolyUtils.cpp
+     src/utils/SkShaderUtils.cpp
+--- webkit/Source/ThirdParty/skia/src/codec/SkPngCodec.cpp~	2024-03-14 12:45:49.000000000 +0000
++++ webkit/Source/ThirdParty/skia/src/codec/SkPngCodec.cpp	2024-05-17 12:23:03.331847216 +0000
+@@ -37,6 +37,8 @@
+ #include <png.h>
+ #include <pngconf.h>
+ 
++#define png_const_bytep png_bytep
++
+ using namespace skia_private;
+ 
+ class SkSampler;
+--- webkit/Source/ThirdParty/skia/src/core/SkMeshPriv.h~	2024-03-14 12:45:49.000000000 +0000
++++ webkit/Source/ThirdParty/skia/src/core/SkMeshPriv.h	2024-05-17 12:33:27.003234393 +0000
+@@ -12,6 +12,11 @@
+ #include "include/core/SkMesh.h"
+ #include "src/core/SkSLTypeShared.h"
+
++#if defined(__sun)
++#include <sys/regset.h>
++#undef FS
++#endif
++
+ struct SkMeshSpecificationPriv {
+     using Varying   = SkMeshSpecification::Varying;
+     using Attribute = SkMeshSpecification::Attribute;
+--- webkit/Source/ThirdParty/skia/src/gpu/ganesh/GrAutoLocaleSetter.h~	2024-03-14 12:45:49.000000000 +0000
++++ webkit/Source/ThirdParty/skia/src/gpu/ganesh/GrAutoLocaleSetter.h	2024-05-17 13:50:24.361148293 +0000
+@@ -27,7 +27,7 @@
+ #define HAVE_XLOCALE 0
+ #endif
+ 
+-#if defined(SK_BUILD_FOR_ANDROID) || defined(__UCLIBC__) || defined(_NEWLIB_VERSION)
++#if defined(SK_BUILD_FOR_ANDROID) || defined(__UCLIBC__) || defined(_NEWLIB_VERSION) || defined(__sun)
+ #define HAVE_LOCALE_T 0
+ #else
+ #define HAVE_LOCALE_T 1
+--- webkit/Source/cmake/OptionsGTK.cmake.~1~	2024-07-24 18:47:18.000000000 +0000
++++ webkit/Source/cmake/OptionsGTK.cmake	2024-07-24 19:05:15.819249087 +0000
+@@ -135,7 +135,7 @@
+ WEBKIT_OPTION_DEFAULT_PORT_VALUE(USE_SYSPROF_CAPTURE PRIVATE ON)
+ 
+ if (CMAKE_CXX_BYTE_ORDER STREQUAL "LITTLE_ENDIAN")
+-    WEBKIT_OPTION_DEFAULT_PORT_VALUE(USE_SKIA PRIVATE ON)
++    WEBKIT_OPTION_DEFAULT_PORT_VALUE(USE_SKIA PUBLIC ON)
+ else ()
+     WEBKIT_OPTION_DEFAULT_PORT_VALUE(USE_SKIA PRIVATE OFF)
+ endif ()
+--- webkit/Source/WebKit/UIProcess/API/glib/WebKitWebContext.cpp~	2024-05-24 12:45:41.000000000 +0000
++++ webkit/Source/WebKit/UIProcess/API/glib/WebKitWebContext.cpp	2024-05-24 14:07:45.259997353 +0000
+@@ -586,7 +586,7 @@
+         g_param_spec_boolean(
+             "use-system-appearance-for-scrollbars",
+             nullptr, nullptr,
+-            FALSE,
++            USE_CAIRO,
+             static_cast<GParamFlags>(WEBKIT_PARAM_READWRITE | G_PARAM_CONSTRUCT | G_PARAM_DEPRECATED));
+ #endif
+ 

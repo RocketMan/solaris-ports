@@ -46,6 +46,18 @@ else
 WANT_LIBCXX =\#
 endif
 
+# JM 2024-05-17
+# g++ and clang++ on Solaris 11.3 define __STDC_VERSION__; see
+# https://gcc.gnu.org/bugzilla/show_bug.cgi?id=57025
+#
+# This is confusing simde, which expects __STDC_VERSION__ to be defined
+# ONLY when compiling with the C compiler, not C++.  Trying to work around
+# this with #undef produces warnings that cannot be suppressed.
+#
+# The following is a hack to deal with this issue quietly.
+COMPONENT_POST_UNPACK_ACTION += \
+	$(GSED) -i 's/defined(__STDC_VERSION__)/!defined(__cplusplus) \&\& \0/g' $(SOURCE_DIR)/Source/WTF/wtf/simde/arm/neon.h ;
+
 # unifdef shipped with the stock 11.3 base-developer-utilities is too old;
 # download, build, and use an up-to-date unifdef to build webkitgtk
 UNIFDEF_VER=2.12

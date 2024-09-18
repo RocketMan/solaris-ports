@@ -1,0 +1,11 @@
+--- webkit/Source/cmake/OptionsGTK.cmake.~1~	2024-08-16 19:32:48.462864366 +0000
++++ webkit/Source/cmake/OptionsGTK.cmake	2024-08-16 19:34:08.451281510 +0000
+@@ -66,7 +66,7 @@
+ 
+ # Private options specific to the GTK port. Changing these options is
+ # completely unsupported. They are intended for use only by WebKit developers.
+-WEBKIT_OPTION_DEFINE(USE_SYSPROF_CAPTURE "Whether to use libsysprof-capture for tracing." PRIVATE ON)
++WEBKIT_OPTION_DEFINE(USE_SYSPROF_CAPTURE "Whether to use libsysprof-capture for tracing." PRIVATE OFF)
+ WEBKIT_OPTION_DEFINE(USE_SYSTEM_SYSPROF_CAPTURE "Whether to use a system-provided libsysprof-capture" PRIVATE ${USE_SYSTEM_SYSPROF_CAPTURE_DEFAULT})
+ 
+ WEBKIT_OPTION_DEPEND(USE_SYSTEM_SYSPROF_CAPTURE USE_SYSPROF_CAPTURE)

@@ -29,13 +29,12 @@ file upstream bug after resolving issues documented above
  # Temporary workaround to allow the build to succeed.
 --- a/Source/WebKit/webkitglib-symbols.map	2019-11-16 15:03:56.000000000 +0000
 +++ b/Source/WebKit/webkitglib-symbols.map	2019-11-17 15:39:23.135196559 +0000
-@@ -1,14 +1,5 @@
+@@ -1,13 +1,5 @@
  {
  global:
 -  jsc_*;
 -  webkit_*;
 -  extern "C++" {
--    "WebKit::GPUProcessMain(int, char**)";
 -    "WebKit::NetworkProcessMain(int, char**)";
 -    "WebKit::WebProcessExtensionManager::initialize(WebKit::InjectedBundle*, API::Object*)";
 -    "WebKit::WebProcessExtensionManager::singleton()";

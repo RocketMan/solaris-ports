@@ -1,0 +1,39 @@
+--- a/Source/ThirdParty/ANGLE/src/common/log_utils.h	2024-04-30 11:41:59.000000000 +0000
++++ b/Source/ThirdParty/ANGLE/src/common/log_utils.h	2024-04-30 11:58:31.996645412 +0000
+@@ -210,6 +210,11 @@
+ #    define ANGLE_ENABLE_ASSERTS
+ #endif
+ 
++#if defined(__sun)
++#include <sys/regset.h>
++#undef ERR
++#endif
++
+ #define INFO() ANGLE_LOG(INFO)
+ #define WARN() ANGLE_LOG(WARN)
+ #define ERR() ANGLE_LOG(ERR)
+--- a/Source/ThirdParty/ANGLE/src/libANGLE/renderer/gl/renderergl_utils.h	2022-08-25 12:07:39.000000000 +0000
++++ b/Source/ThirdParty/ANGLE/src/libANGLE/renderer/gl/renderergl_utils.h	2022-10-24 15:08:58.865987705 +0000
+@@ -10,6 +10,11 @@
+ #ifndef LIBANGLE_RENDERER_GL_RENDERERGLUTILS_H_
+ #define LIBANGLE_RENDERER_GL_RENDERERGLUTILS_H_
+ 
++#if defined(__sun)
++#include <sys/regset.h>
++#undef ES
++#endif
++
+ #include "common/debug.h"
+ #include "libANGLE/Caps.h"
+ #include "libANGLE/Error.h"
+--- webkit/Source/ThirdParty/ANGLE/src/common/SimpleMutex.h~	2024-04-30 11:41:59.000000000 +0000
++++ webkit/Source/ThirdParty/ANGLE/src/common/SimpleMutex.h	2024-05-01 10:39:56.679468539 +0000
+@@ -32,7 +32,7 @@
+ // - Windows 8+
+ //
+ // There is no TSAN support for futex currently, so it is disabled in that case
+-#if !defined(ANGLE_WITH_TSAN)
++#if !defined(ANGLE_WITH_TSAN) && !defined(__sun)
+ #    if defined(ANGLE_PLATFORM_LINUX) || defined(ANGLE_PLATFORM_ANDROID)
+ // Linux has had futexes for a very long time.  Assume support.
+ #        define ANGLE_USE_FUTEX 1

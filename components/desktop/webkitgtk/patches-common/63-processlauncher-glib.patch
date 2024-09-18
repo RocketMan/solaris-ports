@@ -5,7 +5,7 @@
      argv[i++] = processIdentifier.get();
      argv[i++] = webkitSocket.get();
 +#if OS(LINUX)
-     argv[i++] = pidSocket.get();
+     argv[i++] = pidSocketString.get();
 +#endif
  #if ENABLE(DEVELOPER_MODE)
      if (configureJSCForTesting)
