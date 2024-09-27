@@ -39,6 +39,7 @@ set name=info.upstream-url value=$(COMPONENT_PROJECT_URL)
 set name=org.opensolaris.arc-caseid value=PSARC/2013/188 value=PSARC/2021/058
 set name=org.opensolaris.consolidation value=$(CONSOLIDATION)
 file path=usr/lib/$(MACH64)/libc++.a
+file path=usr/lib/$(MACH64)/libc++.modules.json
 link path=usr/lib/$(MACH64)/libc++.so target=libc++.so.1
 link path=usr/lib/$(MACH64)/libc++.so.1 target=libc++.so.1.0
 file path=usr/lib/$(MACH64)/libc++.so.1.0
@@ -48,6 +49,7 @@ link path=usr/lib/$(MACH64)/libc++abi.so.1 target=libc++abi.so.1.0
 file path=usr/lib/$(MACH64)/libc++abi.so.1.0
 file path=usr/lib/$(MACH64)/libc++experimental.a
 file path=usr/lib/libc++.a
+file path=usr/lib/libc++.modules.json
 link path=usr/lib/libc++.so target=libc++.so.1
 link path=usr/lib/libc++.so.1 target=libc++.so.1.0
 file path=usr/lib/libc++.so.1.0

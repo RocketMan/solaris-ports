@@ -33,19 +33,18 @@ COMPILER=clang
 include ../../make-rules/shared-macros.mk
 GCC_ROOT=/usr/gcc/13
 
-# llvm-libcxx shares tarballs and patches with llvm-project
+# llvm-libcxx shares tarballs with llvm-project
 USERLAND_ARCHIVES = ../llvm-project/
-PATCH_DIR = $(USERLAND_ARCHIVES)patches
 
 COMPONENT_NAME=		llvm-project
-COMPONENT_VERSION=	18.1.8
+COMPONENT_VERSION=	19.1.0
 COMPONENT_PROJECT_URL=	https://llvm.org/
 COMPONENT_BUGDB=	utility/llvm
 
 COMPONENT_SRC=		$(COMPONENT_NAME)-$(COMPONENT_VERSION).src
 COMPONENT_ARCHIVE=	$(COMPONENT_SRC).tar.xz
 COMPONENT_ARCHIVE_HASH=	\
-    sha256:0b58557a6d32ceee97c8d533a59b9212d87e0fc4d2833924eb6c611247db2f2a
+    sha256:5042522b49945bc560ff9206f25fb87980a9b89b914193ca00d961511ff0673c
 COMPONENT_ARCHIVE_URL=	https://github.com/llvm/llvm-project/releases/download/llvmorg-$(COMPONENT_VERSION)/$(COMPONENT_ARCHIVE)
 COMPONENT_SIG_URL=	$(COMPONENT_ARCHIVE_URL).sig
 COMPONENT_ANITYA_ID=	1830
@@ -225,6 +224,10 @@ LIBFFI_LIBDIR = $(LIBFFI_LIBDIR_$(BITS))
 LD_B_DIRECT =
 LD_OPTIONS = -M /usr/lib/ld/map.noexstk
 LD_OPTIONS += -M /usr/lib/ld/map.pagealign
+# JM 2024-09-27 bind to gcc unwinder
+# see https://gcc.gnu.org/bugzilla/show_bug.cgi?id=59788
+LDFLAGS += -lsendfile -lgcc_s
+LD_OPTIONS += -M $(GCC_ROOT)/lib/libgcc-unwind.map
 LD_OPTIONS_SO = $(LD_Z_DEFS) $(LD_DEF_LIBS)
 
 # The default target triple must be set so that the OS release is included by
