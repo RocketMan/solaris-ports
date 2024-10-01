@@ -1065,7 +1065,7 @@ diff -Naur llvm-project-19.1.0.src.orig/libcxx/include/math.h llvm-project-19.1.
  
  // abs
  //
-@@ -441,6 +451,32 @@
+@@ -441,6 +451,34 @@
  // templates. Functions are preferred over function templates during overload resolution, which means that our overload
  // will only be selected when the C library doesn't provide one.
  
@@ -1084,7 +1084,9 @@ diff -Naur llvm-project-19.1.0.src.orig/libcxx/include/math.h llvm-project-19.1.
 +using std::__math2::fmod;
 +using std::__math2::frexp;
 +using std::__math2::ldexp;
++#if _LIBCPP_STD_VER >= 17
 +using std::__math2::hypot;
++#endif
 +using std::__math2::log;
 +using std::__math2::log10;
 +using std::__math2::log1p;
