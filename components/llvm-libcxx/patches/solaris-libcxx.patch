@@ -110,6 +110,23 @@ diff -Naur llvm-project-18.1.8.src.orig/libcxx/include/__config llvm-project-18.
  #endif // __cplusplus
  
  #endif // _LIBCPP___CONFIG
+--- llvm-project-19.1.0.src/libcxx/include/__expected/expected.h~	2024-09-17 12:26:36.000000000 +0000
++++ llvm-project-19.1.0.src/libcxx/include/__expected/expected.h	2024-10-05 17:24:14.619239905 +0000
+@@ -9,6 +9,14 @@
+ #ifndef _LIBCPP___EXPECTED_EXPECTED_H
+ #define _LIBCPP___EXPECTED_EXPECTED_H
+ 
++#if defined(__sun)
++#include <sys/regset.h>
++#undef _Err
++#undef _Tp
++#undef _T2
++#undef _E2
++#endif
++
+ #include <__assert>
+ #include <__config>
+ #include <__expected/bad_expected_access.h>
 diff -Naur llvm-project-18.1.8.src.orig/libcxx/include/__locale llvm-project-18.1.8.src/libcxx/include/__locale
 --- llvm-project-18.1.8.src.orig/libcxx/include/__locale	2024-06-15 18:21:32.000000000 +0000
 +++ llvm-project-18.1.8.src/libcxx/include/__locale	2024-07-01 16:32:52.108742752 +0000

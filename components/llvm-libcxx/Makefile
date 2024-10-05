@@ -38,6 +38,7 @@ USERLAND_ARCHIVES = ../llvm-project/
 
 COMPONENT_NAME=		llvm-project
 COMPONENT_VERSION=	19.1.0
+COMPONENT_REVISION=	3
 COMPONENT_PROJECT_URL=	https://llvm.org/
 COMPONENT_BUGDB=	utility/llvm
 
