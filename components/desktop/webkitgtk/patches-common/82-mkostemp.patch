@@ -1,0 +1,16 @@
+--- webkit/Source/WTF/wtf/posix/FileSystemPOSIX.cpp~	2024-10-06 16:47:40.000000000 +0000
++++ webkit/Source/WTF/wtf/posix/FileSystemPOSIX.cpp	2024-10-06 17:26:27.658818680 +0000
+@@ -271,8 +271,13 @@
+     if (snprintf(buffer, PATH_MAX, "%s/%sXXXXXX", temporaryFileDirectory(), prefix.utf8().data()) >= PATH_MAX)
+         goto end;
+ 
++#if defined(__sun)
++    handle = mkstemp(buffer);
++    if (handle < 0 || fcntl(handle, F_SETFD, FD_CLOEXEC) < 0)
++#else
+     handle = mkostemp(buffer, O_CLOEXEC);
+     if (handle < 0)
++#endif
+         goto end;
+ 
+     return { String::fromUTF8(buffer), handle };
