@@ -1,12 +1,11 @@
---- webkit/Source/WebKit/UIProcess/glib/WebProcessPoolGLib.cpp~	2024-08-16 19:15:12.000000000 +0000
-+++ webkit/Source/WebKit/UIProcess/glib/WebProcessPoolGLib.cpp	2024-08-16 22:42:55.999071019 +0000
-@@ -201,6 +201,9 @@
+--- webkit/Source/WebKit/UIProcess/glib/WebProcessPoolGLib.cpp.~1~	2024-10-21 10:00:02.723246300 +0000
++++ webkit/Source/WebKit/UIProcess/glib/WebProcessPoolGLib.cpp	2024-10-30 15:15:11.648219536 +0000
+@@ -207,7 +207,7 @@
+         return;
      }
  
- #if !USE(SYSTEM_MALLOC)
-+#ifndef RUNNING_ON_VALGRIND
-+#define RUNNING_ON_VALGRIND 0
-+#endif
+-#if !USE(SYSTEM_MALLOC)
++#if !USE(SYSTEM_MALLOC) && OS(LINUX)
      if (RUNNING_ON_VALGRIND)
          return;
  #endif
