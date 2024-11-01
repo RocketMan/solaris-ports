@@ -34,7 +34,7 @@ include ../../make-rules/shared-macros.mk
 GCC_ROOT=/usr/gcc/13
 
 COMPONENT_NAME=		llvm-project
-COMPONENT_VERSION=	19.1.2
+COMPONENT_VERSION=	19.1.3
 COMPONENT_REVISION=	0
 COMPONENT_PROJECT_URL=	https://llvm.org/
 COMPONENT_BUGDB=	utility/llvm
@@ -42,7 +42,7 @@ COMPONENT_BUGDB=	utility/llvm
 COMPONENT_SRC=		$(COMPONENT_NAME)-$(COMPONENT_VERSION).src
 COMPONENT_ARCHIVE=	$(COMPONENT_SRC).tar.xz
 COMPONENT_ARCHIVE_HASH=	\
-    sha256:3666f01fc52d8a0b0da83e107d74f208f001717824be0b80007f529453aa1e19
+    sha256:324d483ff0b714c8ce7819a1b679dd9e4706cf91c6caf7336dc4ac0c1d3bf636
 COMPONENT_ARCHIVE_URL=	https://github.com/llvm/llvm-project/releases/download/llvmorg-$(COMPONENT_VERSION)/$(COMPONENT_ARCHIVE)
 COMPONENT_SIG_URL=	$(COMPONENT_ARCHIVE_URL).sig
 COMPONENT_ANITYA_ID=	1830
@@ -286,6 +286,8 @@ CPPFLAGS += -D_GLIBCXX_FULLY_DYNAMIC_STRING=1
 CPPFLAGS.i386 = -DLLVM_INTEL
 CPPFLAGS.sparc = -DLLVM_SPARC
 CPPFLAGS += $(CPPFLAGS.$(MACH))
+# for futimens(2):
+CFLAGS += -D__EXTENSIONS__=1
 
 LIBFFI_INCDIR_32 = $(shell pkg-config --cflags-only-I libffi | sed -e s,-I,,)
 LIBFFI_INCDIR_64 = $(shell env PKG_CONFIG_PATH=$(PKG_CONFIG_PATH.64) pkg-config --cflags-only-I libffi | sed -e s,-I,,)
