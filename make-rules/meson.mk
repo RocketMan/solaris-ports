@@ -34,8 +34,10 @@ BUILD_STYLE = configure
 include $(WS_MAKE_RULES)/configure.mk
 include $(WS_MAKE_RULES)/ninja.mk
 
+MESON_SOURCE ?= $(SOURCE_DIR)
+
 # last component of the meson argument list must be the source directory
-CONFIGURE_OPTIONS += $(SOURCE_DIR)
+CONFIGURE_OPTIONS += $(MESON_SOURCE)
 
 # ensure that meson is present in the build environment
 $(SOURCE_DIR)/.prep: $(SOURCE_DIR)/.checked-meson
