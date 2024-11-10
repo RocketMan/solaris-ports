@@ -1,0 +1,67 @@
+#
+# CDDL HEADER START
+#
+# The contents of this file are subject to the terms of the
+# Common Development and Distribution License (the "License").
+# You may not use this file except in compliance with the License.
+#
+# You can obtain a copy of the license at usr/src/OPENSOLARIS.LICENSE
+# or http://www.opensolaris.org/os/licensing.
+# See the License for the specific language governing permissions
+# and limitations under the License.
+#
+# When distributing Covered Code, include this CDDL HEADER in each
+# file and include the License file at usr/src/OPENSOLARIS.LICENSE.
+# If applicable, add the following below this CDDL HEADER, with the
+# fields enclosed by brackets "[]" replaced with your own identifying
+# information: Portions Copyright [yyyy] [name of copyright owner]
+#
+# CDDL HEADER END
+#
+# Copyright (c) 2024 Jim Mason <jmason at ibinx doc com>.
+#
+
+<transform file path=usr.*/man/.+ -> default mangler.man.stability committed>
+set name=pkg.fmri \
+    value=pkg:/library/libxmlb@$(IPS_COMPONENT_VERSION),$(BUILD_VERSION)
+set name=pkg.summary \
+    value="The libxmlb library takes XML source and converts it to a structured binary representation"
+set name=info.classification \
+    value=org.opensolaris.category.2008:System/Libraries
+set name=info.source-url value=$(COMPONENT_ARCHIVE_URL)
+set name=info.upstream-url value=$(COMPONENT_PROJECT_URL)
+set name=org.opensolaris.consolidation value=$(CONSOLIDATION)
+file path=usr/bin/xb-tool
+file path=usr/include/libxmlb-2/libxmlb/xb-builder-fixup.h
+file path=usr/include/libxmlb-2/libxmlb/xb-builder-node.h
+file path=usr/include/libxmlb-2/libxmlb/xb-builder-source-ctx.h
+file path=usr/include/libxmlb-2/libxmlb/xb-builder-source.h
+file path=usr/include/libxmlb-2/libxmlb/xb-builder.h
+file path=usr/include/libxmlb-2/libxmlb/xb-compile.h
+file path=usr/include/libxmlb-2/libxmlb/xb-machine.h
+file path=usr/include/libxmlb-2/libxmlb/xb-node-query.h
+file path=usr/include/libxmlb-2/libxmlb/xb-node-silo.h
+file path=usr/include/libxmlb-2/libxmlb/xb-node.h
+file path=usr/include/libxmlb-2/libxmlb/xb-opcode.h
+file path=usr/include/libxmlb-2/libxmlb/xb-query-context.h
+file path=usr/include/libxmlb-2/libxmlb/xb-query.h
+file path=usr/include/libxmlb-2/libxmlb/xb-silo-export.h
+file path=usr/include/libxmlb-2/libxmlb/xb-silo-query.h
+file path=usr/include/libxmlb-2/libxmlb/xb-silo.h
+file path=usr/include/libxmlb-2/libxmlb/xb-stack.h
+file path=usr/include/libxmlb-2/libxmlb/xb-string.h
+file path=usr/include/libxmlb-2/libxmlb/xb-value-bindings.h
+file path=usr/include/libxmlb-2/libxmlb/xb-version.h
+file path=usr/include/libxmlb-2/xmlb.h
+file path=usr/lib/$(MACH64)/girepository-1.0/Xmlb-2.0.typelib
+link path=usr/lib/$(MACH64)/libxmlb.so target=libxmlb.so.2
+link path=usr/lib/$(MACH64)/libxmlb.so.2 target=libxmlb.so.2.0.0
+file path=usr/lib/$(MACH64)/libxmlb.so.2.0.0
+file path=usr/lib/$(MACH64)/pkgconfig/xmlb.pc
+link path=usr/lib/libxmlb.so target=libxmlb.so.2
+link path=usr/lib/libxmlb.so.2 target=libxmlb.so.2.0.0
+file path=usr/lib/libxmlb.so.2.0.0
+file path=usr/lib/pkgconfig/xmlb.pc
+file path=usr/share/gir-1.0/Xmlb-2.0.gir
+file path=usr/share/man/man1/xb-tool.1
+license LICENSE license=LGPLv2.1
