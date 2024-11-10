@@ -1,0 +1,20 @@
+--- appstream-1.0.3/src/as-system-info.c~	2024-04-24 19:02:43.000000000 +0000
++++ appstream-1.0.3/src/as-system-info.c	2024-11-10 18:24:52.592522829 +0000
+@@ -47,7 +47,7 @@
+ #include <dirent.h>
+ #include <glib.h>
+ 
+-#if defined(__linux__)
++#if defined(__linux__) || defined(__sun)
+ #include <sys/sysinfo.h>
+ #elif defined(__FreeBSD__) || defined(__NetBSD__) || defined(__APPLE__)
+ #include <sys/types.h>
+@@ -498,6 +498,8 @@
+ 	statex.dwLength = sizeof (statex);
+ 	GlobalMemoryStatusEx (&statex);
+ 	return statex.ullTotalPhys / (1024 * 1024);
++#elif defined(__sun)
++	return sysconf(_SC_PHYS_PAGES) * sysconf(_SC_PAGESIZE) / MB_IN_BYTES;
+ #else
+ #error "Implementation of as_get_physical_memory_total() missing for this OS."
+ #endif

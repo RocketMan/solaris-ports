@@ -1,0 +1,134 @@
+#
+# CDDL HEADER START
+#
+# The contents of this file are subject to the terms of the
+# Common Development and Distribution License (the "License").
+# You may not use this file except in compliance with the License.
+#
+# You can obtain a copy of the license at usr/src/OPENSOLARIS.LICENSE
+# or http://www.opensolaris.org/os/licensing.
+# See the License for the specific language governing permissions
+# and limitations under the License.
+#
+# When distributing Covered Code, include this CDDL HEADER in each
+# file and include the License file at usr/src/OPENSOLARIS.LICENSE.
+# If applicable, add the following below this CDDL HEADER, with the
+# fields enclosed by brackets "[]" replaced with your own identifying
+# information: Portions Copyright [yyyy] [name of copyright owner]
+#
+# CDDL HEADER END
+#
+# Copyright (c) 2024 Jim Mason <jmason at ibinx doc com>.
+#
+
+<transform file path=usr.*/man/.+ -> default mangler.man.stability committed>
+set name=pkg.fmri \
+    value=pkg:/library/desktop/appstream@$(IPS_COMPONENT_VERSION),$(BUILD_VERSION)
+set name=pkg.summary \
+    value="AppStream makes machine-readable software metadata easily accessible"
+set name=info.classification \
+    value="org.opensolaris.category.2008:Desktop (GNOME)/Libraries"
+set name=info.source-url value=$(COMPONENT_ARCHIVE_URL)
+set name=info.upstream-url value=$(COMPONENT_PROJECT_URL)
+set name=org.opensolaris.consolidation value=$(CONSOLIDATION)
+file path=usr/bin/appstreamcli
+file path=usr/include/appstream/appstream.h
+file path=usr/include/appstream/as-agreement-section.h
+file path=usr/include/appstream/as-agreement.h
+file path=usr/include/appstream/as-artifact.h
+file path=usr/include/appstream/as-branding.h
+file path=usr/include/appstream/as-bundle.h
+file path=usr/include/appstream/as-category-gi.h
+file path=usr/include/appstream/as-category.h
+file path=usr/include/appstream/as-checksum.h
+file path=usr/include/appstream/as-component-box.h
+file path=usr/include/appstream/as-component.h
+file path=usr/include/appstream/as-content-rating.h
+file path=usr/include/appstream/as-context.h
+file path=usr/include/appstream/as-developer.h
+file path=usr/include/appstream/as-enum-types.h
+file path=usr/include/appstream/as-icon.h
+file path=usr/include/appstream/as-image.h
+file path=usr/include/appstream/as-issue.h
+file path=usr/include/appstream/as-launchable.h
+file path=usr/include/appstream/as-macros.h
+file path=usr/include/appstream/as-metadata.h
+file path=usr/include/appstream/as-pool.h
+file path=usr/include/appstream/as-provided.h
+file path=usr/include/appstream/as-reference.h
+file path=usr/include/appstream/as-relation-check-result.h
+file path=usr/include/appstream/as-relation.h
+file path=usr/include/appstream/as-release-list.h
+file path=usr/include/appstream/as-release.h
+file path=usr/include/appstream/as-review.h
+file path=usr/include/appstream/as-screenshot.h
+file path=usr/include/appstream/as-spdx.h
+file path=usr/include/appstream/as-suggested.h
+file path=usr/include/appstream/as-system-info.h
+file path=usr/include/appstream/as-translation.h
+file path=usr/include/appstream/as-utils.h
+file path=usr/include/appstream/as-validator-issue.h
+file path=usr/include/appstream/as-validator.h
+file path=usr/include/appstream/as-vercmp.h
+file path=usr/include/appstream/as-version.h
+file path=usr/include/appstream/as-video.h
+file path=usr/lib/$(MACH64)/girepository-1.0/AppStream-1.0.typelib
+link path=usr/lib/$(MACH64)/libappstream.so target=libappstream.so.5
+file path=usr/lib/$(MACH64)/libappstream.so.1.0.3
+link path=usr/lib/$(MACH64)/libappstream.so.5 target=libappstream.so.1.0.3
+file path=usr/lib/$(MACH64)/pkgconfig/appstream.pc
+file path=usr/share/appstream/appstream.conf
+file path=usr/share/gettext/its/metainfo.its
+file path=usr/share/gettext/its/metainfo.loc
+file path=usr/share/gir-1.0/AppStream-1.0.gir
+file path=usr/share/installed-tests/appstream/metainfo-validate.test
+file path=usr/share/locale/ain/LC_MESSAGES/appstream.mo
+file path=usr/share/locale/ar/LC_MESSAGES/appstream.mo
+file path=usr/share/locale/bn/LC_MESSAGES/appstream.mo
+file path=usr/share/locale/bn_BD/LC_MESSAGES/appstream.mo
+file path=usr/share/locale/ca/LC_MESSAGES/appstream.mo
+file path=usr/share/locale/ckb/LC_MESSAGES/appstream.mo
+file path=usr/share/locale/cs/LC_MESSAGES/appstream.mo
+file path=usr/share/locale/da/LC_MESSAGES/appstream.mo
+file path=usr/share/locale/de/LC_MESSAGES/appstream.mo
+file path=usr/share/locale/en_GB/LC_MESSAGES/appstream.mo
+file path=usr/share/locale/eo/LC_MESSAGES/appstream.mo
+file path=usr/share/locale/es/LC_MESSAGES/appstream.mo
+file path=usr/share/locale/et/LC_MESSAGES/appstream.mo
+file path=usr/share/locale/eu/LC_MESSAGES/appstream.mo
+file path=usr/share/locale/fi/LC_MESSAGES/appstream.mo
+file path=usr/share/locale/fr/LC_MESSAGES/appstream.mo
+file path=usr/share/locale/gd/LC_MESSAGES/appstream.mo
+file path=usr/share/locale/gl/LC_MESSAGES/appstream.mo
+file path=usr/share/locale/he/LC_MESSAGES/appstream.mo
+file path=usr/share/locale/hi/LC_MESSAGES/appstream.mo
+file path=usr/share/locale/hr/LC_MESSAGES/appstream.mo
+file path=usr/share/locale/hu/LC_MESSAGES/appstream.mo
+file path=usr/share/locale/ia/LC_MESSAGES/appstream.mo
+file path=usr/share/locale/id/LC_MESSAGES/appstream.mo
+file path=usr/share/locale/it/LC_MESSAGES/appstream.mo
+file path=usr/share/locale/ja/LC_MESSAGES/appstream.mo
+file path=usr/share/locale/ka/LC_MESSAGES/appstream.mo
+file path=usr/share/locale/ko/LC_MESSAGES/appstream.mo
+file path=usr/share/locale/lt/LC_MESSAGES/appstream.mo
+file path=usr/share/locale/nb/LC_MESSAGES/appstream.mo
+file path=usr/share/locale/nl/LC_MESSAGES/appstream.mo
+file path=usr/share/locale/oc/LC_MESSAGES/appstream.mo
+file path=usr/share/locale/pl/LC_MESSAGES/appstream.mo
+file path=usr/share/locale/pt/LC_MESSAGES/appstream.mo
+file path=usr/share/locale/pt_BR/LC_MESSAGES/appstream.mo
+file path=usr/share/locale/ro/LC_MESSAGES/appstream.mo
+file path=usr/share/locale/rom/LC_MESSAGES/appstream.mo
+file path=usr/share/locale/ru/LC_MESSAGES/appstream.mo
+file path=usr/share/locale/sk/LC_MESSAGES/appstream.mo
+file path=usr/share/locale/sl/LC_MESSAGES/appstream.mo
+file path=usr/share/locale/sr/LC_MESSAGES/appstream.mo
+file path=usr/share/locale/sr@latin/LC_MESSAGES/appstream.mo
+file path=usr/share/locale/sv/LC_MESSAGES/appstream.mo
+file path=usr/share/locale/tr/LC_MESSAGES/appstream.mo
+file path=usr/share/locale/uk/LC_MESSAGES/appstream.mo
+file path=usr/share/locale/zh_CN/LC_MESSAGES/appstream.mo
+file path=usr/share/locale/zh_TW/LC_MESSAGES/appstream.mo
+file path=usr/share/man/man1/appstreamcli.1
+file path=usr/share/metainfo/org.freedesktop.appstream.cli.metainfo.xml
+license COPYING license=LGPLv2.1
