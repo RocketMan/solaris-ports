@@ -1,7 +1,7 @@
 ## Slim Nimbus theme
 
 This is a variant of the Nimbus theme with reduced window borders.  It
-supports both gtk2 and gtk3 applications.
+supports gtk2, gtk3, and gtk4 applications.
 
 Dark and light versions of the theme are included.
 
