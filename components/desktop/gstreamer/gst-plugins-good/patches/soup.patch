@@ -1,0 +1,11 @@
+--- gst-plugins-good-1.24.9/ext/adaptivedemux2/meson.build-	2024-10-30 20:33:30.000000000 +0000
++++ gst-plugins-good-1.24.9/ext/adaptivedemux2/meson.build	2024-11-12 16:43:10.468679562 +0000
+@@ -93,7 +93,7 @@
+                               required: soup_ver_opt == '2' and soup_opt.enabled())
+   endif
+ 
+-  if libsoup3_dep.found()
++  if is_variable('libsoup3_dep') and libsoup3_dep.found()
+     soup_link_deps += [libsoup3_dep]
+     soup_link_args = ['-DLINK_SOUP=3']
+   elif libsoup2_dep.found()

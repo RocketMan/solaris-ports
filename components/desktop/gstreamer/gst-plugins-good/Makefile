@@ -36,6 +36,7 @@ BUILD_STYLE=meson
 
 COMPONENT_NAME=		gst-plugins-good
 COMPONENT_VERSION=	1.24.9
+COMPONENT_REVISION=	1
 COMPONENT_PROJECT_URL=	https://gstreamer.freedesktop.org/
 COMPONENT_ARCHIVE=	$(COMPONENT_SRC).tar.xz
 COMPONENT_ARCHIVE_HASH= \
@@ -96,6 +97,7 @@ CONFIGURE_OPTIONS += -Dsoup=enabled
 CONFIGURE_OPTIONS += -Dspeex=enabled
 CONFIGURE_OPTIONS += -Dtaglib=disabled
 CONFIGURE_OPTIONS += -Dvpx=enabled
+CONFIGURE_OPTIONS += -Dsoup-version=2
 
 # Use GNU make during configure
 CONFIGURE_ENV += PATH=$(GNUBIN):$(PATH)
