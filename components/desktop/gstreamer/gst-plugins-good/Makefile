@@ -20,7 +20,7 @@
 #
 
 #
-# Copyright (c) 2018-2022 Jim Mason <jmason at ibinx dot com>.
+# Copyright (c) 2018-2024 Jim Mason <jmason at ibinx dot com>.
 #
 # Adapted from original code Copyright (c) 2015, 2018, Oracle and/or its
 # affiliates. All rights reserved.
@@ -35,11 +35,11 @@ include ../../../../make-rules/shared-macros.mk
 BUILD_STYLE=meson
 
 COMPONENT_NAME=		gst-plugins-good
-COMPONENT_VERSION=	1.20.4
+COMPONENT_VERSION=	1.24.9
 COMPONENT_PROJECT_URL=	https://gstreamer.freedesktop.org/
 COMPONENT_ARCHIVE=	$(COMPONENT_SRC).tar.xz
 COMPONENT_ARCHIVE_HASH= \
-	sha256:b16130fbe632fa8547c2147a0ef575b0140fb521065c5cb121c72ddbd23b64da
+	sha256:897de50bff337e3ca2f86f1eaa28e0828d83024156162a50c4ea0af86e29799f
 COMPONENT_ARCHIVE_URL=	https://gstreamer.freedesktop.org/src/$(COMPONENT_NAME)/$(COMPONENT_ARCHIVE)
 COMPONENT_ANITYA_ID=	1263
 
@@ -127,8 +127,11 @@ REQUIRED_PACKAGES += library/desktop/orc
 REQUIRED_PACKAGES += library/desktop/pango
 REQUIRED_PACKAGES += library/glib2
 REQUIRED_PACKAGES += library/libsoup
+REQUIRED_PACKAGES += library/libsoup3
+REQUIRED_PACKAGES += library/libxml2
 REQUIRED_PACKAGES += library/media/libmpg123
 REQUIRED_PACKAGES += library/ncurses
+REQUIRED_PACKAGES += library/security/nettle
 REQUIRED_PACKAGES += library/zlib
 REQUIRED_PACKAGES += media/lame
 REQUIRED_PACKAGES += runtime/python-35
@@ -139,4 +142,5 @@ REQUIRED_PACKAGES += x11/library/libx11
 REQUIRED_PACKAGES += x11/library/libxdamage
 REQUIRED_PACKAGES += x11/library/libxext
 REQUIRED_PACKAGES += x11/library/libxfixes
+REQUIRED_PACKAGES += x11/library/libxtst
 REQUIRED_PACKAGES += x11/library/libxv

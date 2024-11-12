@@ -20,7 +20,7 @@
 #
 
 #
-# Copyright (c) 2018-2022 Jim Mason <jmason at ibinx dot com>.
+# Copyright (c) 2018-2024 Jim Mason <jmason at ibinx dot com>.
 #
 # Adapted from original code Copyright (c) 2015, 2017, Oracle and/or its
 # affiliates. All rights reserved.
@@ -90,6 +90,7 @@ file path=usr/include/gstreamer-1.0/gst/gstbuffer.h
 file path=usr/include/gstreamer-1.0/gst/gstbufferlist.h
 file path=usr/include/gstreamer-1.0/gst/gstbufferpool.h
 file path=usr/include/gstreamer-1.0/gst/gstbus.h
+file path=usr/include/gstreamer-1.0/gst/gstbytearrayinterface.h
 file path=usr/include/gstreamer-1.0/gst/gstcaps.h
 file path=usr/include/gstreamer-1.0/gst/gstcapsfeatures.h
 file path=usr/include/gstreamer-1.0/gst/gstchildproxy.h
@@ -172,6 +173,7 @@ file path=usr/lib/$(MACH64)/girepository-1.0/GstBase-1.0.typelib
 file path=usr/lib/$(MACH64)/girepository-1.0/GstCheck-1.0.typelib
 file path=usr/lib/$(MACH64)/girepository-1.0/GstController-1.0.typelib
 file path=usr/lib/$(MACH64)/girepository-1.0/GstNet-1.0.typelib
+file path=usr/lib/$(MACH64)/gstreamer-1.0/gst-completion-helper mode=0555
 file path=usr/lib/$(MACH64)/gstreamer-1.0/gst-hotdoc-plugins-scanner mode=0555
 file path=usr/lib/$(MACH64)/gstreamer-1.0/gst-plugin-scanner mode=0555
 file path=usr/lib/$(MACH64)/gstreamer-1.0/gst-plugins-doc-cache-generator \
@@ -181,31 +183,31 @@ file path=usr/lib/$(MACH64)/gstreamer-1.0/libgstcoreelements.so
 file path=usr/lib/$(MACH64)/gstreamer-1.0/libgstcoretracers.so
 link path=usr/lib/$(MACH64)/libgstbase-1.0.so target=libgstbase-1.0.so.0
 link path=usr/lib/$(MACH64)/libgstbase-1.0.so.0 \
-    target=libgstbase-1.0.so.0.2004.0
-file path=usr/lib/$(MACH64)/libgstbase-1.0.so.0.2004.0
+    target=libgstbase-1.0.so.0.2409.0
+file path=usr/lib/$(MACH64)/libgstbase-1.0.so.0.2409.0
 link path=usr/lib/$(MACH64)/libgstcheck-1.0.so target=libgstcheck-1.0.so.0
 link path=usr/lib/$(MACH64)/libgstcheck-1.0.so.0 \
-    target=libgstcheck-1.0.so.0.2004.0
-file path=usr/lib/$(MACH64)/libgstcheck-1.0.so.0.2004.0
+    target=libgstcheck-1.0.so.0.2409.0
+file path=usr/lib/$(MACH64)/libgstcheck-1.0.so.0.2409.0
 link path=usr/lib/$(MACH64)/libgstcontroller-1.0.so \
     target=libgstcontroller-1.0.so.0
 link path=usr/lib/$(MACH64)/libgstcontroller-1.0.so.0 \
-    target=libgstcontroller-1.0.so.0.2004.0
-file path=usr/lib/$(MACH64)/libgstcontroller-1.0.so.0.2004.0
+    target=libgstcontroller-1.0.so.0.2409.0
+file path=usr/lib/$(MACH64)/libgstcontroller-1.0.so.0.2409.0
 link path=usr/lib/$(MACH64)/libgstnet-1.0.so target=libgstnet-1.0.so.0
-link path=usr/lib/$(MACH64)/libgstnet-1.0.so.0 target=libgstnet-1.0.so.0.2004.0
-file path=usr/lib/$(MACH64)/libgstnet-1.0.so.0.2004.0
+link path=usr/lib/$(MACH64)/libgstnet-1.0.so.0 target=libgstnet-1.0.so.0.2409.0
+file path=usr/lib/$(MACH64)/libgstnet-1.0.so.0.2409.0
 link path=usr/lib/$(MACH64)/libgstreamer-1.0.so target=libgstreamer-1.0.so.0
 link path=usr/lib/$(MACH64)/libgstreamer-1.0.so.0 \
-    target=libgstreamer-1.0.so.0.2004.0
-file path=usr/lib/$(MACH64)/libgstreamer-1.0.so.0.2004.0
+    target=libgstreamer-1.0.so.0.2409.0
+file path=usr/lib/$(MACH64)/libgstreamer-1.0.so.0.2409.0
 file path=usr/lib/$(MACH64)/pkgconfig/gstreamer-1.0.pc
 file path=usr/lib/$(MACH64)/pkgconfig/gstreamer-base-1.0.pc
 file path=usr/lib/$(MACH64)/pkgconfig/gstreamer-check-1.0.pc
 file path=usr/lib/$(MACH64)/pkgconfig/gstreamer-controller-1.0.pc
 file path=usr/lib/$(MACH64)/pkgconfig/gstreamer-net-1.0.pc
 file path=usr/share/aclocal/gst-element-check-1.0.m4
-file path=usr/share/gdb/auto-load/usr/lib/$(MACH64)/libgstreamer-1.0.so.0.2004.0-gdb.py
+file path=usr/share/gdb/auto-load/usr/lib/$(MACH64)/libgstreamer-1.0.so.0.2409.0-gdb.py
 file path=usr/share/gir-1.0/Gst-1.0.gir
 file path=usr/share/gir-1.0/GstBase-1.0.gir
 file path=usr/share/gir-1.0/GstCheck-1.0.gir
@@ -236,8 +238,10 @@ file path=usr/share/locale/hu/LC_MESSAGES/gstreamer-1.0.mo
 file path=usr/share/locale/id/LC_MESSAGES/gstreamer-1.0.mo
 file path=usr/share/locale/it/LC_MESSAGES/gstreamer-1.0.mo
 file path=usr/share/locale/ja/LC_MESSAGES/gstreamer-1.0.mo
+file path=usr/share/locale/ka/LC_MESSAGES/gstreamer-1.0.mo
 file path=usr/share/locale/ko/LC_MESSAGES/gstreamer-1.0.mo
 file path=usr/share/locale/lt/LC_MESSAGES/gstreamer-1.0.mo
+file path=usr/share/locale/lv/LC_MESSAGES/gstreamer-1.0.mo
 file path=usr/share/locale/nb/LC_MESSAGES/gstreamer-1.0.mo
 file path=usr/share/locale/nl/LC_MESSAGES/gstreamer-1.0.mo
 file path=usr/share/locale/pl/LC_MESSAGES/gstreamer-1.0.mo

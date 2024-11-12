@@ -20,7 +20,7 @@
 #
 
 #
-# Copyright (c) 2019-2022 Jim Mason <jmason at ibinx dot com>.
+# Copyright (c) 2019-2024 Jim Mason <jmason at ibinx dot com>.
 #
 
 BUILD_BITS =            64
@@ -30,11 +30,11 @@ include ../../../../make-rules/shared-macros.mk
 BUILD_STYLE=meson
 
 COMPONENT_NAME=		gst-devtools
-COMPONENT_VERSION=	1.20.4
+COMPONENT_VERSION=	1.24.9
 COMPONENT_PROJECT_URL=	https://gstreamer.freedesktop.org/
 COMPONENT_ARCHIVE=	$(COMPONENT_SRC).tar.xz
 COMPONENT_ARCHIVE_HASH= \
-	sha256:82a293600273f4dd3eed567aae510ca0c7d629c3807788b00e6cdbd1d2459a84
+	sha256:cf1de1aafa6eb4fd0365932b251528e2340b88697541e021628c5f7259970fb8
 COMPONENT_ARCHIVE_URL=	https://gstreamer.freedesktop.org/src/$(COMPONENT_NAME)/$(COMPONENT_ARCHIVE)
 
 # Supports Python 3.x only.
@@ -46,8 +46,6 @@ include $(WS_MAKE_RULES)/common.mk
 
 CONFIGURE_OPTIONS.32 += -Dintrospection=disabled
 CONFIGURE_OPTIONS += -Dlibexecdir=$(CONFIGURE_LIBDIR.$(BITS))
-CONFIGURE_OPTIONS += -Dpython=enabled
-CONFIGURE_OPTIONS += -Dlibpython-dir=$(PYTHON_VENDOR_PACKAGES)
 
 # Use the build area of gstreamer and gst-plugins-base
 GST_BASE = $(WS_COMPONENTS)/desktop/gstreamer/gstreamer/build/prototype/$(MACH)

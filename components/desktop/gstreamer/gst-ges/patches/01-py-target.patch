@@ -9,12 +9,27 @@
         description: 'Enable GstValidate integration.')
 --- a/meson.build	2020-09-10 13:03:42.900117047 +0000
 +++ b/meson.build	2020-09-10 13:00:16.405575384 +0000
-@@ -262,7 +262,7 @@
-   endif
- endforeach
+@@ -146,7 +146,7 @@
  
--python3 = import('python').find_installation()
-+python3 = import('python').find_installation(get_option('py-target'))
- pkgconfig = import('pkgconfig')
- pkgconfig_subdirs = ['gstreamer-1.0']
+ pymod = import('python')
+ python_opt = get_option('python')
+-python = pymod.find_installation(required: python_opt)
++python = pymod.find_installation(get_option('py-target'), required: python_opt)
+ has_python = false
+ static_build = get_option('default_library') == 'static'
+ if static_build
+@@ -212,14 +212,6 @@
+         endif
+       endforeach
+     endforeach
+-    if not has_python
+-      error_msg = 'Could not find python library to load'
+-      if python_opt.enabled()
+-        error(error_msg)
+-      else
+-        message(error_msg)
+-      endif
+-    endif
+   endif
+ endif
  

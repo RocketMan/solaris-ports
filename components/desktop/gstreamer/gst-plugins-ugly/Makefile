@@ -20,7 +20,7 @@
 #
 
 #
-# Copyright (c) 2018-2022 Jim Mason <jmason at ibinx dot com>.
+# Copyright (c) 2018-2024 Jim Mason <jmason at ibinx dot com>.
 #
 # Adapted from original code Copyright (c) 2015, 2018, Oracle and/or its
 # affiliates. All rights reserved.
@@ -35,11 +35,11 @@ include ../../../../make-rules/shared-macros.mk
 BUILD_STYLE=meson
 
 COMPONENT_NAME=		gst-plugins-ugly
-COMPONENT_VERSION=	1.20.4
+COMPONENT_VERSION=	1.24.9
 COMPONENT_PROJECT_URL=	https://gstreamer.freedesktop.org/
 COMPONENT_ARCHIVE=	$(COMPONENT_SRC).tar.xz
 COMPONENT_ARCHIVE_HASH= \
-	sha256:5c9ec6bab96517e438b3f9bae0ceb84d3436f3da9bbe180cf4d28e32a7251b59
+	sha256:4b6b30110f38cd05eb67422297142b75a55fe00003105f48b13603e6761cc3b6
 COMPONENT_ARCHIVE_URL=	https://gstreamer.freedesktop.org/src/$(COMPONENT_NAME)/$(COMPONENT_ARCHIVE)
 COMPONENT_ANITYA_ID=	1263
 

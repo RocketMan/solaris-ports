@@ -20,7 +20,7 @@
 #
 
 #
-# Copyright (c) 2018-2022 Jim Mason <jmason at ibinx dot com>.
+# Copyright (c) 2018-2024 Jim Mason <jmason at ibinx dot com>.
 #
 # Adapted from original code Copyright (c) 2015, 2018, Oracle and/or its
 # affiliates. All rights reserved.
@@ -35,11 +35,11 @@ include ../../../../make-rules/shared-macros.mk
 BUILD_STYLE=meson
 
 COMPONENT_NAME=		gst-plugins-base
-COMPONENT_VERSION=	1.20.4
+COMPONENT_VERSION=	1.24.9
 COMPONENT_PROJECT_URL=	https://gstreamer.freedesktop.org/
 COMPONENT_ARCHIVE=	$(COMPONENT_SRC).tar.xz
 COMPONENT_ARCHIVE_HASH= \
-	sha256:8d181b7abe4caf23ee9f9ec5b4d3e232640452464e39495bfffb6d776fc97225
+	sha256:5bb3b946907d3ce04dd842b610c8111c2b0611351b25a1fa22af5efa897857cb
 COMPONENT_ARCHIVE_URL=	https://gstreamer.freedesktop.org/src/$(COMPONENT_NAME)/$(COMPONENT_ARCHIVE)
 COMPONENT_ANITYA_ID=	1263
 
@@ -70,10 +70,11 @@ CONFIGURE_OPTIONS += -Dgl_platform=glx,egl
 CONFIGURE_OPTIONS += -Dlibexecdir=$(CONFIGURE_LIBDIR.$(BITS))
 CONFIGURE_OPTIONS += -Dogg=enabled
 CONFIGURE_OPTIONS += -Dtheora=enabled
-CONFIGURE_OPTIONS += -Dvorbix=enabled
+CONFIGURE_OPTIONS += -Dvorbis=enabled
 CONFIGURE_OPTIONS += -Dx11=enabled
 CONFIGURE_OPTIONS += -Dgl-graphene=disabled
 CONFIGURE_OPTIONS += -Dexamples=disabled
+CONFIGURE_OPTIONS += -Ddrm=disabled
 
 # Ensure Python modules are installed into vendor package directories.
 CONFIGURE_ENV += am_cv_python_pythondir=$(PYTHON_VENDOR_PACKAGES)
@@ -113,6 +114,7 @@ REQUIRED_PACKAGES += system/library/math
 REQUIRED_PACKAGES += x11/library/libx11
 REQUIRED_PACKAGES += x11/library/libxcb
 REQUIRED_PACKAGES += x11/library/libxext
+REQUIRED_PACKAGES += x11/library/libxi
 REQUIRED_PACKAGES += x11/library/libxv
 REQUIRED_PACKAGES += x11/library/mesa
 REQUIRED_PACKAGES += x11/library/mesa-egl

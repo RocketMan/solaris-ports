@@ -20,7 +20,7 @@
 #
 
 #
-# Copyright (c) 2018-2022 Jim Mason <jmason at ibinx dot com>.
+# Copyright (c) 2018-2024 Jim Mason <jmason at ibinx dot com>.
 #
 # Adapted from original code Copyright (c) 2015, 2018, Oracle and/or its
 # affiliates. All rights reserved.
@@ -38,12 +38,12 @@ BUILD_STYLE=meson
 # newest version which has no backwards API compatibility and we likely need to
 # ship both, hence the odd name.
 COMPONENT_NAME=		gstreamer
-COMPONENT_VERSION=	1.20.4
+COMPONENT_VERSION=	1.24.9
 COMPONENT_PROJECT_URL=	https://gstreamer.freedesktop.org/
 COMPONENT_SRC=		$(COMPONENT_NAME)-$(COMPONENT_VERSION)
 COMPONENT_ARCHIVE=	$(COMPONENT_SRC).tar.xz
 COMPONENT_ARCHIVE_HASH= \
-	sha256:67c1edf8c3c339cda5dde85f4f7b953bb9607c2d13ae970e2491c5c4c055ef5f
+	sha256:ebf47b6beef508a00c8557d4c1f1713e5c7ef9ba70dac45deed80e182bcf260f
 COMPONENT_ARCHIVE_URL=	https://gstreamer.freedesktop.org/src/$(COMPONENT_NAME)/$(COMPONENT_ARCHIVE)
 COMPONENT_ANITYA_ID=	1263
 
@@ -80,9 +80,9 @@ COMPONENT_BUILD_ENV += PATH=$(GNUBIN):$(PATH)
 unexport SHELLOPTS
 COMPONENT_TEST_MASTER = $(COMPONENT_TEST_RESULTS_DIR)/results-all.master
 COMPONENT_TEST_TRANSFORMER = $(GAWK)
-COMPONENT_TEST_TRANSFORMS = "'" '/OK/ {++ok} \
-        /FAIL/ {++fail; print $$3, $$2} \
-        /SKIP/ {++skip; print $$3, $$2} \
+COMPONENT_TEST_TRANSFORMS = "'" '/Ok/ {++ok} \
+        /Fail/ {++fail; print $$3, $$2} \
+        /Skip/ {++skip; print $$3, $$2} \
         END {print "OK:\\t"ok"\\nFAIL:\\t"fail"\\nSKIP:\\t"skip}' "'"
 
 REQUIRED_PACKAGES += data/docbook/docbook-dtds
