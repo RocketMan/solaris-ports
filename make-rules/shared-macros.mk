@@ -237,7 +237,7 @@ COMPONENT_BUGDB=	utility/$(COMPONENT_NAME)
 COMPONENT_DIR :=	$(shell pwd)
 SOURCE_DIR =	$(COMPONENT_DIR)/$(COMPONENT_SRC)
 BUILD_DIR =	$(COMPONENT_DIR)/build
-PROTO_DIR =	$(BUILD_DIR)/prototype/$(MACH)
+PROTO_DIR ?=	$(BUILD_DIR)/prototype/$(MACH)
 
 ETCDIR =	/etc
 USRDIR =	/usr
@@ -798,11 +798,12 @@ COMPONENT_POST_INSTALL_ACTION += $(PERL_SCRIPTS_PROCESS)
 PHP_TOP_DIR = $(WS_COMPONENTS)/php
 
 # All versions of PHP for building extension packages.
-PHP_VERSIONS = 7.4 8.2 8.3
+PHP_VERSIONS = 7.4 8.2 8.3 8.4
 
 PHP.7.4 = /usr/php/7.4/bin/php
 PHP.8.2 = /usr/php/8.2/bin/php
 PHP.8.3 = /usr/php/8.3/bin/php
+PHP.8.4 = /usr/php/8.4/bin/php
 
 # This is the default BUILD version of tcl
 # Not necessarily the system's default version, i.e. /usr/bin/tclsh
