@@ -255,19 +255,21 @@ https://bugs.webkit.org/show_bug.cgi?id=176341
  #if HAVE(STD_FILESYSTEM) || HAVE(STD_EXPERIMENTAL_FILESYSTEM)
 --- webkit/Source/WTF/wtf/glib/FileSystemGlib.cpp.~2~	2024-04-07 23:02:21.909379687 +0000
 +++ webkit/Source/WTF/wtf/glib/FileSystemGlib.cpp	2024-04-08 10:38:37.794531247 +0000
-@@ -74,6 +74,16 @@
+@@ -74,6 +74,18 @@
  {
      return { };
  }
 +#elif OS(SOLARIS)
 +CString currentExecutablePath()
 +{
-+    static char readLinkBuffer[PATH_MAX], path[PATH_MAX];
-+    sprintf(path, "/proc/%ld/path/a.out", static_cast<long>(getpid()));
++    static char readLinkBuffer[PATH_MAX];
++    static char path[PATH_MAX];
++    sprintf(path, "/proc/%ld/path/a.out", (long)getpid());
 +    ssize_t result = readlink(path, readLinkBuffer, PATH_MAX);
 +    if (result == -1)
 +        return { };
-+    return CString(unsafeMakeSpan(readLinkBuffer, result));
++    readLinkBuffer[result] = '\0';
++    return CString(readLinkBuffer);
 +}
  #elif OS(UNIX)
  CString currentExecutablePath()
