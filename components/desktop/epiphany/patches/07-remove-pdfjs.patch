@@ -1,0 +1,328 @@
+WebKit now has its own copy of PDF.js, and it handles PDF display for us
+automatically. See https://bugs.webkit.org/show_bug.cgi?id=237513.
+
+This patch is adapted from
+https://gitlab.gnome.org/GNOME/epiphany/-/commit/6dff78b72cbad1579e1db548c5c42ca6e6e2942f
+
+
+diff --git a/embed/ephy-embed-shell.c b/embed/ephy-embed-shell.c
+index d5f9f029de095249cd2c1fb61cb1a17fd507e2fe..53c47aaf60fe4b02ac7427bb52401c534c0281df 100644
+--- a/embed/ephy-embed-shell.c
++++ b/embed/ephy-embed-shell.c
+@@ -35,7 +35,6 @@
+ #include "ephy-flatpak-utils.h"
+ #include "ephy-history-service.h"
+ #include "ephy-password-manager.h"
+-#include "ephy-pdf-handler.h"
+ #include "ephy-profile-utils.h"
+ #include "ephy-reader-handler.h"
+ #include "ephy-settings.h"
+@@ -66,7 +65,6 @@ typedef struct {
+   EphyAboutHandler *about_handler;
+   EphyViewSourceHandler *source_handler;
+   EphyReaderHandler *reader_handler;
+-  EphyPDFHandler *pdf_handler;
+   char *guid;
+   EphyFiltersManager *filters_manager;
+   EphySearchEngineManager *search_engine_manager;
+@@ -196,7 +194,6 @@ ephy_embed_shell_dispose (GObject *object)
+   g_clear_object (&priv->about_handler);
+   g_clear_object (&priv->reader_handler);
+   g_clear_object (&priv->source_handler);
+-  g_clear_object (&priv->pdf_handler);
+   g_clear_object (&priv->downloads_manager);
+   g_clear_object (&priv->password_manager);
+   g_clear_object (&priv->permissions_manager);
+@@ -713,15 +710,6 @@ reader_request_cb (WebKitURISchemeRequest *request,
+   ephy_reader_handler_handle_request (priv->reader_handler, request);
+ }
+ 
+-static void
+-pdf_request_cb (WebKitURISchemeRequest *request,
+-                EphyEmbedShell         *shell)
+-{
+-  EphyEmbedShellPrivate *priv = ephy_embed_shell_get_instance_private (shell);
+-
+-  ephy_pdf_handler_handle_request (priv->pdf_handler, request);
+-}
+-
+ static void
+ ephy_resource_request_cb (WebKitURISchemeRequest *request)
+ {
+@@ -741,7 +729,7 @@ ephy_resource_request_cb (WebKitURISchemeRequest *request)
+   request_view = webkit_uri_scheme_request_get_web_view (request);
+   uri = webkit_web_view_get_uri (request_view);
+ 
+-  /* ephy-resource:// requests bypass CORS in order to allow ephy-pdf:// to
++  /* ephy-resource:// requests bypass CORS in order to allow custom schemes to
+    * access ephy-resource://. Accordingly, we need some custom security to
+    * prevent websites from directly accessing ephy-resource://.
+    *
+@@ -751,7 +739,6 @@ ephy_resource_request_cb (WebKitURISchemeRequest *request)
+   if (g_str_has_prefix (uri, "ephy-resource:") ||
+       g_str_has_prefix (path, "/org/gnome/epiphany/page-icons/") ||
+       g_str_has_prefix (path, "/org/gnome/epiphany/page-templates/") ||
+-      (g_str_has_prefix (uri, "ephy-pdf:") && g_str_has_prefix (path, "/org/gnome/epiphany/pdfjs/")) ||
+       (g_str_has_prefix (uri, "ephy-reader:") && g_str_has_prefix (path, "/org/gnome/epiphany/readability/")) ||
+       (g_str_has_prefix (uri, EPHY_VIEW_SOURCE_SCHEME ":") && g_str_has_prefix (path, "/org/gnome/epiphany/highlightjs/"))) {
+     stream = g_resources_open_stream (path, 0, &error);
+@@ -844,7 +831,6 @@ download_started_cb (WebKitWebContext *web_context,
+   EphyEmbedShellPrivate *priv = ephy_embed_shell_get_instance_private (shell);
+   g_autoptr (EphyDownload) ephy_download = NULL;
+   gboolean ephy_download_set;
+-  WebKitWebView *web_view;
+ 
+   /* Is download locked down? */
+   if (g_settings_get_boolean (EPHY_SETTINGS_LOCKDOWN,
+@@ -863,14 +849,7 @@ download_started_cb (WebKitWebContext *web_context,
+     return;
+ 
+   ephy_download = ephy_download_new (download);
+-
+-  web_view = webkit_download_get_web_view (download);
+-  if (EPHY_IS_WEB_VIEW (web_view)) {
+-    if (ephy_web_view_get_document_type (EPHY_WEB_VIEW (web_view)) != EPHY_WEB_VIEW_DOCUMENT_PDF)
+-      ephy_downloads_manager_add_download (priv->downloads_manager, ephy_download);
+-  } else {
+-    ephy_downloads_manager_add_download (priv->downloads_manager, ephy_download);
+-  }
++  ephy_downloads_manager_add_download (priv->downloads_manager, ephy_download);
+ }
+ 
+ static void
+@@ -980,11 +959,6 @@ ephy_embed_shell_startup (GApplication *application)
+   webkit_web_context_register_uri_scheme (priv->web_context, EPHY_VIEW_SOURCE_SCHEME,
+                                           (WebKitURISchemeRequestCallback)source_request_cb,
+                                           shell, NULL);
+-  /* pdf handler */
+-  priv->pdf_handler = ephy_pdf_handler_new ();
+-  webkit_web_context_register_uri_scheme (priv->web_context, EPHY_PDF_SCHEME,
+-                                          (WebKitURISchemeRequestCallback)pdf_request_cb,
+-                                          shell, NULL);
+ 
+   /* reader mode handler */
+   priv->reader_handler = ephy_reader_handler_new ();
+@@ -1535,12 +1509,3 @@ ephy_embed_shell_unregister_ucm_handler (EphyEmbedShell           *shell,
+                                                                           "passwordManagerSave",
+                                                                           priv->guid);
+ }
+-
+-void
+-ephy_embed_shell_pdf_handler_stop (EphyEmbedShell *shell,
+-                                   WebKitWebView  *web_view)
+-{
+-  EphyEmbedShellPrivate *priv = ephy_embed_shell_get_instance_private (shell);
+-
+-  ephy_pdf_handler_stop (priv->pdf_handler, web_view);
+-}
+diff --git a/embed/ephy-embed-shell.h b/embed/ephy-embed-shell.h
+index 9464d42d49a80959b24f5942e396c7d8bb573068..85577c09dbc60ee7ee86f94da2d354c700442fdf 100644
+--- a/embed/ephy-embed-shell.h
++++ b/embed/ephy-embed-shell.h
+@@ -91,7 +91,4 @@ void                     ephy_embed_shell_register_ucm_handler (EphyEmbedShell
+ void                     ephy_embed_shell_unregister_ucm_handler (EphyEmbedShell           *shell,
+                                                                   WebKitUserContentManager *ucm);
+ 
+-void                     ephy_embed_shell_pdf_handler_stop (EphyEmbedShell *shell,
+-                                                            WebKitWebView  *web_view);
+-
+ G_END_DECLS
+diff --git a/embed/ephy-embed-utils.c b/embed/ephy-embed-utils.c
+index 6761650691b9a0f39acba4c15791af2b6a5e5184..51da4f0a6636f1fc3747e55dc7038d6cdac9cd27 100644
+--- a/embed/ephy-embed-utils.c
++++ b/embed/ephy-embed-utils.c
+@@ -146,7 +146,6 @@ ephy_embed_utils_address_has_web_scheme (const char *address)
+                      g_ascii_strncasecmp (address, "ephy-resource", colonpos) &&
+                      g_ascii_strncasecmp (address, EPHY_VIEW_SOURCE_SCHEME, colonpos) &&
+                      g_ascii_strncasecmp (address, "ephy-reader", colonpos) &&
+-                     g_ascii_strncasecmp (address, "ephy-pdf", colonpos) &&
+                      g_ascii_strncasecmp (address, "gopher", colonpos) &&
+                      g_ascii_strncasecmp (address, "inspector", colonpos) &&
+                      g_ascii_strncasecmp (address, "webkit", colonpos));
+diff --git a/embed/ephy-web-view.c b/embed/ephy-web-view.c
+index 4bccbcb4654b43b886ca04bee066b71034ab7c63..b7ec2fa54e7c2c1e241f82ba101aecd1a77d70dd 100644
+--- a/embed/ephy-web-view.c
++++ b/embed/ephy-web-view.c
+@@ -46,7 +46,6 @@
+ #include "ephy-snapshot-service.h"
+ #include "ephy-string.h"
+ #include "ephy-uri-helpers.h"
+-#include "ephy-pdf-handler.h"
+ #include "ephy-view-source-handler.h"
+ #include "ephy-web-app-utils.h"
+ #include "ephy-zoom.h"
+@@ -773,12 +772,8 @@ ephy_web_view_set_display_address (EphyWebView *view)
+ {
+   g_clear_pointer (&view->display_address, g_free);
+ 
+-  if (view->address) {
+-    if (g_str_has_prefix (view->address, EPHY_PDF_SCHEME))
+-      view->display_address = ephy_uri_decode (view->address + strlen (EPHY_PDF_SCHEME) + 1);
+-    else
+-      view->display_address = ephy_uri_decode (view->address);
+-  }
++  if (view->address)
++    view->display_address = ephy_uri_decode (view->address);
+ }
+ 
+ /*
+@@ -818,9 +813,7 @@ uri_changed_cb (WebKitWebView *web_view,
+ {
+   EphyWebView *view = EPHY_WEB_VIEW (web_view);
+ 
+-  if (view->document_type != EPHY_WEB_VIEW_DOCUMENT_PDF)
+-    ephy_web_view_set_address (view,
+-                               webkit_web_view_get_uri (web_view));
++  ephy_web_view_set_address (view, webkit_web_view_get_uri (web_view));
+ }
+ 
+ static void
+@@ -968,8 +961,6 @@ decide_policy_cb (WebKitWebView            *web_view,
+ 
+   /* If it's not the main resource, we don't need to set the document type. */
+   if (is_main_resource) {
+-    const char *method = webkit_uri_request_get_http_method (request);
+-
+     type = EPHY_WEB_VIEW_DOCUMENT_OTHER;
+     if (strcmp (mime_type, "text/html") == 0 || strcmp (mime_type, "text/plain") == 0) {
+       type = EPHY_WEB_VIEW_DOCUMENT_HTML;
+@@ -977,18 +968,6 @@ decide_policy_cb (WebKitWebView            *web_view,
+       type = EPHY_WEB_VIEW_DOCUMENT_XML;
+     } else if (strncmp (mime_type, "image/", 6) == 0) {
+       type = EPHY_WEB_VIEW_DOCUMENT_IMAGE;
+-    } else if (strcmp (mime_type, "application/pdf") == 0 && (!method || strcmp (method, "GET") == 0)) {
+-      g_autofree char *pdf_uri = NULL;
+-
+-      /* FIXME: figure out how to make PDFs work in iframes. */
+-      type = EPHY_WEB_VIEW_DOCUMENT_PDF;
+-      EPHY_WEB_VIEW (web_view)->document_type = type;
+-
+-      pdf_uri = g_strconcat (EPHY_PDF_SCHEME, ":", request_uri, NULL);
+-
+-      webkit_web_view_load_uri (web_view, pdf_uri);
+-
+-      return FALSE;
+     }
+ 
+     /* FIXME: maybe it makes more sense to have an API to query the mime
+@@ -1550,7 +1529,6 @@ update_security_status_for_committed_load (EphyWebView *view,
+   if (!guri ||
+       strcmp (g_uri_get_scheme (guri), EPHY_VIEW_SOURCE_SCHEME) == 0 ||
+       strcmp (g_uri_get_scheme (guri), EPHY_READER_SCHEME) == 0 ||
+-      strcmp (g_uri_get_scheme (guri), EPHY_PDF_SCHEME) == 0 ||
+       g_strcmp0 (tld, "127.0.0.1") == 0 ||
+       g_strcmp0 (tld, "::1") == 0 ||
+       g_strcmp0 (tld, "localhost") == 0 || /* We trust localhost to be local since glib!616. */
+@@ -1655,8 +1633,6 @@ load_changed_cb (WebKitWebView   *web_view,
+         /* TODO: move the normalization down to the history service? */
+         if (g_str_has_prefix (uri, EPHY_ABOUT_SCHEME))
+           history_uri = g_strdup_printf ("about:%s", uri + EPHY_ABOUT_SCHEME_LEN + 1);
+-        else if (g_str_has_prefix (uri, EPHY_PDF_SCHEME))
+-          history_uri = g_strdup (uri + strlen (EPHY_PDF_SCHEME) + 1);
+         else
+           history_uri = g_strdup (uri);
+ 
+@@ -1692,9 +1668,6 @@ load_changed_cb (WebKitWebView   *web_view,
+       /* Ensure we load the icon for this web view, if available. */
+       _ephy_web_view_update_icon (view);
+ 
+-      if (g_str_has_prefix (webkit_web_view_get_uri (web_view), "ephy-pdf"))
+-        ephy_embed_shell_pdf_handler_stop (ephy_embed_shell_get_default (), web_view);
+-
+       /* Reset visit type. */
+       view->visit_type = EPHY_PAGE_VISIT_NONE;
+ 
+diff --git a/embed/ephy-web-view.h b/embed/ephy-web-view.h
+index 62176b70af028322ca26bd9306ec9a2a54fc8204..48a18d4a3c9be5a431a446064a86845d96b8dd02 100644
+--- a/embed/ephy-web-view.h
++++ b/embed/ephy-web-view.h
+@@ -62,7 +62,6 @@ typedef enum
+   EPHY_WEB_VIEW_DOCUMENT_HTML,
+   EPHY_WEB_VIEW_DOCUMENT_XML,
+   EPHY_WEB_VIEW_DOCUMENT_IMAGE,
+-  EPHY_WEB_VIEW_DOCUMENT_PDF,
+   EPHY_WEB_VIEW_DOCUMENT_OTHER
+ } EphyWebViewDocumentType;
+ 
+diff --git a/embed/meson.build b/embed/meson.build
+index 28b95859c273095ef2a15d564ec73cf93fc8f84b..e08d9f9b2a1b85880f965e5aecb30420d348c662 100644
+--- a/embed/meson.build
++++ b/embed/meson.build
+@@ -25,7 +25,6 @@ libephyembed_sources = [
+   'ephy-file-monitor.c',
+   'ephy-filters-manager.c',
+   'ephy-find-toolbar.c',
+-  'ephy-pdf-handler.c',
+   'ephy-reader-handler.c',
+   'ephy-view-source-handler.c',
+   'ephy-web-view.c',
+diff --git a/po/POTFILES.in b/po/POTFILES.in
+index 6f4486476825ffa5a8860370a56a2b2ced964f9b..1e54048be6df09629430743c70d7b7a94d673c93 100644
+--- a/po/POTFILES.in
++++ b/po/POTFILES.in
+@@ -11,7 +11,6 @@ embed/ephy-embed-utils.c
+ embed/ephy-embed-utils.h
+ embed/ephy-encodings.c
+ embed/ephy-find-toolbar.c
+-embed/ephy-pdf-handler.c
+ embed/ephy-reader-handler.c
+ embed/ephy-view-source-handler.c
+ embed/ephy-web-view.c
+diff --git a/src/ephy-session.c b/src/ephy-session.c
+index f10617e2d31631ff286ced342153ac5cf34a9d94..e0a7e8b9040fa05db5b7936d1ad2b176b69f95e7 100644
+--- a/src/ephy-session.c
++++ b/src/ephy-session.c
+@@ -894,8 +894,7 @@ session_seems_reasonable (GList *windows)
+         if (g_uri_get_host (uri) != NULL ||
+             strcmp (g_uri_get_scheme (uri), "data") == 0 ||
+             strcmp (g_uri_get_scheme (uri), "file") == 0 ||
+-            strcmp (g_uri_get_scheme (uri), "ephy-reader") == 0 ||
+-            strcmp (g_uri_get_scheme (uri), "ephy-pdf") == 0)
++            strcmp (g_uri_get_scheme (uri), "ephy-reader") == 0)
+           sane = TRUE;
+       }
+ 
+diff --git a/src/ephy-window.c b/src/ephy-window.c
+index c1521ffee999d87bbd7d2f7a9acecab9dd2f4339..7a23c9226f6cd6977aada04c80251955c4e850ce 100644
+--- a/src/ephy-window.c
++++ b/src/ephy-window.c
+@@ -2635,9 +2635,6 @@ static void
+ download_only_load_cb (EphyWebView *view,
+                        EphyWindow  *window)
+ {
+-  if (ephy_web_view_get_document_type (view) == EPHY_WEB_VIEW_DOCUMENT_PDF)
+-    return;
+-
+   if (ephy_tab_view_get_n_pages (window->tab_view) == 1) {
+     ephy_web_view_load_homepage (view);
+     return;
+diff --git a/src/meson.build b/src/meson.build
+index 0e18d97900cdd163e21b4456be1f089cb659c26a..f51edf7e4c68154b5499018e3982db734afe7f61 100644
+--- a/src/meson.build
++++ b/src/meson.build
+@@ -163,7 +163,6 @@ resources = gnome.compile_resources('epiphany-resources',
+ epiphany_sources = [
+   'ephy-main.c',
+   resources,
+-  pdfjs_resources,
+   highlightjs_resources,
+   readability_resources,
+   adguard_resources
+diff --git a/third-party/meson.build b/third-party/meson.build
+index d65b8747eb9e6a132bc0705b30843e8768c1c1c9..ab22ef9a96224f058f72a64576bde53a8572f86a 100644
+--- a/third-party/meson.build
++++ b/third-party/meson.build
+@@ -5,13 +5,6 @@ adguard_resources = gnome.compile_resources('adguard-resources',
+     source_dir: 'adguard'
+ )
+ 
+-pdfjs_resource_files = files('pdfjs/pdfjs.gresource.xml')
+-pdfjs_resources = gnome.compile_resources('pdfjs-resources',
+-    pdfjs_resource_files,
+-    c_name: 'pdfjs',
+-    source_dir: 'pdfjs'
+-)
+-
+ highlightjs_resource_files = files('highlightjs/highlightjs.gresource.xml')
+ highlightjs_resources = gnome.compile_resources('highlightjs-resources',
+     highlightjs_resource_files,
