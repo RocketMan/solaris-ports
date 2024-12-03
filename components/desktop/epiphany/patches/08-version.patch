@@ -1,0 +1,23 @@
+Meson is picking up the solaris-ports repository git hash for the
+project and including it where the application version ought to be.
+
+This patch reverts this to the actual Epiphany version number.
+
+Note that meson built from solaris-userland-legacy has been patched
+to address the issue, and does not suffer this problem.
+
+See https://lists.busybox.net/pipermail/buildroot/2022-May/704662.html
+for discussion of this issue.
+
+
+--- epiphany-42.5/meson.build~	2023-02-20 17:03:42.000000000 +0000
++++ epiphany-42.5/meson.build	2024-12-01 18:08:54.235809266 +0000
+@@ -66,7 +66,7 @@
+ endif
+ conf.set('EPHY_MICRO_VERSION', 0)
+ 
+-conf.set_quoted('VERSION', '@VCS_TAG@')
++conf.set_quoted('VERSION', meson.project_version())
+ 
+ gsb_api_key = get_option('gsb_api_key')
+ conf.set_quoted('GSB_API_KEY', gsb_api_key)
