@@ -490,10 +490,10 @@ diff -Naur llvm-project-18.1.8.src.orig/libcxx/include/__support/solaris/locale_
 +#endif // defined(__sun)
 +
 +#endif // _LIBCPP___SUPPORT_LOCALE_MGMT_SOLARIS_H
-diff -Naur llvm-project-19.1.0.src.orig/libcxx/include/__support/solaris/xlocale.h llvm-project-19.1.0.src/libcxx/include/__support/solaris/xlocale.h
---- llvm-project-19.1.0.src/libcxx/include/__locale_dir/locale_base_api/solaris.h.~1~	2024-09-24 11:57:25.497634653 +0000
+diff -Naur llvm-project-19.1.0.src.orig/libcxx/include/__locale_dir/locale_base_api/solaris.h llvm-project-19.1.0.src/libcxx/include/__locale_dir/locale_base_api/solaris.h
+--- llvm-project-19.1.0.src.orig/libcxx/include/__locale_dir/locale_base_api/solaris.h	2024-09-24 11:57:25.497634653 +0000
 +++ llvm-project-19.1.0.src/libcxx/include/__locale_dir/locale_base_api/solaris.h	2024-09-24 12:00:13.554949235 +0000
-@@ -0,0 +1,476 @@
+@@ -0,0 +1,393 @@
 +//===----------------------------------------------------------------------===//
 +//
 +// Part of the LLVM Project, under the Apache License v2.0 with LLVM Exceptions.
@@ -520,6 +520,9 @@ diff -Naur llvm-project-19.1.0.src.orig/libcxx/include/__support/solaris/xlocale
 +#ifdef __cplusplus
 +extern "C" {
 +#endif
++
++size_t wcsnrtombs(char* dst, const wchar_t **wcs, size_t wn, size_t n, mbstate_t* st);
++size_t mbsnrtowcs(wchar_t *wcs, const char **src, size_t n, size_t wn, mbstate_t* st);
 +
 +#pragma push_macro("FIX_LOCALE")
 +namespace xlocale {
@@ -653,100 +656,14 @@ diff -Naur llvm-project-19.1.0.src.orig/libcxx/include/__support/solaris/xlocale
 +  return ::strtoul(__nptr, __endptr, __base);
 +}
 +
-+  /* adapted from
-+   * https://chromium.googlesource.com/external/github.com/kripken/emscripten/+/refs/tags/1.37.5/system/lib/libc/musl/src/multibyte/wcsnrtombs.c
-+   */
-+inline _LIBCPP_HIDE_FROM_ABI size_t
-+wcsnrtombs_l(char* dst, const wchar_t **wcs, size_t wn, size_t n, mbstate_t* st, locale_t __loc) {
-+  (void)(st);    // unused param
++inline _LIBCPP_HIDE_FROM_ABI size_t wcsnrtombs_l(char* dst, const wchar_t **wcs, size_t wn, size_t n, mbstate_t* st, locale_t __loc) {
 +  FIX_LOCALE(__loc);
-+  size_t l, cnt=0, n2;
-+  char *s, buf[256];
-+  const wchar_t *ws = *wcs;
-+  if (!dst) s = buf, n = sizeof buf;
-+  else s = dst;
-+  while ( ws && n && ( (n2=wn)>=n || n2>32 ) ) {
-+    if (n2>=n) n2=n;
-+    wn -= n2;
-+    l = wcsrtombs(s, &ws, n2, 0);
-+    if (!(l+1)) {
-+      cnt = l;
-+      n = 0;
-+      break;
-+    }
-+    if (s != buf) {
-+      s += l;
-+      n -= l;
-+    }
-+    cnt += l;
-+  }
-+  if (ws) while (n && wn) {
-+      l = wcrtomb(s, *ws, 0);
-+      if ((l+1)<=1) {
-+	if (!l) ws = 0;
-+	else cnt = l;
-+	break;
-+      }
-+      ws++; wn--;
-+      /* safe - this loop runs fewer than sizeof(buf) times */
-+      s+=l; n-=l;
-+      cnt += l;
-+    }
-+  if (dst) *wcs = ws;
-+  return cnt;
++  return ::wcsnrtombs(dst, wcs, wn, n, st);
 +}
-+  
-+  /* adapted from
-+   * https://chromium.googlesource.com/external/github.com/kripken/emscripten/+/refs/tags/1.37.5/system/lib/libc/musl/src/multibyte/mbsnrtowcs.c
-+   */
-+inline _LIBCPP_HIDE_FROM_ABI size_t
-+mbsnrtowcs_l(wchar_t *wcs, const char **src, size_t n, size_t wn, mbstate_t* st, locale_t __loc) {
++
++inline _LIBCPP_HIDE_FROM_ABI size_t mbsnrtowcs_l(wchar_t *wcs, const char **src, size_t n, size_t wn, mbstate_t* st, locale_t __loc) {
 +  FIX_LOCALE(__loc);
-+  size_t l, cnt=0, n2;
-+  wchar_t *ws, wbuf[256];
-+  const char *s = *src;
-+  if (!wcs) ws = wbuf, wn = sizeof wbuf / sizeof *wbuf;
-+  else ws = wcs;
-+  /* making sure output buffer size is at most n/4 will ensure
-+   * that mbsrtowcs never reads more than n input bytes. thus
-+   * we can use mbsrtowcs as long as it's practical.. */
-+  while ( s && wn && ( (n2=n/4)>=wn || n2>32 ) ) {
-+    if (n2>=wn) n2=wn;
-+    n -= n2;
-+    l = mbsrtowcs(ws, &s, n2, st);
-+    if (!(l+1)) {
-+      cnt = l;
-+      wn = 0;
-+      break;
-+    }
-+    if (ws != wbuf) {
-+      ws += l;
-+      wn -= l;
-+    }
-+    cnt += l;
-+  }
-+  if (s) while (wn && n) {
-+      l = mbrtowc(ws, s, n, st);
-+      if (l+2<=2) {
-+	if (!(l+1)) {
-+	  cnt = l;
-+	  break;
-+	}
-+	if (!l) {
-+	  s = 0;
-+	  break;
-+	}
-+	/* have to roll back partial character */
-+	*(unsigned *)st = 0;
-+	break;
-+      }
-+      s += l; n -= l;
-+      /* safe - this loop runs fewer than sizeof(wbuf)/8 times */
-+      ws++; wn--;
-+      cnt++;
-+    }
-+  if (wcs) *src = s;
-+  return cnt;
++  return ::mbsnrtowcs(wcs, src, n, wn, st);
 +}
 +
 +// suppress 'warning: format string is not a string literal'
@@ -1174,12 +1091,14 @@ diff -Naur llvm-project-18.1.8.src.orig/libcxx/include/string.h llvm-project-18.
 diff -Naur llvm-project-18.1.8.src.orig/libcxx/src/CMakeLists.txt llvm-project-18.1.8.src/libcxx/src/CMakeLists.txt
 --- llvm-project-18.1.8.src.orig/libcxx/src/CMakeLists.txt	2024-06-15 18:21:32.000000000 +0000
 +++ llvm-project-18.1.8.src/libcxx/src/CMakeLists.txt	2024-06-30 19:23:46.510044487 +0000
-@@ -107,6 +107,10 @@
+@@ -107,6 +107,12 @@
        support/win32/thread_win32.cpp
        )
    endif()
 +elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "SunOS")
 +  list(APPEND LIBCXX_SOURCES
++    support/solaris/mbsnrtowcs.cpp
++    support/solaris/wcsnrtombs.cpp
 +    support/solaris/xlocale.cpp
 +    )
  elseif(ZOS)
@@ -1255,6 +1174,146 @@ diff -Naur llvm-project-18.1.8.src.orig/libcxx/src/support/solaris/README.txt ll
 +Solaris.  Some portions are lifted from FreeBSD libc, and so are covered by a
 +2-clause BSD license instead of the MIT/UUIC license that the rest of libc++ is
 +distributed under.
+diff -Naur llvm-project-19.1.5.src.orig/libcxx/src/support/solaris/mbsnrtowcs.cpp llvm-project-19.1.5.src/libcxx/src/support/solaris/mbsnrtowcs.cpp
+--- llvm-project-19.1.5.src.orig/libcxx/src/support/solaris/mbsnrtowcs.cpp	1970-01-01 01:00:00.000000000 +0000
++++ llvm-project-19.1.5.src/libcxx/src/support/solaris/mbsnrtowcs.cpp	2024-12-04 11:25:05.927272911 +0000
+@@ -0,0 +1,76 @@
++//===--------------------------------------------------------------------===//
++//
++// Adapted from musl, under the standard MIT license.
++//
++// See https://github.com/kraj/musl/blob/kraj/master/COPYRIGHT
++//
++// SPDX-License-Identifier: MIT License
++//
++//===--------------------------------------------------------------------===//
++
++#include <cwchar>
++
++#ifdef __cplusplus
++extern "C" {
++#endif
++
++/**
++ * mbsnrtowcs(3) polyfill for Solaris 11.3
++ */
++size_t mbsnrtowcs(wchar_t *wcs, const char **src, size_t n, size_t wn, mbstate_t *st)
++{
++	size_t l, cnt=0, n2;
++	wchar_t *ws, wbuf[256];
++	const char *s = *src;
++	const char *tmp_s;
++
++	if (!wcs) ws = wbuf, wn = sizeof wbuf / sizeof *wbuf;
++	else ws = wcs;
++
++	/* making sure output buffer size is at most n/4 will ensure
++	 * that mbsrtowcs never reads more than n input bytes. thus
++	 * we can use mbsrtowcs as long as it's practical.. */
++
++	while ( s && wn && ( (n2=n/4)>=wn || n2>32 ) ) {
++		if (n2>=wn) n2=wn;
++		tmp_s = s;
++		l = mbsrtowcs(ws, &s, n2, st);
++		if (!(l+1)) {
++			cnt = l;
++			wn = 0;
++			break;
++		}
++		if (ws != wbuf) {
++			ws += l;
++			wn -= l;
++		}
++		n = s ? n - (s - tmp_s) : 0;
++		cnt += l;
++	}
++	if (s) while (wn && n) {
++		l = mbrtowc(ws, s, n, st);
++		if (l+2<=2) {
++			if (!(l+1)) {
++				cnt = l;
++				break;
++			}
++			if (!l) {
++				s = 0;
++				break;
++			}
++			/* have to roll back partial character */
++			*(unsigned *)st = 0;
++			break;
++		}
++		s += l; n -= l;
++		/* safe - this loop runs fewer than sizeof(wbuf)/8 times */
++		ws++; wn--;
++		cnt++;
++	}
++	if (wcs) *src = s;
++	return cnt;
++}
++
++#ifdef __cplusplus
++}
++#endif
+diff -Naur llvm-project-19.1.5.src.orig/libcxx/src/support/solaris/wcsnrtombs.cpp llvm-project-19.1.5.src/libcxx/src/support/solaris/wcsnrtombs.cpp
+--- llvm-project-19.1.5.src.orig/libcxx/src/support/solaris/wcsnrtombs.cpp	1970-01-01 01:00:00.000000000 +0000
++++ llvm-project-19.1.5.src/libcxx/src/support/solaris/wcsnrtombs.cpp	2024-12-04 11:25:07.352276812 +0000
+@@ -0,0 +1,56 @@
++//===--------------------------------------------------------------------===//
++//
++// Adapted from musl, under the standard MIT license.
++//
++// See https://github.com/kraj/musl/blob/kraj/master/COPYRIGHT
++//
++// SPDX-License-Identifier: MIT License
++//
++//===--------------------------------------------------------------------===//
++
++#include <cwchar>
++#include <climits>
++#include <string.h>
++
++#ifdef __cplusplus
++extern "C" {
++#endif
++
++/**
++ * wcsnrtombs(3) polyfill for Solaris 11.3
++ */
++size_t wcsnrtombs(char *dst, const wchar_t **wcs, size_t wn, size_t n, mbstate_t *st)
++{
++	const wchar_t *ws = *wcs;
++	size_t cnt = 0;
++	if (!dst) n=0;
++	while (ws && wn) {
++		char tmp[MB_LEN_MAX];
++		size_t l = wcrtomb(n<MB_LEN_MAX ? tmp : dst, *ws, 0);
++		if (l==(size_t)-1) {
++			cnt = -1;
++			break;
++		}
++		if (dst) {
++			if (n<MB_LEN_MAX) {
++				if (l>n) break;
++				memcpy(dst, tmp, l);
++			}
++			dst += l;
++			n -= l;
++		}
++		if (!*ws) {
++			ws = 0;
++			break;
++		}
++		ws++;
++		wn--;
++		cnt += l;
++	}
++	if (dst) *wcs = ws;
++	return cnt;
++}
++
++#ifdef __cplusplus
++}
++#endif
 diff -Naur llvm-project-19.1.0.src.orig/libcxx/src/support/solaris/xlocale.cpp llvm-project-19.1.0.src/libcxx/src/support/solaris/xlocale.cpp
 --- llvm-project-19.1.0.src/libcxx/src/support/solaris/xlocale.cpp.~1~	2024-09-24 11:57:25.503186077 +0000
 +++ llvm-project-19.1.0.src/libcxx/src/support/solaris/xlocale.cpp	2024-09-24 12:08:20.006457497 +0000
