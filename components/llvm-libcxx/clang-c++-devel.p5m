@@ -734,7 +734,6 @@ file path=usr/include/c++/v1/__string/extern_template_lists.h
 file path=usr/include/c++/v1/__support/ibm/gettod_zos.h
 file path=usr/include/c++/v1/__support/ibm/locale_mgmt_zos.h
 file path=usr/include/c++/v1/__support/ibm/nanosleep.h
-file path=usr/include/c++/v1/__support/solaris/floatingpoint.h
 file path=usr/include/c++/v1/__support/solaris/locale_mgmt_solaris.h
 file path=usr/include/c++/v1/__support/xlocale/__nop_locale_mgmt.h
 file path=usr/include/c++/v1/__support/xlocale/__posix_l_fallback.h

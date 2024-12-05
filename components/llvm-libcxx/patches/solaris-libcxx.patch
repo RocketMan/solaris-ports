@@ -53,13 +53,12 @@ diff -Naur llvm-project-18.1.8.src.orig/libcxx/include/__config llvm-project-18.
  #  if defined(_AIX) && !defined(__64BIT__)
  // The size of wchar is 2 byte on 32-bit mode on AIX.
  #    define _LIBCPP_SHORT_WCHAR 1
-@@ -917,7 +926,8 @@
+@@ -917,7 +926,7 @@
  #    define _LIBCPP_DECLARE_STRONG_ENUM_EPILOG(x)
  #  endif // _LIBCPP_CXX03_LANG
  
 -#  if defined(__APPLE__) || defined(__FreeBSD__) || defined(_LIBCPP_MSVCRT_LIKE) || defined(__NetBSD__)
-+#  if defined(__APPLE__) || defined(__FreeBSD__) || defined(_LIBCPP_MSVCRT_LIKE) || defined(__sun__) ||                \
-+      defined(__NetBSD__)
++#  if defined(__APPLE__) || defined(__FreeBSD__) || defined(_LIBCPP_MSVCRT_LIKE) || defined(__NetBSD__) || defined(__sun__)
  #    define _LIBCPP_LOCALE__L_EXTENSIONS 1
  #  endif
  
@@ -398,22 +397,6 @@ diff -Naur llvm-project-19.1.0.src.orig/libcxx/include/__math/solaris.h llvm-pro
 +_LIBCPP_END_NAMESPACE_STD
 +
 +#endif // _LIBCPP___MATH_SOLARIS_H
---- llvm-project-18.1.8.src.orig/libcxx/include/__support/solaris/floatingpoint.h	1970-01-01 01:00:00.000000000 +0000
-+++ llvm-project-18.1.8.src/libcxx/include/__support/solaris/floatingpoint.h	2024-06-30 19:23:46.508513337 +0000
-@@ -0,0 +1,13 @@
-+//===----------------------------------------------------------------------===//
-+//
-+// Part of the LLVM Project, under the Apache License v2.0 with LLVM Exceptions.
-+// See https://llvm.org/LICENSE.txt for license information.
-+// SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
-+//
-+//===----------------------------------------------------------------------===//
-+
-+#define atof sun_atof
-+#define strtod sun_strtod
-+#include_next "floatingpoint.h"
-+#undef atof
-+#undef strtod
 diff -Naur llvm-project-18.1.8.src.orig/libcxx/include/__random/log2.h llvm-project-18.1.8.src/libcxx/include/__random/log2.h
 --- llvm-project-18.1.8.src.orig/libcxx/include/__random/log2.h	2024-06-15 18:21:32.000000000 +0000
 +++ llvm-project-18.1.8.src/libcxx/include/__random/log2.h	2024-08-01 10:33:55.725217228 +0000
@@ -906,41 +889,14 @@ diff -Naur llvm-project-19.1.0.src.orig/libcxx/include/CMakeLists.txt llvm-proje
    __math/special_functions.h
    __math/traits.h
    __math/trigonometric_functions.h
-@@ -692,6 +694,8 @@
+@@ -692,6 +694,7 @@
    __support/ibm/gettod_zos.h
    __support/ibm/locale_mgmt_zos.h
    __support/ibm/nanosleep.h
-+  __support/solaris/floatingpoint.h
 +  __support/solaris/locale_mgmt_solaris.h
    __support/xlocale/__nop_locale_mgmt.h
    __support/xlocale/__posix_l_fallback.h
    __support/xlocale/__strtonum_fallback.h
-diff -Naur llvm-project-18.1.8.src.orig/libcxx/include/locale llvm-project-18.1.8.src/libcxx/include/locale
---- llvm-project-18.1.8.src.orig/libcxx/include/locale	2024-06-15 18:21:32.000000000 +0000
-+++ llvm-project-18.1.8.src/libcxx/include/locale	2024-07-01 12:47:57.009140844 +0000
-@@ -10,6 +10,8 @@
- #ifndef _LIBCPP_LOCALE
- #define _LIBCPP_LOCALE
- 
-+#include <ctype.h>
-+
- /*
-     locale synopsis
- 
-@@ -1103,11 +1105,11 @@
-     *__oe++ = __ct.widen(*__nf++);
-     *__oe++ = __ct.widen(*__nf++);
-     for (__ns = __nf; __ns < __ne; ++__ns)
--      if (!isxdigit_l(*__ns, _LIBCPP_GET_C_LOCALE))
-+      if (!isxdigit(*__ns))
-         break;
-   } else {
-     for (__ns = __nf; __ns < __ne; ++__ns)
--      if (!isdigit_l(*__ns, _LIBCPP_GET_C_LOCALE))
-+      if (!isdigit(*__ns))
-         break;
-   }
-   if (__grouping.empty()) {
 diff -Naur llvm-project-19.1.0.src.orig/libcxx/include/math.h llvm-project-19.1.0.src/libcxx/include/math.h
 --- llvm-project-19.1.0.src/libcxx/include/math.h.~1~	2024-09-17 12:26:36.000000000 +0000
 +++ llvm-project-19.1.0.src/libcxx/include/math.h	2024-09-25 17:45:17.141192436 +0000
@@ -1141,17 +1097,6 @@ diff -Naur llvm-project-18.1.8.src.orig/libcxx/src/locale.cpp llvm-project-18.1.
  #  elif defined(_LIBCPP_MSVCRT) || defined(__MINGW32__)
    return __pctype_func();
  #  elif defined(__EMSCRIPTEN__)
-@@ -1171,8 +1179,10 @@
-       if (iswxdigit_l(ch, __l_))
-         *vec |= xdigit;
- #  endif
-+#if !defined(__sun__)
-       if (iswblank_l(ch, __l_))
-         *vec |= blank;
-+#endif
-     }
-   }
-   return low;
 diff -Naur llvm-project-18.1.8.src.orig/libcxx/src/random.cpp llvm-project-18.1.8.src/libcxx/src/random.cpp
 --- llvm-project-18.1.8.src.orig/libcxx/src/random.cpp	2024-06-15 18:21:32.000000000 +0000
 +++ llvm-project-18.1.8.src/libcxx/src/random.cpp	2024-06-30 19:23:46.511635733 +0000
@@ -1166,14 +1111,6 @@ diff -Naur llvm-project-18.1.8.src.orig/libcxx/src/random.cpp llvm-project-18.1.
  #include <errno.h>
  #include <stdio.h>
  #include <stdlib.h>
-diff -Naur llvm-project-18.1.8.src.orig/libcxx/src/support/solaris/README.txt llvm-project-18.1.8.src/libcxx/src/support/solaris/README.txt
---- llvm-project-18.1.8.src.orig/libcxx/src/support/solaris/README.txt	1970-01-01 01:00:00.000000000 +0000
-+++ llvm-project-18.1.8.src/libcxx/src/support/solaris/README.txt	2024-06-30 19:23:46.512087816 +0000
-@@ -0,0 +1,4 @@
-+This directory contains a partial implementation of the xlocale APIs for
-+Solaris.  Some portions are lifted from FreeBSD libc, and so are covered by a
-+2-clause BSD license instead of the MIT/UUIC license that the rest of libc++ is
-+distributed under.
 diff -Naur llvm-project-19.1.5.src.orig/libcxx/src/support/solaris/mbsnrtowcs.cpp llvm-project-19.1.5.src/libcxx/src/support/solaris/mbsnrtowcs.cpp
 --- llvm-project-19.1.5.src.orig/libcxx/src/support/solaris/mbsnrtowcs.cpp	1970-01-01 01:00:00.000000000 +0000
 +++ llvm-project-19.1.5.src/libcxx/src/support/solaris/mbsnrtowcs.cpp	2024-12-04 11:25:05.927272911 +0000
