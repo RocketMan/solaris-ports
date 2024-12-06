@@ -37,7 +37,7 @@ diff -Naur llvm-project-18.1.8.src.orig/libcxx/CMakeLists.txt llvm-project-18.1.
 diff -Naur llvm-project-18.1.8.src.orig/libcxx/include/__config llvm-project-18.1.8.src/libcxx/include/__config
 --- llvm-project-18.1.8.src.orig/libcxx/include/__config	2024-06-15 18:21:32.000000000 +0000
 +++ llvm-project-18.1.8.src/libcxx/include/__config	2024-07-01 13:05:23.785844443 +0000
-@@ -553,6 +553,15 @@
+@@ -249,6 +249,15 @@
  #    define _LIBCPP_HAS_OPEN_WITH_WCHAR
  #  endif // defined(_WIN32)
  
@@ -53,7 +53,16 @@ diff -Naur llvm-project-18.1.8.src.orig/libcxx/include/__config llvm-project-18.
  #  if defined(_AIX) && !defined(__64BIT__)
  // The size of wchar is 2 byte on 32-bit mode on AIX.
  #    define _LIBCPP_SHORT_WCHAR 1
-@@ -917,7 +926,7 @@
+@@ -295,7 +304,7 @@
+ #  if defined(__APPLE__) || defined(__FreeBSD__) || defined(__NetBSD__) || defined(__OpenBSD__) ||                     \
+       defined(__DragonFly__)
+ #    define _LIBCPP_USING_ARC4_RANDOM
+-#  elif defined(__wasi__) || defined(__EMSCRIPTEN__)
++#  elif defined(__wasi__) || defined(__EMSCRIPTEN__) || defined(__sun__)
+ #    define _LIBCPP_USING_GETENTROPY
+ #  elif defined(__Fuchsia__)
+ #    define _LIBCPP_USING_FUCHSIA_CPRNG
+@@ -631,7 +640,7 @@
  #    define _LIBCPP_DECLARE_STRONG_ENUM_EPILOG(x)
  #  endif // _LIBCPP_CXX03_LANG
  
@@ -62,7 +71,7 @@ diff -Naur llvm-project-18.1.8.src.orig/libcxx/include/__config llvm-project-18.
  #    define _LIBCPP_LOCALE__L_EXTENSIONS 1
  #  endif
  
-@@ -941,6 +951,10 @@
+@@ -655,6 +664,10 @@
  #    define _LIBCPP_HAS_NO_ALIGNED_ALLOCATION
  #  endif
  
@@ -73,7 +82,7 @@ diff -Naur llvm-project-18.1.8.src.orig/libcxx/include/__config llvm-project-18.
  // It is not yet possible to use aligned_alloc() on all Apple platforms since
  // 10.15 was the first version to ship an implementation of aligned_alloc().
  #  if defined(__APPLE__)
-@@ -957,7 +971,7 @@
+@@ -671,7 +684,7 @@
  #    define _LIBCPP_HAS_DEFAULTRUNELOCALE
  #  endif
  
@@ -82,7 +91,7 @@ diff -Naur llvm-project-18.1.8.src.orig/libcxx/include/__config llvm-project-18.
  #    define _LIBCPP_WCTYPE_IS_MASK
  #  endif
  
-@@ -1101,6 +1115,7 @@
+@@ -815,6 +828,7 @@
          defined(__linux__) ||                                                                                          \
          defined(__GNU__) ||                                                                                            \
          defined(__APPLE__) ||                                                                                          \
@@ -90,7 +99,7 @@ diff -Naur llvm-project-18.1.8.src.orig/libcxx/include/__config llvm-project-18.
          defined(__MVS__) ||                                                                                            \
          defined(_AIX) ||                                                                                               \
          defined(__EMSCRIPTEN__)
-@@ -1560,6 +1575,18 @@
+@@ -1223,6 +1237,18 @@
  #    define _LIBCPP_HAS_EXPLICIT_THIS_PARAMETER
  #  endif
  
