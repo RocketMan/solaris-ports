@@ -15,7 +15,7 @@ diff -Naur llvm-project-18.1.8.src.orig/libcxx/CMakeLists.txt llvm-project-18.1.
      OR LIBCXX_CXX_ABI STREQUAL "none")
    set(ENABLE_LINKER_SCRIPT_DEFAULT_VALUE OFF)
 -elseif((UNIX OR FUCHSIA) AND NOT APPLE)
-+elseif((UNIX OR FUCHSIA) AND NOT APPLE AND NOT ("${CMAKE_SYSTEM_NAME}" STREQUAL "SunOS"))
++elseif((UNIX OR FUCHSIA) AND NOT APPLE AND NOT CMAKE_HOST_SOLARIS)
    set(ENABLE_LINKER_SCRIPT_DEFAULT_VALUE ON)
  else()
    set(ENABLE_LINKER_SCRIPT_DEFAULT_VALUE OFF)
@@ -1060,7 +1060,7 @@ diff -Naur llvm-project-18.1.8.src.orig/libcxx/src/CMakeLists.txt llvm-project-1
        support/win32/thread_win32.cpp
        )
    endif()
-+elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "SunOS")
++elseif(CMAKE_HOST_SOLARIS)
 +  list(APPEND LIBCXX_SOURCES
 +    support/solaris/mbsnrtowcs.cpp
 +    support/solaris/wcsnrtombs.cpp
