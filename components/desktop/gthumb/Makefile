@@ -26,10 +26,9 @@
 BUILD_BITS =            64
 COMPILER =		gcc
 include ../../../make-rules/shared-macros.mk
-GCC_ROOT =		/usr/gcc/9
 
 COMPONENT_NAME=		gthumb
-COMPONENT_VERSION=	3.10.0
+COMPONENT_VERSION=	3.12.0
 COMPONENT_SRC=		$(COMPONENT_NAME)-$(GIT_COMMIT_ID)
 COMPONENT_ARCHIVE_URL=	$(GIT_REPO)/-/archive/$(COMPONENT_VERSION)/$(COMPONENT_SRC).tar.gz
 GIT_REPO=		https://gitlab.gnome.org/GNOME/gthumb
@@ -48,9 +47,11 @@ include $(WS_MAKE_RULES)/common.mk
 COMPONENT_BUILD_ENV += VERBOSE=1
 CONFIGURE_OPTIONS += -Dlibchamplain=true
 
+REQUIRED_PACKAGES += desktop/cd-burning/brasero
 REQUIRED_PACKAGES += image/library/exiv2
 REQUIRED_PACKAGES += image/library/libjpeg
 REQUIRED_PACKAGES += image/library/libpng
+REQUIRED_PACKAGES += image/library/libpng14
 REQUIRED_PACKAGES += image/library/librsvg
 REQUIRED_PACKAGES += image/library/libtiff
 REQUIRED_PACKAGES += image/library/libwebp
@@ -69,7 +70,9 @@ REQUIRED_PACKAGES += library/gnome/libsecret
 REQUIRED_PACKAGES += library/json-glib
 REQUIRED_PACKAGES += library/lcms2
 REQUIRED_PACKAGES += library/libsoup
+REQUIRED_PACKAGES += library/media/libheif
 REQUIRED_PACKAGES += library/zlib
 REQUIRED_PACKAGES += system/library/gcc/gcc-c-runtime
 REQUIRED_PACKAGES += system/library/gcc/gcc-c++-runtime
 REQUIRED_PACKAGES += system/library/math
+REQUIRED_PACKAGES += x11/library/libx11

@@ -1,0 +1,11 @@
+--- gthumb-3.12.0/meson.build~	2021-09-19 16:49:45.000000000 +0000
++++ gthumb-3.12.0/meson.build	2024-12-22 19:26:33.878625884 +0000
+@@ -371,7 +371,7 @@
+ subdir('gthumb')
+ subdir('extensions')
+ subdir('data')
+-subdir('help')
++#subdir('help')
+ subdir('po')
+ subdir('m4')
+ 
