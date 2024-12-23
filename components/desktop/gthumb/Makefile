@@ -26,20 +26,22 @@
 BUILD_BITS =            64
 COMPILER =		gcc
 include ../../../make-rules/shared-macros.mk
+GCC_ROOT=/usr/gcc/10
 
 COMPONENT_NAME=		gthumb
-COMPONENT_VERSION=	3.12.0
-COMPONENT_SRC=		$(COMPONENT_NAME)-$(GIT_COMMIT_ID)
-COMPONENT_ARCHIVE_URL=	$(GIT_REPO)/-/archive/$(COMPONENT_VERSION)/$(COMPONENT_SRC).tar.gz
-GIT_REPO=		https://gitlab.gnome.org/GNOME/gthumb
-GIT_COMMIT_ID=		$(COMPONENT_VERSION)
+COMPONENT_VERSION=	3.12.6
+COMPONENT_ARCHIVE_URL=	https://gitlab.gnome.org/GNOME/gthumb/-/archive/$(COMPONENT_VERSION)/$(COMPONENT_SRC).tar.gz
 COMPONENT_PROJECT_URL=	https://wiki.gnome.org/Apps/Gthumb
+COMPONENT_ARCHIVE_HASH= \
+    sha256:73a3f20af9b79a7b7dea809dd4308a0a3c98b30f51eba1147e0a0c3102f7d643
 COMPONENT_ANITYA_ID=	1270
 
 PATH=$(GNUBIN):$(USRBINDIR)
 
 CFLAGS += -D__EXTENSIONS__ -D_XOPEN_SOURCE=600 -D_XPG6
 CPPFLAGS += -I/usr/include/lcms2
+CXXFLAGS += -std=c++17
+CXXFLAGS += -DEXIV2API=
 
 BUILD_STYLE = meson
 include $(WS_MAKE_RULES)/common.mk

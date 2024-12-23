@@ -1,0 +1,69 @@
+--- gthumb-3.12.6/gthumb/gio-utils.c~	2024-03-10 17:14:47.000000000 +0000
++++ gthumb-3.12.6/gthumb/gio-utils.c	2024-12-23 16:07:00.049050945 +0000
+@@ -2427,7 +2427,7 @@
+ 		g_file_info_set_display_name (file_info, name);
+ 
+ 		uri = g_file_get_uri (file);
+-		icon = g_themed_icon_new (g_str_has_prefix (uri, "file://") ? "folder-symbolic" : "folder-remote-symbolic");
++		icon = g_themed_icon_new (g_str_has_prefix (uri, "file://") ? "folder" : "folder-remote");
+ 		g_file_info_set_symbolic_icon (file_info, icon);
+ 
+ 		g_object_unref (icon);
+--- gthumb-3.12.6/gthumb/gth-file-list.c~	2024-03-10 17:14:47.000000000 +0000
++++ gthumb-3.12.6/gthumb/gth-file-list.c	2024-12-23 16:22:14.389343641 +0000
+@@ -860,7 +860,7 @@
+ 		/* files in the .thumbnails directory are already thumbnails,
+ 		 * set them as created. */
+ 		is_thumbnail = _g_uri_is_parent (cache_base_uri, uri);
+-		icon = g_file_info_get_symbolic_icon (file_data->info);
++		icon = g_file_info_get_icon (file_data->info);
+ 		image = gth_icon_cache_get_surface (file_list->priv->icon_cache, icon);
+ 		gth_file_store_queue_add (file_store,
+ 					  file_data,
+@@ -1160,7 +1160,7 @@
+ 
+ 			file_data = gth_file_store_get_file (file_store, &iter);
+ 
+-			icon = g_file_info_get_symbolic_icon (file_data->info);
++			icon = g_file_info_get_icon (file_data->info);
+ 			image = gth_icon_cache_get_surface (file_list->priv->icon_cache, icon);
+ 			gth_file_store_queue_set (file_store,
+ 						  &iter,
+@@ -1381,7 +1381,7 @@
+ #ifdef DEBUG_THUMBNAILER
+ 		g_print ("<ERROR: %s\n", g_file_get_uri (job->file_data->file));
+ #endif
+-		GIcon *icon = g_file_info_get_symbolic_icon (job->file_data->info);
++		GIcon *icon = g_file_info_get_icon (job->file_data->info);
+ 		cairo_surface_t *icon_image = gth_icon_cache_get_surface (file_list->priv->icon_cache, icon);
+ 		gth_file_store_set (file_store,
+ 				    &iter,
+@@ -1603,7 +1603,7 @@
+ 					g_print ("    REMOVE THUMBNAIL\n");
+ #endif
+ 
+-					icon = g_file_info_get_symbolic_icon (file_data->info);
++					icon = g_file_info_get_icon (file_data->info);
+ 					image = gth_icon_cache_get_surface (file_list->priv->icon_cache, icon);
+ 					gth_file_store_queue_set (file_store,
+ 								  &file_list->priv->thumbnailer_state.current,
+@@ -1689,7 +1689,7 @@
+ #ifdef DEBUG_THUMBNAILER
+ 					g_print ("    REMOVE THUMBNAIL\n");
+ #endif
+-					icon = g_file_info_get_symbolic_icon (file_data->info);
++					icon = g_file_info_get_icon (file_data->info);
+ 					image = gth_icon_cache_get_surface (file_list->priv->icon_cache, icon);
+ 					gth_file_store_queue_set (file_store,
+ 								  &file_list->priv->thumbnailer_state.current,
+--- gthumb-3.12.6/gthumb/gth-folder-tree.c~	2024-03-10 17:14:47.000000000 +0000
++++ gthumb-3.12.6/gthumb/gth-folder-tree.c	2024-12-23 16:21:20.055400013 +0000
+@@ -1228,7 +1228,7 @@
+ 	_time = _g_time_val_to_time (gth_file_data_get_modification_time (file_data));
+ 	gtk_tree_store_set (folder_tree->priv->tree_store, iter,
+ 			    COLUMN_STYLE, PANGO_STYLE_NORMAL,
+-			    COLUMN_ICON, g_file_info_get_symbolic_icon (file_data->info),
++			    COLUMN_ICON, g_file_info_get_icon (file_data->info),
+ 			    COLUMN_TYPE, ENTRY_TYPE_FILE,
+ 			    COLUMN_FILE_DATA, file_data,
+ 			    COLUMN_NAME, display_name,

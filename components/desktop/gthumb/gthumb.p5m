@@ -29,7 +29,7 @@ set name=pkg.fmri \
 set name=pkg.summary value="GNOME image organizer (gthumb)"
 set name=info.classification \
     value="org.opensolaris.category.2008:Applications/Graphics and Imaging"
-set name=info.repository-url value=$(GIT_REPO)
+set name=info.source-url value=$(COMPONENT_ARCHIVE_URL)
 set name=info.upstream-url value=$(COMPONENT_PROJECT_URL)
 set name=org.opensolaris.consolidation value=$(CONSOLIDATION)
 file path=usr/bin/gthumb
@@ -228,6 +228,7 @@ file path=usr/lib/$(MACH64)/gthumb/extensions/slideshow.extension
 file path=usr/lib/$(MACH64)/gthumb/extensions/terminal.extension
 file path=usr/lib/$(MACH64)/gthumb/extensions/webalbums.extension
 file path=usr/lib/$(MACH64)/pkgconfig/gthumb.pc
+file path=usr/libexec/gthumb/video-thumbnailer
 file path=usr/share/aclocal/gthumb.m4
 file path=usr/share/applications/org.gnome.gThumb.Import.desktop
 file path=usr/share/applications/org.gnome.gThumb.desktop
@@ -423,6 +424,7 @@ file path=usr/share/gthumb/ui/search-editor.ui
 file path=usr/share/gthumb/ui/sharpen-options.ui
 file path=usr/share/gthumb/ui/shortcuts-preferences.ui
 file path=usr/share/gthumb/ui/slideshow-preferences.ui
+file path=usr/share/gthumb/ui/sort-order-folder-tree.ui
 file path=usr/share/gthumb/ui/sort-order.ui
 file path=usr/share/gthumb/ui/tag-chooser.ui
 file path=usr/share/gthumb/ui/template-editor-dialog.ui
@@ -438,6 +440,7 @@ file path=usr/share/icons/hicolor/scalable/apps/org.gnome.gThumb.svg
 file path=usr/share/locale/am/LC_MESSAGES/gthumb.mo
 file path=usr/share/locale/ar/LC_MESSAGES/gthumb.mo
 file path=usr/share/locale/az/LC_MESSAGES/gthumb.mo
+file path=usr/share/locale/be/LC_MESSAGES/gthumb.mo
 file path=usr/share/locale/bg/LC_MESSAGES/gthumb.mo
 file path=usr/share/locale/bs/LC_MESSAGES/gthumb.mo
 file path=usr/share/locale/ca/LC_MESSAGES/gthumb.mo
@@ -464,9 +467,11 @@ file path=usr/share/locale/hi/LC_MESSAGES/gthumb.mo
 file path=usr/share/locale/hr/LC_MESSAGES/gthumb.mo
 file path=usr/share/locale/hu/LC_MESSAGES/gthumb.mo
 file path=usr/share/locale/id/LC_MESSAGES/gthumb.mo
+file path=usr/share/locale/ie/LC_MESSAGES/gthumb.mo
 file path=usr/share/locale/is/LC_MESSAGES/gthumb.mo
 file path=usr/share/locale/it/LC_MESSAGES/gthumb.mo
 file path=usr/share/locale/ja/LC_MESSAGES/gthumb.mo
+file path=usr/share/locale/ka/LC_MESSAGES/gthumb.mo
 file path=usr/share/locale/kn/LC_MESSAGES/gthumb.mo
 file path=usr/share/locale/ko/LC_MESSAGES/gthumb.mo
 file path=usr/share/locale/lt/LC_MESSAGES/gthumb.mo

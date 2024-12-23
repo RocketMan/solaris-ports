@@ -1,0 +1,57 @@
+From dcc4eb3bdd3b67f067128011af5a7c7219285263 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Ball=C3=B3=20Gy=C3=B6rgy?= <ballogyor@gmail.com>
+Date: Fri, 6 Sep 2024 03:09:57 +0000
+Subject: [PATCH] preferences dialog: same dialog shown endlessy
+
+This fixes the problem that the program enters into infinite loop when failed to activate an extension.
+There was a previous attempt to fix this issue in commit 3d62cd4cfec5eaae8ff8c0a090892125d931fe25
+---
+ gthumb/dlg-preferences-extensions.c | 23 ++++++++++++++---------
+ 1 file changed, 14 insertions(+), 9 deletions(-)
+
+diff --git a/gthumb/dlg-preferences-extensions.c b/gthumb/dlg-preferences-extensions.c
+index bd19c3616..74dffde7f 100644
+--- a/gthumb/dlg-preferences-extensions.c
++++ b/gthumb/dlg-preferences-extensions.c
+@@ -364,24 +364,29 @@ extension_switch_activated_cb (GObject    *gobject,
+ 	GError                  *error = NULL;
+ 
+ 	if (gtk_switch_get_active (GTK_SWITCH (gobject))) {
+-		if (! gth_extension_manager_activate (gth_main_get_default_extension_manager (), description->id, &error))
++		if (! gth_extension_manager_activate (gth_main_get_default_extension_manager (), description->id, &error)) {
+ 			_gtk_error_dialog_from_gerror_show (GTK_WINDOW (browser_data->dialog), _("Could not activate the extension"), error);
++
++			g_clear_error (&error);
++
++			/* reset to the previous state */
++			call_when_idle (change_switch_state, gobject);
++		}
+ 		else
+ 			browser_data->enabled_disabled_cardinality_changed = TRUE;
+ 	}
+ 	else {
+-		if (! gth_extension_manager_deactivate (gth_main_get_default_extension_manager (), description->id, &error))
++		if (! gth_extension_manager_deactivate (gth_main_get_default_extension_manager (), description->id, &error)) {
+ 			_gtk_error_dialog_from_gerror_show (GTK_WINDOW (browser_data->dialog), _("Could not deactivate the extension"), error);
++
++			g_clear_error (&error);
++
++			/* reset to the previous state */
++			call_when_idle (change_switch_state, gobject);
++		}
+ 		else
+ 			browser_data->enabled_disabled_cardinality_changed = TRUE;
+ 	}
+-
+-	if (error != NULL) {
+-		/* reset to the previous state */
+-		call_when_idle (change_switch_state, gobject);
+-	}
+-
+-	g_clear_error (&error);
+ }
+ 
+ 
+-- 
+GitLab
+
