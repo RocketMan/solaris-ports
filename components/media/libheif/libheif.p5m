@@ -1,0 +1,39 @@
+<transform file path=usr.*/man/.+ -> default mangler.man.stability uncommitted>
+set name=pkg.fmri \
+    value=pkg:/library/media/libheif@$(IPS_COMPONENT_VERSION),$(BUILD_VERSION)
+set name=pkg.summary \
+    value="libheif is an ISO/IEC 23008-12:2017 HEIF and AVIF (AV1 Image File Format) file format decoder and encoder"
+set name=pkg.description \
+    value="HEIF and AVIF are new image file formats employing HEVC (H.265) or AV1 image coding, respectively, for the best compression ratios currently possible."
+set name=info.classification \
+    value="org.opensolaris.category.2008:System/Multimedia Libraries"
+set name=info.source-url value=$(COMPONENT_ARCHIVE_URL)
+set name=info.upstream-url value=$(COMPONENT_PROJECT_URL)
+set name=org.opensolaris.consolidation value=$(CONSOLIDATION)
+file path=usr/bin/heif-dec
+file path=usr/bin/heif-enc
+file path=usr/bin/heif-info
+file path=usr/bin/heif-thumbnailer
+file path=usr/include/libheif/heif.h
+file path=usr/include/libheif/heif_cxx.h
+file path=usr/include/libheif/heif_items.h
+file path=usr/include/libheif/heif_plugin.h
+file path=usr/include/libheif/heif_properties.h
+file path=usr/include/libheif/heif_regions.h
+file path=usr/include/libheif/heif_version.h
+file path=usr/lib/$(MACH64)/cmake/libheif/libheif-config-relwithdebinfo.cmake
+file path=usr/lib/$(MACH64)/cmake/libheif/libheif-config-version.cmake
+file path=usr/lib/$(MACH64)/cmake/libheif/libheif-config.cmake
+file path=usr/lib/$(MACH64)/gdk-pixbuf-2.0/2.10.0/loaders/libpixbufloader-heif.so
+link path=usr/lib/$(MACH64)/libheif.so target=libheif.so.1
+link path=usr/lib/$(MACH64)/libheif.so.1 target=libheif.so.1.19.5
+file path=usr/lib/$(MACH64)/libheif.so.1.19.5
+file path=usr/lib/$(MACH64)/pkgconfig/libheif.pc
+file path=usr/share/man/man1/heif-dec.1
+file path=usr/share/man/man1/heif-enc.1
+file path=usr/share/man/man1/heif-info.1
+file path=usr/share/man/man1/heif-thumbnailer.1
+file files/avif.xml path=usr/share/mime/packages/avif.xml
+file files/heif.xml path=usr/share/mime/packages/heif.xml
+file path=usr/share/thumbnailers/heif.thumbnailer
+license COPYING license=LGPLv3

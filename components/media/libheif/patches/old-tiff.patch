@@ -1,0 +1,22 @@
+Support downversion TIFF where last data type is TIFF_IDF(13)
+
+--- libheif-1.19.5/heifio/decoder_tiff.cc~	2024-11-19 19:05:17.000000000 +0000
++++ libheif-1.19.5/heifio/decoder_tiff.cc	2024-12-22 10:27:18.063306019 +0000
+@@ -64,7 +64,7 @@
+     return false;
+   }
+ 
+-  tmsize_t result = readProc(handle, dest, size);
++  tsize_t result = readProc(handle, dest, static_cast<tsize_t>(size));
+   if (result < 0 || static_cast<size_t>(result) != size) {
+     return false;
+   }
+@@ -154,7 +154,7 @@
+       return nullptr;
+     }
+ 
+-    if (!readTIFFUint16(tif, &tag->type) || tag->type > TIFF_IFD8) {
++    if (!readTIFFUint16(tif, &tag->type) || tag->type > TIFF_IFD) {
+       return nullptr;
+     }
+ 
