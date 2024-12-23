@@ -30,13 +30,13 @@ set name=pkg.summary \
     value="Exif, IPTC & XMP metadata and ICC Profile C++ library and tool"
 set name=info.classification \
     value="org.opensolaris.category.2008:System/Multimedia Libraries"
-set name=info.repository-url value=$(GIT_REPO)
+set name=info.source-url value=$(COMPONENT_ARCHIVE_URL)
 set name=info.upstream-url value=$(COMPONENT_PROJECT_URL)
 set name=org.opensolaris.consolidation value=$(CONSOLIDATION)
 file path=usr/bin/exiv2
 file path=usr/include/exiv2/asfvideo.hpp
 file path=usr/include/exiv2/basicio.hpp
-file path=usr/include/exiv2/bigtiffimage.hpp
+file path=usr/include/exiv2/bmffimage.hpp
 file path=usr/include/exiv2/bmpimage.hpp
 file path=usr/include/exiv2/config.h
 file path=usr/include/exiv2/convert.hpp
@@ -54,7 +54,7 @@ file path=usr/include/exiv2/futils.hpp
 file path=usr/include/exiv2/gifimage.hpp
 file path=usr/include/exiv2/http.hpp
 file path=usr/include/exiv2/image.hpp
-file path=usr/include/exiv2/ini.hpp
+file path=usr/include/exiv2/image_types.hpp
 file path=usr/include/exiv2/iptc.hpp
 file path=usr/include/exiv2/jp2image.hpp
 file path=usr/include/exiv2/jpgimage.hpp
@@ -63,6 +63,7 @@ file path=usr/include/exiv2/metadatum.hpp
 file path=usr/include/exiv2/mrwimage.hpp
 file path=usr/include/exiv2/orfimage.hpp
 file path=usr/include/exiv2/pgfimage.hpp
+file path=usr/include/exiv2/photoshop.hpp
 file path=usr/include/exiv2/pngimage.hpp
 file path=usr/include/exiv2/preview.hpp
 file path=usr/include/exiv2/properties.hpp
@@ -71,34 +72,41 @@ file path=usr/include/exiv2/quicktimevideo.hpp
 file path=usr/include/exiv2/rafimage.hpp
 file path=usr/include/exiv2/riffvideo.hpp
 file path=usr/include/exiv2/rw2image.hpp
-file path=usr/include/exiv2/rwlock.hpp
 file path=usr/include/exiv2/slice.hpp
-file path=usr/include/exiv2/ssh.hpp
 file path=usr/include/exiv2/tags.hpp
 file path=usr/include/exiv2/tgaimage.hpp
 file path=usr/include/exiv2/tiffimage.hpp
 file path=usr/include/exiv2/types.hpp
-file path=usr/include/exiv2/utilsvideo.hpp
 file path=usr/include/exiv2/value.hpp
 file path=usr/include/exiv2/version.hpp
 file path=usr/include/exiv2/webpimage.hpp
 file path=usr/include/exiv2/xmp_exiv2.hpp
 file path=usr/include/exiv2/xmpsidecar.hpp
-file path=usr/lib/$(MACH64)/cmake/exiv2/exiv2Config-release.cmake
-file path=usr/lib/$(MACH64)/cmake/exiv2/exiv2Config.cmake
 file path=usr/lib/$(MACH64)/cmake/exiv2/exiv2ConfigVersion.cmake
-file path=usr/lib/$(MACH64)/libexiv2-xmp.a
-link path=usr/lib/$(MACH64)/libexiv2.so target=libexiv2.so.27
-file path=usr/lib/$(MACH64)/libexiv2.so.0.27.2
-link path=usr/lib/$(MACH64)/libexiv2.so.27 target=libexiv2.so.0.27.2
+link path=usr/lib/$(MACH64)/libexiv2.so target=libexiv2.so.28
+file path=usr/lib/$(MACH64)/libexiv2.so.0.28.3
+link path=usr/lib/$(MACH64)/libexiv2.so.28 target=libexiv2.so.0.28.3
 file path=usr/lib/$(MACH64)/pkgconfig/exiv2.pc
-file path=usr/lib/cmake/exiv2/exiv2Config-release.cmake
-file path=usr/lib/cmake/exiv2/exiv2Config.cmake
-file path=usr/lib/cmake/exiv2/exiv2ConfigVersion.cmake
-file path=usr/lib/libexiv2-xmp.a
-link path=usr/lib/libexiv2.so target=libexiv2.so.27
-file path=usr/lib/libexiv2.so.0.27.2
-link path=usr/lib/libexiv2.so.27 target=libexiv2.so.0.27.2
-file path=usr/lib/pkgconfig/exiv2.pc
+file path=usr/share/locale/bs/LC_MESSAGES/exiv2.mo
+file path=usr/share/locale/ca/LC_MESSAGES/exiv2.mo
+file path=usr/share/locale/da/LC_MESSAGES/exiv2.mo
+file path=usr/share/locale/de/LC_MESSAGES/exiv2.mo
+file path=usr/share/locale/es/LC_MESSAGES/exiv2.mo
+file path=usr/share/locale/fi/LC_MESSAGES/exiv2.mo
+file path=usr/share/locale/fr/LC_MESSAGES/exiv2.mo
+file path=usr/share/locale/gl/LC_MESSAGES/exiv2.mo
+file path=usr/share/locale/it/LC_MESSAGES/exiv2.mo
+file path=usr/share/locale/ka/LC_MESSAGES/exiv2.mo
+file path=usr/share/locale/ms/LC_MESSAGES/exiv2.mo
+file path=usr/share/locale/nl/LC_MESSAGES/exiv2.mo
+file path=usr/share/locale/pl/LC_MESSAGES/exiv2.mo
+file path=usr/share/locale/pt/LC_MESSAGES/exiv2.mo
+file path=usr/share/locale/pt_BR/LC_MESSAGES/exiv2.mo
+file path=usr/share/locale/ru/LC_MESSAGES/exiv2.mo
+file path=usr/share/locale/sk/LC_MESSAGES/exiv2.mo
+file path=usr/share/locale/sv/LC_MESSAGES/exiv2.mo
+file path=usr/share/locale/ug/LC_MESSAGES/exiv2.mo
+file path=usr/share/locale/uk/LC_MESSAGES/exiv2.mo
+file path=usr/share/locale/vi/LC_MESSAGES/exiv2.mo
 file path=usr/share/man/man1/exiv2.1
 license COPYING license=GPLv2

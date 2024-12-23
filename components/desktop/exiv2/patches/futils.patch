@@ -1,0 +1,12 @@
+--- exiv2-0.28.3/src/futils.cpp~	2024-07-08 07:43:13.000000000 +0000
++++ exiv2-0.28.3/src/futils.cpp	2024-12-23 10:14:23.786705741 +0000
+@@ -7,6 +7,9 @@
+ #include "enforce.hpp"
+ #include "error.hpp"
+ #include "utils.hpp"
++#if defined(__sun__)
++#include "image_int.hpp"
++#endif
+ 
+ // + standard includes
+ #include <algorithm>

@@ -20,35 +20,34 @@
 #
 
 #
-# Copyright (c) 2019 Jim Mason <jmason at ibinx dot com>.  All rights reserved.
+# Copyright (c) 2019-2024 Jim Mason <jmason at ibinx dot com>.  All rights reserved.
 #
 
-BUILD_BITS =            64_and_32
+BUILD_BITS =            64
 COMPILER =		gcc
 include ../../../make-rules/shared-macros.mk
+GCC_ROOT=/usr/gcc/10
 
 COMPONENT_NAME=		exiv2
-COMPONENT_VERSION=	0.27.2
-COMPONENT_SRC=		$(COMPONENT_NAME)-$(COMPONENT_VERSION)
-COMPONENT_ARCHIVE_URL=	$(GIT_REPO)/archive/$(GIT_COMMIT_ID).tar.gz
-GIT_REPO=		https://github.com/Exiv2/$(COMPONENT_NAME)
-GIT_COMMIT_ID=		v$(COMPONENT_VERSION)
+COMPONENT_VERSION=	0.28.3
+COMPONENT_ARCHIVE=	$(COMPONENT_SRC).tar.gz
+COMPONENT_ARCHIVE_URL=	https://github.com/Exiv2/$(COMPONENT_NAME)/archive/refs/tags/v$(COMPONENT_VERSION).tar.gz
 COMPONENT_PROJECT_URL=	https://www.exiv2.org
+COMPONENT_ARCHIVE_HASH= \
+    sha256:1315e17d454bf4da3cc0edb857b1d2c143670f3485b537d0f946d9ed31d87b70
 COMPONENT_ANITYA_ID=	769
+BUILD_STYLE=meson
 
 PATH=$(GNUBIN):$(USRBINDIR)
 
 LDFLAGS += -lsocket -lnsl
 
-BUILD_STYLE = cmake
 include $(WS_MAKE_RULES)/common.mk
 
-COMPONENT_BUILD_ENV += VERBOSE=1
-CMAKE_OPTIONS += -DCMAKE_BUILD_TYPE=Release
-CMAKE_OPTIONS += -DEXIV2_BUILD_SAMPLES=OFF 
-
+REQUIRED_PACKAGES += library/brotli
 REQUIRED_PACKAGES += library/expat
 REQUIRED_PACKAGES += library/zlib
 REQUIRED_PACKAGES += system/library/gcc/gcc-c-runtime
 REQUIRED_PACKAGES += system/library/gcc/gcc-c++-runtime
 REQUIRED_PACKAGES += system/library/math
+REQUIRED_PACKAGES += web/curl
