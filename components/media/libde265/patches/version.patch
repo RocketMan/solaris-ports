@@ -1,0 +1,13 @@
+Install version header as file rather than symbolic link to build tree
+
+--- libde265-1.0.15/libde265/CMakeLists.txt~	2023-11-21 09:09:05.000000000 +0000
++++ libde265-1.0.15/libde265/CMakeLists.txt	2024-12-22 13:30:59.733284212 +0000
+@@ -79,7 +79,7 @@
+ set (libde265_public_headers
+   de265.h
+   en265.h
+-  ${CMAKE_CURRENT_BINARY_DIR}/de265-version.h
++  de265-version.h
+ )
+ 
+ if(MSVC OR MINGW)

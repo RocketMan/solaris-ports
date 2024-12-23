@@ -1,0 +1,28 @@
+--- libde265-1.0.15/CMakeLists.txt.~1~	2023-12-20 10:41:58.000000000 +0000
++++ libde265-1.0.15/CMakeLists.txt	2024-12-22 13:22:13.890674459 +0000
+@@ -29,21 +29,21 @@
+ find_package(Threads REQUIRED)
+ 
+ CHECK_INCLUDE_FILE(malloc.h HAVE_MALLOC_H)
++CHECK_INCLUDE_FILE(alloca.h HAVE_ALLOCA_H)
+ CHECK_FUNCTION_EXISTS(posix_memalign HAVE_POSIX_MEMALIGN)
+ 
+ if (HAVE_MALLOC_H)
+   add_definitions(-DHAVE_MALLOC_H)
+ endif()
++if (HAVE_ALLOCA_H)
++  add_definitions(-DHAVE_ALLOCA_H)
++endif()
+ if (HAVE_POSIX_MEMALIGN)
+   add_definitions(-DHAVE_POSIX_MEMALIGN)
+ endif()
+ 
+ configure_file (libde265/de265-version.h.in libde265/de265-version.h)
+ 
+-if(CMAKE_COMPILER_IS_GNUCXX OR ${CMAKE_CXX_COMPILER_ID} MATCHES Clang)
+-  add_definitions(-Wall)
+-endif()
+-
+ include(CheckCXXSymbolExists)
+ check_cxx_symbol_exists(_LIBCPP_VERSION cstdlib HAVE_LIBCPP)
+ if(HAVE_LIBCPP)
