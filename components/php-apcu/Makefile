@@ -20,20 +20,21 @@
 #
 
 #
-# Copyright (c) 2020 Jim Mason <jmason at ibinx dot com>.  All rights reserved.
+# Copyright (c) 2025 Jim Mason <jmason at ibinx dot com>.  All rights reserved.
 #
 
 BUILD_BITS=64
 COMPILER=gcc
 include ../../make-rules/shared-macros.mk
+GCC_ROOT=/usr/gcc/10
 
 COMPONENT_NAME=		apcu
-COMPONENT_VERSION=	5.1.23
+COMPONENT_VERSION=	5.1.24
 COMPONENT_ARCHIVE=	$(COMPONENT_NAME)-$(COMPONENT_VERSION).tgz
 COMPONENT_ARCHIVE_URL=	https://pecl.php.net/get/$(COMPONENT_ARCHIVE)
 COMPONENT_PROJECT_URL=	https://pecl.php.net/package/APCu
 COMPONENT_ARCHIVE_HASH=	\
-    sha256:67ee7464ccad2335c3fa4aeb0b8edbcf6d8344feea7922620c6a13015d604482
+    sha256:5c28a55b27082c69657e25b7ecf553e2cf6b74ec3fa77d6b76f4fb982e001e43
 COMPONENT_ANITYA_ID=	11010
 
 BUILD_STYLE=phpize
