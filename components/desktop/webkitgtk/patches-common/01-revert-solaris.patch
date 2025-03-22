@@ -24,29 +24,29 @@ https://bugs.webkit.org/show_bug.cgi?id=176341
      || defined(unix)        \
      || defined(__unix)      \
      || defined(__unix__)
---- a/Source/WTF/wtf/PlatformHave.h	2024-03-14 12:45:49.000000000 +0000
-+++ b/Source/WTF/wtf/PlatformHave.h	2024-03-14 16:55:53.537873878 +0000
-@@ -229,16 +229,16 @@
+--- a/Source/WTF/wtf/PlatformHave.h	2025-02-18 16:11:00.000000000 +0000
++++ b/Source/WTF/wtf/PlatformHave.h	2025-02-18 16:37:17.917018342 +0000
+@@ -237,16 +237,16 @@
  #define HAVE_HOSTED_CORE_ANIMATION 1
  #endif
  
--#if OS(DARWIN) || OS(FUCHSIA) || ((OS(FREEBSD) || OS(NETBSD) || OS(OPENBSD) || OS(LINUX) || OS(QNX)) && (CPU(X86) || CPU(X86_64) || CPU(ARM) || CPU(ARM64) || CPU(MIPS) || CPU(RISCV64)))
-+#if OS(DARWIN) || OS(FUCHSIA) || OS(SOLARIS) || ((OS(FREEBSD) || OS(NETBSD) || OS(OPENBSD) || OS(LINUX) || OS(QNX)) && (CPU(X86) || CPU(X86_64) || CPU(ARM) || CPU(ARM64) || CPU(MIPS) || CPU(RISCV64)))
+-#if OS(DARWIN) || OS(FUCHSIA) || ((OS(FREEBSD) || OS(HAIKU) || OS(NETBSD) || OS(OPENBSD) || OS(LINUX) || OS(HURD) || OS(QNX)) && (CPU(X86_64) || CPU(ARM) || CPU(ARM64) || CPU(RISCV64)))
++#if OS(DARWIN) || OS(FUCHSIA) || OS(SOLARIS) || ((OS(FREEBSD) || OS(HAIKU) || OS(NETBSD) || OS(OPENBSD) || OS(LINUX) || OS(HURD) || OS(QNX)) && (CPU(X86_64) || CPU(ARM) || CPU(ARM64) || CPU(RISCV64)))
  #define HAVE_MACHINE_CONTEXT 1
  #endif
  
--#if OS(DARWIN) || (OS(LINUX) && defined(__GLIBC__) && !defined(__UCLIBC__) && !CPU(MIPS))
-+#if OS(DARWIN) || OS(SOLARIS) || (OS(LINUX) && defined(__GLIBC__) && !defined(__UCLIBC__) && !CPU(MIPS))
+-#if OS(DARWIN) || OS(HAIKU) || ((OS(LINUX) || OS(HURD)) && defined(__GLIBC__) && !defined(__UCLIBC__) && !CPU(MIPS))
++#if OS(DARWIN) || OS(SOLARIS) || OS(HAIKU) || ((OS(LINUX) || OS(HURD)) && defined(__GLIBC__) && !defined(__UCLIBC__) && !CPU(MIPS))
  #define HAVE_BACKTRACE 1
  #define HAVE_BACKTRACE_SYMBOLS 1
  #endif
  
--#if OS(DARWIN) || OS(LINUX)
-+#if OS(DARWIN) || OS(LINUX) || OS(SOLARIS)
+-#if OS(DARWIN) || OS(HAIKU) || OS(LINUX) || OS(HURD)
++#if OS(DARWIN) || OS(SOLARIS) || OS(HAIKU) || OS(LINUX) || OS(HURD)
  #define HAVE_DLADDR 1
  #endif
  
-@@ -384,7 +384,7 @@
+@@ -402,7 +402,7 @@
  #define HAVE_URL_FORMATTING 1
  #endif
  
@@ -68,29 +68,29 @@ https://bugs.webkit.org/show_bug.cgi?id=176341
  
  #if PLATFORM(COCOA)
  #define USE_FOUNDATION 1
---- a/Source/WTF/wtf/InlineASM.h	2024-03-14 12:45:49.000000000 +0000
-+++ b/Source/WTF/wtf/InlineASM.h	2024-03-14 16:57:06.895331109 +0000
+--- a/Source/WTF/wtf/InlineASM.h	2024-09-28 18:23:39.000000000 +0000
++++ b/Source/WTF/wtf/InlineASM.h	2024-09-28 18:55:08.604699361 +0000
 @@ -43,9 +43,9 @@
  #define THUMB_FUNC_PARAM(name)
  #endif
  
--#if (OS(LINUX) || OS(FREEBSD) || OS(QNX)) && CPU(X86_64)
-+#if (OS(LINUX) || OS(FREEBSD) || OS(SOLARIS) || OS(QNX)) && CPU(X86_64)
+-#if (OS(LINUX) || OS(FREEBSD) || OS(HAIKU) || OS(QNX)) && CPU(X86_64)
++#if (OS(LINUX) || OS(FREEBSD) || OS(SOLARIS) || OS(HAIKU) || OS(QNX)) && CPU(X86_64)
  #define GLOBAL_REFERENCE(name) #name "@plt"
 -#elif OS(LINUX) && CPU(X86) && defined(__PIC__)
 +#elif (OS(LINUX) || OS(SOLARIS)) && CPU(X86) && defined(__PIC__)
  #define GLOBAL_REFERENCE(name) SYMBOL_STRING(name) "@plt"
  #else
  #define GLOBAL_REFERENCE(name) SYMBOL_STRING(name)
-@@ -67,6 +67,7 @@
+@@ -66,6 +66,7 @@
+ #elif  OS(LINUX)               \
      || OS(FREEBSD)             \
      || OS(FUCHSIA)             \
-     || OS(OPENBSD)             \
 +    || OS(SOLARIS)             \
+     || OS(HAIKU)               \
      || OS(HPUX)                \
      || OS(NETBSD)              \
-     || OS(QNX)
-@@ -82,6 +83,7 @@
+@@ -83,6 +84,7 @@
  #if OS(DARWIN)
  #define LOCAL_LABEL_STRING(name) "L" #name
  #elif  OS(LINUX)               \
@@ -98,73 +98,82 @@ https://bugs.webkit.org/show_bug.cgi?id=176341
      || OS(FREEBSD)             \
      || OS(FUCHSIA)             \
      || OS(OPENBSD)             \
---- a/Source/WTF/wtf/NumberOfCores.cpp	2018-08-15 10:12:46.542551846 -0700
-+++ b/Source/WTF/wtf/NumberOfCores.cpp	2018-08-15 10:13:55.247620671 -0700
-@@ -34,7 +34,7 @@
- // data types defined in the former. See sysctl(3) and style(9).
- #include <sys/types.h>
+--- a/Source/WTF/wtf/NumberOfCores.cpp	2024-09-28 18:49:56.602451193 +0000
++++ b/Source/WTF/wtf/NumberOfCores.cpp	2024-09-28 18:56:39.508502678 +0000
+@@ -31,7 +31,7 @@
+ 
+ #if OS(DARWIN)
  #include <sys/sysctl.h>
--#elif OS(LINUX) || OS(AIX) || OS(OPENBSD) || OS(NETBSD) || OS(FREEBSD)
-+#elif OS(LINUX) || OS(AIX) || OS(SOLARIS) || OS(OPENBSD) || OS(NETBSD) || OS(FREEBSD)
+-#elif OS(LINUX) || OS(AIX) || OS(OPENBSD) || OS(NETBSD) || OS(FREEBSD) || OS(HAIKU)
++#elif OS(LINUX) || OS(AIX) || OS(SOLARIS) || OS(OPENBSD) || OS(NETBSD) || OS(FREEBSD) || OS(HAIKU)
  #include <unistd.h>
  #elif OS(WINDOWS)
  #include <windows.h>
-@@ -69,7 +69,7 @@
+@@ -66,7 +66,7 @@
      int sysctlResult = sysctl(name, sizeof(name) / sizeof(int), &result, &length, 0, 0);
  
      s_numberOfCores = sysctlResult < 0 ? defaultIfUnavailable : result;
--#elif OS(LINUX) || OS(AIX) || OS(OPENBSD) || OS(NETBSD) || OS(FREEBSD)
-+#elif OS(LINUX) || OS(AIX) || OS(SOLARIS) || OS(OPENBSD) || OS(NETBSD) || OS(FREEBSD)
+-#elif OS(LINUX) || OS(AIX) || OS(OPENBSD) || OS(NETBSD) || OS(FREEBSD) || OS(HAIKU)
++#elif OS(LINUX) || OS(AIX) || OS(SOLARIS) || OS(OPENBSD) || OS(NETBSD) || OS(FREEBSD) || OS(HAIKU)
      long sysconfResult = sysconf(_SC_NPROCESSORS_ONLN);
  
      s_numberOfCores = sysconfResult < 0 ? defaultIfUnavailable : static_cast<int>(sysconfResult);
---- a/Source/JavaScriptCore/runtime/MachineContext.h	2020-05-14 18:09:21.000000000 +0000
-+++ b/Source/JavaScriptCore/runtime/MachineContext.h	2020-05-29 18:34:00.405996855 +0000
-@@ -196,7 +196,7 @@
+--- a/Source/JavaScriptCore/runtime/MachineContext.h	2025-02-18 16:10:59.000000000 +0000
++++ b/Source/JavaScriptCore/runtime/MachineContext.h	2025-02-18 17:31:00.765794517 +0000
+@@ -182,7 +182,7 @@
  #error Unknown Architecture
  #endif
  
--#elif OS(FUCHSIA) || OS(LINUX)
-+#elif OS(FUCHSIA) || OS(LINUX) || OS(SOLARIS)
+-#elif OS(FUCHSIA) || OS(LINUX) || OS(HURD)
++#elif OS(FUCHSIA) || OS(LINUX) || OS(HURD) || OS(SOLARIS)
  
- #if CPU(X86)
-     return reinterpret_cast<void*&>((uintptr_t&) machineContext.gregs[REG_ESP]);
-@@ -347,7 +347,7 @@
+ #if CPU(X86_64)
+     return reinterpret_cast<void*&>((uintptr_t&) machineContext.gregs[REG_RSP]);
+@@ -305,7 +305,7 @@
  #error Unknown Architecture
  #endif
  
--#elif OS(FUCHSIA) || OS(LINUX)
-+#elif OS(FUCHSIA) || OS(LINUX) || OS(SOLARIS)
+-#elif OS(FUCHSIA) || OS(LINUX) || OS(HURD)
++#elif OS(FUCHSIA) || OS(LINUX) || OS(HURD) || OS(SOLARIS)
  
  // The following sequence depends on glibc's sys/ucontext.h.
- #if CPU(X86)
-@@ -498,7 +498,7 @@
+ #if CPU(X86_64)
+@@ -467,7 +467,7 @@
  #error Unknown Architecture
  #endif
  
--#elif OS(FUCHSIA) || OS(LINUX)
-+#elif OS(FUCHSIA) || OS(LINUX) || OS(SOLARIS)
+-#elif OS(FUCHSIA) || OS(LINUX) || OS(HURD)
++#elif OS(FUCHSIA) || OS(LINUX) || OS(HURD) || OS(SOLARIS)
  
  // The following sequence depends on glibc's sys/ucontext.h.
- #if CPU(X86)
-@@ -656,7 +656,7 @@
+ #if CPU(X86_64)
+@@ -655,7 +655,7 @@
  #error Unknown Architecture
  #endif
  
--#elif OS(FUCHSIA) || OS(LINUX)
-+#elif OS(FUCHSIA) || OS(LINUX) || OS(SOLARIS)
+-#elif OS(FUCHSIA) || OS(LINUX) || OS(HURD)
++#elif OS(FUCHSIA) || OS(LINUX) || OS(HURD) || OS(SOLARIS)
  
  // The following sequence depends on glibc's sys/ucontext.h.
- #if CPU(X86)
-@@ -773,7 +773,7 @@
+ #if CPU(X86_64)
+@@ -712,7 +712,7 @@
  #error Unknown Architecture
  #endif
  
--#elif OS(FUCHSIA) || OS(LINUX)
-+#elif OS(FUCHSIA) || OS(LINUX) || OS(SOLARIS)
+-#elif OS(FUCHSIA) || OS(LINUX) || OS(HURD)
++#elif OS(FUCHSIA) || OS(LINUX) || OS(HURD) || OS(SOLARIS)
  
  // The following sequence depends on glibc's sys/ucontext.h.
- #if CPU(X86)
+ #if CPU(X86_64)
+@@ -834,7 +834,7 @@
+ #error Unknown Architecture
+ #endif
+ 
+-#elif OS(FUCHSIA) || OS(LINUX) || OS(HURD)
++#elif OS(FUCHSIA) || OS(LINUX) || OS(HURD) || OS(SOLARIS)
+ 
+ // The following sequence depends on glibc's sys/ucontext.h.
+ #if CPU(X86_64)
 --- a/Source/WTF/wtf/Assertions.h	2019-08-12 12:11:40.344341406 +0000
 +++ b/Source/WTF/wtf/Assertions.h	2019-08-12 12:11:23.631513186 +0000
 @@ -433,7 +433,7 @@
@@ -176,8 +185,8 @@ https://bugs.webkit.org/show_bug.cgi?id=176341
  /* Unlike static_assert below, this also works in plain C code. */
  #define COMPILE_ASSERT(exp, name) _Static_assert((exp), #name)
  #else
---- a/Source/WTF/wtf/StackBounds.cpp	2018-08-15 10:14:40.847145054 -0700
-+++ b/Source/WTF/wtf/StackBounds.cpp	2018-08-15 10:17:23.584352622 -0700
+--- a/Source/WTF/wtf/StackBounds.cpp	2024-09-28 18:49:56.607484467 +0000
++++ b/Source/WTF/wtf/StackBounds.cpp	2024-09-28 18:58:30.149016744 +0000
 @@ -29,6 +29,10 @@
  
  #include <windows.h>
@@ -186,10 +195,10 @@ https://bugs.webkit.org/show_bug.cgi?id=176341
 +
 +#include <thread.h>
 +
- #elif OS(UNIX)
+ #elif OS(UNIX) || OS(HAIKU)
  
  #include <pthread.h>
-@@ -65,6 +69,17 @@
+@@ -77,6 +81,19 @@
      return newThreadStackBounds(pthread_self());
  }
  
@@ -200,11 +209,13 @@ https://bugs.webkit.org/show_bug.cgi?id=176341
 +    stack_t s;
 +    thr_stksegment(&s);
 +    void* origin = s.ss_sp;
++WTF_ALLOW_UNSAFE_BUFFER_USAGE_BEGIN
 +    void* bound = static_cast<char*>(origin) - s.ss_size;
++WTF_ALLOW_UNSAFE_BUFFER_USAGE_END
 +    return StackBounds { origin, bound };
 +}
 +
- #elif OS(UNIX)
+ #elif OS(UNIX) || OS(HAIKU)
  
  #if OS(OPENBSD)
 --- a/Source/WebCore/platform/network/DNS.h	2020-04-01 16:42:11.000000000 +0000
@@ -255,21 +266,19 @@ https://bugs.webkit.org/show_bug.cgi?id=176341
  #if HAVE(STD_FILESYSTEM) || HAVE(STD_EXPERIMENTAL_FILESYSTEM)
 --- webkit/Source/WTF/wtf/glib/FileSystemGlib.cpp.~2~	2024-04-07 23:02:21.909379687 +0000
 +++ webkit/Source/WTF/wtf/glib/FileSystemGlib.cpp	2024-04-08 10:38:37.794531247 +0000
-@@ -74,6 +74,18 @@
+@@ -74,6 +74,16 @@
  {
      return { };
  }
 +#elif OS(SOLARIS)
 +CString currentExecutablePath()
 +{
-+    static char readLinkBuffer[PATH_MAX];
-+    static char path[PATH_MAX];
-+    sprintf(path, "/proc/%ld/path/a.out", (long)getpid());
++    static char readLinkBuffer[PATH_MAX], path[PATH_MAX];
++    sprintf(path, "/proc/%ld/path/a.out", static_cast<long>(getpid()));
 +    ssize_t result = readlink(path, readLinkBuffer, PATH_MAX);
 +    if (result == -1)
 +        return { };
-+    readLinkBuffer[result] = '\0';
-+    return CString(readLinkBuffer);
++    return CString(unsafeMakeSpan(readLinkBuffer, result));
 +}
  #elif OS(UNIX)
  CString currentExecutablePath()

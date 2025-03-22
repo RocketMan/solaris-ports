@@ -1,22 +1,23 @@
---- a/Source/WebKit/PlatformGTK.cmake	2018-06-11 09:16:31.000000000 +0000
-+++ b/Source/WebKit/PlatformGTK.cmake	2018-09-15 23:32:16.907900295 +0000
-@@ -25,7 +25,7 @@
- add_definitions(-DDATADIR="${CMAKE_INSTALL_FULL_DATADIR}")
+--- a/Source/WebKit/PlatformGTK.cmake	2024-09-28 19:07:32.544449620 +0000
++++ b/Source/WebKit/PlatformGTK.cmake	2024-09-28 19:08:30.207540397 +0000
+@@ -45,7 +45,7 @@
+ add_definitions(-DPKGLIBDIR="${LIB_INSTALL_DIR}/webkit${WEBKITGTK_API_INFIX}gtk-${WEBKITGTK_API_VERSION}")
  
  if (NOT DEVELOPER_MODE AND NOT CMAKE_SYSTEM_NAME MATCHES "Darwin")
 -    WEBKIT_ADD_TARGET_PROPERTIES(WebKit LINK_FLAGS "-Wl,--version-script,${CMAKE_CURRENT_SOURCE_DIR}/webkitglib-symbols.map")
 +    WEBKIT_ADD_TARGET_PROPERTIES(WebKit LINK_FLAGS "-Wl,-M,${CMAKE_CURRENT_SOURCE_DIR}/webkitglib-symbols.map")
+     set_property(TARGET WebKit APPEND PROPERTY LINK_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/webkitglib-symbols.map")
  endif ()
  
- # Temporary workaround to allow the build to succeed.
---- a/Source/WebKit/webkitglib-symbols.map	2020-02-12 15:23:31.000000000 +0000
-+++ b/Source/WebKit/webkitglib-symbols.map	2020-02-12 16:11:14.137301145 +0000
-@@ -1,13 +1,5 @@
+--- a/Source/WebKit/webkitglib-symbols.map	2024-10-29 12:34:12.869961735 +0000
++++ b/Source/WebKit/webkitglib-symbols.map	2024-10-29 12:34:51.961326060 +0000
+@@ -1,14 +1,5 @@
  {
  global:
 -  jsc_*;
 -  webkit_*;
 -  extern "C++" {
+-    "WebKit::GPUProcessMain(int, char**)";
 -    "WebKit::NetworkProcessMain(int, char**)";
 -    "WebKit::WebProcessExtensionManager::initialize(WebKit::InjectedBundle*, API::Object*)";
 -    "WebKit::WebProcessExtensionManager::singleton()";

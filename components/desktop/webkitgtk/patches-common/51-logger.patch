@@ -1,12 +1,12 @@
---- a/Source/WebCore/platform/mediastream/MediaStreamTrackPrivate.h	2022-09-20 16:30:29.000000000 +0000
-+++ b/Source/WebCore/platform/mediastream/MediaStreamTrackPrivate.h	2023-03-06 18:30:59.576119635 +0000
-@@ -121,8 +121,8 @@
+--- a/Source/WebCore/platform/mediastream/MediaStreamTrackPrivate.h	2024-09-28 19:04:53.803251036 +0000
++++ b/Source/WebCore/platform/mediastream/MediaStreamTrackPrivate.h	2024-09-28 19:05:52.989603879 +0000
+@@ -149,8 +149,8 @@
  
      void setIdForTesting(String&& id) { m_id = WTFMove(id); }
  
 +    const Logger& logger() const { return m_logger; }
  #if !RELEASE_LOG_DISABLED
 -    const Logger& logger() const final { return m_logger; }
-     const void* logIdentifier() const final { return m_logIdentifier; }
+     uint64_t logIdentifier() const final { return m_logIdentifier; }
  #endif
  

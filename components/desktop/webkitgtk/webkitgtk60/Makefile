@@ -20,7 +20,7 @@
 #
 
 #
-# Copyright (c) 2020-2024 Jim Mason <jmason at ibinx dot com>.
+# Copyright (c) 2020-2025 Jim Mason <jmason at ibinx dot com>.
 #
 # Adapted from original code Copyright (c) 2016, 2018, Oracle and/or its
 # affiliates. All rights reserved.
@@ -32,11 +32,11 @@
 include ../webkitgtk-common.mk
 
 COMPONENT_NAME=		webkitgtk
-COMPONENT_VERSION=	2.46.6
+COMPONENT_VERSION=	2.48.0
 COMPONENT_PROJECT_URL=	https://webkitgtk.org
 COMPONENT_ARCHIVE=	$(COMPONENT_SRC).tar.xz
 COMPONENT_ARCHIVE_HASH= \
-	sha256:f2b31de693220ba9bab76ce6ddfe5b0bfab2515cb2b0a70f3c54d4050766c32b
+	sha256:94904a55cf12d44a4e36ceadafff02d46da73d76be9b4769f34cbfdf0eebf88e
 COMPONENT_ARCHIVE_URL=	https://webkitgtk.org/releases/$(COMPONENT_ARCHIVE)
 COMPONENT_ANITYA_ID=	5355
 
@@ -108,6 +108,8 @@ CMAKE_OPTIONS += -DENABLE_JOURNALD_LOG=OFF
 CMAKE_OPTIONS += -DUSE_LIBBACKTRACE=OFF
 CMAKE_OPTIONS += -DUSE_TEXTURE_MAPPER_DMABUF=OFF
 CMAKE_OPTIONS += -DUSE_SKIA=OFF
+CMAKE_OPTIONS += -DENABLE_SPEECH_SYNTHESIS=OFF
+CMAKE_OPTIONS += -DUSE_CXX_STDLIB_ASSERTIONS=OFF
 
 CMAKE_OPTIONS += -DLIB_INSTALL_DIR="$(USRLIB)"
 CMAKE_OPTIONS += -DLIBEXEC_INSTALL_DIR="$(USRLIB)/WebKit60"

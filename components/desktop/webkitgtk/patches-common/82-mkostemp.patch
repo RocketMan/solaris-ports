@@ -1,16 +1,16 @@
---- webkit/Source/WTF/wtf/posix/FileSystemPOSIX.cpp~	2024-10-06 16:47:40.000000000 +0000
-+++ webkit/Source/WTF/wtf/posix/FileSystemPOSIX.cpp	2024-10-06 17:26:27.658818680 +0000
-@@ -271,8 +271,13 @@
-     if (snprintf(buffer, PATH_MAX, "%s/%sXXXXXX", temporaryFileDirectory(), prefix.utf8().data()) >= PATH_MAX)
-         goto end;
+--- webkit/Source/WTF/wtf/posix/FileSystemPOSIX.cpp.~1~	2025-01-16 19:47:56.970285259 +0000
++++ webkit/Source/WTF/wtf/posix/FileSystemPOSIX.cpp	2025-01-16 19:49:35.409402645 +0000
+@@ -275,8 +275,13 @@
+     auto buffer = MallocSpan<char>::malloc(length);
+     snprintf(buffer.mutableSpan().data(), length, "%s/%s-XXXXXX", directory, prefixUTF8.data());
  
 +#if defined(__sun)
-+    handle = mkstemp(buffer);
++    handle = mkstemp(buffer.mutableSpan().data());
 +    if (handle < 0 || fcntl(handle, F_SETFD, FD_CLOEXEC) < 0)
 +#else
-     handle = mkostemp(buffer, O_CLOEXEC);
+     handle = mkostemp(buffer.mutableSpan().data(), O_CLOEXEC);
      if (handle < 0)
 +#endif
          goto end;
  
-     return { String::fromUTF8(buffer), handle };
+     return { String::fromUTF8(buffer.span().data()), handle };

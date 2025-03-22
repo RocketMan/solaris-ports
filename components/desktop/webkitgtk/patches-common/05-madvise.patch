@@ -40,18 +40,18 @@
  #else
      SYSCALL(madvise(p, vmSize, MADV_NORMAL));
  #if BOS(LINUX)
---- a/Source/WTF/wtf/posix/OSAllocatorPOSIX.cpp	2020-11-06 11:48:12.000000000 +0000
-+++ b/Source/WTF/wtf/posix/OSAllocatorPOSIX.cpp	2021-06-30 17:58:37.946388576 +0000
-@@ -115,7 +115,7 @@
+--- a/Source/WTF/wtf/posix/OSAllocatorPOSIX.cpp	2024-09-28 18:23:39.000000000 +0000
++++ b/Source/WTF/wtf/posix/OSAllocatorPOSIX.cpp	2024-09-28 19:03:11.687784973 +0000
+@@ -97,7 +97,7 @@
  
  void* OSAllocator::tryReserveUncommitted(size_t bytes, Usage usage, bool writable, bool executable, bool jitCageEnabled, bool includesGuardPages)
  {
--#if OS(LINUX)
-+#if OS(LINUX) || OS(SOLARIS)
+-#if OS(LINUX) || OS(HAIKU)
++#if OS(LINUX) || OS(SOLARIS) || OS(HAIKU)
      UNUSED_PARAM(usage);
      UNUSED_PARAM(jitCageEnabled);
      UNUSED_PARAM(includesGuardPages);
-@@ -129,7 +129,11 @@
+@@ -111,7 +111,11 @@
      if (result == MAP_FAILED)
          result = nullptr;
      if (result)
@@ -63,12 +63,12 @@
  #else
      void* result = tryReserveAndCommit(bytes, usage, writable, executable, jitCageEnabled, includesGuardPages);
  #if HAVE(MADV_FREE_REUSE)
-@@ -232,10 +236,14 @@
+@@ -216,10 +220,14 @@
  
  void OSAllocator::commit(void* address, size_t bytes, bool writable, bool executable)
  {
--#if OS(LINUX)
-+#if OS(LINUX) || OS(SOLARIS)
+-#if OS(LINUX) || OS(HAIKU)
++#if OS(LINUX) || OS(SOLARIS) || OS(HAIKU)
      UNUSED_PARAM(writable);
      UNUSED_PARAM(executable);
 +#if OS(SOLARIS)
@@ -79,16 +79,16 @@
  #elif HAVE(MADV_FREE_REUSE)
      UNUSED_PARAM(writable);
      UNUSED_PARAM(executable);
-@@ -253,6 +261,8 @@
+@@ -237,6 +245,8 @@
  {
- #if OS(LINUX)
+ #if OS(LINUX) || OS(HAIKU)
      while (madvise(address, bytes, MADV_DONTNEED) == -1 && errno == EAGAIN) { }
 +#elif OS(SOLARIS)
 +    while (posix_madvise(address, bytes, POSIX_MADV_DONTNEED) == EAGAIN) { }
  #elif HAVE(MADV_FREE_REUSE)
      while (madvise(address, bytes, MADV_FREE_REUSABLE) == -1 && errno == EAGAIN) { }
  #elif HAVE(MADV_FREE)
-@@ -267,7 +277,9 @@
+@@ -251,7 +261,9 @@
  
  void OSAllocator::hintMemoryNotNeededSoon(void* address, size_t bytes)
  {

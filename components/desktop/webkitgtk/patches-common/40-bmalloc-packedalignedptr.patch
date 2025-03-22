@@ -7,8 +7,8 @@ Suitable for upstream.
 
 diff --git a/Source/bmalloc/bmalloc/Packed.h b/Source/bmalloc/bmalloc/Packed.h
 index a51809445086..a0d1e06a9508 100644
---- a/Source/bmalloc/bmalloc/Packed.h
-+++ b/Source/bmalloc/bmalloc/Packed.h
+--- webkit/Source/bmalloc/bmalloc/Packed.h.~1~	2024-11-24 18:41:16.000000000 +0000
++++ webkit/Source/bmalloc/bmalloc/Packed.h	2024-11-24 19:03:37.356568453 +0000
 @@ -37,6 +37,8 @@
  
  namespace bmalloc {
@@ -18,22 +18,22 @@ index a51809445086..a0d1e06a9508 100644
  template<typename T>
  class Packed {
  public:
-@@ -139,6 +141,12 @@ public:
+@@ -145,6 +147,12 @@
  #endif
          if (isAlignmentShiftProfitable)
              value <<= alignmentShiftSize;
 +
 +#if BCPU(X86_64) && !(BOS(DARWIN) || BOS(LINUX) || BOS(WINDOWS))
 +        constexpr unsigned shiftBits = countOfBits<uintptr_t> - BOS_EFFECTIVE_ADDRESS_WIDTH;
-+        value = (bitwise_cast<intptr_t>(value) << shiftBits) >> shiftBits;
++        value = (std::bit_cast<intptr_t>(value) << shiftBits) >> shiftBits;
 +#endif
 +
-         return bitwise_cast<T*>(value);
+         return std::bit_cast<T*>(value);
      }
  
-@@ -152,6 +159,7 @@ public:
+@@ -158,6 +166,7 @@
  #else
-         memcpy(m_storage.data(), bitwise_cast<uint8_t*>(&value) + (sizeof(void*) - storageSize), storageSize);
+         memcpy(m_storage.data(), std::bit_cast<uint8_t*>(&value) + (sizeof(void*) - storageSize), storageSize);
  #endif
 +        BASSERT(get() == passedValue);
      }

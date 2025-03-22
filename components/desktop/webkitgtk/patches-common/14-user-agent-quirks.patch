@@ -21,3 +21,12 @@ and `netwerk/protocol/http/nsHttpHandler.cpp` in the Firefox source.
      if (chassisType() == WTF::ChassisType::Mobile)
          return "like Android 4.4"_s;
  
+@@ -111,7 +113,7 @@
+         //
+         // But beware, because some websites also discriminate against high Safari versions.
+         // https://webkit.org/b/284775
+-        uaString.append("Version/60.5 "_s);
++        uaString.append("Version/18.1 "_s);
+ 
+     if (chassisType() == WTF::ChassisType::Mobile)
+         uaString.append("Mobile "_s);
