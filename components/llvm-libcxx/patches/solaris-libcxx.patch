@@ -7,10 +7,18 @@ It has been updated for the current libc++ source.  In addition, it
 includes changes in support of Solaris 11.3.
 
 
-diff -Naur llvm-project-18.1.8.src.orig/libcxx/CMakeLists.txt llvm-project-18.1.8.src/libcxx/CMakeLists.txt
---- llvm-project-18.1.8.src.orig/libcxx/CMakeLists.txt	2024-06-15 18:21:32.000000000 +0000
-+++ llvm-project-18.1.8.src/libcxx/CMakeLists.txt	2024-07-01 19:21:30.283506332 +0000
-@@ -262,7 +262,7 @@
+diff -Naur llvm-project-20.1.0-rc1.src.orig/libcxx/CMakeLists.txt llvm-project-20.1.0-rc1.src/libcxx/CMakeLists.txt
+--- llvm-project-20.1.0-rc1.src/libcxx/CMakeLists.txt.~1~	2025-02-02 02:04:34.000000000 +0000
++++ llvm-project-20.1.0-rc1.src/libcxx/CMakeLists.txt	2025-02-09 17:05:17.516079188 +0000
+@@ -160,6 +160,7 @@
+ 
+ # TODO: Figure out how to build GoogleBenchmark on those platforms, and how to build when exceptions or RTTI is disabled
+ if (WIN32 OR MINGW OR ANDROID OR ${CMAKE_SYSTEM_NAME} MATCHES "AIX"
++    OR CMAKE_HOST_SOLARIS
+     OR NOT LIBCXX_ENABLE_LOCALIZATION
+     OR NOT LIBCXX_ENABLE_THREADS
+     OR NOT LIBCXX_ENABLE_FILESYSTEM
+@@ -267,7 +268,7 @@
      OR NOT LIBCXX_ENABLE_SHARED
      OR LIBCXX_CXX_ABI STREQUAL "none")
    set(ENABLE_LINKER_SCRIPT_DEFAULT_VALUE OFF)
@@ -19,7 +27,7 @@ diff -Naur llvm-project-18.1.8.src.orig/libcxx/CMakeLists.txt llvm-project-18.1.
    set(ENABLE_LINKER_SCRIPT_DEFAULT_VALUE ON)
  else()
    set(ENABLE_LINKER_SCRIPT_DEFAULT_VALUE OFF)
-@@ -280,6 +280,14 @@
+@@ -285,6 +286,14 @@
  # link with libunwind or libgcc_s while running the test cases.
  option(LIBCXXABI_USE_LLVM_UNWINDER "Build and use the LLVM unwinder." ON)
  
@@ -34,9 +42,82 @@ diff -Naur llvm-project-18.1.8.src.orig/libcxx/CMakeLists.txt llvm-project-18.1.
  # Target options --------------------------------------------------------------
  option(LIBCXX_BUILD_32_BITS "Build 32 bit multilib libc++. This option is not supported anymore when building the runtimes. Please specify a full triple instead." ${LLVM_BUILD_32_BITS})
  if (LIBCXX_BUILD_32_BITS)
-diff -Naur llvm-project-18.1.8.src.orig/libcxx/include/__config llvm-project-18.1.8.src/libcxx/include/__config
---- llvm-project-18.1.8.src.orig/libcxx/include/__config	2024-06-15 18:21:32.000000000 +0000
-+++ llvm-project-18.1.8.src/libcxx/include/__config	2024-07-01 13:05:23.785844443 +0000
+diff -Naur llvm-project-20.1.0-rc1.src.orig/libcxx/include/__config llvm-project-20.1.0-rc1.src/libcxx/include/__config
+--- llvm-project-20.1.0-rc1.src/libcxx/include/__config.~1~	2025-02-02 02:04:34.000000000 +0000
++++ llvm-project-20.1.0-rc1.src/libcxx/include/__config	2025-02-08 21:49:20.759281661 +0000
+@@ -233,6 +233,15 @@
+ #    define _LIBCPP_HAS_BITSCAN64 0
+ #  endif // defined(_WIN32)
+ 
++#  ifdef __sun__
++#    include <sys/isa_defs.h>
++#    ifdef _LITTLE_ENDIAN
++#      define _LIBCPP_LITTLE_ENDIAN
++#    else
++#      define _LIBCPP_BIG_ENDIAN
++#    endif
++#  endif // __sun__
++
+ #  if defined(_AIX) && !defined(__64BIT__)
+ // The size of wchar is 2 byte on 32-bit mode on AIX.
+ #    define _LIBCPP_SHORT_WCHAR 1
+@@ -279,7 +288,7 @@
+ #  if defined(__APPLE__) || defined(__FreeBSD__) || defined(__NetBSD__) || defined(__OpenBSD__) ||                     \
+       defined(__DragonFly__)
+ #    define _LIBCPP_USING_ARC4_RANDOM
+-#  elif defined(__wasi__) || defined(__EMSCRIPTEN__)
++#  elif defined(__wasi__) || defined(__EMSCRIPTEN__) || defined(__sun__)
+ #    define _LIBCPP_USING_GETENTROPY
+ #  elif defined(__Fuchsia__)
+ #    define _LIBCPP_USING_FUCHSIA_CPRNG
+@@ -668,7 +677,7 @@
+ #    else
+ #      define _LIBCPP_HAS_C11_ALIGNED_ALLOC 1
+ #    endif
+-#  elif defined(__ANDROID__) && __ANDROID_API__ < 28
++#  elif defined(__ANDROID__) && __ANDROID_API__ < 28 || defined(__sun)
+ // Android only provides aligned_alloc when targeting API 28 or higher.
+ #    define _LIBCPP_HAS_C11_ALIGNED_ALLOC 0
+ #  else
+@@ -679,7 +688,7 @@
+ #    define _LIBCPP_HAS_DEFAULTRUNELOCALE
+ #  endif
+ 
+-#  if defined(__APPLE__) || defined(__FreeBSD__)
++#  if defined(__APPLE__) || defined(__FreeBSD__) || defined(__sun__)
+ #    define _LIBCPP_WCTYPE_IS_MASK
+ #  endif
+ 
+@@ -823,6 +832,7 @@
+         defined(__linux__) ||                                                                                          \
+         defined(__GNU__) ||                                                                                            \
+         defined(__APPLE__) ||                                                                                          \
++        defined(__sun__) ||                                                                                            \
+         defined(__MVS__) ||                                                                                            \
+         defined(_AIX) ||                                                                                               \
+         defined(__EMSCRIPTEN__)
+@@ -1238,6 +1248,18 @@
+ #    define _LIBCPP_HAS_EXPLICIT_THIS_PARAMETER 0
+ #  endif
+ 
++
++#if !defined(__CLANG_MAX_ALIGN_T_DEFINED) && defined(__sun)
++// from /usr/lib/<arch>/clang/18/include/stddef.h
++typedef struct {
++  long long __clang_max_align_nonce1
++      __attribute__((__aligned__(__alignof__(long long))));
++  long double __clang_max_align_nonce2
++      __attribute__((__aligned__(__alignof__(long double))));
++} max_align_t;
++#define __CLANG_MAX_ALIGN_T_DEFINED
++#endif
++
+ #endif // __cplusplus
+ 
+ #endif // _LIBCPP___CONFIG
+diff -Naur llvm-project-18.1.8.src.orig/libcxx/include/__cxx03/__config llvm-project-18.1.8.src/libcxx/include/__cxx03/__config
+--- llvm-project-18.1.8.src.orig/libcxx/include/__cxx03/__config	2024-06-15 18:21:32.000000000 +0000
++++ llvm-project-18.1.8.src/libcxx/include/__cxx03/__config	2024-07-01 13:05:23.785844443 +0000
 @@ -249,6 +249,15 @@
  #    define _LIBCPP_HAS_OPEN_WITH_WCHAR
  #  endif // defined(_WIN32)
@@ -71,18 +152,16 @@ diff -Naur llvm-project-18.1.8.src.orig/libcxx/include/__config llvm-project-18.
  #    define _LIBCPP_LOCALE__L_EXTENSIONS 1
  #  endif
  
-@@ -655,6 +664,10 @@
- #    define _LIBCPP_HAS_NO_ALIGNED_ALLOCATION
+@@ -662,7 +671,7 @@
+          __ENVIRONMENT_MAC_OS_X_VERSION_MIN_REQUIRED__ < 101500)
+ #      define _LIBCPP_HAS_NO_C11_ALIGNED_ALLOC
+ #    endif
+-#  elif defined(__ANDROID__) && __ANDROID_API__ < 28
++#  elif defined(__ANDROID__) && __ANDROID_API__ < 28 || defined(__sun)
+ // Android only provides aligned_alloc when targeting API 28 or higher.
+ #    define _LIBCPP_HAS_NO_C11_ALIGNED_ALLOC
  #  endif
- 
-+#if defined(__sun)
-+#      define _LIBCPP_HAS_NO_C11_ALIGNED_ALLOC
-+#endif
-+
- // It is not yet possible to use aligned_alloc() on all Apple platforms since
- // 10.15 was the first version to ship an implementation of aligned_alloc().
- #  if defined(__APPLE__)
-@@ -671,7 +684,7 @@
+@@ -671,7 +680,7 @@
  #    define _LIBCPP_HAS_DEFAULTRUNELOCALE
  #  endif
  
@@ -91,7 +170,7 @@ diff -Naur llvm-project-18.1.8.src.orig/libcxx/include/__config llvm-project-18.
  #    define _LIBCPP_WCTYPE_IS_MASK
  #  endif
  
-@@ -815,6 +828,7 @@
+@@ -815,6 +824,7 @@
          defined(__linux__) ||                                                                                          \
          defined(__GNU__) ||                                                                                            \
          defined(__APPLE__) ||                                                                                          \
@@ -99,7 +178,7 @@ diff -Naur llvm-project-18.1.8.src.orig/libcxx/include/__config llvm-project-18.
          defined(__MVS__) ||                                                                                            \
          defined(_AIX) ||                                                                                               \
          defined(__EMSCRIPTEN__)
-@@ -1223,6 +1237,18 @@
+@@ -1223,6 +1233,18 @@
  #    define _LIBCPP_HAS_EXPLICIT_THIS_PARAMETER
  #  endif
  
@@ -117,12 +196,12 @@ diff -Naur llvm-project-18.1.8.src.orig/libcxx/include/__config llvm-project-18.
 +
  #endif // __cplusplus
  
- #endif // _LIBCPP___CONFIG
---- llvm-project-19.1.0.src/libcxx/include/__expected/expected.h~	2024-09-17 12:26:36.000000000 +0000
-+++ llvm-project-19.1.0.src/libcxx/include/__expected/expected.h	2024-10-05 17:24:14.619239905 +0000
+ #endif // _LIBCPP___CXX03___CONFIG
+--- llvm-project-20.1.0-rc1.src/libcxx/include/__cxx03/__expected/expected.h~	2025-02-02 02:04:34.000000000 +0000
++++ llvm-project-20.1.0-rc1.src/libcxx/include/__cxx03/__expected/expected.h	2025-02-09 10:28:31.185223552 +0000
 @@ -9,6 +9,13 @@
- #ifndef _LIBCPP___EXPECTED_EXPECTED_H
- #define _LIBCPP___EXPECTED_EXPECTED_H
+ #ifndef _LIBCPP___CXX03___EXPECTED_EXPECTED_H
+ #define _LIBCPP___CXX03___EXPECTED_EXPECTED_H
  
 +#if defined(__sun)
 +#undef _Err
@@ -131,12 +210,12 @@ diff -Naur llvm-project-18.1.8.src.orig/libcxx/include/__config llvm-project-18.
 +#undef _E2
 +#endif
 +
- #include <__assert>
- #include <__config>
- #include <__expected/bad_expected_access.h>
-diff -Naur llvm-project-18.1.8.src.orig/libcxx/include/__locale llvm-project-18.1.8.src/libcxx/include/__locale
---- llvm-project-18.1.8.src.orig/libcxx/include/__locale	2024-06-15 18:21:32.000000000 +0000
-+++ llvm-project-18.1.8.src/libcxx/include/__locale	2024-07-01 16:32:52.108742752 +0000
+ #include <__cxx03/__assert>
+ #include <__cxx03/__config>
+ #include <__cxx03/__expected/bad_expected_access.h>
+diff -Naur llvm-project-20.1.0-rc1.src.orig/libcxx/include/__cxx03/__locale llvm-project-20.1.0-rc1.src/libcxx/include/_cxx03/__locale
+--- llvm-project-20.1.0.src-rc1.orig/libcxx/include/__cxx03/__locale	2024-06-15 18:21:32.000000000 +0000
++++ llvm-project-20.1.0.src-rc1/libcxx/include/__cxx03/__locale	2024-07-01 16:32:52.108742752 +0000
 @@ -391,7 +393,7 @@
    static const mask blank        = _CTYPE_B;
    static const mask __regex_word = 0x80;
@@ -158,334 +237,10 @@ diff -Naur llvm-project-18.1.8.src.orig/libcxx/include/__locale llvm-project-18.
  #elif defined(_NEWLIB_VERSION)
    // Same type as Newlib's _ctype_ array in newlib/libc/include/ctype.h.
    typedef char mask;
-diff -Naur llvm-project-19.1.0.src.orig/libcxx/include/__math/solaris.h llvm-project-19.1.0.src/libcxx/include/__math/solaris.h
---- llvm-project-19.1.0.src/libcxx/include/__math/solaris.h.~1~	2024-09-25 12:16:17.250842579 +0000
-+++ llvm-project-19.1.0.src/libcxx/include/__math/solaris.h	2024-09-25 17:45:43.875550941 +0000
-@@ -0,0 +1,244 @@
-+//===----------------------------------------------------------------------===//
-+//
-+// Part of the LLVM Project, under the Apache License v2.0 with LLVM Exceptions.
-+// See https://llvm.org/LICENSE.txt for license information.
-+// SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
-+//
-+//===----------------------------------------------------------------------===//
-+
-+#ifndef _LIBCPP___MATH_SOLARIS_H
-+#define _LIBCPP___MATH_SOLARIS_H
-+
-+#include <__config>
-+#include <__type_traits/enable_if.h>
-+#include <__type_traits/is_arithmetic.h>
-+#include <__type_traits/is_integral.h>
-+#include <__type_traits/is_same.h>
-+#include <__type_traits/promote.h>
-+#include <limits>
-+
-+#if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
-+#  pragma GCC system_header
-+#endif
-+
-+_LIBCPP_BEGIN_NAMESPACE_STD
-+
-+namespace __math2 {
-+
-+// acos
-+
-+template <class _A1, __enable_if_t<is_integral<_A1>::value, int> = 0>
-+inline _LIBCPP_HIDE_FROM_ABI double acos(_A1 __x) _NOEXCEPT {
-+  return __builtin_acos((double)__x);
-+}
-+
-+// asin
-+
-+template <class _A1, __enable_if_t<is_integral<_A1>::value, int> = 0>
-+inline _LIBCPP_HIDE_FROM_ABI double asin(_A1 __x) _NOEXCEPT {
-+  return __builtin_asin((double)__x);
-+}
-+
-+// atan
-+
-+template <class _A1, __enable_if_t<is_integral<_A1>::value, int> = 0>
-+inline _LIBCPP_HIDE_FROM_ABI double atan(_A1 __x) _NOEXCEPT {
-+  return __builtin_atan((double)__x);
-+}
-+
-+// atan2
-+
-+template <class _A1, class _A2, __enable_if_t<is_arithmetic<_A1>::value && is_arithmetic<_A2>::value, int> = 0>
-+inline _LIBCPP_HIDE_FROM_ABI typename __promote<_A1, _A2>::type atan2(_A1 __y, _A2 __x) _NOEXCEPT {
-+  using __result_type = typename __promote<_A1, _A2>::type;
-+  static_assert(!(_IsSame<_A1, __result_type>::value && _IsSame<_A2, __result_type>::value), "");
-+  return __math::atan2((__result_type)__y, (__result_type)__x);
-+}
-+
-+// ceil
-+
-+template <class _A1, __enable_if_t<is_integral<_A1>::value, int> = 0>
-+inline _LIBCPP_HIDE_FROM_ABI double ceil(_A1 __x) _NOEXCEPT {
-+  return __builtin_ceil((double)__x);
-+}
-+
-+// cos
-+
-+template <class _A1, __enable_if_t<is_integral<_A1>::value, int> = 0>
-+inline _LIBCPP_HIDE_FROM_ABI double cos(_A1 __x) _NOEXCEPT {
-+  return __builtin_cos((double)__x);
-+}
-+
-+// cosh
-+
-+template <class _A1, __enable_if_t<is_integral<_A1>::value, int> = 0>
-+inline _LIBCPP_HIDE_FROM_ABI double cosh(_A1 __x) _NOEXCEPT {
-+  return __builtin_cosh((double)__x);
-+}
-+
-+// exp
-+
-+template <class _A1, __enable_if_t<is_integral<_A1>::value, int> = 0>
-+inline _LIBCPP_HIDE_FROM_ABI double exp(_A1 __x) _NOEXCEPT {
-+  return __builtin_exp((double)__x);
-+}
-+
-+// fabs
-+
-+template <class _A1, __enable_if_t<is_integral<_A1>::value, int> = 0>
-+inline _LIBCPP_HIDE_FROM_ABI double fabs(_A1 __x) _NOEXCEPT {
-+  return __builtin_fabs((double)__x);
-+}
-+
-+// floor
-+
-+template <class _A1, __enable_if_t<is_integral<_A1>::value, int> = 0>
-+inline _LIBCPP_HIDE_FROM_ABI double floor(_A1 __x) _NOEXCEPT {
-+  return __builtin_floor((double)__x);
-+}
-+
-+// fmod
-+
-+template <class _A1, class _A2, __enable_if_t<is_arithmetic<_A1>::value && is_arithmetic<_A2>::value, int> = 0>
-+inline _LIBCPP_HIDE_FROM_ABI typename __promote<_A1, _A2>::type fmod(_A1 __x, _A2 __y) _NOEXCEPT {
-+  using __result_type = typename __promote<_A1, _A2>::type;
-+  return ::fmod((__result_type)__x, (__result_type)__y);
-+}
-+
-+// frexp
-+
-+template <class _A1, __enable_if_t<is_integral<_A1>::value, int> = 0>
-+inline _LIBCPP_HIDE_FROM_ABI double frexp(_A1 __x, int* __e) _NOEXCEPT {
-+  return __builtin_frexp((double)__x, __e);
-+}
-+
-+// hypot
-+
-+#if _LIBCPP_STD_VER >= 17
-+// Computes the three-dimensional hypotenuse: `std::hypot(x,y,z)`.
-+// The naive implementation might over-/underflow which is why this implementation is more involved:
-+//    If the square of an argument might run into issues, we scale the arguments appropriately.
-+// See https://github.com/llvm/llvm-project/issues/92782 for a detailed discussion and summary.
-+template <class _Real>
-+_LIBCPP_HIDE_FROM_ABI _Real __hypot(_Real __x, _Real __y, _Real __z) {
-+  // Factors needed to determine if over-/underflow might happen
-+  constexpr int __exp              = std::numeric_limits<_Real>::max_exponent / 2;
-+  const _Real __overflow_threshold = __math::ldexp(_Real(1), __exp);
-+  const _Real __overflow_scale     = __math::ldexp(_Real(1), -(__exp + 20));
-+
-+  // Scale arguments depending on their size
-+  const _Real __max_abs = __math::fmax(__math::fabs(__x), __math::fmax(__math::fabs(__y), __math::fabs(__z)));
-+  _Real __scale;
-+  if (__max_abs > __overflow_threshold) { // x*x + y*y + z*z might overflow
-+    __scale = __overflow_scale;
-+  } else if (__max_abs < 1 / __overflow_threshold) { // x*x + y*y + z*z might underflow
-+    __scale = 1 / __overflow_scale;
-+  } else {
-+    __scale = 1;
-+  }
-+  __x *= __scale;
-+  __y *= __scale;
-+  __z *= __scale;
-+
-+  // Compute hypot of scaled arguments and undo scaling
-+  return __math::sqrt(__x * __x + __y * __y + __z * __z) / __scale;
-+}
-+
-+inline _LIBCPP_HIDE_FROM_ABI float hypot(float __x, float __y, float __z) { return __math::__hypot(__x, __y, __z); }
-+
-+inline _LIBCPP_HIDE_FROM_ABI double hypot(double __x, double __y, double __z) { return __math::__hypot(__x, __y, __z); }
-+
-+inline _LIBCPP_HIDE_FROM_ABI long double hypot(long double __x, long double __y, long double __z) {
-+  return __math::__hypot(__x, __y, __z);
-+}
-+
-+template <class _A1,
-+          class _A2,
-+          class _A3,
-+          std::enable_if_t< is_arithmetic_v<_A1> && is_arithmetic_v<_A2> && is_arithmetic_v<_A3>, int> = 0 >
-+_LIBCPP_HIDE_FROM_ABI typename __promote<_A1, _A2, _A3>::type hypot(_A1 __x, _A2 __y, _A3 __z) _NOEXCEPT {
-+  using __result_type = typename __promote<_A1, _A2, _A3>::type;
-+  static_assert(!(
-+      std::is_same_v<_A1, __result_type> && std::is_same_v<_A2, __result_type> && std::is_same_v<_A3, __result_type>));
-+  return __math::__hypot(
-+      static_cast<__result_type>(__x), static_cast<__result_type>(__y), static_cast<__result_type>(__z));
-+}
-+#endif
-+
-+// ldexp
-+
-+template <class _A1, __enable_if_t<is_integral<_A1>::value, int> = 0>
-+inline _LIBCPP_HIDE_FROM_ABI double ldexp(_A1 __x, int __e) _NOEXCEPT {
-+  return __builtin_ldexp((double)__x, __e);
-+}
-+
-+// log
-+
-+template <class _A1, __enable_if_t<is_integral<_A1>::value, int> = 0>
-+inline _LIBCPP_HIDE_FROM_ABI double log(_A1 __x) _NOEXCEPT {
-+  return __builtin_log((double)__x);
-+}
-+
-+// log10
-+
-+template <class _A1, __enable_if_t<is_integral<_A1>::value, int> = 0>
-+inline _LIBCPP_HIDE_FROM_ABI double log10(_A1 __x) _NOEXCEPT {
-+  return __builtin_log10((double)__x);
-+}
-+
-+// log1p
-+
-+template <class _A1, __enable_if_t<is_integral<_A1>::value, int> = 0>
-+inline _LIBCPP_HIDE_FROM_ABI double log1p(_A1 __x) _NOEXCEPT {
-+  return __builtin_log1p((double)__x);
-+}
-+
-+// pow
-+
-+template <class _A1, class _A2, __enable_if_t<is_arithmetic<_A1>::value && is_arithmetic<_A2>::value, int> = 0>
-+inline _LIBCPP_HIDE_FROM_ABI typename __promote<_A1, _A2>::type pow(_A1 __x, _A2 __y) _NOEXCEPT {
-+  using __result_type = typename __promote<_A1, _A2>::type;
-+  static_assert(!(_IsSame<_A1, __result_type>::value && _IsSame<_A2, __result_type>::value), "");
-+  return __math::pow((__result_type)__x, (__result_type)__y);
-+}
-+
-+// sin
-+
-+template <class _A1, __enable_if_t<is_integral<_A1>::value, int> = 0>
-+inline _LIBCPP_HIDE_FROM_ABI double sin(_A1 __x) _NOEXCEPT {
-+  return __builtin_sin((double)__x);
-+}
-+
-+// sinh
-+
-+template <class _A1, __enable_if_t<is_integral<_A1>::value, int> = 0>
-+inline _LIBCPP_HIDE_FROM_ABI double sinh(_A1 __x) _NOEXCEPT {
-+  return __builtin_sinh((double)__x);
-+}
-+
-+// sqrt
-+
-+template <class _A1, __enable_if_t<is_integral<_A1>::value, int> = 0>
-+inline _LIBCPP_HIDE_FROM_ABI double sqrt(_A1 __x) _NOEXCEPT {
-+  return __builtin_sqrt((double)__x);
-+}
-+
-+// tan
-+
-+template <class _A1, __enable_if_t<is_integral<_A1>::value, int> = 0>
-+inline _LIBCPP_HIDE_FROM_ABI double tan(_A1 __x) _NOEXCEPT {
-+  return __builtin_tan((double)__x);
-+}
-+
-+// tanh
-+
-+template <class _A1, __enable_if_t<is_integral<_A1>::value, int> = 0>
-+inline _LIBCPP_HIDE_FROM_ABI double tanh(_A1 __x) _NOEXCEPT {
-+  return __builtin_tanh((double)__x);
-+}
-+
-+} // namespace __math2
-+
-+_LIBCPP_END_NAMESPACE_STD
-+
-+#endif // _LIBCPP___MATH_SOLARIS_H
-diff -Naur llvm-project-18.1.8.src.orig/libcxx/include/__random/log2.h llvm-project-18.1.8.src/libcxx/include/__random/log2.h
---- llvm-project-18.1.8.src.orig/libcxx/include/__random/log2.h	2024-06-15 18:21:32.000000000 +0000
-+++ llvm-project-18.1.8.src/libcxx/include/__random/log2.h	2024-08-01 10:33:55.725217228 +0000
-@@ -13,6 +13,10 @@
- #include <__type_traits/conditional.h>
- #include <cstddef>
- 
-+#if defined(__sun)
-+#define __log2(x) __builtin_log2(x)
-+#endif
-+
- #if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
- #  pragma GCC system_header
- #endif
-diff -Naur llvm-project-18.1.8.src.orig/libcxx/include/__support/solaris/locale_mgmt_solaris.h llvm-project-18.1.8.src/libcxx/include/__support/solaris/locale_mgmt_solaris.h
---- llvm-project-18.1.8.src.orig/libcxx/include/__support/solaris/locale_mgmt_solaris.h	1970-01-01 01:00:00.000000000 +0000
-+++ llvm-project-18.1.8.src/libcxx/include/__support/solaris/locale_mgmt_solaris.h	2024-07-24 09:50:46.960236158 +0000
-@@ -0,0 +1,58 @@
-+// -*- C++ -*-
-+//===----------------------------------------------------------------------===//
-+//
-+// Part of the LLVM Project, under the Apache License v2.0 with LLVM Exceptions.
-+// See https://llvm.org/LICENSE.txt for license information.
-+// SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
-+//
-+//===----------------------------------------------------------------------===//
-+
-+#ifndef _LIBCPP___SUPPORT_LOCALE_MGMT_SOLARIS_H
-+#define _LIBCPP___SUPPORT_LOCALE_MGMT_SOLARIS_H
-+
-+#if defined(__sun)
-+
-+#  include <locale.h>
-+#  include <string>
-+
-+#  ifdef __cplusplus
-+extern "C" {
-+#  endif
-+
-+#  define _LC_MAX LC_MESSAGES /* highest real category */
-+#  define _NCAT (_LC_MAX + 1) /* maximum + 1 */
-+
-+#  define _CATMASK(n) (1 << (n))
-+#  define LC_COLLATE_MASK _CATMASK(LC_COLLATE)
-+#  define LC_CTYPE_MASK _CATMASK(LC_CTYPE)
-+#  define LC_MONETARY_MASK _CATMASK(LC_MONETARY)
-+#  define LC_NUMERIC_MASK _CATMASK(LC_NUMERIC)
-+#  define LC_TIME_MASK _CATMASK(LC_TIME)
-+#  define LC_MESSAGES_MASK _CATMASK(LC_MESSAGES)
-+#  define LC_ALL_MASK (_CATMASK(_NCAT) - 1)
-+
-+typedef struct locale_struct {
-+  int category_mask;
-+  std::string lc_collate;
-+  std::string lc_ctype;
-+  std::string lc_monetary;
-+  std::string lc_numeric;
-+  std::string lc_time;
-+  std::string lc_messages;
-+}* locale_t;
-+
-+#  define LC_GLOBAL_LOCALE ((locale_t) -1L)
-+
-+// Solaris 11.3 does not have newlocale, freelocale and uselocale.
-+// The functions below are workarounds in single thread mode.
-+_LIBCPP_EXPORTED_FROM_ABI locale_t newlocale_internal(int category_mask, const char* locale, locale_t base);
-+_LIBCPP_EXPORTED_FROM_ABI void freelocale_internal(locale_t locobj);
-+_LIBCPP_EXPORTED_FROM_ABI locale_t uselocale_internal(locale_t newloc);
-+
-+#  ifdef __cplusplus
-+}
-+#  endif
-+
-+#endif // defined(__sun)
-+
-+#endif // _LIBCPP___SUPPORT_LOCALE_MGMT_SOLARIS_H
-diff -Naur llvm-project-19.1.0.src.orig/libcxx/include/__locale_dir/locale_base_api/solaris.h llvm-project-19.1.0.src/libcxx/include/__locale_dir/locale_base_api/solaris.h
---- llvm-project-19.1.0.src.orig/libcxx/include/__locale_dir/locale_base_api/solaris.h	2024-09-24 11:57:25.497634653 +0000
-+++ llvm-project-19.1.0.src/libcxx/include/__locale_dir/locale_base_api/solaris.h	2024-09-24 12:00:13.554949235 +0000
-@@ -0,0 +1,393 @@
+diff -Naur llvm-project-20.1.0-rc1.src.orig/libcxx/include/__cxx03/__locale_dir/locale_base_api/solaris.h llvm-project-20.1.0-rc1.src/libcxx/include/__cxx03/__locale_dir/locale_base_api/solaris.h
+--- llvm-project-20.1.0-rc1.src.orig/libcxx/include/__cxx03/__locale_dir/locale_base_api/solaris.h	2024-09-24 11:57:25.497634653 +0000
++++ llvm-project-20.1.0-rc1.src/libcxx/include/__cxx03/__locale_dir/locale_base_api/solaris.h	2024-09-24 12:00:13.554949235 +0000
+@@ -0,0 +1,366 @@
 +//===----------------------------------------------------------------------===//
 +//
 +// Part of the LLVM Project, under the Apache License v2.0 with LLVM Exceptions.
@@ -507,7 +262,6 @@ diff -Naur llvm-project-19.1.0.src.orig/libcxx/include/__locale_dir/locale_base_
 +#include <__support/solaris/locale_mgmt_solaris.h>
 +#include <cstdlib>
 +#include <cwchar>
-+#include <pthread.h>
 +
 +#ifdef __cplusplus
 +extern "C" {
@@ -517,32 +271,6 @@ diff -Naur llvm-project-19.1.0.src.orig/libcxx/include/__locale_dir/locale_base_
 +size_t mbsnrtowcs(wchar_t *wcs, const char **src, size_t n, size_t wn, mbstate_t* st);
 +
 +#pragma push_macro("FIX_LOCALE")
-+namespace xlocale {
-+struct __setAndRestore {
-+  explicit __setAndRestore(locale_t locale) {
-+    pthread_mutex_lock(&__mtx);
-+    if (locale == (locale_t)0) {
-+      __cloc   = newlocale_internal(LC_ALL_MASK, "C", /* base */ (locale_t)0);
-+      __stored = uselocale_internal(__cloc);
-+    } else {
-+      __stored = uselocale_internal(locale);
-+    }
-+  }
-+
-+  ~__setAndRestore() {
-+    uselocale_internal(__stored);
-+    if (__cloc)
-+      freelocale_internal(__cloc);
-+    pthread_mutex_unlock(&__mtx);
-+  }
-+
-+private:
-+  locale_t __stored = (locale_t)0;
-+  locale_t __cloc   = (locale_t)0;
-+  static pthread_mutex_t __mtx;
-+};
-+
-+} // namespace xlocale
 +#define FIX_LOCALE(__loc) xlocale::__setAndRestore __newLoc(__loc)
 +
 +#define MB_CUR_MAX_L(__loc) MB_CUR_MAX
@@ -879,72 +607,290 @@ diff -Naur llvm-project-19.1.0.src.orig/libcxx/include/__locale_dir/locale_base_
 +#endif
 +
 +#endif
-diff -Naur llvm-project-19.1.0.src.orig/libcxx/include/CMakeLists.txt llvm-project-19.1.0.src/libcxx/include/CMakeLists.txt
---- llvm-project-19.1.0.src/libcxx/include/CMakeLists.txt.~1~	2024-09-23 17:52:17.911585935 +0000
-+++ llvm-project-19.1.0.src/libcxx/include/CMakeLists.txt	2024-09-23 18:13:32.061758540 +0000
-@@ -491,6 +491,7 @@
-   __locale_dir/locale_base_api/musl.h
-   __locale_dir/locale_base_api/newlib.h
-   __locale_dir/locale_base_api/openbsd.h
-+  __locale_dir/locale_base_api/solaris.h
-   __locale_dir/locale_base_api/win32.h
-   __math/abs.h
-   __math/copysign.h
-@@ -509,6 +510,7 @@
-   __math/remainder.h
-   __math/roots.h
-   __math/rounding_functions.h
-+  __math/solaris.h
-   __math/special_functions.h
-   __math/traits.h
-   __math/trigonometric_functions.h
-@@ -692,6 +694,7 @@
-   __support/ibm/gettod_zos.h
-   __support/ibm/locale_mgmt_zos.h
-   __support/ibm/nanosleep.h
-+  __support/solaris/locale_mgmt_solaris.h
-   __support/xlocale/__nop_locale_mgmt.h
-   __support/xlocale/__posix_l_fallback.h
-   __support/xlocale/__strtonum_fallback.h
-diff -Naur llvm-project-19.1.0.src.orig/libcxx/include/math.h llvm-project-19.1.0.src/libcxx/include/math.h
---- llvm-project-19.1.0.src/libcxx/include/math.h.~1~	2024-09-17 12:26:36.000000000 +0000
-+++ llvm-project-19.1.0.src/libcxx/include/math.h	2024-09-25 17:45:17.141192436 +0000
-@@ -293,6 +293,12 @@
- 
- #  include <__config>
- 
-+#  ifdef __cplusplus
-+extern "C++" {
-+#    include <cstddef>
-+}
-+#  endif
+--- /dev/null	2025-02-09 10:50:09.000000000 +0000
++++ llvm-project-20.1.0-rc1.src/libcxx/include/__cxx03/__math/solaris.h	2025-02-09 10:49:47.181279278 +0000
+@@ -0,0 +1,244 @@
++//===----------------------------------------------------------------------===//
++//
++// Part of the LLVM Project, under the Apache License v2.0 with LLVM Exceptions.
++// See https://llvm.org/LICENSE.txt for license information.
++// SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
++//
++//===----------------------------------------------------------------------===//
 +
- #  if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
- #    pragma GCC system_header
- #  endif
-@@ -372,6 +378,9 @@
- #    include <__math/remainder.h>
- #    include <__math/roots.h>
- #    include <__math/rounding_functions.h>
++#ifndef _LIBCPP___CXX03___MATH_SOLARIS_H
++#define _LIBCPP___CXX03___MATH_SOLARIS_H
++
++#include <__cxx03/__config>
++#include <__cxx03/__type_traits/enable_if.h>
++#include <__cxx03/__type_traits/is_arithmetic.h>
++#include <__cxx03/__type_traits/is_integral.h>
++#include <__cxx03/__type_traits/is_same.h>
++#include <__cxx03/__type_traits/promote.h>
++#include <__cxx03/limits>
++
++#if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
++#  pragma GCC system_header
++#endif
++
++_LIBCPP_BEGIN_NAMESPACE_STD
++
++namespace __math2 {
++
++// acos
++
++template <class _A1, __enable_if_t<is_integral<_A1>::value, int> = 0>
++inline _LIBCPP_HIDE_FROM_ABI double acos(_A1 __x) _NOEXCEPT {
++  return __builtin_acos((double)__x);
++}
++
++// asin
++
++template <class _A1, __enable_if_t<is_integral<_A1>::value, int> = 0>
++inline _LIBCPP_HIDE_FROM_ABI double asin(_A1 __x) _NOEXCEPT {
++  return __builtin_asin((double)__x);
++}
++
++// atan
++
++template <class _A1, __enable_if_t<is_integral<_A1>::value, int> = 0>
++inline _LIBCPP_HIDE_FROM_ABI double atan(_A1 __x) _NOEXCEPT {
++  return __builtin_atan((double)__x);
++}
++
++// atan2
++
++template <class _A1, class _A2, __enable_if_t<is_arithmetic<_A1>::value && is_arithmetic<_A2>::value, int> = 0>
++inline _LIBCPP_HIDE_FROM_ABI typename __promote<_A1, _A2>::type atan2(_A1 __y, _A2 __x) _NOEXCEPT {
++  using __result_type = typename __promote<_A1, _A2>::type;
++  static_assert(!(_IsSame<_A1, __result_type>::value && _IsSame<_A2, __result_type>::value), "");
++  return __math::atan2((__result_type)__y, (__result_type)__x);
++}
++
++// ceil
++
++template <class _A1, __enable_if_t<is_integral<_A1>::value, int> = 0>
++inline _LIBCPP_HIDE_FROM_ABI double ceil(_A1 __x) _NOEXCEPT {
++  return __builtin_ceil((double)__x);
++}
++
++// cos
++
++template <class _A1, __enable_if_t<is_integral<_A1>::value, int> = 0>
++inline _LIBCPP_HIDE_FROM_ABI double cos(_A1 __x) _NOEXCEPT {
++  return __builtin_cos((double)__x);
++}
++
++// cosh
++
++template <class _A1, __enable_if_t<is_integral<_A1>::value, int> = 0>
++inline _LIBCPP_HIDE_FROM_ABI double cosh(_A1 __x) _NOEXCEPT {
++  return __builtin_cosh((double)__x);
++}
++
++// exp
++
++template <class _A1, __enable_if_t<is_integral<_A1>::value, int> = 0>
++inline _LIBCPP_HIDE_FROM_ABI double exp(_A1 __x) _NOEXCEPT {
++  return __builtin_exp((double)__x);
++}
++
++// fabs
++
++template <class _A1, __enable_if_t<is_integral<_A1>::value, int> = 0>
++inline _LIBCPP_HIDE_FROM_ABI double fabs(_A1 __x) _NOEXCEPT {
++  return __builtin_fabs((double)__x);
++}
++
++// floor
++
++template <class _A1, __enable_if_t<is_integral<_A1>::value, int> = 0>
++inline _LIBCPP_HIDE_FROM_ABI double floor(_A1 __x) _NOEXCEPT {
++  return __builtin_floor((double)__x);
++}
++
++// fmod
++
++template <class _A1, class _A2, __enable_if_t<is_arithmetic<_A1>::value && is_arithmetic<_A2>::value, int> = 0>
++inline _LIBCPP_HIDE_FROM_ABI typename __promote<_A1, _A2>::type fmod(_A1 __x, _A2 __y) _NOEXCEPT {
++  using __result_type = typename __promote<_A1, _A2>::type;
++  return ::fmod((__result_type)__x, (__result_type)__y);
++}
++
++// frexp
++
++template <class _A1, __enable_if_t<is_integral<_A1>::value, int> = 0>
++inline _LIBCPP_HIDE_FROM_ABI double frexp(_A1 __x, int* __e) _NOEXCEPT {
++  return __builtin_frexp((double)__x, __e);
++}
++
++// hypot
++
++#if _LIBCPP_STD_VER >= 17
++// Computes the three-dimensional hypotenuse: `std::hypot(x,y,z)`.
++// The naive implementation might over-/underflow which is why this implementation is more involved:
++//    If the square of an argument might run into issues, we scale the arguments appropriately.
++// See https://github.com/llvm/llvm-project/issues/92782 for a detailed discussion and summary.
++template <class _Real>
++_LIBCPP_HIDE_FROM_ABI _Real __hypot(_Real __x, _Real __y, _Real __z) {
++  // Factors needed to determine if over-/underflow might happen
++  constexpr int __exp              = std::numeric_limits<_Real>::max_exponent / 2;
++  const _Real __overflow_threshold = __math::ldexp(_Real(1), __exp);
++  const _Real __overflow_scale     = __math::ldexp(_Real(1), -(__exp + 20));
++
++  // Scale arguments depending on their size
++  const _Real __max_abs = __math::fmax(__math::fabs(__x), __math::fmax(__math::fabs(__y), __math::fabs(__z)));
++  _Real __scale;
++  if (__max_abs > __overflow_threshold) { // x*x + y*y + z*z might overflow
++    __scale = __overflow_scale;
++  } else if (__max_abs < 1 / __overflow_threshold) { // x*x + y*y + z*z might underflow
++    __scale = 1 / __overflow_scale;
++  } else {
++    __scale = 1;
++  }
++  __x *= __scale;
++  __y *= __scale;
++  __z *= __scale;
++
++  // Compute hypot of scaled arguments and undo scaling
++  return __math::sqrt(__x * __x + __y * __y + __z * __z) / __scale;
++}
++
++inline _LIBCPP_HIDE_FROM_ABI float hypot(float __x, float __y, float __z) { return __math::__hypot(__x, __y, __z); }
++
++inline _LIBCPP_HIDE_FROM_ABI double hypot(double __x, double __y, double __z) { return __math::__hypot(__x, __y, __z); }
++
++inline _LIBCPP_HIDE_FROM_ABI long double hypot(long double __x, long double __y, long double __z) {
++  return __math::__hypot(__x, __y, __z);
++}
++
++template <class _A1,
++          class _A2,
++          class _A3,
++          std::enable_if_t< is_arithmetic_v<_A1> && is_arithmetic_v<_A2> && is_arithmetic_v<_A3>, int> = 0 >
++_LIBCPP_HIDE_FROM_ABI typename __promote<_A1, _A2, _A3>::type hypot(_A1 __x, _A2 __y, _A3 __z) _NOEXCEPT {
++  using __result_type = typename __promote<_A1, _A2, _A3>::type;
++  static_assert(!(
++      std::is_same_v<_A1, __result_type> && std::is_same_v<_A2, __result_type> && std::is_same_v<_A3, __result_type>));
++  return __math::__hypot(
++      static_cast<__result_type>(__x), static_cast<__result_type>(__y), static_cast<__result_type>(__z));
++}
++#endif
++
++// ldexp
++
++template <class _A1, __enable_if_t<is_integral<_A1>::value, int> = 0>
++inline _LIBCPP_HIDE_FROM_ABI double ldexp(_A1 __x, int __e) _NOEXCEPT {
++  return __builtin_ldexp((double)__x, __e);
++}
++
++// log
++
++template <class _A1, __enable_if_t<is_integral<_A1>::value, int> = 0>
++inline _LIBCPP_HIDE_FROM_ABI double log(_A1 __x) _NOEXCEPT {
++  return __builtin_log((double)__x);
++}
++
++// log10
++
++template <class _A1, __enable_if_t<is_integral<_A1>::value, int> = 0>
++inline _LIBCPP_HIDE_FROM_ABI double log10(_A1 __x) _NOEXCEPT {
++  return __builtin_log10((double)__x);
++}
++
++// log1p
++
++template <class _A1, __enable_if_t<is_integral<_A1>::value, int> = 0>
++inline _LIBCPP_HIDE_FROM_ABI double log1p(_A1 __x) _NOEXCEPT {
++  return __builtin_log1p((double)__x);
++}
++
++// pow
++
++template <class _A1, class _A2, __enable_if_t<is_arithmetic<_A1>::value && is_arithmetic<_A2>::value, int> = 0>
++inline _LIBCPP_HIDE_FROM_ABI typename __promote<_A1, _A2>::type pow(_A1 __x, _A2 __y) _NOEXCEPT {
++  using __result_type = typename __promote<_A1, _A2>::type;
++  static_assert(!(_IsSame<_A1, __result_type>::value && _IsSame<_A2, __result_type>::value), "");
++  return __math::pow((__result_type)__x, (__result_type)__y);
++}
++
++// sin
++
++template <class _A1, __enable_if_t<is_integral<_A1>::value, int> = 0>
++inline _LIBCPP_HIDE_FROM_ABI double sin(_A1 __x) _NOEXCEPT {
++  return __builtin_sin((double)__x);
++}
++
++// sinh
++
++template <class _A1, __enable_if_t<is_integral<_A1>::value, int> = 0>
++inline _LIBCPP_HIDE_FROM_ABI double sinh(_A1 __x) _NOEXCEPT {
++  return __builtin_sinh((double)__x);
++}
++
++// sqrt
++
++template <class _A1, __enable_if_t<is_integral<_A1>::value, int> = 0>
++inline _LIBCPP_HIDE_FROM_ABI double sqrt(_A1 __x) _NOEXCEPT {
++  return __builtin_sqrt((double)__x);
++}
++
++// tan
++
++template <class _A1, __enable_if_t<is_integral<_A1>::value, int> = 0>
++inline _LIBCPP_HIDE_FROM_ABI double tan(_A1 __x) _NOEXCEPT {
++  return __builtin_tan((double)__x);
++}
++
++// tanh
++
++template <class _A1, __enable_if_t<is_integral<_A1>::value, int> = 0>
++inline _LIBCPP_HIDE_FROM_ABI double tanh(_A1 __x) _NOEXCEPT {
++  return __builtin_tanh((double)__x);
++}
++
++} // namespace __math2
++
++_LIBCPP_END_NAMESPACE_STD
++
++#endif // _LIBCPP___CXX03___MATH_SOLARIS_H
+--- llvm-project-20.1.0-rc1.src/libcxx/include/__cxx03/__random/log2.h~	2025-02-02 02:04:34.000000000 +0000
++++ llvm-project-20.1.0-rc1.src/libcxx/include/__cxx03/__random/log2.h	2025-02-09 10:34:39.534134893 +0000
+@@ -13,6 +13,10 @@
+ #include <__cxx03/__type_traits/conditional.h>
+ #include <__cxx03/cstddef>
+ 
++#if defined(__sun)
++#define __log2(x) __builtin_log2(x)
++#endif
++
+ #if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
+ #  pragma GCC system_header
+ #endif
+--- llvm-project-20.1.0-rc1.src/libcxx/include/__cxx03/math.h~	2025-02-02 02:04:34.000000000 +0000
++++ llvm-project-20.1.0-rc1.src/libcxx/include/__cxx03/math.h	2025-02-09 10:41:31.956413258 +0000
+@@ -372,6 +372,9 @@
+ #    include <__cxx03/__math/remainder.h>
+ #    include <__cxx03/__math/roots.h>
+ #    include <__cxx03/__math/rounding_functions.h>
 +#  if defined(__sun)
-+#    include <__math/solaris.h>
++#    include <__cxx03/__math/solaris.h>
 +#  endif
- #    include <__math/traits.h>
- #    include <__math/trigonometric_functions.h>
- #    include <__type_traits/enable_if.h>
-@@ -379,6 +388,7 @@
- #    include <__type_traits/is_integral.h>
- #    include <stdlib.h>
+ #    include <__cxx03/__math/traits.h>
+ #    include <__cxx03/__math/trigonometric_functions.h>
+ #    include <__cxx03/__type_traits/enable_if.h>
+@@ -379,6 +382,7 @@
+ #    include <__cxx03/__type_traits/is_integral.h>
+ #    include <__cxx03/stdlib.h>
  
 +#if !defined(__sun)
  // fpclassify relies on implementation-defined constants, so we can't move it to a detail header
  _LIBCPP_BEGIN_NAMESPACE_STD
  
-@@ -412,10 +422,10 @@
- _LIBCPP_END_NAMESPACE_STD
+@@ -413,9 +417,10 @@
  
  using std::__math::fpclassify;
--using std::__math::signbit;
+ using std::__math::signbit;
 +#endif // !defined(__sun)
  
 -// The MSVC runtime already provides these functions as templates
@@ -954,7 +900,7 @@ diff -Naur llvm-project-19.1.0.src.orig/libcxx/include/math.h llvm-project-19.1.
  using std::__math::isfinite;
  using std::__math::isgreater;
  using std::__math::isgreaterequal;
-@@ -426,7 +436,7 @@
+@@ -426,7 +431,7 @@
  using std::__math::isnan;
  using std::__math::isnormal;
  using std::__math::isunordered;
@@ -963,7 +909,7 @@ diff -Naur llvm-project-19.1.0.src.orig/libcxx/include/math.h llvm-project-19.1.
  
  // abs
  //
-@@ -441,6 +451,34 @@
+@@ -441,6 +446,34 @@
  // templates. Functions are preferred over function templates during overload resolution, which means that our overload
  // will only be selected when the C library doesn't provide one.
  
@@ -998,7 +944,7 @@ diff -Naur llvm-project-19.1.0.src.orig/libcxx/include/math.h llvm-project-19.1.
  using std::__math::acos;
  using std::__math::acosh;
  using std::__math::asin;
-@@ -498,6 +535,7 @@
+@@ -498,6 +531,7 @@
  using std::__math::tanh;
  using std::__math::tgamma;
  using std::__math::trunc;
@@ -1006,9 +952,8 @@ diff -Naur llvm-project-19.1.0.src.orig/libcxx/include/math.h llvm-project-19.1.
  
  } // extern "C++"
  
-diff -Naur llvm-project-19.1.0.src.orig/libcxx/include/stdlib.h llvm-project-19.1.0.src/libcxx/include/stdlib.h
---- llvm-project-19.1.0.src/libcxx/include/stdlib.h.~1~	2024-09-17 12:26:36.000000000 +0000
-+++ llvm-project-19.1.0.src/libcxx/include/stdlib.h	2024-09-23 18:31:36.404808798 +0000
+--- llvm-project-20.1.0-rc2.src/libcxx/include/__cxx03/stdlib.h~	2025-02-12 05:59:18.000000000 +0000
++++ llvm-project-20.1.0-rc2.src/libcxx/include/__cxx03/stdlib.h	2025-02-18 12:32:21.152749107 +0000
 @@ -110,10 +110,13 @@
  
  // MSVCRT already has the correct prototype in <stdlib.h> if __cplusplus is defined
@@ -1041,18 +986,979 @@ diff -Naur llvm-project-19.1.0.src.orig/libcxx/include/stdlib.h llvm-project-19.
  #      if !(defined(__FreeBSD__) && !defined(__LONG_LONG_SUPPORTED))
  inline _LIBCPP_HIDE_FROM_ABI lldiv_t div(long long __x, long long __y) _NOEXCEPT { return ::lldiv(__x, __y); }
  #      endif
-diff -Naur llvm-project-18.1.8.src.orig/libcxx/include/string.h llvm-project-18.1.8.src/libcxx/include/string.h
---- llvm-project-18.1.8.src.orig/libcxx/include/string.h	2024-06-15 18:21:32.000000000 +0000
-+++ llvm-project-18.1.8.src/libcxx/include/string.h	2024-06-30 19:23:46.509754671 +0000
-@@ -64,7 +64,7 @@
+--- llvm-project-20.1.0-rc1.src/libcxx/include/__cxx03/wchar.h~	2025-02-02 02:04:34.000000000 +0000
++++ llvm-project-20.1.0-rc1.src/libcxx/include/__cxx03/wchar.h	2025-02-09 17:55:02.520970286 +0000
+@@ -130,7 +130,7 @@
+ #  endif
+ 
+ // Determine whether we have const-correct overloads for wcschr and friends.
+-#  if defined(_WCHAR_H_CPLUSPLUS_98_CONFORMANCE_)
++#  if defined(_WCHAR_H_CPLUSPLUS_98_CONFORMANCE_) || defined(__sun)
+ #    define _LIBCPP_WCHAR_H_HAS_CONST_OVERLOADS 1
+ #  elif defined(__GLIBC_PREREQ)
+ #    if __GLIBC_PREREQ(2, 10)
+--- llvm-project-19.1.0.src/libcxx/include/__expected/expected.h~	2024-09-17 12:26:36.000000000 +0000
++++ llvm-project-19.1.0.src/libcxx/include/__expected/expected.h	2024-10-05 17:24:14.619239905 +0000
+@@ -9,6 +9,13 @@
+ #ifndef _LIBCPP___EXPECTED_EXPECTED_H
+ #define _LIBCPP___EXPECTED_EXPECTED_H
+ 
++#if defined(__sun)
++#undef _Err
++#undef _Tp
++#undef _T2
++#undef _E2
++#endif
++
+ #include <__assert>
+ #include <__config>
+ #include <__expected/bad_expected_access.h>
+diff -Naur llvm-project-18.1.8.src.orig/libcxx/include/__locale llvm-project-18.1.8.src/libcxx/include/__locale
+--- llvm-project-18.1.8.src.orig/libcxx/include/__locale	2024-06-15 18:21:32.000000000 +0000
++++ llvm-project-18.1.8.src/libcxx/include/__locale	2024-07-01 16:32:52.108742752 +0000
+@@ -391,7 +393,7 @@
+   static const mask blank        = _CTYPE_B;
+   static const mask __regex_word = 0x80;
+ #  endif
+-#elif defined(_AIX)
++#elif defined(__sun__) || defined(_AIX)
+   typedef unsigned int mask;
+   static const mask space        = _ISSPACE;
+   static const mask print        = _ISPRINT;
+@@ -403,7 +405,11 @@
+   static const mask punct        = _ISPUNCT;
+   static const mask xdigit       = _ISXDIGIT;
+   static const mask blank        = _ISBLANK;
++# if defined(_AIX)
+   static const mask __regex_word = 0x8000;
++# else
++  static const mask __regex_word = 1 << 10;
++# endif
+ #elif defined(_NEWLIB_VERSION)
+   // Same type as Newlib's _ctype_ array in newlib/libc/include/ctype.h.
+   typedef char mask;
+diff -Naur llvm-project-20.1.0-rc1.src.orig/libcxx/include/__locale_dir/locale_base_api/locale_base_api.h llvm-project-20.1.0-rc1.src/libcxx/include/__locale_dir/locale_base_api/locale_base_api.h
+--- llvm-project-20.1.0-rc1.src/libcxx/include/__locale_dir/locale_base_api.h~	2025-02-02 02:04:34.000000000 +0000
++++ llvm-project-20.1.0-rc1.src/libcxx/include/__locale_dir/locale_base_api.h	2025-02-09 10:09:15.247935735 +0000
+@@ -124,6 +124,8 @@
+ #    include <__locale_dir/locale_base_api/android.h>
+ #  elif defined(__OpenBSD__)
+ #    include <__locale_dir/locale_base_api/openbsd.h>
++#  elif defined(__sun__)
++#    include <__locale_dir/locale_base_api/solaris.h>
+ #  elif defined(__wasi__) || _LIBCPP_HAS_MUSL_LIBC
+ #    include <__locale_dir/locale_base_api/musl.h>
+ #  endif
+diff -Naur llvm-project-19.1.0.src.orig/libcxx/include/__locale_dir/locale_base_api/solaris.h llvm-project-19.1.0.src/libcxx/include/__locale_dir/locale_base_api/solaris.h
+--- llvm-project-19.1.0.src.orig/libcxx/include/__locale_dir/locale_base_api/solaris.h	2024-09-24 11:57:25.497634653 +0000
++++ llvm-project-19.1.0.src/libcxx/include/__locale_dir/locale_base_api/solaris.h	2024-09-24 12:00:13.554949235 +0000
+@@ -0,0 +1,366 @@
++//===----------------------------------------------------------------------===//
++//
++// Part of the LLVM Project, under the Apache License v2.0 with LLVM Exceptions.
++// See https://llvm.org/LICENSE.txt for license information.
++// SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
++//
++//===----------------------------------------------------------------------===//
++
++////////////////////////////////////////////////////////////////////////////////
++// Minimal xlocale implementation for Solaris.  This implements the subset of
++// the xlocale APIs that libc++ depends on.
++////////////////////////////////////////////////////////////////////////////////
++#ifndef __XLOCALE_H_INCLUDED
++#define __XLOCALE_H_INCLUDED
++
++#include <string.h>
++#include <stdlib.h>
++#include <stdarg.h>
++#include <__support/solaris/locale_mgmt_solaris.h>
++#include <cstdlib>
++#include <cwchar>
++
++#ifdef __cplusplus
++extern "C" {
++#endif
++
++size_t wcsnrtombs(char* dst, const wchar_t **wcs, size_t wn, size_t n, mbstate_t* st);
++size_t mbsnrtowcs(wchar_t *wcs, const char **src, size_t n, size_t wn, mbstate_t* st);
++
++#pragma push_macro("FIX_LOCALE")
++#define FIX_LOCALE(__loc) xlocale::__setAndRestore __newLoc(__loc)
++
++#define MB_CUR_MAX_L(__loc) MB_CUR_MAX
++
++inline _LIBCPP_HIDE_FROM_ABI locale_t
++newlocale(int category_mask, const char* locale, locale_t base) {
++  return newlocale_internal(category_mask, locale, base);
++}
++
++inline _LIBCPP_HIDE_FROM_ABI void
++freelocale(locale_t locobj) {
++  freelocale_internal(locobj);
++}
++
++inline _LIBCPP_HIDE_FROM_ABI locale_t
++uselocale(locale_t newloc) {
++  return uselocale_internal(newloc);
++}
++
++inline _LIBCPP_HIDE_FROM_ABI int
++mbtowc_l(wchar_t *pwc, const char *src, size_t n, locale_t __loc) {
++  FIX_LOCALE(__loc);
++  return ::mbtowc(pwc, src, n);
++}
++  
++inline _LIBCPP_HIDE_FROM_ABI size_t
++wcrtomb_l(char *__nptr, wchar_t __endptr, mbstate_t *__base, locale_t __loc) {
++  FIX_LOCALE(__loc);
++  return ::wcrtomb(__nptr, __endptr, __base);
++}
++  
++inline _LIBCPP_HIDE_FROM_ABI int
++iswctype_l(wint_t __nptr, wctype_t __endptr, locale_t __loc) {
++  FIX_LOCALE(__loc);
++  return ::iswctype(__nptr, __endptr);
++}
++  
++inline _LIBCPP_HIDE_FROM_ABI wint_t
++btowc_l(int c, locale_t __loc) {
++  FIX_LOCALE(__loc);
++  return ::btowc(c);
++}
++  
++inline _LIBCPP_HIDE_FROM_ABI int
++wctob_l(wint_t c, locale_t __loc) {
++  FIX_LOCALE(__loc);
++  return ::wctob(c);
++}
++
++inline _LIBCPP_HIDE_FROM_ABI size_t
++mbrlen_l(const char *s, size_t n, mbstate_t *ps, locale_t __loc) {
++  FIX_LOCALE(__loc);
++  return ::mbrlen(s, n, ps);
++}
++
++inline _LIBCPP_HIDE_FROM_ABI size_t
++mbsrtowcs_l(wchar_t *dst, const char **src, size_t len, mbstate_t* st, locale_t __loc) {
++  FIX_LOCALE(__loc);
++  return ::mbsrtowcs(dst, src, len, st);
++}
++
++inline _LIBCPP_HIDE_FROM_ABI size_t
++mbrtowc_l(wchar_t *pwc, const char *s, size_t len, mbstate_t* st, locale_t __loc) {
++  FIX_LOCALE(__loc);
++  return ::mbrtowc(pwc, s, len, st);
++}
++
++// The following are not POSIX routines.  These are quick-and-dirty hacks
++// to make things pretend to work
++inline _LIBCPP_HIDE_FROM_ABI long long strtoll_l(const char* __nptr, char** __endptr, int __base, locale_t __loc) {
++  FIX_LOCALE(__loc);
++  return ::strtoll(__nptr, __endptr, __base);
++}
++
++inline _LIBCPP_HIDE_FROM_ABI long strtol_l(const char* __nptr, char** __endptr, int __base, locale_t __loc) {
++  FIX_LOCALE(__loc);
++  return ::strtol(__nptr, __endptr, __base);
++}
++
++inline _LIBCPP_HIDE_FROM_ABI double strtod_l(const char* __nptr, char** __endptr, locale_t __loc) {
++  FIX_LOCALE(__loc);
++  return ::strtod(__nptr, __endptr);
++}
++
++inline _LIBCPP_HIDE_FROM_ABI float strtof_l(const char* __nptr, char** __endptr, locale_t __loc) {
++  FIX_LOCALE(__loc);
++  return ::strtof(__nptr, __endptr);
++}
++
++inline _LIBCPP_HIDE_FROM_ABI long double strtold_l(const char* __nptr, char** __endptr, locale_t __loc) {
++  FIX_LOCALE(__loc);
++  return ::strtold(__nptr, __endptr);
++}
++
++inline _LIBCPP_HIDE_FROM_ABI unsigned long long
++strtoull_l(const char* __nptr, char** __endptr, int __base, locale_t __loc) {
++  FIX_LOCALE(__loc);
++  return ::strtoull(__nptr, __endptr, __base);
++}
++
++inline _LIBCPP_HIDE_FROM_ABI unsigned long strtoul_l(const char* __nptr, char** __endptr, int __base, locale_t __loc) {
++  FIX_LOCALE(__loc);
++  return ::strtoul(__nptr, __endptr, __base);
++}
++
++inline _LIBCPP_HIDE_FROM_ABI size_t wcsnrtombs_l(char* dst, const wchar_t **wcs, size_t wn, size_t n, mbstate_t* st, locale_t __loc) {
++  FIX_LOCALE(__loc);
++  return ::wcsnrtombs(dst, wcs, wn, n, st);
++}
++
++inline _LIBCPP_HIDE_FROM_ABI size_t mbsnrtowcs_l(wchar_t *wcs, const char **src, size_t n, size_t wn, mbstate_t* st, locale_t __loc) {
++  FIX_LOCALE(__loc);
++  return ::mbsnrtowcs(wcs, src, n, wn, st);
++}
++
++// suppress 'warning: format string is not a string literal'
++#pragma GCC diagnostic push
++#pragma GCC diagnostic ignored "-Wformat-nonliteral"
++  
++inline _LIBCPP_HIDE_FROM_ABI int vsnprintf_l(char* __s, size_t __n, locale_t __loc, const char* __format, va_list __va) {
++  FIX_LOCALE(__loc);
++  return vsnprintf(__s, __n, __format, __va);
++}
++
++inline _LIBCPP_HIDE_FROM_ABI int snprintf_l(char *__s, size_t __n, locale_t __loc, const char *__format, ...) {
++  va_list __va;
++  va_start(__va, __format);
++  int __res = vsnprintf_l(__s, __n , __loc, __format, __va);
++  va_end(__va);
++  return __res;
++}
++
++inline _LIBCPP_HIDE_FROM_ABI int asprintf_l(char **__s, locale_t __loc, const char *__format, ...) {
++  FIX_LOCALE(__loc);
++  va_list __va;
++  va_start(__va, __format);
++  // FIXME:
++  int __res = vasprintf(__s, __format, __va);
++  va_end(__va);
++  return __res;
++}
++
++inline _LIBCPP_HIDE_FROM_ABI int sscanf_l(const char *__s, locale_t __loc, const char *__format, ...) {
++  FIX_LOCALE(__loc);
++  va_list __va;
++  va_start(__va, __format);
++  // FIXME:
++  int __res = vsscanf(__s, __format, __va);
++  va_end(__va);
++  return __res;
++}
++
++#pragma GCC diagnostic pop
++
++inline _LIBCPP_HIDE_FROM_ABI struct lconv *localeconv_l(locale_t __loc) {
++  FIX_LOCALE(__loc);
++  return localeconv();
++}
++
++inline _LIBCPP_HIDE_FROM_ABI int isalnum_l(int __c, locale_t __loc) {
++  FIX_LOCALE(__loc);
++  return ::isalnum(__c);
++}
++
++inline _LIBCPP_HIDE_FROM_ABI int isalpha_l(int __c, locale_t __loc) {
++  FIX_LOCALE(__loc);
++  return ::isalpha(__c);
++}
++
++inline _LIBCPP_HIDE_FROM_ABI int isblank_l(int __c, locale_t __loc) {
++  FIX_LOCALE(__loc);
++  return ::isblank(__c);
++}
++
++inline _LIBCPP_HIDE_FROM_ABI int iscntrl_l(int __c, locale_t __loc) {
++  FIX_LOCALE(__loc);
++  return ::iscntrl(__c);
++}
++
++inline _LIBCPP_HIDE_FROM_ABI int isdigit_l(int __c, locale_t __loc) {
++  FIX_LOCALE(__loc);
++  return ::isdigit(__c);
++}
++
++inline _LIBCPP_HIDE_FROM_ABI int isgraph_l(int __c, locale_t __loc) {
++  FIX_LOCALE(__loc);
++  return ::isgraph(__c);
++}
++
++inline _LIBCPP_HIDE_FROM_ABI int islower_l(int __c, locale_t __loc) {
++  FIX_LOCALE(__loc);
++  return ::islower(__c);
++}
++
++inline _LIBCPP_HIDE_FROM_ABI int isprint_l(int __c, locale_t __loc) {
++  FIX_LOCALE(__loc);
++  return ::isprint(__c);
++}
++
++inline _LIBCPP_HIDE_FROM_ABI int ispunct_l(int __c, locale_t __loc) {
++  FIX_LOCALE(__loc);
++  return ::ispunct(__c);
++}
++
++inline _LIBCPP_HIDE_FROM_ABI int isspace_l(int __c, locale_t __loc) {
++  FIX_LOCALE(__loc);
++  return ::isspace(__c);
++}
++
++inline _LIBCPP_HIDE_FROM_ABI int isupper_l(int __c, locale_t __loc) {
++  FIX_LOCALE(__loc);
++  return ::isupper(__c);
++}
++
++inline _LIBCPP_HIDE_FROM_ABI int isxdigit_l(int __c, locale_t __loc) {
++  FIX_LOCALE(__loc);
++  return ::isxdigit(__c);
++}
++
++inline _LIBCPP_HIDE_FROM_ABI int toupper_l(int __c, locale_t __loc) {
++  FIX_LOCALE(__loc);
++  return ::toupper(__c);
++}
++
++inline _LIBCPP_HIDE_FROM_ABI int tolower_l(int __c, locale_t __loc) {
++  FIX_LOCALE(__loc);
++  return ::tolower(__c);
++}
++
++#ifndef _LIBCPP_HAS_NO_WIDE_CHARACTERS
++inline _LIBCPP_HIDE_FROM_ABI int iswalnum_l(wint_t __c, locale_t __loc) {
++  FIX_LOCALE(__loc);
++  return ::iswalnum(__c);
++}
++
++inline _LIBCPP_HIDE_FROM_ABI int iswalpha_l(wint_t __c, locale_t __loc) {
++  FIX_LOCALE(__loc);
++  return ::iswalpha(__c);
++}
++
++inline _LIBCPP_HIDE_FROM_ABI int iswblank_l(wint_t __c, locale_t __loc) {
++  FIX_LOCALE(__loc);
++  return ::iswblank(__c);
++}
++
++inline _LIBCPP_HIDE_FROM_ABI int iswcntrl_l(wint_t __c, locale_t __loc) {
++  FIX_LOCALE(__loc);
++  return ::iswcntrl(__c);
++}
++
++inline _LIBCPP_HIDE_FROM_ABI int iswdigit_l(wint_t __c, locale_t __loc) {
++  FIX_LOCALE(__loc);
++  return ::iswdigit(__c);
++}
++
++inline _LIBCPP_HIDE_FROM_ABI int iswgraph_l(wint_t __c, locale_t __loc) {
++  FIX_LOCALE(__loc);
++  return ::iswgraph(__c);
++}
++
++inline _LIBCPP_HIDE_FROM_ABI int iswlower_l(wint_t __c, locale_t __loc) {
++  FIX_LOCALE(__loc);
++  return ::iswlower(__c);
++}
++
++inline _LIBCPP_HIDE_FROM_ABI int iswprint_l(wint_t __c, locale_t __loc) {
++  FIX_LOCALE(__loc);
++  return ::iswprint(__c);
++}
++
++inline _LIBCPP_HIDE_FROM_ABI int iswpunct_l(wint_t __c, locale_t __loc) {
++  FIX_LOCALE(__loc);
++  return ::iswpunct(__c);
++}
++
++inline _LIBCPP_HIDE_FROM_ABI int iswspace_l(wint_t __c, locale_t __loc) {
++  FIX_LOCALE(__loc);
++  return ::iswspace(__c);
++}
++
++inline _LIBCPP_HIDE_FROM_ABI int iswupper_l(wint_t __c, locale_t __loc) {
++  FIX_LOCALE(__loc);
++  return ::iswupper(__c);
++}
++
++inline _LIBCPP_HIDE_FROM_ABI int iswxdigit_l(wint_t __c, locale_t __loc) {
++  FIX_LOCALE(__loc);
++  return ::iswxdigit(__c);
++}
++
++inline _LIBCPP_HIDE_FROM_ABI wint_t towupper_l(wint_t __c, locale_t __loc) {
++  FIX_LOCALE(__loc);
++  return ::towupper(__c);
++}
++
++inline _LIBCPP_HIDE_FROM_ABI wint_t towlower_l(wint_t __c, locale_t __loc) {
++  FIX_LOCALE(__loc);
++  return ::towlower(__c);
++}
++#endif // _LIBCPP_HAS_NO_WIDE_CHARACTERS
++
++inline _LIBCPP_HIDE_FROM_ABI int strcoll_l(const char* __s1, const char* __s2, locale_t __loc) {
++  FIX_LOCALE(__loc);
++  return ::strcoll(__s1, __s2);
++}
++
++inline _LIBCPP_HIDE_FROM_ABI size_t strxfrm_l(char* __dest, const char* __src, size_t __n, locale_t __loc) {
++  FIX_LOCALE(__loc);
++  return ::strxfrm(__dest, __src, __n);
++}
++
++inline _LIBCPP_HIDE_FROM_ABI size_t
++strftime_l(char* __s, size_t __max, const char* __format, const struct tm* __tm, locale_t __loc) {
++  FIX_LOCALE(__loc);
++  return ::strftime(__s, __max, __format, __tm);
++}
++
++#ifndef _LIBCPP_HAS_NO_WIDE_CHARACTERS
++inline _LIBCPP_HIDE_FROM_ABI int wcscoll_l(const wchar_t* __ws1, const wchar_t* __ws2, locale_t __loc) {
++  FIX_LOCALE(__loc);
++  return ::wcscoll(__ws1, __ws2);
++}
++
++inline _LIBCPP_HIDE_FROM_ABI size_t wcsxfrm_l(wchar_t* __dest, const wchar_t* __src, size_t __n, locale_t __loc) {
++  FIX_LOCALE(__loc);
++  return ::wcsxfrm(__dest, __src, __n);
++}
++#endif // _LIBCPP_HAS_NO_WIDE_CHARACTERS
++
++#pragma pop_macro("FIX_LOCALE")
++
++#ifdef __cplusplus
++}
++#endif
++
++#endif
+diff -Naur llvm-project-19.1.0.src.orig/libcxx/include/__math/solaris.h llvm-project-19.1.0.src/libcxx/include/__math/solaris.h
+--- llvm-project-19.1.0.src/libcxx/include/__math/solaris.h.~1~	2024-09-25 12:16:17.250842579 +0000
++++ llvm-project-19.1.0.src/libcxx/include/__math/solaris.h	2024-09-25 17:45:43.875550941 +0000
+@@ -0,0 +1,244 @@
++//===----------------------------------------------------------------------===//
++//
++// Part of the LLVM Project, under the Apache License v2.0 with LLVM Exceptions.
++// See https://llvm.org/LICENSE.txt for license information.
++// SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
++//
++//===----------------------------------------------------------------------===//
++
++#ifndef _LIBCPP___MATH_SOLARIS_H
++#define _LIBCPP___MATH_SOLARIS_H
++
++#include <__config>
++#include <__type_traits/enable_if.h>
++#include <__type_traits/is_arithmetic.h>
++#include <__type_traits/is_integral.h>
++#include <__type_traits/is_same.h>
++#include <__type_traits/promote.h>
++#include <limits>
++
++#if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
++#  pragma GCC system_header
++#endif
++
++_LIBCPP_BEGIN_NAMESPACE_STD
++
++namespace __math2 {
++
++// acos
++
++template <class _A1, __enable_if_t<is_integral<_A1>::value, int> = 0>
++inline _LIBCPP_HIDE_FROM_ABI double acos(_A1 __x) _NOEXCEPT {
++  return __builtin_acos((double)__x);
++}
++
++// asin
++
++template <class _A1, __enable_if_t<is_integral<_A1>::value, int> = 0>
++inline _LIBCPP_HIDE_FROM_ABI double asin(_A1 __x) _NOEXCEPT {
++  return __builtin_asin((double)__x);
++}
++
++// atan
++
++template <class _A1, __enable_if_t<is_integral<_A1>::value, int> = 0>
++inline _LIBCPP_HIDE_FROM_ABI double atan(_A1 __x) _NOEXCEPT {
++  return __builtin_atan((double)__x);
++}
++
++// atan2
++
++template <class _A1, class _A2, __enable_if_t<is_arithmetic<_A1>::value && is_arithmetic<_A2>::value, int> = 0>
++inline _LIBCPP_HIDE_FROM_ABI typename __promote<_A1, _A2>::type atan2(_A1 __y, _A2 __x) _NOEXCEPT {
++  using __result_type = typename __promote<_A1, _A2>::type;
++  static_assert(!(_IsSame<_A1, __result_type>::value && _IsSame<_A2, __result_type>::value), "");
++  return __math::atan2((__result_type)__y, (__result_type)__x);
++}
++
++// ceil
++
++template <class _A1, __enable_if_t<is_integral<_A1>::value, int> = 0>
++inline _LIBCPP_HIDE_FROM_ABI double ceil(_A1 __x) _NOEXCEPT {
++  return __builtin_ceil((double)__x);
++}
++
++// cos
++
++template <class _A1, __enable_if_t<is_integral<_A1>::value, int> = 0>
++inline _LIBCPP_HIDE_FROM_ABI double cos(_A1 __x) _NOEXCEPT {
++  return __builtin_cos((double)__x);
++}
++
++// cosh
++
++template <class _A1, __enable_if_t<is_integral<_A1>::value, int> = 0>
++inline _LIBCPP_HIDE_FROM_ABI double cosh(_A1 __x) _NOEXCEPT {
++  return __builtin_cosh((double)__x);
++}
++
++// exp
++
++template <class _A1, __enable_if_t<is_integral<_A1>::value, int> = 0>
++inline _LIBCPP_HIDE_FROM_ABI double exp(_A1 __x) _NOEXCEPT {
++  return __builtin_exp((double)__x);
++}
++
++// fabs
++
++template <class _A1, __enable_if_t<is_integral<_A1>::value, int> = 0>
++inline _LIBCPP_HIDE_FROM_ABI double fabs(_A1 __x) _NOEXCEPT {
++  return __builtin_fabs((double)__x);
++}
++
++// floor
++
++template <class _A1, __enable_if_t<is_integral<_A1>::value, int> = 0>
++inline _LIBCPP_HIDE_FROM_ABI double floor(_A1 __x) _NOEXCEPT {
++  return __builtin_floor((double)__x);
++}
++
++// fmod
++
++template <class _A1, class _A2, __enable_if_t<is_arithmetic<_A1>::value && is_arithmetic<_A2>::value, int> = 0>
++inline _LIBCPP_HIDE_FROM_ABI typename __promote<_A1, _A2>::type fmod(_A1 __x, _A2 __y) _NOEXCEPT {
++  using __result_type = typename __promote<_A1, _A2>::type;
++  return ::fmod((__result_type)__x, (__result_type)__y);
++}
++
++// frexp
++
++template <class _A1, __enable_if_t<is_integral<_A1>::value, int> = 0>
++inline _LIBCPP_HIDE_FROM_ABI double frexp(_A1 __x, int* __e) _NOEXCEPT {
++  return __builtin_frexp((double)__x, __e);
++}
++
++// hypot
++
++#if _LIBCPP_STD_VER >= 17
++// Computes the three-dimensional hypotenuse: `std::hypot(x,y,z)`.
++// The naive implementation might over-/underflow which is why this implementation is more involved:
++//    If the square of an argument might run into issues, we scale the arguments appropriately.
++// See https://github.com/llvm/llvm-project/issues/92782 for a detailed discussion and summary.
++template <class _Real>
++_LIBCPP_HIDE_FROM_ABI _Real __hypot(_Real __x, _Real __y, _Real __z) {
++  // Factors needed to determine if over-/underflow might happen
++  constexpr int __exp              = std::numeric_limits<_Real>::max_exponent / 2;
++  const _Real __overflow_threshold = __math::ldexp(_Real(1), __exp);
++  const _Real __overflow_scale     = __math::ldexp(_Real(1), -(__exp + 20));
++
++  // Scale arguments depending on their size
++  const _Real __max_abs = __math::fmax(__math::fabs(__x), __math::fmax(__math::fabs(__y), __math::fabs(__z)));
++  _Real __scale;
++  if (__max_abs > __overflow_threshold) { // x*x + y*y + z*z might overflow
++    __scale = __overflow_scale;
++  } else if (__max_abs < 1 / __overflow_threshold) { // x*x + y*y + z*z might underflow
++    __scale = 1 / __overflow_scale;
++  } else {
++    __scale = 1;
++  }
++  __x *= __scale;
++  __y *= __scale;
++  __z *= __scale;
++
++  // Compute hypot of scaled arguments and undo scaling
++  return __math::sqrt(__x * __x + __y * __y + __z * __z) / __scale;
++}
++
++inline _LIBCPP_HIDE_FROM_ABI float hypot(float __x, float __y, float __z) { return __math::__hypot(__x, __y, __z); }
++
++inline _LIBCPP_HIDE_FROM_ABI double hypot(double __x, double __y, double __z) { return __math::__hypot(__x, __y, __z); }
++
++inline _LIBCPP_HIDE_FROM_ABI long double hypot(long double __x, long double __y, long double __z) {
++  return __math::__hypot(__x, __y, __z);
++}
++
++template <class _A1,
++          class _A2,
++          class _A3,
++          std::enable_if_t< is_arithmetic_v<_A1> && is_arithmetic_v<_A2> && is_arithmetic_v<_A3>, int> = 0 >
++_LIBCPP_HIDE_FROM_ABI typename __promote<_A1, _A2, _A3>::type hypot(_A1 __x, _A2 __y, _A3 __z) _NOEXCEPT {
++  using __result_type = typename __promote<_A1, _A2, _A3>::type;
++  static_assert(!(
++      std::is_same_v<_A1, __result_type> && std::is_same_v<_A2, __result_type> && std::is_same_v<_A3, __result_type>));
++  return __math::__hypot(
++      static_cast<__result_type>(__x), static_cast<__result_type>(__y), static_cast<__result_type>(__z));
++}
++#endif
++
++// ldexp
++
++template <class _A1, __enable_if_t<is_integral<_A1>::value, int> = 0>
++inline _LIBCPP_HIDE_FROM_ABI double ldexp(_A1 __x, int __e) _NOEXCEPT {
++  return __builtin_ldexp((double)__x, __e);
++}
++
++// log
++
++template <class _A1, __enable_if_t<is_integral<_A1>::value, int> = 0>
++inline _LIBCPP_HIDE_FROM_ABI double log(_A1 __x) _NOEXCEPT {
++  return __builtin_log((double)__x);
++}
++
++// log10
++
++template <class _A1, __enable_if_t<is_integral<_A1>::value, int> = 0>
++inline _LIBCPP_HIDE_FROM_ABI double log10(_A1 __x) _NOEXCEPT {
++  return __builtin_log10((double)__x);
++}
++
++// log1p
++
++template <class _A1, __enable_if_t<is_integral<_A1>::value, int> = 0>
++inline _LIBCPP_HIDE_FROM_ABI double log1p(_A1 __x) _NOEXCEPT {
++  return __builtin_log1p((double)__x);
++}
++
++// pow
++
++template <class _A1, class _A2, __enable_if_t<is_arithmetic<_A1>::value && is_arithmetic<_A2>::value, int> = 0>
++inline _LIBCPP_HIDE_FROM_ABI typename __promote<_A1, _A2>::type pow(_A1 __x, _A2 __y) _NOEXCEPT {
++  using __result_type = typename __promote<_A1, _A2>::type;
++  static_assert(!(_IsSame<_A1, __result_type>::value && _IsSame<_A2, __result_type>::value), "");
++  return __math::pow((__result_type)__x, (__result_type)__y);
++}
++
++// sin
++
++template <class _A1, __enable_if_t<is_integral<_A1>::value, int> = 0>
++inline _LIBCPP_HIDE_FROM_ABI double sin(_A1 __x) _NOEXCEPT {
++  return __builtin_sin((double)__x);
++}
++
++// sinh
++
++template <class _A1, __enable_if_t<is_integral<_A1>::value, int> = 0>
++inline _LIBCPP_HIDE_FROM_ABI double sinh(_A1 __x) _NOEXCEPT {
++  return __builtin_sinh((double)__x);
++}
++
++// sqrt
++
++template <class _A1, __enable_if_t<is_integral<_A1>::value, int> = 0>
++inline _LIBCPP_HIDE_FROM_ABI double sqrt(_A1 __x) _NOEXCEPT {
++  return __builtin_sqrt((double)__x);
++}
++
++// tan
++
++template <class _A1, __enable_if_t<is_integral<_A1>::value, int> = 0>
++inline _LIBCPP_HIDE_FROM_ABI double tan(_A1 __x) _NOEXCEPT {
++  return __builtin_tan((double)__x);
++}
++
++// tanh
++
++template <class _A1, __enable_if_t<is_integral<_A1>::value, int> = 0>
++inline _LIBCPP_HIDE_FROM_ABI double tanh(_A1 __x) _NOEXCEPT {
++  return __builtin_tanh((double)__x);
++}
++
++} // namespace __math2
++
++_LIBCPP_END_NAMESPACE_STD
++
++#endif // _LIBCPP___MATH_SOLARIS_H
+diff -Naur llvm-project-18.1.8.src.orig/libcxx/include/__random/log2.h llvm-project-18.1.8.src/libcxx/include/__random/log2.h
+--- llvm-project-18.1.8.src.orig/libcxx/include/__random/log2.h	2024-06-15 18:21:32.000000000 +0000
++++ llvm-project-18.1.8.src/libcxx/include/__random/log2.h	2024-08-01 10:33:55.725217228 +0000
+@@ -13,6 +13,10 @@
+ #include <__type_traits/conditional.h>
+ #include <cstddef>
+ 
++#if defined(__sun)
++#define __log2(x) __builtin_log2(x)
++#endif
++
+ #if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
+ #  pragma GCC system_header
+ #endif
+diff -Naur llvm-project-18.1.8.src.orig/libcxx/include/__support/solaris/locale_mgmt_solaris.h llvm-project-18.1.8.src/libcxx/include/__support/solaris/locale_mgmt_solaris.h
+--- llvm-project-18.1.8.src.orig/libcxx/include/__support/solaris/locale_mgmt_solaris.h	1970-01-01 01:00:00.000000000 +0000
++++ llvm-project-18.1.8.src/libcxx/include/__support/solaris/locale_mgmt_solaris.h	2024-07-24 09:50:46.960236158 +0000
+@@ -0,0 +1,86 @@
++// -*- C++ -*-
++//===----------------------------------------------------------------------===//
++//
++// Part of the LLVM Project, under the Apache License v2.0 with LLVM Exceptions.
++// See https://llvm.org/LICENSE.txt for license information.
++// SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
++//
++//===----------------------------------------------------------------------===//
++
++#ifndef _LIBCPP___SUPPORT_LOCALE_MGMT_SOLARIS_H
++#define _LIBCPP___SUPPORT_LOCALE_MGMT_SOLARIS_H
++
++#if defined(__sun)
++
++#  include <locale.h>
++#  include <string>
++#  include <pthread.h>
++
++#  ifdef __cplusplus
++extern "C" {
++#  endif
++
++#  define _LC_MAX LC_MESSAGES /* highest real category */
++#  define _NCAT (_LC_MAX + 1) /* maximum + 1 */
++
++#  define _CATMASK(n) (1 << (n))
++#  define LC_COLLATE_MASK _CATMASK(LC_COLLATE)
++#  define LC_CTYPE_MASK _CATMASK(LC_CTYPE)
++#  define LC_MONETARY_MASK _CATMASK(LC_MONETARY)
++#  define LC_NUMERIC_MASK _CATMASK(LC_NUMERIC)
++#  define LC_TIME_MASK _CATMASK(LC_TIME)
++#  define LC_MESSAGES_MASK _CATMASK(LC_MESSAGES)
++#  define LC_ALL_MASK (_CATMASK(_NCAT) - 1)
++
++typedef struct locale_struct {
++  int category_mask;
++  std::string lc_collate;
++  std::string lc_ctype;
++  std::string lc_monetary;
++  std::string lc_numeric;
++  std::string lc_time;
++  std::string lc_messages;
++}* locale_t;
++
++#  define LC_GLOBAL_LOCALE ((locale_t) -1L)
++
++// Solaris 11.3 does not have newlocale, freelocale and uselocale.
++// The functions below are workarounds in single thread mode.
++_LIBCPP_EXPORTED_FROM_ABI locale_t newlocale_internal(int category_mask, const char* locale, locale_t base);
++_LIBCPP_EXPORTED_FROM_ABI void freelocale_internal(locale_t locobj);
++_LIBCPP_EXPORTED_FROM_ABI locale_t uselocale_internal(locale_t newloc);
++
++namespace xlocale {
++struct __setAndRestore {
++  explicit __setAndRestore(locale_t locale) {
++    pthread_mutex_lock(&__mtx);
++    if (locale == (locale_t)0) {
++      __cloc   = newlocale_internal(LC_ALL_MASK, "C", /* base */ (locale_t)0);
++      __stored = uselocale_internal(__cloc);
++    } else {
++      __stored = uselocale_internal(locale);
++    }
++  }
++
++  ~__setAndRestore() {
++    uselocale_internal(__stored);
++    if (__cloc)
++      freelocale_internal(__cloc);
++    pthread_mutex_unlock(&__mtx);
++  }
++
++private:
++  locale_t __stored = (locale_t)0;
++  locale_t __cloc   = (locale_t)0;
++  static pthread_mutex_t __mtx;
++};
++
++} // namespace xlocale
++
++#  ifdef __cplusplus
++}
++#  endif
++
++#endif // defined(__sun)
++
++#endif // _LIBCPP___SUPPORT_LOCALE_MGMT_SOLARIS_H
+diff -Naur llvm-project-20.1.0-rc1.src.orig/libcxx/include/CMakeLists.txt llvm-project-20.1.0-rc1.src/libcxx/include/CMakeLists.txt
+--- llvm-project-20.1.0-rc1.src/libcxx/include/CMakeLists.txt.~1~	2025-02-02 02:04:34.000000000 +0000
++++ llvm-project-20.1.0-rc1.src/libcxx/include/CMakeLists.txt	2025-02-08 19:01:54.533694398 +0000
+@@ -506,6 +506,7 @@
+   __locale_dir/locale_base_api/ibm.h
+   __locale_dir/locale_base_api/musl.h
+   __locale_dir/locale_base_api/openbsd.h
++  __locale_dir/locale_base_api/solaris.h
+   __locale_dir/pad_and_output.h
+   __locale_dir/support/apple.h
+   __locale_dir/support/bsd_like.h
+@@ -531,6 +532,7 @@
+   __math/remainder.h
+   __math/roots.h
+   __math/rounding_functions.h
++  __math/solaris.h
+   __math/special_functions.h
+   __math/traits.h
+   __math/trigonometric_functions.h
+@@ -726,6 +728,7 @@
+   __support/ibm/gettod_zos.h
+   __support/ibm/locale_mgmt_zos.h
+   __support/ibm/nanosleep.h
++  __support/solaris/locale_mgmt_solaris.h
+   __support/xlocale/__nop_locale_mgmt.h
+   __support/xlocale/__posix_l_fallback.h
+   __support/xlocale/__strtonum_fallback.h
+@@ -1555,6 +1558,7 @@
+   __cxx03/__locale_dir/locale_base_api/musl.h
+   __cxx03/__locale_dir/locale_base_api/newlib.h
+   __cxx03/__locale_dir/locale_base_api/openbsd.h
++  __cxx03/__locale_dir/locale_base_api/solaris.h
+   __cxx03/__locale_dir/locale_base_api/win32.h
+   __cxx03/__math/abs.h
+   __cxx03/__math/copysign.h
+@@ -1573,6 +1577,7 @@
+   __cxx03/__math/remainder.h
+   __cxx03/__math/roots.h
+   __cxx03/__math/rounding_functions.h
++  __cxx03/__math/solaris.h
+   __cxx03/__math/special_functions.h
+   __cxx03/__math/traits.h
+   __cxx03/__math/trigonometric_functions.h
+diff -Naur llvm-project-20.1.0-rc1.src.orig/libcxx/include/math.h llvm-project-20.1.0-rc1.src/libcxx/include/math.h
+--- llvm-project-20.1.0-rc1.src/libcxx/include/math.h.~1~	2025-02-02 02:04:34.000000000 +0000
++++ llvm-project-20.1.0-rc1.src/libcxx/include/math.h	2025-02-08 19:05:26.430521207 +0000
+@@ -375,6 +381,9 @@
+ #      include <__math/remainder.h>
+ #      include <__math/roots.h>
+ #      include <__math/rounding_functions.h>
++#  if defined(__sun)
++#      include <__math/solaris.h>
++#  endif
+ #      include <__math/traits.h>
+ #      include <__math/trigonometric_functions.h>
+ #      include <__type_traits/enable_if.h>
+@@ -382,6 +391,7 @@
+ #      include <__type_traits/is_integral.h>
+ #      include <stdlib.h>
+ 
++#if !defined(__sun)
+ // fpclassify relies on implementation-defined constants, so we can't move it to a detail header
+ _LIBCPP_BEGIN_NAMESPACE_STD
+ 
+@@ -416,9 +426,10 @@
+ 
+ using std::__math::fpclassify;
+ using std::__math::signbit;
++#endif // !defined(__sun)
+ 
+-// The MSVC runtime already provides these functions as templates
+-#      ifndef _LIBCPP_MSVCRT
++// The MSVC and Solaris runtime already provide these functions as templates
++#      if !defined(_LIBCPP_MSVCRT) && !defined(__sun)
+ using std::__math::isfinite;
+ using std::__math::isgreater;
+ using std::__math::isgreaterequal;
+@@ -429,7 +440,7 @@
+ using std::__math::isnan;
+ using std::__math::isnormal;
+ using std::__math::isunordered;
+-#      endif // _LIBCPP_MSVCRT
++#      endif // !defined(_LIBCPP_MSVCRT) && !defined(__sun)
+ 
+ // abs
+ //
+@@ -444,6 +455,34 @@
+ // templates. Functions are preferred over function templates during overload resolution, which means that our overload
+ // will only be selected when the C library doesn't provide one.
+ 
++// The Solaris runtime already provides some functions as templates
++#if defined(__sun)
++using std::__math2::acos;
++using std::__math2::asin;
++using std::__math2::atan;
++using std::__math2::atan2;
++using std::__math2::ceil;
++using std::__math2::cos;
++using std::__math2::cosh;
++using std::__math2::exp;
++using std::__math2::fabs;
++using std::__math2::floor;
++using std::__math2::fmod;
++using std::__math2::frexp;
++using std::__math2::ldexp;
++#if _LIBCPP_STD_VER >= 17
++using std::__math2::hypot;
++#endif
++using std::__math2::log;
++using std::__math2::log10;
++using std::__math2::log1p;
++using std::__math2::pow;
++using std::__math2::sin;
++using std::__math2::sinh;
++using std::__math2::sqrt;
++using std::__math2::tan;
++using std::__math2::tanh;
++#else
+ using std::__math::acos;
+ using std::__math::acosh;
+ using std::__math::asin;
+@@ -501,6 +540,7 @@
+ using std::__math::tanh;
+ using std::__math::tgamma;
+ using std::__math::trunc;
++#endif // !defined(__sun)
+ 
+ } // extern "C++"
+ 
+diff -Naur llvm-project-20.1.0-rc1.src.orig/libcxx/include/stdlib.h llvm-project-20.1.0-rc1.src/libcxx/include/stdlib.h
+--- llvm-project-20.1.0-rc1.src/libcxx/include/stdlib.h.~1~	2025-02-02 02:04:34.000000000 +0000
++++ llvm-project-20.1.0-rc1.src/libcxx/include/stdlib.h	2025-02-08 19:07:29.637482889 +0000
+@@ -108,10 +108,13 @@
+ 
+ // MSVCRT already has the correct prototype in <stdlib.h> if __cplusplus is defined
+ #      if !defined(_LIBCPP_MSVCRT)
++#        if !defined(__sun__)
+ [[__nodiscard__]] inline _LIBCPP_HIDE_FROM_ABI long abs(long __x) _NOEXCEPT { return __builtin_labs(__x); }
++#        endif // !defined(__sun__)
+ [[__nodiscard__]] inline _LIBCPP_HIDE_FROM_ABI long long abs(long long __x) _NOEXCEPT { return __builtin_llabs(__x); }
+ #      endif // !defined(_LIBCPP_MSVCRT)
+ 
++#if !defined(__sun__)
+ [[__nodiscard__]] inline _LIBCPP_HIDE_FROM_ABI float abs(float __lcpp_x) _NOEXCEPT {
+   return __builtin_fabsf(__lcpp_x); // Use builtins to prevent needing math.h
+ }
+@@ -123,6 +126,7 @@
+ [[__nodiscard__]] inline _LIBCPP_HIDE_FROM_ABI long double abs(long double __lcpp_x) _NOEXCEPT {
+   return __builtin_fabsl(__lcpp_x);
+ }
++#endif // !defined(__sun__)
+ 
+ // div
+ 
+@@ -138,7 +142,9 @@
+ 
+ // MSVCRT already has the correct prototype in <stdlib.h> if __cplusplus is defined
+ #      if !defined(_LIBCPP_MSVCRT)
++#        if !defined(__sun__)
+ inline _LIBCPP_HIDE_FROM_ABI ldiv_t div(long __x, long __y) _NOEXCEPT { return ::ldiv(__x, __y); }
++#        endif // !defined(__sun__)
+ #        if !(defined(__FreeBSD__) && !defined(__LONG_LONG_SUPPORTED))
+ inline _LIBCPP_HIDE_FROM_ABI lldiv_t div(long long __x, long long __y) _NOEXCEPT { return ::lldiv(__x, __y); }
+ #        endif
+diff -Naur llvm-project-20.1.0.src-rc1.orig/libcxx/include/string.h llvm-project-20.1.0-rc1.src/libcxx/include/string.h
+--- llvm-project-20.1.0-rc1.src/libcxx/include/string.h.~1~	2025-02-08 18:56:56.072279954 +0000
++++ llvm-project-20.1.0-rc1.src/libcxx/include/string.h	2025-02-08 19:08:41.665842913 +0000
+@@ -67,8 +67,7 @@
  // MSVCRT, GNU libc and its derivates may already have the correct prototype in
  // <string.h>. This macro can be defined by users if their C library provides
  // the right signature.
--#if defined(__CORRECT_ISO_CPP_STRING_H_PROTO) || defined(_LIBCPP_MSVCRT) || defined(_STRING_H_CPLUSPLUS_98_CONFORMANCE_)
-+#if defined(__CORRECT_ISO_CPP_STRING_H_PROTO) || defined(_LIBCPP_MSVCRT) || defined(__sun__) || defined(_STRING_H_CPLUSPLUS_98_CONFORMANCE_)
- #  define _LIBCPP_STRING_H_HAS_CONST_OVERLOADS
- #endif
+-#  if defined(__CORRECT_ISO_CPP_STRING_H_PROTO) || defined(_LIBCPP_MSVCRT) ||                                          \
+-      defined(_STRING_H_CPLUSPLUS_98_CONFORMANCE_)
++#  if defined(__CORRECT_ISO_CPP_STRING_H_PROTO) || defined(_LIBCPP_MSVCRT) || defined(__sun__) || defined(_STRING_H_CPLUSPLUS_98_CONFORMANCE_)
+ #    define _LIBCPP_STRING_H_HAS_CONST_OVERLOADS
+ #  endif
  
+--- llvm-project-20.1.0-rc1.src/libcxx/include/wchar.h~	2025-02-02 02:04:34.000000000 +0000
++++ llvm-project-20.1.0-rc1.src/libcxx/include/wchar.h	2025-02-09 17:54:42.878980299 +0000
+@@ -123,7 +123,7 @@
+ #    include <stddef.h>      // provide size_t
+ 
+ // Determine whether we have const-correct overloads for wcschr and friends.
+-#    if defined(_WCHAR_H_CPLUSPLUS_98_CONFORMANCE_)
++#    if defined(_WCHAR_H_CPLUSPLUS_98_CONFORMANCE_) || defined(__sun)
+ #      define _LIBCPP_WCHAR_H_HAS_CONST_OVERLOADS 1
+ #    elif defined(__GLIBC_PREREQ)
+ #      if __GLIBC_PREREQ(2, 10)
 diff -Naur llvm-project-18.1.8.src.orig/libcxx/src/CMakeLists.txt llvm-project-18.1.8.src/libcxx/src/CMakeLists.txt
 --- llvm-project-18.1.8.src.orig/libcxx/src/CMakeLists.txt	2024-06-15 18:21:32.000000000 +0000
 +++ llvm-project-18.1.8.src/libcxx/src/CMakeLists.txt	2024-06-30 19:23:46.510044487 +0000
@@ -1069,6 +1975,23 @@ diff -Naur llvm-project-18.1.8.src.orig/libcxx/src/CMakeLists.txt llvm-project-1
  elseif(ZOS)
    list(APPEND LIBCXX_SOURCES
      support/ibm/mbsnrtowcs.cpp
+--- llvm-project-18.1.8.src/libcxx/src/filesystem/operations.cpp-	2024-06-15 18:21:32.000000000 +0000
++++ llvm-project-18.1.8.src/libcxx/src/filesystem/operations.cpp	2024-07-03 12:59:38.589570578 +0000
+@@ -186,7 +186,14 @@
+   size_t count = read_fd.get_stat().st_size;
+   do {
+     ssize_t res;
++#if defined(__sun)
++    // sendfile offset parameter is not nullable on Solaris 11.3
++    // null offset means from the current position
++    off_t off = ::lseek(read_fd.fd, 0, SEEK_CUR);
++    if ((res = ::sendfile(write_fd.fd, read_fd.fd, &off, count)) == -1) {
++#else
+     if ((res = ::sendfile(write_fd.fd, read_fd.fd, nullptr, count)) == -1) {
++#endif
+       ec = capture_errno();
+       return false;
+     }
 diff -Naur llvm-project-18.1.8.src.orig/libcxx/src/include/config_elast.h llvm-project-18.1.8.src/libcxx/src/include/config_elast.h
 --- llvm-project-18.1.8.src.orig/libcxx/src/include/config_elast.h	2024-06-15 18:21:32.000000000 +0000
 +++ llvm-project-18.1.8.src/libcxx/src/include/config_elast.h	2024-06-30 19:23:46.510294904 +0000
@@ -1081,6 +2004,24 @@ diff -Naur llvm-project-18.1.8.src.orig/libcxx/src/include/config_elast.h llvm-p
  #elif defined(__MVS__)
  #  define _LIBCPP_ELAST 1160
  #elif defined(_LIBCPP_MSVCRT_LIKE)
+--- llvm-project-18.1.8.src/libcxx/src/iostream.cpp-	2024-06-15 18:21:32.000000000 +0000
++++ llvm-project-18.1.8.src/libcxx/src/iostream.cpp	2024-07-06 11:44:58.513477070 +0000
+@@ -105,9 +105,15 @@
+         ;
+ #endif // _LIBCPP_HAS_NO_WIDE_CHARACTERS
+ 
++#if defined(__sun)
++// Solaris 11.3 fails to run the ctor of the hidden __start_std_streams;
++// do it in the old way without hiding
++ios_base::Init __start_std_streams;
++#else
+ // Pretend we're inside a system header so the compiler doesn't flag the use of the init_priority
+ // attribute with a value that's reserved for the implementation (we're the implementation).
+ #include "iostream_init.h"
++#endif
+ 
+ // On Windows the TLS storage for locales needs to be initialized before we create
+ // the standard streams, otherwise it may not be alive during program termination
 diff -Naur llvm-project-18.1.8.src.orig/libcxx/src/locale.cpp llvm-project-18.1.8.src/libcxx/src/locale.cpp
 --- llvm-project-18.1.8.src.orig/libcxx/src/locale.cpp	2024-06-15 18:21:32.000000000 +0000
 +++ llvm-project-18.1.8.src/libcxx/src/locale.cpp	2024-06-30 19:23:46.511364607 +0000
@@ -1274,7 +2215,7 @@ diff -Naur llvm-project-19.1.0.src.orig/libcxx/src/support/solaris/xlocale.cpp l
 +
 +#ifdef __sun__
 +
-+#include "__locale_dir/locale_base_api/solaris.h"
++#include <__support/solaris/locale_mgmt_solaris.h>
 +#include <stdio.h>
 +#include <errno.h>
 +
@@ -1412,10 +2353,10 @@ diff -Naur llvm-project-18.1.8.src.orig/libcxxabi/src/cxa_exception.h llvm-proje
  
  struct _LIBCXXABI_HIDDEN __cxa_eh_globals {
      __cxa_exception *   caughtExceptions;
-diff -Naur llvm-project-18.1.8.src.orig/libcxxabi/src/demangle/ItaniumDemangle.h llvm-project-18.1.8.src/libcxxabi/src/demangle/ItaniumDemangle.h
---- llvm-project-18.1.8.src.orig/libcxxabi/src/demangle/ItaniumDemangle.h	2024-06-15 18:21:32.000000000 +0000
-+++ llvm-project-18.1.8.src/libcxxabi/src/demangle/ItaniumDemangle.h	2024-07-01 10:19:29.698280724 +0000
-@@ -31,6 +31,11 @@
+diff -Naur llvm-project-20.1.0-rc1.src.orig/libcxxabi/src/demangle/ItaniumDemangle.h llvm-project-20.1.0-rc1.src/libcxxabi/src/demangle/ItaniumDemangle.h
+--- llvm-project-20.1.0-rc1.src/libcxxabi/src/demangle/ItaniumDemangle.h.~1~	2025-02-08 18:56:56.080129339 +0000
++++ llvm-project-20.1.0-rc1.src/libcxxabi/src/demangle/ItaniumDemangle.h	2025-02-08 19:10:07.222113577 +0000
+@@ -30,6 +30,11 @@
  #include <type_traits>
  #include <utility>
  
@@ -1424,44 +2365,9 @@ diff -Naur llvm-project-18.1.8.src.orig/libcxxabi/src/demangle/ItaniumDemangle.h
 +#undef SS
 +#endif
 +
- #ifdef _LIBCXXABI_COMPILER_CLANG
+ #if defined(__clang__)
  #pragma clang diagnostic push
  #pragma clang diagnostic ignored "-Wunused-template"
---- llvm-project-18.1.8.src/libcxx/src/filesystem/operations.cpp-	2024-06-15 18:21:32.000000000 +0000
-+++ llvm-project-18.1.8.src/libcxx/src/filesystem/operations.cpp	2024-07-03 12:59:38.589570578 +0000
-@@ -186,7 +186,14 @@
-   size_t count = read_fd.get_stat().st_size;
-   do {
-     ssize_t res;
-+#if defined(__sun)
-+    // sendfile offset parameter is not nullable on Solaris 11.3
-+    // null offset means from the current position
-+    off_t off = ::lseek(read_fd.fd, 0, SEEK_CUR);
-+    if ((res = ::sendfile(write_fd.fd, read_fd.fd, &off, count)) == -1) {
-+#else
-     if ((res = ::sendfile(write_fd.fd, read_fd.fd, nullptr, count)) == -1) {
-+#endif
-       ec = capture_errno();
-       return false;
-     }
---- llvm-project-18.1.8.src/libcxx/src/iostream.cpp-	2024-06-15 18:21:32.000000000 +0000
-+++ llvm-project-18.1.8.src/libcxx/src/iostream.cpp	2024-07-06 11:44:58.513477070 +0000
-@@ -105,9 +105,15 @@
-         ;
- #endif // _LIBCPP_HAS_NO_WIDE_CHARACTERS
- 
-+#if defined(__sun)
-+// Solaris 11.3 fails to run the ctor of the hidden __start_std_streams;
-+// do it in the old way without hiding
-+ios_base::Init __start_std_streams;
-+#else
- // Pretend we're inside a system header so the compiler doesn't flag the use of the init_priority
- // attribute with a value that's reserved for the implementation (we're the implementation).
- #include "iostream_init.h"
-+#endif
- 
- // On Windows the TLS storage for locales needs to be initialized before we create
- // the standard streams, otherwise it may not be alive during program termination
 --- llvm-project-19.1.0.src/libcxx/test/configs/llvm-libc++-shared.cfg.in.~1~	2024-09-23 17:50:38.123844853 +0000
 +++ llvm-project-19.1.0.src/libcxx/test/configs/llvm-libc++-shared.cfg.in	2024-09-23 17:51:11.473752552 +0000
 @@ -10,7 +10,7 @@
