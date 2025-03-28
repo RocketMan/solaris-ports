@@ -20,7 +20,7 @@
 #
 
 #
-# Copyright (c) 2018-2024 Jim Mason <jmason at ibinx doc com>.
+# Copyright (c) 2018-2025 Jim Mason <jmason at ibinx doc com>.
 #
 # Adapted from original code Copyright (c) 2015, 2023, Oracle and/or its
 # affiliates.
@@ -34,7 +34,7 @@ include ../../make-rules/shared-macros.mk
 GCC_ROOT=/usr/gcc/13
 
 COMPONENT_NAME=		llvm-project
-COMPONENT_VERSION=	19.1.7
+COMPONENT_VERSION=	20.1.1
 COMPONENT_REVISION=	0
 COMPONENT_PROJECT_URL=	https://llvm.org/
 COMPONENT_BUGDB=	utility/llvm
@@ -42,7 +42,7 @@ COMPONENT_BUGDB=	utility/llvm
 COMPONENT_SRC=		$(COMPONENT_NAME)-$(COMPONENT_VERSION).src
 COMPONENT_ARCHIVE=	$(COMPONENT_SRC).tar.xz
 COMPONENT_ARCHIVE_HASH=	\
-    sha256:82401fea7b79d0078043f7598b835284d6650a75b93e64b6f761ea7b63097501
+    sha256:4d5ebbd40ce1e984a650818a4bb5ae86fc70644dec2e6d54e78b4176db3332e0
 COMPONENT_ARCHIVE_URL=	https://github.com/llvm/llvm-project/releases/download/llvmorg-$(COMPONENT_VERSION)/$(COMPONENT_ARCHIVE)
 COMPONENT_SIG_URL=	$(COMPONENT_ARCHIVE_URL).sig
 COMPONENT_ANITYA_ID=	1830
