@@ -1,0 +1,23 @@
+From 3fa0568e6ef96e045286afe18444bc28fe93962b Mon Sep 17 00:00:00 2001
+From: Pierre Ossman <ossman@cendio.se>
+Date: Mon, 28 Sep 2020 15:47:25 +0200
+Subject: [PATCH] Avoid depending on yywrap()
+
+This is no longer automatically included in modern setups, and we don't
+really need it, so turn it off to avoid issues.
+---
+ Config/exports.l | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/Config/exports.l b/Config/exports.l
+index 662603c..7e7c4fc 100644
+--- a/Config/exports.l
++++ b/Config/exports.l
+@@ -50,6 +50,7 @@ OLDNET {IP}"/"{IP}
+ 
+ %option nounput
+ %option noinput
++%option noyywrap
+ 
+ %%
+ 

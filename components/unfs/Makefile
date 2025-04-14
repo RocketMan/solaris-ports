@@ -20,26 +20,23 @@
 #
 
 #
-# Copyright (c) 2018-2021 Jim Mason <jmason at ibinx dot com>.
+# Copyright (c) 2018-2025 Jim Mason <jmason at ibinx dot com>.
 #
 
 BUILD_BITS=		32
 COMPILER=		gcc
 include ../../make-rules/shared-macros.mk
+GCC_ROOT=		/usr/gcc/10
 
-COMPONENT_NAME=		unfs
+COMPONENT_NAME=		unfs3
 COMPONENT_VERSION=	0.9.23
-COMPONENT_REVISION=	1
+COMPONENT_REVISION=	2
 COMPONENT_SRC=		$(COMPONENT_NAME)-$(COMPONENT_VERSION)
 COMPONENT_PROJECT_URL=	https://unfs3.github.io/
-
-COMPONENT_ARCHIVE_SRC=	git
-
-GIT_REPO=		https://github.com/unfs3/unfs3
-GIT_COMMIT_ID=		3fa0568
-GIT_HASH=		sha256:27fac81ebacc839ff9ffe567d12568bcda2b687a745cebda69204d9da790f273
-
-COMPONENT_ARCHIVE_URL=	$(GIT_REPO)/archive/unfs3/$(COMPONENT_SRC).tar.gz
+COMPONENT_ARCHIVE=	$(COMPONENT_SRC).tar.gz
+COMPONENT_ARCHIVE_URL=	https://github.com/unfs3/$(COMPONENT_NAME)/releases/download/$(COMPONENT_NAME)-$(COMPONENT_VERSION)/$(COMPONENT_ARCHIVE)
+COMPONENT_ARCHIVE_HASH = \
+	sha256:380b36d6559c0b18100807e93872da72b64415427566992e8bf34673a161d4c7
 
 COMPONENT_PRE_CONFIGURE_ACTION = ($(CLONEY) $(SOURCE_DIR) $(@D))
 COMPONENT_PREP_ACTION = \
@@ -57,5 +54,4 @@ LDFLAGS += $(CC_BITS)
 
 REQUIRED_PACKAGES += system/core-os
 REQUIRED_PACKAGES += system/library
-REQUIRED_PACKAGES += system/library/flex-runtime
 REQUIRED_PACKAGES += system/network

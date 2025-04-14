@@ -1,0 +1,90 @@
+The RPC functions on Solaris expect STREAMS rather than sockets.
+
+
+--- unfs3-0.9.23/daemon.c.~1~	2022-11-24 12:43:09.000000000 +0000
++++ unfs3-0.9.23/daemon.c	2025-04-15 10:17:28.231260849 +0000
+@@ -130,6 +130,11 @@
+ int get_socket_type(struct svc_req *rqstp)
+ {
+     int v, res;
++#if defined(__SVR4)
++    struct t_info info;
++    res = t_getinfo(rqstp->rq_xprt->xp_fd, &info);
++    v = info.servtype == T_CLTS ? SOCK_DGRAM : SOCK_STREAM;
++#else
+     socklen_t l;
+ 
+     l = sizeof(v);
+@@ -139,6 +144,7 @@
+ #else
+     res = getsockopt(rqstp->rq_xprt->xp_sock, SOL_SOCKET, SO_TYPE, &v, &l);
+ #endif
++#endif // defined(__SVR4)
+ 
+     if (res < 0) {
+ 	logmsg(LOG_CRIT, "unable to determine socket type");
+@@ -747,10 +753,31 @@
+ 	sin.sin_family = AF_INET;
+ 	sin.sin_port = htons(port);
+ 	sin.sin_addr.s_addr = opt_bind_addr.s_addr;
++
++#if defined(__SVR4)
++	int sin_len = sizeof(struct sockaddr);
++	struct t_bind bind_req, bind_resp;
++	bind_req.addr.maxlen = sin_len;
++	bind_req.addr.len = sin_len;
++	bind_req.addr.buf = (char *)&sin;
++	bind_req.qlen = 0;
++
++	struct sockaddr_in sout;
++	bind_resp.addr.maxlen = sin_len;
++	bind_resp.addr.buf = (char *)&sout;
++	if ((sock = t_open("/dev/udp", O_RDWR, NULL)) == -1) {
++	    t_error("t_open");
++	    exit(1);
++	}
++
++	if (t_bind(sock, &bind_req, &bind_resp) == -1) {
++	    t_error("t_bind");
++#else
+ 	sock = socket(PF_INET, SOCK_DGRAM, 0);
+ 	setsockopt(sock, SOL_SOCKET, SO_REUSEADDR, (const char *) &on, sizeof(on));
+ 	if (bind(sock, (struct sockaddr *) &sin, sizeof(struct sockaddr))) {
+ 	    perror("bind");
++#endif // defined(__SVR4)
+ 	    fprintf(stderr, "Couldn't bind to udp port %d\n", port);
+ 	    exit(1);
+ 	}
+@@ -782,10 +809,32 @@
+ 	sin.sin_family = AF_INET;
+ 	sin.sin_port = htons(port);
+ 	sin.sin_addr.s_addr = opt_bind_addr.s_addr;
++
++#if defined(__SVR4)
++	int sin_len = sizeof(struct sockaddr);
++	struct t_bind bind_req, bind_resp;
++	bind_req.addr.maxlen = sin_len;
++	bind_req.addr.len = sin_len;
++	bind_req.addr.buf = (char *)&sin;
++	bind_req.qlen = 0;
++
++	struct sockaddr_in sout;
++	bind_resp.addr.maxlen = sin_len;
++	bind_resp.addr.buf = (char*)&sout;
++
++	if ((sock = t_open("/dev/tcp", O_RDWR, NULL)) == -1) {
++	    t_error("t_open");
++	    exit(1);
++	}
++
++	if (t_bind(sock, &bind_req, &bind_resp) == -1) {
++	    t_error("t_bind");
++#else
+ 	sock = socket(PF_INET, SOCK_STREAM, 0);
+ 	setsockopt(sock, SOL_SOCKET, SO_REUSEADDR, (const char *) &on, sizeof(on));
+ 	if (bind(sock, (struct sockaddr *) &sin, sizeof(struct sockaddr))) {
+ 	    perror("bind");
++#endif // defined(__SVR4)
+ 	    fprintf(stderr, "Couldn't bind to tcp port %d\n", port);
+ 	    exit(1);
+ 	}
