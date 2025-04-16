@@ -1014,18 +1014,18 @@ diff -Naur llvm-project-20.1.0-rc1.src.orig/libcxx/include/__cxx03/__locale_dir/
  #include <__config>
  #include <__expected/bad_expected_access.h>
 diff -Naur llvm-project-18.1.8.src.orig/libcxx/include/__locale llvm-project-18.1.8.src/libcxx/include/__locale
---- llvm-project-18.1.8.src.orig/libcxx/include/__locale	2024-06-15 18:21:32.000000000 +0000
-+++ llvm-project-18.1.8.src/libcxx/include/__locale	2024-07-01 16:32:52.108742752 +0000
-@@ -391,7 +393,7 @@
+--- llvm-project-20.1.3.src/libcxx/include/__locale.~1~	2025-04-16 14:02:19.619662311 +0000
++++ llvm-project-20.1.3.src/libcxx/include/__locale	2025-04-16 14:04:21.995710144 +0000
+@@ -377,7 +377,7 @@
    static const mask blank        = _CTYPE_B;
    static const mask __regex_word = 0x80;
- #  endif
--#elif defined(_AIX)
-+#elif defined(__sun__) || defined(_AIX)
+ #    endif
+-#  elif defined(_AIX)
++#  elif defined(__sun__) || defined(_AIX)
    typedef unsigned int mask;
    static const mask space        = _ISSPACE;
    static const mask print        = _ISPRINT;
-@@ -403,7 +405,11 @@
+@@ -389,7 +389,11 @@
    static const mask punct        = _ISPUNCT;
    static const mask xdigit       = _ISXDIGIT;
    static const mask blank        = _ISBLANK;
@@ -1034,21 +1034,20 @@ diff -Naur llvm-project-18.1.8.src.orig/libcxx/include/__locale llvm-project-18.
 +# else
 +  static const mask __regex_word = 1 << 10;
 +# endif
- #elif defined(_NEWLIB_VERSION)
+ #  elif defined(_NEWLIB_VERSION)
    // Same type as Newlib's _ctype_ array in newlib/libc/include/ctype.h.
    typedef char mask;
-diff -Naur llvm-project-20.1.0-rc1.src.orig/libcxx/include/__locale_dir/locale_base_api/locale_base_api.h llvm-project-20.1.0-rc1.src/libcxx/include/__locale_dir/locale_base_api/locale_base_api.h
---- llvm-project-20.1.0-rc1.src/libcxx/include/__locale_dir/locale_base_api.h~	2025-02-02 02:04:34.000000000 +0000
-+++ llvm-project-20.1.0-rc1.src/libcxx/include/__locale_dir/locale_base_api.h	2025-02-09 10:09:15.247935735 +0000
-@@ -124,6 +124,8 @@
- #    include <__locale_dir/locale_base_api/android.h>
- #  elif defined(__OpenBSD__)
- #    include <__locale_dir/locale_base_api/openbsd.h>
-+#  elif defined(__sun__)
-+#    include <__locale_dir/locale_base_api/solaris.h>
- #  elif defined(__wasi__) || _LIBCPP_HAS_MUSL_LIBC
- #    include <__locale_dir/locale_base_api/musl.h>
- #  endif
+--- llvm-project-20.1.3.src/libcxx/include/__locale_dir/locale_base_api.h.~1~	2025-04-16 14:02:19.620334539 +0000
++++ llvm-project-20.1.3.src/libcxx/include/__locale_dir/locale_base_api.h	2025-04-16 14:05:33.278587823 +0000
+@@ -133,6 +133,8 @@
+ #      include <__locale_dir/locale_base_api/android.h>
+ #    elif defined(__OpenBSD__)
+ #      include <__locale_dir/locale_base_api/openbsd.h>
++#    elif defined(__sun__)
++#      include <__locale_dir/locale_base_api/solaris.h>
+ #    elif defined(__wasi__) || _LIBCPP_HAS_MUSL_LIBC
+ #      include <__locale_dir/locale_base_api/musl.h>
+ #    endif
 diff -Naur llvm-project-19.1.0.src.orig/libcxx/include/__locale_dir/locale_base_api/solaris.h llvm-project-19.1.0.src/libcxx/include/__locale_dir/locale_base_api/solaris.h
 --- llvm-project-19.1.0.src.orig/libcxx/include/__locale_dir/locale_base_api/solaris.h	2024-09-24 11:57:25.497634653 +0000
 +++ llvm-project-19.1.0.src/libcxx/include/__locale_dir/locale_base_api/solaris.h	2024-09-24 12:00:13.554949235 +0000
