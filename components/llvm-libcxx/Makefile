@@ -36,17 +36,27 @@ GCC_ROOT=/usr/gcc/13
 # llvm-libcxx shares tarballs with llvm-project
 USERLAND_ARCHIVES = ../llvm-project/
 
-COMPONENT_NAME=		llvm-project
-COMPONENT_VERSION=	20.1.3
+# set to `llvmorg` to use github tarball or `llvm-project` for xz asset
+COMPONENT_NAME=		llvmorg
+COMPONENT_VERSION=	20.1.4
 COMPONENT_REVISION=	0
 COMPONENT_PROJECT_URL=	https://llvm.org/
 COMPONENT_BUGDB=	utility/llvm
 
+ifeq ($(COMPONENT_NAME),llvm-project)
+# xz asset, if available
 COMPONENT_SRC=		$(COMPONENT_NAME)-$(COMPONENT_VERSION).src
 COMPONENT_ARCHIVE=	$(COMPONENT_SRC).tar.xz
-COMPONENT_ARCHIVE_HASH=	\
-    sha256:b6183c41281ee3f23da7fda790c6d4f5877aed103d1e759763b1008bdd0e2c50
 COMPONENT_ARCHIVE_URL=	https://github.com/llvm/llvm-project/releases/download/llvmorg-$(COMPONENT_VERSION)/$(COMPONENT_ARCHIVE)
+else
+# github source code tarball
+COMPONENT_SRC=		llvm-project-$(COMPONENT_NAME)-$(COMPONENT_VERSION)
+COMPONENT_ARCHIVE=	$(COMPONENT_NAME)-$(COMPONENT_VERSION).tar.gz
+COMPONENT_ARCHIVE_URL=	https://github.com/llvm/llvm-project/archive/refs/tags/$(COMPONENT_ARCHIVE)
+endif
+
+COMPONENT_ARCHIVE_HASH=	\
+    sha256:65e3a582c4c684fa707a56ff643427bce3633eceaceae3295d81c0e830f44b89
 COMPONENT_SIG_URL=	$(COMPONENT_ARCHIVE_URL).sig
 COMPONENT_ANITYA_ID=	1830
 
