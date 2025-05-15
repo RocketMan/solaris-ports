@@ -145,12 +145,12 @@ file path=usr/lib/$(MACH64)/WebKit60/jsc mode=0555
 link path=usr/lib/$(MACH64)/libjavascriptcoregtk-6.0.so \
     target=libjavascriptcoregtk-6.0.so.1
 link path=usr/lib/$(MACH64)/libjavascriptcoregtk-6.0.so.1 \
-    target=libjavascriptcoregtk-6.0.so.1.5.4
-file path=usr/lib/$(MACH64)/libjavascriptcoregtk-6.0.so.1.5.4
+    target=libjavascriptcoregtk-6.0.so.1.5.5
+file path=usr/lib/$(MACH64)/libjavascriptcoregtk-6.0.so.1.5.5
 link path=usr/lib/$(MACH64)/libwebkitgtk-6.0.so target=libwebkitgtk-6.0.so.4
 link path=usr/lib/$(MACH64)/libwebkitgtk-6.0.so.4 \
-    target=libwebkitgtk-6.0.so.4.11.6
-file path=usr/lib/$(MACH64)/libwebkitgtk-6.0.so.4.11.6
+    target=libwebkitgtk-6.0.so.4.11.7
+file path=usr/lib/$(MACH64)/libwebkitgtk-6.0.so.4.11.7
 file path=usr/lib/$(MACH64)/pkgconfig/javascriptcoregtk-6.0.pc
 file path=usr/lib/$(MACH64)/pkgconfig/webkitgtk-6.0.pc
 file path=usr/lib/$(MACH64)/pkgconfig/webkitgtk-web-process-extension-6.0.pc
