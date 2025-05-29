@@ -1,0 +1,27 @@
+Pass -Rdir and -R dir through to the Solaris linker
+
+Suitable for upstream.
+
+--- llvm-project-llvmorg-20.1.5/clang/include/clang/Driver/Options.td-	2025-05-28 18:37:58.799570088 +0000
++++ llvm-project-llvmorg-20.1.5/clang/include/clang/Driver/Options.td	2025-05-28 18:42:03.313114247 +0000
+@@ -3723,6 +3723,9 @@
+ def Rpass_analysis_EQ : Joined<["-"], "Rpass-analysis=">, Group<R_value_Group>,
+   HelpText<"Report transformation analysis from optimization passes whose "
+            "name matches the given POSIX regular expression">;
++def R_linker : JoinedOrSeparate<["-"], "R">, Flags<[RenderJoined]>, Group<Link_Group>,
++  Visibility<[ClangOption, FlangOption]>,
++  MetaVarName<"<dir>">, HelpText<"Add a runtime library search path">;
+ def R_Joined : Joined<["-"], "R">, Group<R_Group>,
+   Visibility<[ClangOption, CLOption, DXCOption]>,
+   MetaVarName<"<remark>">, HelpText<"Enable the specified remark">;
+--- llvm-project-llvmorg-20.1.5/clang/lib/Driver/ToolChains/Solaris.cpp.~4~	2025-05-14 19:44:11.136578897 +0000
++++ llvm-project-llvmorg-20.1.5/clang/lib/Driver/ToolChains/Solaris.cpp	2025-05-28 18:45:56.820432710 +0000
+@@ -203,7 +203,7 @@
+ 
+   ToolChain.AddFilePathLibArgs(Args, CmdArgs);
+ 
+-  Args.addAllArgs(CmdArgs, {options::OPT_L, options::OPT_T_Group});
++  Args.addAllArgs(CmdArgs, {options::OPT_L, options::OPT_R_linker, options::OPT_T_Group});
+ 
+   bool NeedsSanitizerDeps = addSanitizerRuntimes(ToolChain, Args, CmdArgs);
+   AddLinkerInputs(ToolChain, Inputs, Args, CmdArgs, JA);
