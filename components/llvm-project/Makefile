@@ -36,7 +36,7 @@ GCC_ROOT=/usr/gcc/13
 # set to `llvmorg` to use github tarball or `llvm-project` for xz asset
 COMPONENT_NAME=		llvmorg
 COMPONENT_VERSION=	20.1.7
-COMPONENT_REVISION=	0
+COMPONENT_REVISION=	1
 COMPONENT_PROJECT_URL=	https://llvm.org/
 COMPONENT_BUGDB=	utility/llvm
 

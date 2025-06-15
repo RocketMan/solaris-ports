@@ -1,0 +1,30 @@
+Revert to gcc7 XPG4 semantics.
+
+Solaris 11.3 exhibits the issues described here:
+
+https://www.illumos.org/issues/12306
+
+This patch mirrors the `910-legacy-xpg4.patch` for gcc.
+
+
+--- llvm-project-llvmorg-20.1.7/clang/lib/Driver/ToolChains/Solaris.cpp.~5~	2025-06-13 15:49:56.696308217 +0000
++++ llvm-project-llvmorg-20.1.7/clang/lib/Driver/ToolChains/Solaris.cpp	2025-06-15 18:56:19.654677504 +0000
+@@ -184,10 +184,14 @@
+     CmdArgs.push_back(Args.MakeArgString(ToolChain.GetFilePath(values_X)));
+ 
+     const char *values_xpg = "values-xpg6.o";
+-    // Use values-xpg4.o for -std=c90, -std=gnu90, -std=iso9899:199409.
+-    if (LangStd && LangStd->getLanguage() == Language::C && !LangStd->isC99())
+-      values_xpg = "values-xpg4.o";
+-    CmdArgs.push_back(Args.MakeArgString(ToolChain.GetFilePath(values_xpg)));
++    // No values-xpg*.o object is linked in unless the equivalent of
++    // '-std=c99|c11' is used during the linking of C code.  In either
++    // of those cases, values-xpg6.o is linked.
++    if (LangStd &&
++        (LangStd->isC99() || LangStd->isC11() ||
++         LangStd->isCPlusPlus11() || LangStd->isCPlusPlus14() ||
++         LangStd->isCPlusPlus17()))
++      CmdArgs.push_back(Args.MakeArgString(ToolChain.GetFilePath(values_xpg)));
+ 
+     const char *crtbegin = nullptr;
+ //  no crtbeginS.o with 11.3 gcc
