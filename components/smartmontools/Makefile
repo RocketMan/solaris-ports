@@ -25,14 +25,14 @@
 #
 
 BUILD_BITS=		64
-COMPILER=		gcc
+COMPILER=		clang
 include ../../make-rules/shared-macros.mk
 
 COMPONENT_NAME=		smartmontools
-COMPONENT_VERSION=	7.2
+COMPONENT_VERSION=	7.5
 COMPONENT_PROJECT_URL=	https://www.smartmontools.org/
 COMPONENT_ARCHIVE_HASH=	\
-    sha256:5cd98a27e6393168bc6aaea070d9e1cd551b0f898c52f66b2ff2e5d274118cd6
+    sha256:690b83ca331378da9ea0d9d61008c4b22dde391387b9bbad7f29387f2595f76e
 COMPONENT_ARCHIVE_URL=	https://sourceforge.net/projects/$(COMPONENT_NAME)/files/$(COMPONENT_NAME)/$(COMPONENT_VERSION)/$(COMPONENT_ARCHIVE)
 COMPONENT_ANITYA_ID=	4835
 
@@ -42,9 +42,12 @@ include $(WS_MAKE_RULES)/common.mk
 # Run automake to pickup man page normalization changes.
 COMPONENT_PREP_ACTION = (cd $(@D) ; ./autogen.sh)
 
+CXXFLAGS += -stdlib=libc++
+LDFLAGS += -lc++
+
 CONFIGURE_OPTIONS += --sysconfdir=$(ETCDIR)
 
 REQUIRED_PACKAGES += system/core-os
 REQUIRED_PACKAGES += system/device-administration
+REQUIRED_PACKAGES += system/library/llvm/clang-c++-runtime
 REQUIRED_PACKAGES += system/library/gcc/gcc-c-runtime
-REQUIRED_PACKAGES += system/library/gcc/gcc-c++-runtime
