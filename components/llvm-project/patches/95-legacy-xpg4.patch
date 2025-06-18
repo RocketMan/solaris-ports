@@ -20,7 +20,7 @@ This patch mirrors the `910-legacy-xpg4.patch` for gcc.
 +    // No values-xpg*.o object is linked in unless the equivalent of
 +    // '-std=c99|c11' is used during the linking of C code.  In either
 +    // of those cases, values-xpg6.o is linked.
-+    if (LangStd &&
++    if (!Args.hasArg(options::OPT_shared) && LangStd &&
 +        (LangStd->isC99() || LangStd->isC11() ||
 +         LangStd->isCPlusPlus11() || LangStd->isCPlusPlus14() ||
 +         LangStd->isCPlusPlus17()))
