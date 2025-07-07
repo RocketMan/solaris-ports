@@ -1,0 +1,8 @@
+##
+## This file loads OWASP CRS's rules when the package is installed
+## It is Included by module/apache-security
+##
+Include /etc/modsecurity/crs/crs-setup.conf
+IncludeOptional /etc/modsecurity/crs/REQUEST-900-EXCLUSION-RULES-BEFORE-CRS.conf
+Include /usr/share/modsecurity-crs/rules/*.conf
+IncludeOptional /etc/modsecurity/crs/RESPONSE-999-EXCLUSION-RULES-AFTER-CRS.conf
