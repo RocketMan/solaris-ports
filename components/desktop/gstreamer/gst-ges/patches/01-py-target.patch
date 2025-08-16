@@ -7,8 +7,8 @@
 +option('py-target', type : 'string', description : 'target Python')
  option('validate', type : 'feature', value : 'auto', yield: true,
         description: 'Enable GstValidate integration.')
---- a/meson.build	2020-09-10 13:03:42.900117047 +0000
-+++ b/meson.build	2020-09-10 13:00:16.405575384 +0000
+--- a/meson.build	2025-08-16 12:56:17.840744580 +0000
++++ b/meson.build	2025-08-16 12:57:27.212900066 +0000
 @@ -146,7 +146,7 @@
  
  pymod = import('python')
@@ -18,17 +18,12 @@
  has_python = false
  static_build = get_option('default_library') == 'static'
  if static_build
-@@ -212,14 +212,6 @@
+@@ -230,9 +230,6 @@
          endif
        endforeach
      endforeach
 -    if not has_python
--      error_msg = 'Could not find python library to load'
--      if python_opt.enabled()
--        error(error_msg)
--      else
--        message(error_msg)
--      endif
+-      message('Could not find python library to load, will try loading at runtime')
 -    endif
    endif
  endif
