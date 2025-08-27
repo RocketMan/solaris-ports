@@ -40,8 +40,8 @@ the RPATH/RUNPATH.  CAUTION: This means the build directory will be
 left in the RPATH!
 
 
---- llvm-18.1.7/clang/tools/clang-shlib/CMakeLists.txt.~1~	2024-06-05 22:56:32.000000000 +0000
-+++ llvm-18.1.7/clang/tools/clang-shlib/CMakeLists.txt	2024-06-17 12:54:12.465514133 +0000
+--- llvm-project-llvmorg-21.1.0-rc1/clang/tools/clang-shlib/CMakeLists.txt.~1~	2025-07-17 20:02:34.000000000 +0000
++++ llvm-project-llvmorg-21.1.0-rc1/clang/tools/clang-shlib/CMakeLists.txt	2025-07-18 20:07:53.228835418 +0000
 @@ -42,7 +42,7 @@
  endif()
  
@@ -51,10 +51,10 @@ left in the RPATH!
                    ${INSTALL_WITH_TOOLCHAIN}
                    clang-shlib.cpp
                    ${_OBJECTS}
-@@ -51,7 +51,8 @@
+@@ -58,7 +58,8 @@
  # Optimize function calls for default visibility definitions to avoid PLT and
  # reduce dynamic relocations.
- if (NOT APPLE AND NOT MINGW AND NOT LLVM_LINKER_IS_SOLARISLD_ILLUMOS)
+ if (NOT APPLE AND LLVM_LINKER_SUPPORTS_B_SYMBOLIC_FUNCTIONS)
 -  target_link_options(clang-cpp PRIVATE LINKER:-Bsymbolic-functions)
 +  target_link_options(clang-cpp PRIVATE LINKER:-Bsymbolic)
 +  target_link_options(clang-cpp PRIVATE LINKER:-znoldynsym)

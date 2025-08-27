@@ -35,7 +35,9 @@ GCC_ROOT=/usr/gcc/13
 
 # set to `llvmorg` to use github tarball or `llvm-project` for xz asset
 COMPONENT_NAME=		llvmorg
-COMPONENT_VERSION=	20.1.8
+COMPONENT_VERSION=	21.1.0
+#COMPONENT_VERSION=	21.1.0-rc3
+#IPS_COMPONENT_VERSION=	21.0.3
 COMPONENT_REVISION=	0
 COMPONENT_PROJECT_URL=	https://llvm.org/
 COMPONENT_BUGDB=	utility/llvm
@@ -53,7 +55,7 @@ COMPONENT_ARCHIVE_URL=	https://github.com/llvm/llvm-project/archive/refs/tags/$(
 endif
 
 COMPONENT_ARCHIVE_HASH=	\
-    sha256:a6cbad9b2243b17e87795817cfff2107d113543a12486586f8a055a2bb044963
+    sha256:fba0618cf8de48ec05880c446edd756a2669157eab9d29949e971c77da10275f
 COMPONENT_SIG_URL=	$(COMPONENT_ARCHIVE_URL).sig
 COMPONENT_ANITYA_ID=	1830
 
@@ -299,6 +301,8 @@ CPPFLAGS += $(CPPFLAGS.$(MACH))
 # for futimens(2):
 CFLAGS += -D__EXTENSIONS__=1
 
+LDFLAGS += -lnsl -lsocket
+
 LIBFFI_INCDIR_32 = $(shell pkg-config --cflags-only-I libffi | sed -e s,-I,,)
 LIBFFI_INCDIR_64 = $(shell env PKG_CONFIG_PATH=$(PKG_CONFIG_PATH.64) pkg-config --cflags-only-I libffi | sed -e s,-I,,)
 LIBFFI_INCDIR = $(LIBFFI_INCDIR_$(BITS))
@@ -329,9 +333,11 @@ endif
 
 #CMAKE_OPTIONS += -DCMAKE_ASM_COMPILER:STRING="/usr/gnu/bin/as"
 
-# cmake-generated RPATH_CHANGE fails in 11.3.  elfdump of the target shows
-# LLVM_RUNPATH is already present in the RPATH, so we just leave it alone.
-$(SOLARIS_11_4_5_ONLY)CMAKE_OPTIONS += -DCMAKE_INSTALL_RPATH:STRING="$(LLVM_RUNPATH)"
+# avoid including gate directories in the RPATH
+CMAKE_OPTIONS += -DCMAKE_SKIP_RPATH=OFF
+CMAKE_OPTIONS += -DCMAKE_BUILD_WITH_INSTALL_RPATH=ON
+CMAKE_OPTIONS += -DCMAKE_INSTALL_RPATH:STRING="$(LLVM_RUNPATH)"
+CMAKE_OPTIONS += -DCMAKE_INSTALL_RPATH_USE_LINK_PATH=FALSE
 
 CMAKE_OPTIONS += -S $(SOURCE_DIR)/llvm -B $(BUILD_DIR_64)
 CMAKE_OPTIONS += -DLLVM_ENABLE_PROJECTS="clang"

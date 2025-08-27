@@ -10,17 +10,6 @@ gnome-shell cores dump on sparc when mesa is build with llvm without this.
  00000000ea6af60c llvm::RuntimeDyldImpl::resolveRelocations() (3cd2e10, 6, 1, e7b04430, 3cd42d0, 3ee67b0) + 2dc
  00000000ea6af888 llvm::RuntimeDyld::resolveRelocations() (3e13038, 3d801a0, 3fa49a0, 3fa49b0, e7b04430, e7b04430) + 30 
 
---- llvm-13.0.1/llvm/include/llvm/BinaryFormat/ELFRelocs/Sparc.def
-+++ llvm-13.0.1/llvm/include/llvm/BinaryFormat/ELFRelocs/Sparc.def
-@@ -87,3 +87,8 @@ ELF_RELOC(R_SPARC_GOTDATA_LOX10,  81)
- ELF_RELOC(R_SPARC_GOTDATA_OP_HIX22,  82)
- ELF_RELOC(R_SPARC_GOTDATA_OP_LOX10,  83)
- ELF_RELOC(R_SPARC_GOTDATA_OP,     84)
-+ELF_RELOC(R_SPARC_H34,            85)
-+ELF_RELOC(R_SPARC_SIZE32,         86)
-+ELF_RELOC(R_SPARC_SIZE64,         87)
-+ELF_RELOC(R_SPARC_WDISP10,        88)
-+ELF_RELOC(R_SPARC_NUM,            89)
 --- llvm-13.0.1/llvm/include/llvm/Object/ELFObjectFile.h
 +++ llvm-13.0.1/llvm/include/llvm/Object/ELFObjectFile.h
 @@ -1190,8 +1190,9 @@ return "elf32-littleriscv";
