@@ -197,22 +197,6 @@ diff -Naur llvm-project-18.1.8.src.orig/libcxx/include/__cxx03/__config llvm-pro
  #endif // __cplusplus
  
  #endif // _LIBCPP___CXX03___CONFIG
---- llvm-project-20.1.0-rc1.src/libcxx/include/__cxx03/__expected/expected.h~	2025-02-02 02:04:34.000000000 +0000
-+++ llvm-project-20.1.0-rc1.src/libcxx/include/__cxx03/__expected/expected.h	2025-02-09 10:28:31.185223552 +0000
-@@ -9,6 +9,13 @@
- #ifndef _LIBCPP___CXX03___EXPECTED_EXPECTED_H
- #define _LIBCPP___CXX03___EXPECTED_EXPECTED_H
- 
-+#if defined(__sun)
-+#undef _Err
-+#undef _Tp
-+#undef _T2
-+#undef _E2
-+#endif
-+
- #include <__cxx03/__assert>
- #include <__cxx03/__config>
- #include <__cxx03/__expected/bad_expected_access.h>
 diff -Naur llvm-project-20.1.0-rc1.src.orig/libcxx/include/__cxx03/__locale llvm-project-20.1.0-rc1.src/libcxx/include/_cxx03/__locale
 --- llvm-project-20.1.0.src-rc1.orig/libcxx/include/__cxx03/__locale	2024-06-15 18:21:32.000000000 +0000
 +++ llvm-project-20.1.0.src-rc1/libcxx/include/__cxx03/__locale	2024-07-01 16:32:52.108742752 +0000
@@ -1418,9 +1402,26 @@ diff -Naur llvm-project-19.1.0.src.orig/libcxx/include/__locale_dir/locale_base_
 +#endif
 +
 +#endif
+--- llvm-project-llvmorg-21.1.0-rc1/libcxx/include/__math/abs.h.~1~	2025-07-17 20:02:34.000000000 +0000
++++ llvm-project-llvmorg-21.1.0-rc1/libcxx/include/__math/abs.h	2025-07-19 19:13:29.375810551 +0000
+@@ -41,12 +41,14 @@
+ 
+ // abs
+ 
++#if !defined(__sun__)
+ [[__nodiscard__]] _LIBCPP_HIDE_FROM_ABI inline float abs(float __x) _NOEXCEPT { return __builtin_fabsf(__x); }
+ [[__nodiscard__]] _LIBCPP_HIDE_FROM_ABI inline double abs(double __x) _NOEXCEPT { return __builtin_fabs(__x); }
+ 
+ [[__nodiscard__]] _LIBCPP_HIDE_FROM_ABI inline long double abs(long double __x) _NOEXCEPT {
+   return __builtin_fabsl(__x);
+ }
++#endif // !defined(__sun__)
+ 
+ template <class = int>
+ [[__nodiscard__]] _LIBCPP_HIDE_FROM_ABI inline int abs(int __x) _NOEXCEPT {
 diff -Naur llvm-project-19.1.0.src.orig/libcxx/include/__math/solaris.h llvm-project-19.1.0.src/libcxx/include/__math/solaris.h
---- llvm-project-19.1.0.src/libcxx/include/__math/solaris.h.~1~	2024-09-25 12:16:17.250842579 +0000
-+++ llvm-project-19.1.0.src/libcxx/include/__math/solaris.h	2024-09-25 17:45:43.875550941 +0000
+--- llvm-project-llvmorg-21.1.0-rc1/libcxx/include/__math/solaris.h~	2025-02-09 10:50:09.000000000 +0000
++++ llvm-project-llvmorg-21.1.0-rc1/libcxx/include/__math/solaris.h	2025-07-18 12:48:27.009191870 +0000
 @@ -0,0 +1,244 @@
 +//===----------------------------------------------------------------------===//
 +//
@@ -1473,8 +1474,8 @@ diff -Naur llvm-project-19.1.0.src.orig/libcxx/include/__math/solaris.h llvm-pro
 +// atan2
 +
 +template <class _A1, class _A2, __enable_if_t<is_arithmetic<_A1>::value && is_arithmetic<_A2>::value, int> = 0>
-+inline _LIBCPP_HIDE_FROM_ABI typename __promote<_A1, _A2>::type atan2(_A1 __y, _A2 __x) _NOEXCEPT {
-+  using __result_type = typename __promote<_A1, _A2>::type;
++inline _LIBCPP_HIDE_FROM_ABI __promote_t<_A1, _A2> atan2(_A1 __y, _A2 __x) _NOEXCEPT {
++  using __result_type = __promote_t<_A1, _A2>;
 +  static_assert(!(_IsSame<_A1, __result_type>::value && _IsSame<_A2, __result_type>::value), "");
 +  return __math::atan2((__result_type)__y, (__result_type)__x);
 +}
@@ -1524,8 +1525,8 @@ diff -Naur llvm-project-19.1.0.src.orig/libcxx/include/__math/solaris.h llvm-pro
 +// fmod
 +
 +template <class _A1, class _A2, __enable_if_t<is_arithmetic<_A1>::value && is_arithmetic<_A2>::value, int> = 0>
-+inline _LIBCPP_HIDE_FROM_ABI typename __promote<_A1, _A2>::type fmod(_A1 __x, _A2 __y) _NOEXCEPT {
-+  using __result_type = typename __promote<_A1, _A2>::type;
++inline _LIBCPP_HIDE_FROM_ABI __promote_t<_A1, _A2> fmod(_A1 __x, _A2 __y) _NOEXCEPT {
++  using __result_type = __promote_t<_A1, _A2>;
 +  return ::fmod((__result_type)__x, (__result_type)__y);
 +}
 +
@@ -1580,8 +1581,8 @@ diff -Naur llvm-project-19.1.0.src.orig/libcxx/include/__math/solaris.h llvm-pro
 +          class _A2,
 +          class _A3,
 +          std::enable_if_t< is_arithmetic_v<_A1> && is_arithmetic_v<_A2> && is_arithmetic_v<_A3>, int> = 0 >
-+_LIBCPP_HIDE_FROM_ABI typename __promote<_A1, _A2, _A3>::type hypot(_A1 __x, _A2 __y, _A3 __z) _NOEXCEPT {
-+  using __result_type = typename __promote<_A1, _A2, _A3>::type;
++_LIBCPP_HIDE_FROM_ABI __promote_t<_A1, _A2, _A3> hypot(_A1 __x, _A2 __y, _A3 __z) _NOEXCEPT {
++  using __result_type = __promote_t<_A1, _A2, _A3>;
 +  static_assert(!(
 +      std::is_same_v<_A1, __result_type> && std::is_same_v<_A2, __result_type> && std::is_same_v<_A3, __result_type>));
 +  return __math::__hypot(
@@ -1620,8 +1621,8 @@ diff -Naur llvm-project-19.1.0.src.orig/libcxx/include/__math/solaris.h llvm-pro
 +// pow
 +
 +template <class _A1, class _A2, __enable_if_t<is_arithmetic<_A1>::value && is_arithmetic<_A2>::value, int> = 0>
-+inline _LIBCPP_HIDE_FROM_ABI typename __promote<_A1, _A2>::type pow(_A1 __x, _A2 __y) _NOEXCEPT {
-+  using __result_type = typename __promote<_A1, _A2>::type;
++inline _LIBCPP_HIDE_FROM_ABI __promote_t<_A1, _A2> pow(_A1 __x, _A2 __y) _NOEXCEPT {
++  using __result_type = __promote_t<_A1, _A2>;
 +  static_assert(!(_IsSame<_A1, __result_type>::value && _IsSame<_A2, __result_type>::value), "");
 +  return __math::pow((__result_type)__x, (__result_type)__y);
 +}
@@ -1771,17 +1772,17 @@ diff -Naur llvm-project-18.1.8.src.orig/libcxx/include/__support/solaris/locale_
 +
 +#endif // _LIBCPP___SUPPORT_LOCALE_MGMT_SOLARIS_H
 diff -Naur llvm-project-20.1.0-rc1.src.orig/libcxx/include/CMakeLists.txt llvm-project-20.1.0-rc1.src/libcxx/include/CMakeLists.txt
---- llvm-project-20.1.0-rc1.src/libcxx/include/CMakeLists.txt.~1~	2025-02-02 02:04:34.000000000 +0000
-+++ llvm-project-20.1.0-rc1.src/libcxx/include/CMakeLists.txt	2025-02-08 19:01:54.533694398 +0000
-@@ -506,6 +506,7 @@
+--- llvm-project-llvmorg-21.1.0-rc1/libcxx/include/CMakeLists.txt.~1~	2025-07-17 20:02:34.000000000 +0000
++++ llvm-project-llvmorg-21.1.0-rc1/libcxx/include/CMakeLists.txt	2025-07-18 12:27:15.850557029 +0000
+@@ -519,6 +519,7 @@
    __locale_dir/locale_base_api/ibm.h
    __locale_dir/locale_base_api/musl.h
    __locale_dir/locale_base_api/openbsd.h
 +  __locale_dir/locale_base_api/solaris.h
-   __locale_dir/pad_and_output.h
-   __locale_dir/support/apple.h
-   __locale_dir/support/bsd_like.h
-@@ -531,6 +532,7 @@
+   __locale_dir/messages.h
+   __locale_dir/money.h
+   __locale_dir/num.h
+@@ -552,6 +553,7 @@
    __math/remainder.h
    __math/roots.h
    __math/rounding_functions.h
@@ -1789,7 +1790,7 @@ diff -Naur llvm-project-20.1.0-rc1.src.orig/libcxx/include/CMakeLists.txt llvm-p
    __math/special_functions.h
    __math/traits.h
    __math/trigonometric_functions.h
-@@ -726,6 +728,7 @@
+@@ -753,6 +755,7 @@
    __support/ibm/gettod_zos.h
    __support/ibm/locale_mgmt_zos.h
    __support/ibm/nanosleep.h
@@ -1797,7 +1798,7 @@ diff -Naur llvm-project-20.1.0-rc1.src.orig/libcxx/include/CMakeLists.txt llvm-p
    __support/xlocale/__nop_locale_mgmt.h
    __support/xlocale/__posix_l_fallback.h
    __support/xlocale/__strtonum_fallback.h
-@@ -1555,6 +1558,7 @@
+@@ -1301,6 +1304,7 @@
    __cxx03/__locale_dir/locale_base_api/musl.h
    __cxx03/__locale_dir/locale_base_api/newlib.h
    __cxx03/__locale_dir/locale_base_api/openbsd.h
@@ -1805,18 +1806,18 @@ diff -Naur llvm-project-20.1.0-rc1.src.orig/libcxx/include/CMakeLists.txt llvm-p
    __cxx03/__locale_dir/locale_base_api/win32.h
    __cxx03/__math/abs.h
    __cxx03/__math/copysign.h
-@@ -1573,6 +1577,7 @@
+@@ -1319,6 +1323,7 @@
    __cxx03/__math/remainder.h
    __cxx03/__math/roots.h
    __cxx03/__math/rounding_functions.h
 +  __cxx03/__math/solaris.h
-   __cxx03/__math/special_functions.h
    __cxx03/__math/traits.h
    __cxx03/__math/trigonometric_functions.h
+   __cxx03/__mbstate_t.h
 diff -Naur llvm-project-20.1.0-rc1.src.orig/libcxx/include/math.h llvm-project-20.1.0-rc1.src/libcxx/include/math.h
---- llvm-project-20.1.0-rc1.src/libcxx/include/math.h.~1~	2025-02-02 02:04:34.000000000 +0000
-+++ llvm-project-20.1.0-rc1.src/libcxx/include/math.h	2025-02-08 19:05:26.430521207 +0000
-@@ -375,6 +381,9 @@
+--- llvm-project-llvmorg-21.1.0-rc1/libcxx/include/math.h.~1~	2025-07-17 20:02:34.000000000 +0000
++++ llvm-project-llvmorg-21.1.0-rc1/libcxx/include/math.h	2025-07-20 15:40:52.024181165 +0000
+@@ -375,11 +375,15 @@
  #      include <__math/remainder.h>
  #      include <__math/roots.h>
  #      include <__math/rounding_functions.h>
@@ -1826,15 +1827,13 @@ diff -Naur llvm-project-20.1.0-rc1.src.orig/libcxx/include/math.h llvm-project-2
  #      include <__math/traits.h>
  #      include <__math/trigonometric_functions.h>
  #      include <__type_traits/enable_if.h>
-@@ -382,6 +391,7 @@
  #      include <__type_traits/is_integral.h>
- #      include <stdlib.h>
  
 +#if !defined(__sun)
  // fpclassify relies on implementation-defined constants, so we can't move it to a detail header
  _LIBCPP_BEGIN_NAMESPACE_STD
  
-@@ -416,9 +426,10 @@
+@@ -414,9 +418,10 @@
  
  using std::__math::fpclassify;
  using std::__math::signbit;
@@ -1847,19 +1846,20 @@ diff -Naur llvm-project-20.1.0-rc1.src.orig/libcxx/include/math.h llvm-project-2
  using std::__math::isfinite;
  using std::__math::isgreater;
  using std::__math::isgreaterequal;
-@@ -429,7 +440,7 @@
+@@ -427,7 +432,7 @@
  using std::__math::isnan;
  using std::__math::isnormal;
  using std::__math::isunordered;
 -#      endif // _LIBCPP_MSVCRT
 +#      endif // !defined(_LIBCPP_MSVCRT) && !defined(__sun)
  
- // abs
- //
-@@ -444,6 +455,34 @@
- // templates. Functions are preferred over function templates during overload resolution, which means that our overload
+ // We have to provide double overloads for <math.h> to work on platforms that don't provide the full set of math
+ // functions. To make the overload set work with multiple functions that take the same arguments, we make our overloads
+@@ -435,6 +440,35 @@
  // will only be selected when the C library doesn't provide one.
  
+ using std::__math::abs;
++
 +// The Solaris runtime already provides some functions as templates
 +#if defined(__sun)
 +using std::__math2::acos;
@@ -1891,7 +1891,7 @@ diff -Naur llvm-project-20.1.0-rc1.src.orig/libcxx/include/math.h llvm-project-2
  using std::__math::acos;
  using std::__math::acosh;
  using std::__math::asin;
-@@ -501,6 +540,7 @@
+@@ -492,6 +526,7 @@
  using std::__math::tanh;
  using std::__math::tgamma;
  using std::__math::trunc;
@@ -1900,31 +1900,9 @@ diff -Naur llvm-project-20.1.0-rc1.src.orig/libcxx/include/math.h llvm-project-2
  } // extern "C++"
  
 diff -Naur llvm-project-20.1.0-rc1.src.orig/libcxx/include/stdlib.h llvm-project-20.1.0-rc1.src/libcxx/include/stdlib.h
---- llvm-project-20.1.0-rc1.src/libcxx/include/stdlib.h.~1~	2025-02-02 02:04:34.000000000 +0000
-+++ llvm-project-20.1.0-rc1.src/libcxx/include/stdlib.h	2025-02-08 19:07:29.637482889 +0000
-@@ -108,10 +108,13 @@
- 
- // MSVCRT already has the correct prototype in <stdlib.h> if __cplusplus is defined
- #      if !defined(_LIBCPP_MSVCRT)
-+#        if !defined(__sun__)
- [[__nodiscard__]] inline _LIBCPP_HIDE_FROM_ABI long abs(long __x) _NOEXCEPT { return __builtin_labs(__x); }
-+#        endif // !defined(__sun__)
- [[__nodiscard__]] inline _LIBCPP_HIDE_FROM_ABI long long abs(long long __x) _NOEXCEPT { return __builtin_llabs(__x); }
- #      endif // !defined(_LIBCPP_MSVCRT)
- 
-+#if !defined(__sun__)
- [[__nodiscard__]] inline _LIBCPP_HIDE_FROM_ABI float abs(float __lcpp_x) _NOEXCEPT {
-   return __builtin_fabsf(__lcpp_x); // Use builtins to prevent needing math.h
- }
-@@ -123,6 +126,7 @@
- [[__nodiscard__]] inline _LIBCPP_HIDE_FROM_ABI long double abs(long double __lcpp_x) _NOEXCEPT {
-   return __builtin_fabsl(__lcpp_x);
- }
-+#endif // !defined(__sun__)
- 
- // div
- 
-@@ -138,7 +142,9 @@
+--- llvm-project-llvmorg-21.1.0-rc1/libcxx/include/stdlib.h.~1~	2025-07-17 20:02:34.000000000 +0000
++++ llvm-project-llvmorg-21.1.0-rc1/libcxx/include/stdlib.h	2025-07-18 12:19:39.026116955 +0000
+@@ -123,7 +123,9 @@
  
  // MSVCRT already has the correct prototype in <stdlib.h> if __cplusplus is defined
  #      if !defined(_LIBCPP_MSVCRT)
