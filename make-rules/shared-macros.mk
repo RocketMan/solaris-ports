@@ -750,6 +750,7 @@ PERL_VERSION_NODOT = $(subst .,,$(PERL_VERSION))
 PERL_VERSIONS = 5.22
 
 PERL.5.22 =     /usr/perl5/5.22/bin/perl
+PERL.5.36 =     /usr/perl5/5.36/bin/perl
 
 # Use these in a component's Makefile for building and packaging with the
 # BUILD's default perl and the package it comes from.
