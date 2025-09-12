@@ -1502,6 +1502,7 @@ file path=usr/include/c++/v1/__type_traits/is_trivially_lexicographically_compar
 file path=usr/include/c++/v1/__type_traits/is_trivially_relocatable.h
 file path=usr/include/c++/v1/__type_traits/is_unbounded_array.h
 file path=usr/include/c++/v1/__type_traits/is_union.h
+file path=usr/include/c++/v1/__type_traits/is_unqualified.h
 file path=usr/include/c++/v1/__type_traits/is_unsigned.h
 file path=usr/include/c++/v1/__type_traits/is_valid_expansion.h
 file path=usr/include/c++/v1/__type_traits/is_void.h
