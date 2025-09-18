@@ -250,10 +250,10 @@ https://bugs.webkit.org/show_bug.cgi?id=176341
  #else
      return ""_s;
  #endif
---- a/Source/WTF/wtf/FileSystem.cpp	2022-01-16 10:16:25.434651050 +0000
-+++ b/Source/WTF/wtf/FileSystem.cpp	2022-01-16 10:17:37.427787250 +0000
-@@ -48,6 +48,11 @@
- #include <wtf/StdFilesystem.h>
+--- a/Source/WTF/wtf/FileSystem.h	2025-03-27 15:34:09.000000000 +0000
++++ b/Source/WTF/wtf/FileSystem.h	2025-03-27 16:23:00.021706499 +0000
+@@ -50,6 +50,11 @@
+ typedef const struct __CFData* CFDataRef;
  #endif
  
 +#if OS(SOLARIS) && !defined(MAP_FILE)
@@ -261,9 +261,9 @@ https://bugs.webkit.org/show_bug.cgi?id=176341
 +#define MAP_FILE 0
 +#endif
 +
- namespace WTF::FileSystemImpl {
+ OBJC_CLASS NSString;
  
- #if HAVE(STD_FILESYSTEM) || HAVE(STD_EXPERIMENTAL_FILESYSTEM)
+ 
 --- webkit/Source/WTF/wtf/glib/FileSystemGlib.cpp.~2~	2024-04-07 23:02:21.909379687 +0000
 +++ webkit/Source/WTF/wtf/glib/FileSystemGlib.cpp	2024-04-08 10:38:37.794531247 +0000
 @@ -74,6 +74,16 @@

@@ -1,16 +1,16 @@
---- webkit/Source/WTF/wtf/posix/FileSystemPOSIX.cpp.~1~	2025-01-16 19:47:56.970285259 +0000
-+++ webkit/Source/WTF/wtf/posix/FileSystemPOSIX.cpp	2025-01-16 19:49:35.409402645 +0000
-@@ -275,8 +275,13 @@
+--- webkit/Source/WTF/wtf/posix/FileSystemPOSIX.cpp.~1~	2025-03-27 15:54:54.289855895 +0000
++++ webkit/Source/WTF/wtf/posix/FileSystemPOSIX.cpp	2025-03-27 16:00:54.305198539 +0000
+@@ -178,8 +178,13 @@
      auto buffer = MallocSpan<char>::malloc(length);
      snprintf(buffer.mutableSpan().data(), length, "%s/%s-XXXXXX", directory, prefixUTF8.data());
  
 +#if defined(__sun)
-+    handle = mkstemp(buffer.mutableSpan().data());
-+    if (handle < 0 || fcntl(handle, F_SETFD, FD_CLOEXEC) < 0)
++    auto handle = FileHandle::adopt(mkstemp(buffer.mutableSpan().data()));
++    if (!handle || fcntl(handle.platformHandle(), F_SETFD, FD_CLOEXEC) < 0)
 +#else
-     handle = mkostemp(buffer.mutableSpan().data(), O_CLOEXEC);
-     if (handle < 0)
+     auto handle = FileHandle::adopt(mkostemp(buffer.mutableSpan().data(), O_CLOEXEC));
+     if (!handle)
 +#endif
-         goto end;
+         return { String(), FileHandle() };
  
-     return { String::fromUTF8(buffer.span().data()), handle };
+     return { String::fromUTF8(buffer.span().data()), WTFMove(handle) };

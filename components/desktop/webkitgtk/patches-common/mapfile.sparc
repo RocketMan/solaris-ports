@@ -27,13 +27,14 @@ file upstream bug after resolving issues documented above
      set_property(TARGET WebKit APPEND PROPERTY LINK_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/webkitglib-symbols.map")
  endif ()
  
---- a/Source/WebKit/webkitglib-symbols.map	2024-10-29 12:34:12.869961735 +0000
-+++ b/Source/WebKit/webkitglib-symbols.map	2024-10-29 12:34:51.961326060 +0000
-@@ -1,14 +1,5 @@
+--- webkitgtk-2.50.0/Source/WebKit/webkitglib-symbols.map.~1~	2025-09-17 15:59:28.190885881 +0000
++++ webkitgtk-2.50.0/Source/WebKit/webkitglib-symbols.map	2025-09-17 16:00:08.378226516 +0000
+@@ -1,15 +1,5 @@
  {
  global:
 -  jsc_*;
 -  webkit_*;
+-  wpe_*;
 -  extern "C++" {
 -    "WebKit::GPUProcessMain(int, char**)";
 -    "WebKit::NetworkProcessMain(int, char**)";

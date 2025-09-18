@@ -92,10 +92,15 @@ CLEAN_PATHS += $(UNIFDEF_DIR)
 COMPONENT_BUILD_ENV += PATH="$(COMPONENT_DIR)/$(UNIFDEF_DIR):$(GNUBIN):$(PATH)"
 
 ifeq ($(COMPILER), clang)
+CFLAGS += -Wno-character-conversion
 CFLAGS += -Wno-expansion-to-defined
+CFLAGS += -Wno-unnecessary-virtual-specifier
+CXXFLAGS += -Wno-character-conversion
 CXXFLAGS += -Wno-expansion-to-defined
 CXXFLAGS += -Wno-gnu-include-next
+CXXFLAGS += -Wno-preferred-type-bitfield-enum-conversion
 CXXFLAGS += -Wno-sign-compare
+CXXFLAGS += -Wno-unnecessary-virtual-specifier
 CXXFLAGS += -Wno-unused-lambda-capture
 $(WANT_LIBCXX)CXXFLAGS += -stdlib=libc++
 endif
