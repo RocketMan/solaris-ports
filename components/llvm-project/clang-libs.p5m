@@ -45,8 +45,8 @@ set name=org.opensolaris.consolidation value=$(CONSOLIDATION)
 link path=usr/lib/$(MACH64)/libclang-cpp.so target=libclang-cpp.so.21.1
 file path=usr/lib/$(MACH64)/libclang-cpp.so.21.1
 link path=usr/lib/$(MACH64)/libclang.so target=libclang.so.21.1
-link path=usr/lib/$(MACH64)/libclang.so.21.1 target=libclang.so.21.1.4
-file path=usr/lib/$(MACH64)/libclang.so.21.1.4
+link path=usr/lib/$(MACH64)/libclang.so.21.1 target=libclang.so.21.1.5
+file path=usr/lib/$(MACH64)/libclang.so.21.1.5
 license llvm.license license="Apache License v2.0 with LLVM Exceptions"
 depend type=require fmri=pkg:/developer/gcc/gcc-c++
 depend type=require fmri=pkg:/developer/gnu-binutils
