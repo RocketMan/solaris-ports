@@ -32,12 +32,12 @@
 include ../webkitgtk-common.mk
 
 COMPONENT_NAME=		webkitgtk
-COMPONENT_VERSION=	2.50.1
+COMPONENT_VERSION=	2.50.2
 COMPONENT_REVISION=	0
 COMPONENT_PROJECT_URL=	https://webkitgtk.org
 COMPONENT_ARCHIVE=	$(COMPONENT_SRC).tar.xz
 COMPONENT_ARCHIVE_HASH= \
-	sha256:33e912ee6e3cdb4b9803715f50686af85a60af47f1cf72a6acc6a2db1bb3d9fe
+	sha256:19ab61f2d44e62cd443673943d2d5341b84d08405f67a7c37b7a77ad3550f880
 COMPONENT_ARCHIVE_URL=	https://webkitgtk.org/releases/$(COMPONENT_ARCHIVE)
 COMPONENT_ANITYA_ID=	5355
 
@@ -166,6 +166,7 @@ REQUIRED_PACKAGES += library/icu
 # Uncomment this line if you are using the icu-gcc from this repo:
 #REQUIRED_PACKAGES += library/icu-gcc
 REQUIRED_PACKAGES += library/desktop/libnotify
+REQUIRED_PACKAGES += library/expat
 REQUIRED_PACKAGES += library/lcms2
 REQUIRED_PACKAGES += library/libsoup3
 REQUIRED_PACKAGES += library/libtasn1
