@@ -1,0 +1,2 @@
+<transform dir link -> drop>
+<transform file path=usr/lib/.* -> drop>
