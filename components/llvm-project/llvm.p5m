@@ -45,7 +45,7 @@ set name=org.opensolaris.arc-caseid value=PSARC/2013/188 value=PSARC/2018/097 \
 set name=org.opensolaris.consolidation value=$(CONSOLIDATION)
 file path=usr/bin/FileCheck
 file path=usr/bin/UnicodeNameMappingGenerator
-file path=usr/bin/amdgpu-arch
+link path=usr/bin/amdgpu-arch target=offload-arch
 file path=usr/bin/bugpoint
 file path=usr/bin/count
 file path=usr/bin/dsymutil
@@ -61,8 +61,10 @@ link path=usr/bin/llvm-bitcode-strip target=llvm-objcopy
 file path=usr/bin/llvm-c-test
 file path=usr/bin/llvm-cat
 file path=usr/bin/llvm-cfi-verify
+file path=usr/bin/llvm-cgdata
 file path=usr/bin/llvm-config
 file path=usr/bin/llvm-cov
+file path=usr/bin/llvm-ctxprof-util
 file path=usr/bin/llvm-cvtres
 file path=usr/bin/llvm-cxxdump
 file path=usr/bin/llvm-cxxfilt
@@ -92,6 +94,7 @@ file path=usr/bin/llvm-lto2
 file path=usr/bin/llvm-mc
 file path=usr/bin/llvm-mca
 file path=usr/bin/llvm-ml
+link path=usr/bin/llvm-ml64 target=llvm-ml
 file path=usr/bin/llvm-modextract
 file path=usr/bin/llvm-mt
 file path=usr/bin/llvm-nm
@@ -118,14 +121,17 @@ file path=usr/bin/llvm-strings
 link path=usr/bin/llvm-strip target=llvm-objcopy
 file path=usr/bin/llvm-symbolizer
 file path=usr/bin/llvm-tblgen
+file path=usr/bin/llvm-test-mustache-spec
 file path=usr/bin/llvm-tli-checker
 file path=usr/bin/llvm-undname
 link path=usr/bin/llvm-windres target=llvm-rc
 file path=usr/bin/llvm-xray
 file path=usr/bin/not
-file path=usr/bin/nvptx-arch
+link path=usr/bin/nvptx-arch target=offload-arch
 file path=usr/bin/obj2yaml
+file path=usr/bin/offload-arch
 file path=usr/bin/opt
+file path=usr/bin/reduce-chunk-list
 file path=usr/bin/sancov
 file path=usr/bin/sanstats
 file path=usr/bin/split-file

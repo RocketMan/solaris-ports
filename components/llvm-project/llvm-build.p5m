@@ -2303,6 +2303,7 @@ file path=usr/lib/$(MACH64)/libLLVMCodeGenTypes.a
 file path=usr/lib/$(MACH64)/libLLVMCore.a
 file path=usr/lib/$(MACH64)/libLLVMCoroutines.a
 file path=usr/lib/$(MACH64)/libLLVMCoverage.a
+file path=usr/lib/$(MACH64)/libLLVMDWARFCFIChecker.a
 file path=usr/lib/$(MACH64)/libLLVMDWARFLinker.a
 file path=usr/lib/$(MACH64)/libLLVMDWARFLinkerClassic.a
 file path=usr/lib/$(MACH64)/libLLVMDWARFLinkerParallel.a
@@ -2310,6 +2311,7 @@ file path=usr/lib/$(MACH64)/libLLVMDWP.a
 file path=usr/lib/$(MACH64)/libLLVMDebugInfoBTF.a
 file path=usr/lib/$(MACH64)/libLLVMDebugInfoCodeView.a
 file path=usr/lib/$(MACH64)/libLLVMDebugInfoDWARF.a
+file path=usr/lib/$(MACH64)/libLLVMDebugInfoDWARFLowLevel.a
 file path=usr/lib/$(MACH64)/libLLVMDebugInfoGSYM.a
 file path=usr/lib/$(MACH64)/libLLVMDebugInfoLogicalView.a
 file path=usr/lib/$(MACH64)/libLLVMDebugInfoMSF.a
@@ -2320,10 +2322,11 @@ file path=usr/lib/$(MACH64)/libLLVMDiff.a
 file path=usr/lib/$(MACH64)/libLLVMDlltoolDriver.a
 file path=usr/lib/$(MACH64)/libLLVMExecutionEngine.a
 file path=usr/lib/$(MACH64)/libLLVMExegesis.a
-file path=usr/lib/$(MACH64)/libLLVMExegesisX86.a
+file path=usr/lib/$(MACH64)/libLLVMExegesisX86.a variant.arch=i386
 file path=usr/lib/$(MACH64)/libLLVMExtensions.a
 file path=usr/lib/$(MACH64)/libLLVMFileCheck.a
 file path=usr/lib/$(MACH64)/libLLVMFrontendAtomic.a
+file path=usr/lib/$(MACH64)/libLLVMFrontendDirective.a
 file path=usr/lib/$(MACH64)/libLLVMFrontendDriver.a
 file path=usr/lib/$(MACH64)/libLLVMFrontendHLSL.a
 file path=usr/lib/$(MACH64)/libLLVMFrontendOffloading.a
@@ -2381,13 +2384,14 @@ file path=usr/lib/$(MACH64)/libLLVMTransformUtils.a
 file path=usr/lib/$(MACH64)/libLLVMVectorize.a
 file path=usr/lib/$(MACH64)/libLLVMWindowsDriver.a
 file path=usr/lib/$(MACH64)/libLLVMWindowsManifest.a
-file path=usr/lib/$(MACH64)/libLLVMX86AsmParser.a
-file path=usr/lib/$(MACH64)/libLLVMX86CodeGen.a
-file path=usr/lib/$(MACH64)/libLLVMX86Desc.a
-file path=usr/lib/$(MACH64)/libLLVMX86Disassembler.a
-file path=usr/lib/$(MACH64)/libLLVMX86Info.a
-file path=usr/lib/$(MACH64)/libLLVMX86TargetMCA.a
+file path=usr/lib/$(MACH64)/libLLVMX86AsmParser.a variant.arch=i386
+file path=usr/lib/$(MACH64)/libLLVMX86CodeGen.a variant.arch=i386
+file path=usr/lib/$(MACH64)/libLLVMX86Desc.a variant.arch=i386
+file path=usr/lib/$(MACH64)/libLLVMX86Disassembler.a variant.arch=i386
+file path=usr/lib/$(MACH64)/libLLVMX86Info.a variant.arch=i386
+file path=usr/lib/$(MACH64)/libLLVMX86TargetMCA.a variant.arch=i386
 file path=usr/lib/$(MACH64)/libLLVMXRay.a
+file path=usr/lib/$(MACH64)/libLLVMipo.a
 link path=usr/lib/$(MACH64)/libRemarks.so target=libRemarks.so.21.1
 file path=usr/lib/$(MACH64)/libRemarks.so.21.1
 file path=usr/lib/analyze-c++

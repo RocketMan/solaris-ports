@@ -680,6 +680,7 @@ file path=usr/include/clang/Lex/ModuleLoader.h
 file path=usr/include/clang/Lex/ModuleMap.h
 file path=usr/include/clang/Lex/ModuleMapFile.h
 file path=usr/include/clang/Lex/MultipleIncludeOpt.h
+file path=usr/include/clang/Lex/NoTrivialPPDirectiveTracer.h
 file path=usr/include/clang/Lex/PPCallbacks.h
 file path=usr/include/clang/Lex/PPConditionalDirectiveRecord.h
 file path=usr/include/clang/Lex/PPDirectiveParameter.h
