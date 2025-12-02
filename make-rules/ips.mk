@@ -228,6 +228,9 @@ MANIFESTS =		$(VERSIONED_MANIFESTS:%=$(MANIFEST_BASE)-%)
 DEPENDED=$(VERSIONED_MANIFESTS:%.p5m=$(MANIFEST_BASE)-%.depend)
 RESOLVED=$(VERSIONED_MANIFESTS:%.p5m=$(MANIFEST_BASE)-%.depend.res)
 PUBLISHED=$(RESOLVED:%.depend.res=%.published)
+# List of manifests that are to be constructed during 'gmake manifest-check'
+CHECKED=$(CANONICAL_MANIFESTS:%.p5m=$(MANIFEST_BASE)-%.constructed)
+MANGLED=$(VERSIONED_MANIFESTS:%.p5m=$(MANIFEST_BASE)-%.mangled)
 
 COPYRIGHT_FILE ?=	$(COMPONENT_NAME)-$(COMPONENT_VERSION).copyright
 IPS_COMPONENT_VERSION ?=	$(COMPONENT_VERSION)
@@ -240,12 +243,32 @@ IPS_COMPONENT_VERSION ?=	$(COMPONENT_VERSION)
 # a package is for one architecture only.
 PUBLISH_STAMP ?= $(BUILD_DIR)/.published-$(MACH)
 
-publish:		build install $(PUBLISH_STAMP)
+$(MANIFEST_BASE)-%.constructed: install
+	@env $(call prepare_env_args,\
+	    GENERATE_TRANSFORMS PROTO_DIR PKG_HARDLINKS PKG_AUTO_HARDLINKS \
+	    MANIFEST_BASE COMPONENT_DIR MANIFEST_CLEANUP_TRANSFORM \
+	    MANIFEST_GENERATE GENERATE_PROTO_DIRS) $(MANIFEST_COMPARE) "$@" $(MANIFEST_UPDATE) $(PKG_OPTIONS)
+
+# Make manifest-check perform any action only in components built for the
+# current architecture we run on
+ifeq ($(strip $(BUILD_ARCH)),$(MACH))
+manifest-check: install $(CHECKED)
+else
+manifest-check:
+endif
+
+manifest-update: MANIFEST_UPDATE=--update
+manifest-update: manifest-check
+
+publish:		build install manifest-check $(PUBLISH_STAMP)
 
 sample-manifest:	$(GENERATED).p5m
 
 $(GENERATED).p5m:	install
-	$(PKGSEND) generate $(PKG_HARDLINKS:%=--target %) $(PROTO_DIR) | \
+	$(MANIFEST_GENERATE) \
+	    $(PKG_OPTIONS) \
+	    $(PKG_HARDLINKS:%=--target %) \
+	    $(PROTO_DIR) $(GENERATE_PROTO_DIRS) | \
 	$(PKGMOGRIFY) $(PKG_OPTIONS) /dev/fd/0 $(GENERATE_TRANSFORMS) | \
 		sed -e '/^$$/d' -e '/^#.*$$/d' | $(PKGFMT) | \
 		cat $(METADATA_TEMPLATE) - >$@
