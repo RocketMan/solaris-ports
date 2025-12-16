@@ -38,7 +38,7 @@ USERLAND_ARCHIVES = ../llvm-project/
 
 # set to `llvmorg` to use github tarball or `llvm-project` for xz asset
 COMPONENT_NAME=		llvm-project
-COMPONENT_VERSION=	21.1.7
+COMPONENT_VERSION=	21.1.8
 #COMPONENT_VERSION=	21.1.0-rc3
 #IPS_COMPONENT_VERSION=	21.0.3
 COMPONENT_REVISION=	1
@@ -58,7 +58,7 @@ COMPONENT_ARCHIVE_URL=	https://github.com/llvm/llvm-project/archive/refs/tags/$(
 endif
 
 COMPONENT_ARCHIVE_HASH=	\
-    sha256:e5b65fd79c95c343bb584127114cb2d252306c1ada1e057899b6aacdd445899e
+    sha256:4633a23617fa31a3ea51242586ea7fb1da7140e426bd62fc164261fe036aa142
 COMPONENT_SIG_URL=	$(COMPONENT_ARCHIVE_URL).sig
 COMPONENT_ANITYA_ID=	1830
 
