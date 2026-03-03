@@ -7,18 +7,18 @@ It has been updated for the current libc++ source.  In addition, it
 includes changes in support of Solaris 11.3.
 
 
-diff -Naur llvm-project-20.1.0-rc1.src.orig/libcxx/CMakeLists.txt llvm-project-20.1.0-rc1.src/libcxx/CMakeLists.txt
---- llvm-project-20.1.0-rc1.src/libcxx/CMakeLists.txt.~1~	2025-02-02 02:04:34.000000000 +0000
-+++ llvm-project-20.1.0-rc1.src/libcxx/CMakeLists.txt	2025-02-09 17:05:17.516079188 +0000
-@@ -160,6 +160,7 @@
+diff -Naur llvm-project-22.1.0-rc1.src.orig/libcxx/CMakeLists.txt llvm-project-20.1.0-rc1.src/libcxx/CMakeLists.txt
+--- llvm-project-22.1.0-rc1.src/libcxx/CMakeLists.txt.~1~	2026-01-16 09:12:04.000000000 +0000
++++ llvm-project-22.1.0-rc1.src/libcxx/CMakeLists.txt	2026-01-18 12:40:16.634785445 +0000
+@@ -173,6 +173,7 @@
  
  # TODO: Figure out how to build GoogleBenchmark on those platforms, and how to build when exceptions or RTTI is disabled
- if (WIN32 OR MINGW OR ANDROID OR ${CMAKE_SYSTEM_NAME} MATCHES "AIX"
+ if (WIN32 OR MINGW OR ANDROID OR "${CMAKE_SYSTEM_NAME}" MATCHES "AIX"
 +    OR CMAKE_HOST_SOLARIS
      OR NOT LIBCXX_ENABLE_LOCALIZATION
      OR NOT LIBCXX_ENABLE_THREADS
      OR NOT LIBCXX_ENABLE_FILESYSTEM
-@@ -267,7 +268,7 @@
+@@ -275,7 +276,7 @@
      OR NOT LIBCXX_ENABLE_SHARED
      OR LIBCXX_CXX_ABI STREQUAL "none")
    set(ENABLE_LINKER_SCRIPT_DEFAULT_VALUE OFF)
@@ -27,7 +27,7 @@ diff -Naur llvm-project-20.1.0-rc1.src.orig/libcxx/CMakeLists.txt llvm-project-2
    set(ENABLE_LINKER_SCRIPT_DEFAULT_VALUE ON)
  else()
    set(ENABLE_LINKER_SCRIPT_DEFAULT_VALUE OFF)
-@@ -285,6 +286,14 @@
+@@ -293,6 +294,14 @@
  # link with libunwind or libgcc_s while running the test cases.
  option(LIBCXXABI_USE_LLVM_UNWINDER "Build and use the LLVM unwinder." ON)
  
@@ -42,10 +42,10 @@ diff -Naur llvm-project-20.1.0-rc1.src.orig/libcxx/CMakeLists.txt llvm-project-2
  # Target options --------------------------------------------------------------
  option(LIBCXX_BUILD_32_BITS "Build 32 bit multilib libc++. This option is not supported anymore when building the runtimes. Please specify a full triple instead." ${LLVM_BUILD_32_BITS})
  if (LIBCXX_BUILD_32_BITS)
-diff -Naur llvm-project-20.1.0-rc1.src.orig/libcxx/include/__config llvm-project-20.1.0-rc1.src/libcxx/include/__config
---- llvm-project-20.1.0-rc1.src/libcxx/include/__config.~1~	2025-02-02 02:04:34.000000000 +0000
-+++ llvm-project-20.1.0-rc1.src/libcxx/include/__config	2025-02-08 21:49:20.759281661 +0000
-@@ -233,6 +233,15 @@
+diff -Naur llvm-project-22.1.0-rc1.src.orig/libcxx/include/__config llvm-project-20.1.0-rc1.src/libcxx/include/__config
+--- llvm-project-22.1.0-rc1.src/libcxx/include/__config.~1~	2026-01-16 09:12:04.000000000 +0000
++++ llvm-project-22.1.0-rc1.src/libcxx/include/__config	2026-01-18 12:34:34.158773192 +0000
+@@ -101,6 +101,15 @@
  #    define _LIBCPP_HAS_BITSCAN64 0
  #  endif // defined(_WIN32)
  
@@ -61,7 +61,7 @@ diff -Naur llvm-project-20.1.0-rc1.src.orig/libcxx/include/__config llvm-project
  #  if defined(_AIX) && !defined(__64BIT__)
  // The size of wchar is 2 byte on 32-bit mode on AIX.
  #    define _LIBCPP_SHORT_WCHAR 1
-@@ -279,7 +288,7 @@
+@@ -140,7 +149,7 @@
  #  if defined(__APPLE__) || defined(__FreeBSD__) || defined(__NetBSD__) || defined(__OpenBSD__) ||                     \
        defined(__DragonFly__)
  #    define _LIBCPP_USING_ARC4_RANDOM
@@ -70,17 +70,8 @@ diff -Naur llvm-project-20.1.0-rc1.src.orig/libcxx/include/__config llvm-project
  #    define _LIBCPP_USING_GETENTROPY
  #  elif defined(__Fuchsia__)
  #    define _LIBCPP_USING_FUCHSIA_CPRNG
-@@ -668,7 +677,7 @@
- #    else
- #      define _LIBCPP_HAS_C11_ALIGNED_ALLOC 1
- #    endif
--#  elif defined(__ANDROID__) && __ANDROID_API__ < 28
-+#  elif defined(__ANDROID__) && __ANDROID_API__ < 28 || defined(__sun)
- // Android only provides aligned_alloc when targeting API 28 or higher.
- #    define _LIBCPP_HAS_C11_ALIGNED_ALLOC 0
- #  else
-@@ -679,7 +688,7 @@
- #    define _LIBCPP_HAS_DEFAULTRUNELOCALE
+@@ -485,7 +494,7 @@
+ #    define _LIBCPP_HAS_ALIGNED_ALLOCATION 1
  #  endif
  
 -#  if defined(__APPLE__) || defined(__FreeBSD__)
@@ -88,7 +79,7 @@ diff -Naur llvm-project-20.1.0-rc1.src.orig/libcxx/include/__config llvm-project
  #    define _LIBCPP_WCTYPE_IS_MASK
  #  endif
  
-@@ -823,6 +832,7 @@
+@@ -629,6 +638,7 @@
          defined(__linux__) ||                                                                                          \
          defined(__GNU__) ||                                                                                            \
          defined(__APPLE__) ||                                                                                          \
@@ -96,8 +87,8 @@ diff -Naur llvm-project-20.1.0-rc1.src.orig/libcxx/include/__config llvm-project
          defined(__MVS__) ||                                                                                            \
          defined(_AIX) ||                                                                                               \
          defined(__EMSCRIPTEN__)
-@@ -1238,6 +1248,18 @@
- #    define _LIBCPP_HAS_EXPLICIT_THIS_PARAMETER 0
+@@ -1045,6 +1055,18 @@
+ #    define _LIBCPP_DIAGNOSE_NULLPTR
  #  endif
  
 +
@@ -115,10 +106,10 @@ diff -Naur llvm-project-20.1.0-rc1.src.orig/libcxx/include/__config llvm-project
  #endif // __cplusplus
  
  #endif // _LIBCPP___CONFIG
-diff -Naur llvm-project-18.1.8.src.orig/libcxx/include/__cxx03/__config llvm-project-18.1.8.src/libcxx/include/__cxx03/__config
---- llvm-project-18.1.8.src.orig/libcxx/include/__cxx03/__config	2024-06-15 18:21:32.000000000 +0000
-+++ llvm-project-18.1.8.src/libcxx/include/__cxx03/__config	2024-07-01 13:05:23.785844443 +0000
-@@ -249,6 +249,15 @@
+diff -Naur llvm-project-22.1.0-rc1.src.orig/libcxx/include/__cxx03/__config llvm-project-18.1.8.src/libcxx/include/__cxx03/__config
+--- llvm-project-22.1.0-rc1.src/libcxx/include/__cxx03/__config.~1~	2026-01-16 09:12:04.000000000 +0000
++++ llvm-project-22.1.0-rc1.src/libcxx/include/__cxx03/__config	2026-01-18 12:34:34.218487338 +0000
+@@ -239,6 +239,15 @@
  #    define _LIBCPP_HAS_OPEN_WITH_WCHAR
  #  endif // defined(_WIN32)
  
@@ -134,7 +125,7 @@ diff -Naur llvm-project-18.1.8.src.orig/libcxx/include/__cxx03/__config llvm-pro
  #  if defined(_AIX) && !defined(__64BIT__)
  // The size of wchar is 2 byte on 32-bit mode on AIX.
  #    define _LIBCPP_SHORT_WCHAR 1
-@@ -295,7 +304,7 @@
+@@ -285,7 +294,7 @@
  #  if defined(__APPLE__) || defined(__FreeBSD__) || defined(__NetBSD__) || defined(__OpenBSD__) ||                     \
        defined(__DragonFly__)
  #    define _LIBCPP_USING_ARC4_RANDOM
@@ -143,25 +134,16 @@ diff -Naur llvm-project-18.1.8.src.orig/libcxx/include/__cxx03/__config llvm-pro
  #    define _LIBCPP_USING_GETENTROPY
  #  elif defined(__Fuchsia__)
  #    define _LIBCPP_USING_FUCHSIA_CPRNG
-@@ -631,7 +640,7 @@
- #    define _LIBCPP_DECLARE_STRONG_ENUM_EPILOG(x)
- #  endif // _LIBCPP_CXX03_LANG
+@@ -598,7 +607,7 @@
+       };
+ // clang-format on
  
 -#  if defined(__APPLE__) || defined(__FreeBSD__) || defined(_LIBCPP_MSVCRT_LIKE) || defined(__NetBSD__)
 +#  if defined(__APPLE__) || defined(__FreeBSD__) || defined(_LIBCPP_MSVCRT_LIKE) || defined(__NetBSD__) || defined(__sun__)
  #    define _LIBCPP_LOCALE__L_EXTENSIONS 1
  #  endif
  
-@@ -662,7 +671,7 @@
-          __ENVIRONMENT_MAC_OS_X_VERSION_MIN_REQUIRED__ < 101500)
- #      define _LIBCPP_HAS_NO_C11_ALIGNED_ALLOC
- #    endif
--#  elif defined(__ANDROID__) && __ANDROID_API__ < 28
-+#  elif defined(__ANDROID__) && __ANDROID_API__ < 28 || defined(__sun)
- // Android only provides aligned_alloc when targeting API 28 or higher.
- #    define _LIBCPP_HAS_NO_C11_ALIGNED_ALLOC
- #  endif
-@@ -671,7 +680,7 @@
+@@ -626,7 +635,7 @@
  #    define _LIBCPP_HAS_DEFAULTRUNELOCALE
  #  endif
  
@@ -170,7 +152,7 @@ diff -Naur llvm-project-18.1.8.src.orig/libcxx/include/__cxx03/__config llvm-pro
  #    define _LIBCPP_WCTYPE_IS_MASK
  #  endif
  
-@@ -815,6 +824,7 @@
+@@ -682,6 +691,7 @@
          defined(__linux__) ||                                                                                          \
          defined(__GNU__) ||                                                                                            \
          defined(__APPLE__) ||                                                                                          \
@@ -178,7 +160,7 @@ diff -Naur llvm-project-18.1.8.src.orig/libcxx/include/__cxx03/__config llvm-pro
          defined(__MVS__) ||                                                                                            \
          defined(_AIX) ||                                                                                               \
          defined(__EMSCRIPTEN__)
-@@ -1223,6 +1233,18 @@
+@@ -1076,6 +1086,18 @@
  #    define _LIBCPP_HAS_EXPLICIT_THIS_PARAMETER
  #  endif
  
@@ -197,10 +179,10 @@ diff -Naur llvm-project-18.1.8.src.orig/libcxx/include/__cxx03/__config llvm-pro
  #endif // __cplusplus
  
  #endif // _LIBCPP___CXX03___CONFIG
-diff -Naur llvm-project-20.1.0-rc1.src.orig/libcxx/include/__cxx03/__locale llvm-project-20.1.0-rc1.src/libcxx/include/_cxx03/__locale
---- llvm-project-20.1.0.src-rc1.orig/libcxx/include/__cxx03/__locale	2024-06-15 18:21:32.000000000 +0000
-+++ llvm-project-20.1.0.src-rc1/libcxx/include/__cxx03/__locale	2024-07-01 16:32:52.108742752 +0000
-@@ -391,7 +393,7 @@
+diff -Naur llvm-project-22.1.0-rc1.src.orig/libcxx/include/__cxx03/__locale llvm-project-20.1.0-rc1.src/libcxx/include/_cxx03/__locale
+--- llvm-project-22.1.0-rc1.src/libcxx/include/__cxx03/__locale.~1~	2026-01-16 09:12:04.000000000 +0000
++++ llvm-project-22.1.0-rc1.src/libcxx/include/__cxx03/__locale	2026-01-18 12:46:03.731477818 +0000
+@@ -371,7 +371,7 @@
    static const mask blank        = _CTYPE_B;
    static const mask __regex_word = 0x80;
  #  endif
@@ -209,7 +191,7 @@ diff -Naur llvm-project-20.1.0-rc1.src.orig/libcxx/include/__cxx03/__locale llvm
    typedef unsigned int mask;
    static const mask space        = _ISSPACE;
    static const mask print        = _ISPRINT;
-@@ -403,7 +405,11 @@
+@@ -383,7 +383,11 @@
    static const mask punct        = _ISPUNCT;
    static const mask xdigit       = _ISXDIGIT;
    static const mask blank        = _ISBLANK;
@@ -218,7 +200,7 @@ diff -Naur llvm-project-20.1.0-rc1.src.orig/libcxx/include/__cxx03/__locale llvm
 +# else
 +  static const mask __regex_word = 1 << 10;
 +# endif
- #elif defined(_NEWLIB_VERSION)
+ #elif _LIBCPP_LIBC_NEWLIB
    // Same type as Newlib's _ctype_ array in newlib/libc/include/ctype.h.
    typedef char mask;
 diff -Naur llvm-project-20.1.0-rc1.src.orig/libcxx/include/__cxx03/__locale_dir/locale_base_api/solaris.h llvm-project-20.1.0-rc1.src/libcxx/include/__cxx03/__locale_dir/locale_base_api/solaris.h
@@ -997,10 +979,10 @@ diff -Naur llvm-project-20.1.0-rc1.src.orig/libcxx/include/__cxx03/__locale_dir/
  #include <__assert>
  #include <__config>
  #include <__expected/bad_expected_access.h>
-diff -Naur llvm-project-18.1.8.src.orig/libcxx/include/__locale llvm-project-18.1.8.src/libcxx/include/__locale
---- llvm-project-20.1.3.src/libcxx/include/__locale.~1~	2025-04-16 14:02:19.619662311 +0000
-+++ llvm-project-20.1.3.src/libcxx/include/__locale	2025-04-16 14:04:21.995710144 +0000
-@@ -377,7 +377,7 @@
+diff -Naur llvm-project-22.1.0-rc1.src.orig/libcxx/include/__locale llvm-project-18.1.8.src/libcxx/include/__locale
+--- llvm-project-22.1.0-rc1.src/libcxx/include/__locale.~1~	2026-01-16 09:12:04.000000000 +0000
++++ llvm-project-22.1.0-rc1.src/libcxx/include/__locale	2026-01-18 12:47:20.341100595 +0000
+@@ -375,7 +375,7 @@
    static const mask blank        = _CTYPE_B;
    static const mask __regex_word = 0x80;
  #    endif
@@ -1009,7 +991,7 @@ diff -Naur llvm-project-18.1.8.src.orig/libcxx/include/__locale llvm-project-18.
    typedef unsigned int mask;
    static const mask space        = _ISSPACE;
    static const mask print        = _ISPRINT;
-@@ -389,7 +389,11 @@
+@@ -387,7 +387,11 @@
    static const mask punct        = _ISPUNCT;
    static const mask xdigit       = _ISXDIGIT;
    static const mask blank        = _ISBLANK;
@@ -1018,20 +1000,20 @@ diff -Naur llvm-project-18.1.8.src.orig/libcxx/include/__locale llvm-project-18.
 +# else
 +  static const mask __regex_word = 1 << 10;
 +# endif
- #  elif defined(_NEWLIB_VERSION)
+ #  elif _LIBCPP_LIBC_NEWLIB
    // Same type as Newlib's _ctype_ array in newlib/libc/include/ctype.h.
    typedef char mask;
---- llvm-project-20.1.3.src/libcxx/include/__locale_dir/locale_base_api.h.~1~	2025-04-16 14:02:19.620334539 +0000
-+++ llvm-project-20.1.3.src/libcxx/include/__locale_dir/locale_base_api.h	2025-04-16 14:05:33.278587823 +0000
-@@ -133,6 +133,8 @@
- #      include <__locale_dir/locale_base_api/android.h>
+--- llvm-project-22.1.0-rc1.src/libcxx/include/__locale_dir/locale_base_api.h.~1~	2026-01-18 12:34:34.832180100 +0000
++++ llvm-project-22.1.0-rc1.src/libcxx/include/__locale_dir/locale_base_api.h	2026-01-18 12:48:39.079536490 +0000
+@@ -132,6 +132,8 @@
+ #      include <__locale_dir/locale_base_api/ibm.h>
  #    elif defined(__OpenBSD__)
  #      include <__locale_dir/locale_base_api/openbsd.h>
 +#    elif defined(__sun__)
 +#      include <__locale_dir/locale_base_api/solaris.h>
- #    elif defined(__wasi__) || _LIBCPP_HAS_MUSL_LIBC
- #      include <__locale_dir/locale_base_api/musl.h>
  #    endif
+ 
+ #    include <__locale_dir/locale_base_api/bsd_locale_fallbacks.h>
 diff -Naur llvm-project-19.1.0.src.orig/libcxx/include/__locale_dir/locale_base_api/solaris.h llvm-project-19.1.0.src/libcxx/include/__locale_dir/locale_base_api/solaris.h
 --- llvm-project-19.1.0.src.orig/libcxx/include/__locale_dir/locale_base_api/solaris.h	2024-09-24 11:57:25.497634653 +0000
 +++ llvm-project-19.1.0.src/libcxx/include/__locale_dir/locale_base_api/solaris.h	2024-09-24 12:00:13.554949235 +0000
@@ -1969,6 +1951,17 @@ diff -Naur llvm-project-18.1.8.src.orig/libcxx/src/CMakeLists.txt llvm-project-1
        ec = capture_errno();
        return false;
      }
+--- llvm-project-22.1.0-rc1.src/libcxx/src/include/aligned_alloc.h-	2026-01-16 09:12:04.000000000 +0000
++++ llvm-project-22.1.0-rc1.src/libcxx/src/include/aligned_alloc.h	2026-01-18 14:56:34.343961836 +0000
+@@ -31,7 +31,7 @@
+   return ::_aligned_malloc(__size, __alignment);
+ 
+ // Android only provides aligned_alloc when targeting API 28 or higher.
+-#  elif !defined(__ANDROID__) || __ANDROID_API__ >= 28
++#  elif !defined(__sun) && (!defined(__ANDROID__) || __ANDROID_API__ >= 28)
+   // aligned_alloc() requires that __size is a multiple of __alignment,
+   // but for C++ [new.delete.general], only states "if the value of an
+   // alignment argument passed to any of these functions is not a valid
 diff -Naur llvm-project-18.1.8.src.orig/libcxx/src/include/config_elast.h llvm-project-18.1.8.src/libcxx/src/include/config_elast.h
 --- llvm-project-18.1.8.src.orig/libcxx/src/include/config_elast.h	2024-06-15 18:21:32.000000000 +0000
 +++ llvm-project-18.1.8.src/libcxx/src/include/config_elast.h	2024-06-30 19:23:46.510294904 +0000
@@ -2041,7 +2034,7 @@ diff -Naur llvm-project-18.1.8.src.orig/libcxx/src/random.cpp llvm-project-18.1.
 diff -Naur llvm-project-19.1.5.src.orig/libcxx/src/support/solaris/mbsnrtowcs.cpp llvm-project-19.1.5.src/libcxx/src/support/solaris/mbsnrtowcs.cpp
 --- llvm-project-19.1.5.src.orig/libcxx/src/support/solaris/mbsnrtowcs.cpp	1970-01-01 01:00:00.000000000 +0000
 +++ llvm-project-19.1.5.src/libcxx/src/support/solaris/mbsnrtowcs.cpp	2024-12-04 11:25:05.927272911 +0000
-@@ -0,0 +1,76 @@
+@@ -0,0 +1,77 @@
 +//===--------------------------------------------------------------------===//
 +//
 +// Adapted from musl, under the standard MIT license.
@@ -2053,6 +2046,7 @@ diff -Naur llvm-project-19.1.5.src.orig/libcxx/src/support/solaris/mbsnrtowcs.cp
 +//===--------------------------------------------------------------------===//
 +
 +#include <cwchar>
++#include <__locale_dir/locale_base_api/solaris.h>
 +
 +#ifdef __cplusplus
 +extern "C" {
@@ -2121,7 +2115,7 @@ diff -Naur llvm-project-19.1.5.src.orig/libcxx/src/support/solaris/mbsnrtowcs.cp
 diff -Naur llvm-project-19.1.5.src.orig/libcxx/src/support/solaris/wcsnrtombs.cpp llvm-project-19.1.5.src/libcxx/src/support/solaris/wcsnrtombs.cpp
 --- llvm-project-19.1.5.src.orig/libcxx/src/support/solaris/wcsnrtombs.cpp	1970-01-01 01:00:00.000000000 +0000
 +++ llvm-project-19.1.5.src/libcxx/src/support/solaris/wcsnrtombs.cpp	2024-12-04 11:25:07.352276812 +0000
-@@ -0,0 +1,56 @@
+@@ -0,0 +1,57 @@
 +//===--------------------------------------------------------------------===//
 +//
 +// Adapted from musl, under the standard MIT license.
@@ -2135,6 +2129,7 @@ diff -Naur llvm-project-19.1.5.src.orig/libcxx/src/support/solaris/wcsnrtombs.cp
 +#include <cwchar>
 +#include <climits>
 +#include <string.h>
++#include <__locale_dir/locale_base_api/solaris.h>
 +
 +#ifdef __cplusplus
 +extern "C" {
