@@ -68,7 +68,7 @@ UNIFDEF_HASH=sha256:fba564a24db7b97ebe9329713ac970627b902e5e9e8b14e19e024eb6e278
 
 # webkitgtk variants share the patches from patches-common;
 # variant-specific patches are in the optional patches subdirectory
-PATCH_LIST=../patches-common/* $(shell compgen -G patches/*)
+PATCH_LIST=../patches-common/* $(shell compgen -G patches/\*)
 PATCH_DIR=patches-all
 CLEAN_PATHS += $(PATCH_DIR)
 COPY_COMMON_FILES_1:= $(shell mkdir -p $(PATCH_DIR))
