@@ -2,8 +2,8 @@ Pass -Rdir and -R dir through to the Solaris linker
 
 Suitable for upstream.
 
---- llvm-project-llvmorg-20.1.5/clang/include/clang/Driver/Options.td-	2025-05-28 18:37:58.799570088 +0000
-+++ llvm-project-llvmorg-20.1.5/clang/include/clang/Driver/Options.td	2025-05-28 18:42:03.313114247 +0000
+--- llvm-project-llvmorg-22.1.0-rc1/clang/include/clang/Options/Options.td-	2025-05-28 18:37:58.799570088 +0000
++++ llvm-project-llvmorg-22.1.0-rc1/clang/include/clang/Options/Options.td	2025-05-28 18:42:03.313114247 +0000
 @@ -3723,6 +3723,9 @@
  def Rpass_analysis_EQ : Joined<["-"], "Rpass-analysis=">, Group<R_value_Group>,
    HelpText<"Report transformation analysis from optimization passes whose "

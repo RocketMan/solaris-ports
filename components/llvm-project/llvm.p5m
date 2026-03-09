@@ -59,6 +59,7 @@ file path=usr/bin/llvm-as
 file path=usr/bin/llvm-bcanalyzer
 link path=usr/bin/llvm-bitcode-strip target=llvm-objcopy
 file path=usr/bin/llvm-c-test
+file path=usr/bin/llvm-cas
 file path=usr/bin/llvm-cat
 file path=usr/bin/llvm-cfi-verify
 file path=usr/bin/llvm-cgdata
@@ -83,6 +84,7 @@ file path=usr/bin/llvm-extract
 file path=usr/bin/llvm-gsymutil
 file path=usr/bin/llvm-ifs
 link path=usr/bin/llvm-install-name-tool target=llvm-objcopy
+file path=usr/bin/llvm-ir2vec
 file path=usr/bin/llvm-jitlink
 file path=usr/bin/llvm-jitlink-executor
 link path=usr/bin/llvm-lib target=llvm-ar
@@ -100,6 +102,8 @@ file path=usr/bin/llvm-mt
 file path=usr/bin/llvm-nm
 file path=usr/bin/llvm-objcopy
 file path=usr/bin/llvm-objdump
+file path=usr/bin/llvm-offload-binary
+file path=usr/bin/llvm-offload-wrapper
 file path=usr/bin/llvm-opt-report
 link path=usr/bin/llvm-otool target=llvm-objdump
 file path=usr/bin/llvm-pdbutil
