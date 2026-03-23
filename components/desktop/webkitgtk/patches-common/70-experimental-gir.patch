@@ -1,0 +1,202 @@
+GIR picks up several experimental features that we do not include in the build.
+
+This patch is a brute-force removal of those features so that they are not
+scanned by GIR.
+
+
+--- x/webkitgtk-2.52.0/Source/WebKit/PlatformGTK.cmake	2026-03-18 08:17:55.155162300 +0000
++++ webkitgtk-2.52.0/Source/WebKit/PlatformGTK.cmake	2026-03-21 09:16:12.419943723 +0000
+@@ -208,7 +208,6 @@
+     ${WEBKIT_DIR}/UIProcess/API/glib/WebKitWebsiteDataManager.h.in
+     ${WEBKIT_DIR}/UIProcess/API/glib/WebKitWindowProperties.h.in
+     ${WEBKIT_DIR}/UIProcess/API/glib/WebKitWebsitePolicies.h.in
+-    ${WEBKIT_DIR}/UIProcess/API/glib/WebKitXRPermissionRequest.h.in
+     ${WEBKIT_DIR}/UIProcess/API/glib/webkit.h.in
+     ${WEBKIT_DIR}/UIProcess/API/gtk/WebKitColorChooserRequest.h.in
+     ${WEBKIT_DIR}/UIProcess/API/gtk/WebKitPointerLockPermissionRequest.h.in
+@@ -223,17 +222,6 @@
+     )
+ endif ()
+ 
+-if (ENABLE_2022_GLIB_API)
+-    list(APPEND WebKitGTK_HEADER_TEMPLATES
+-        ${WEBKIT_DIR}/UIProcess/API/glib/WebKitWebExtensionMatchPattern.h.in
+-        ${WEBKIT_DIR}/UIProcess/API/glib/WebKitWebExtension.h.in
+-    )
+-    list(APPEND WebKit_SOURCES
+-        ${WEBKIT_DIR}/UIProcess/API/glib/WebKitWebExtensionMatchPattern.cpp
+-        ${WEBKIT_DIR}/UIProcess/API/glib/WebKitWebExtension.cpp
+-    )
+-endif ()
+-
+ set(WebKitGTK_INSTALLED_HEADERS
+     ${WebKitGTK_DERIVED_SOURCES_DIR}/webkit/WebKitEnumTypes.h
+     ${WebKitGTK_DERIVED_SOURCES_DIR}/webkit/WebKitVersion.h
+--- x/webkitgtk-2.52.0/Source/WebKit/SourcesGTK.txt	2026-02-05 15:47:38.193858900 +0000
++++ webkitgtk-2.52.0/Source/WebKit/SourcesGTK.txt	2026-03-21 09:23:36.981962108 +0000
+@@ -199,7 +199,6 @@
+ UIProcess/API/glib/WebKitWebsiteDataManager.cpp @no-unify
+ UIProcess/API/glib/WebKitWindowProperties.cpp @no-unify
+ UIProcess/API/glib/WebKitWebsitePolicies.cpp @no-unify
+-UIProcess/API/glib/WebKitXRPermissionRequest.cpp @no-unify
+ 
+ UIProcess/API/gtk/DragSourceGtk3.cpp @no-unify
+ UIProcess/API/gtk/DragSourceGtk4.cpp @no-unify
+--- webkitgtk-2.52.0/Source/WebKit/UIProcess/API/glib/webkit.h.in-	2026-03-21 14:05:27.698128842 +0000
++++ webkitgtk-2.52.0/Source/WebKit/UIProcess/API/glib/webkit.h.in	2026-03-21 14:22:19.857433479 +0000
+@@ -125,7 +125,7 @@
+ #include <@API_INCLUDE_PREFIX@/WebKitUserMessage.h>
+ #include <@API_INCLUDE_PREFIX@/WebKitVersion.h>
+ #include <@API_INCLUDE_PREFIX@/WebKitWebContext.h>
+-#if ENABLE(2022_GLIB_API)
++#if ENABLE(2022_GLIB_API) && ENABLE(WK_WEB_EXTENSIONS)
+ #include <@API_INCLUDE_PREFIX@/WebKitWebExtension.h>
+ #include <@API_INCLUDE_PREFIX@/WebKitWebExtensionMatchPattern.h>
+ #endif
+@@ -145,7 +145,6 @@
+ #include <@API_INCLUDE_PREFIX@/WebKitWebsiteDataAccessPermissionRequest.h>
+ #include <@API_INCLUDE_PREFIX@/WebKitWebsiteDataManager.h>
+ #include <@API_INCLUDE_PREFIX@/WebKitWindowProperties.h>
+-#include <@API_INCLUDE_PREFIX@/WebKitXRPermissionRequest.h>
+ 
+ #include <@API_INCLUDE_PREFIX@/WebKitAutocleanups.h>
+ 
+--- x/webkitgtk-2.52.0/Source/WebKit/UIProcess/API/glib/WebKitError.h.in	2026-01-23 08:35:26.523447800 +0000
++++ webkitgtk-2.52.0/Source/WebKit/UIProcess/API/glib/WebKitError.h.in	2026-03-20 19:31:04.401389035 +0000
+@@ -36,9 +36,6 @@
+ #define WEBKIT_JAVASCRIPT_ERROR                  webkit_javascript_error_quark ()
+ #define WEBKIT_SNAPSHOT_ERROR                    webkit_snapshot_error_quark ()
+ #define WEBKIT_USER_CONTENT_FILTER_ERROR         webkit_user_content_filter_error_quark ()
+-#if ENABLE(2022_GLIB_API)
+-#define WEBKIT_WEB_EXTENSION_ERROR               webkit_web_extension_error_quark ()
+-#endif
+ #define WEBKIT_WEB_EXTENSION_MATCH_PATTERN_ERROR webkit_web_extension_match_pattern_error_quark ()
+ 
+ #if PLATFORM(GTK)
+@@ -192,24 +189,6 @@
+ #endif
+ 
+ /**
+- * WebKitWebExtensionMatchPatternError:
+- * @WEBKIT_WEB_EXTENSION_MATCH_PATTERN_ERROR_UNKNOWN: An unknown error occured.
+- * @WEBKIT_WEB_EXTENSION_MATCH_PATTERN_ERROR_INVALID_SCHEME: The scheme component was invalid.
+- * @WEBKIT_WEB_EXTENSION_MATCH_PATTERN_ERROR_INVALID_HOST: The host component was invalid.
+- * @WEBKIT_WEB_EXTENSION_MATCH_PATTERN_ERROR_INVALID_PATH: The path component was invalid.
+- *
+- * Enum values used to denote errors happening when creating a #WebKitWebExtensionMatchPattern
+- * 
+- * Since: 2.52
+- */
+-typedef enum {
+-    WEBKIT_WEB_EXTENSION_MATCH_PATTERN_ERROR_UNKNOWN = 899,
+-    WEBKIT_WEB_EXTENSION_MATCH_PATTERN_ERROR_INVALID_SCHEME = 808,
+-    WEBKIT_WEB_EXTENSION_MATCH_PATTERN_ERROR_INVALID_HOST = 809,
+-    WEBKIT_WEB_EXTENSION_MATCH_PATTERN_ERROR_INVALID_PATH = 810,
+-} WebKitWebExtensionMatchPatternError;
+-
+-/**
+  * WebKitUserContentFilterError:
+  * @WEBKIT_USER_CONTENT_FILTER_ERROR_INVALID_SOURCE: The JSON source for a content filter is invalid.
+  * @WEBKIT_USER_CONTENT_FILTER_ERROR_NOT_FOUND: The requested content filter could not be found.
+@@ -268,9 +247,6 @@
+ #endif
+ 
+ WEBKIT_API GQuark
+-webkit_web_extension_match_pattern_error_quark (void);
+-
+-WEBKIT_API GQuark
+ webkit_user_content_filter_error_quark         (void);
+ 
+ #if ENABLE(2022_GLIB_API)
+--- webkitgtk-2.52.0/Source/WebKit/UIProcess/API/glib/WebKitUIClient.cpp~	2026-01-23 08:35:26.531447600 +0000
++++ webkitgtk-2.52.0/Source/WebKit/UIProcess/API/glib/WebKitUIClient.cpp	2026-03-21 14:28:51.559718183 +0000
+@@ -37,7 +37,6 @@
+ #include "WebKitWebViewPrivate.h"
+ #include "WebKitWebsiteDataAccessPermissionRequestPrivate.h"
+ #include "WebKitWindowPropertiesPrivate.h"
+-#include "WebKitXRPermissionRequestPrivate.h"
+ #include "WebPageProxy.h"
+ #include "WebProcessProxy.h"
+ #include "WebsiteDataStore.h"
+--- x/webkitgtk-2.52.0/Source/WebKit/UIProcess/API/glib/WebKitXRPermissionRequest.h.in	2026-01-23 08:35:26.539447500 +0000
++++ webkitgtk-2.52.0/Source/WebKit/UIProcess/API/glib/WebKitXRPermissionRequest.h.in	2026-03-21 09:15:34.295826069 +0000
+@@ -22,6 +22,8 @@
+ #ifndef WebKitXRPermissionRequest_h
+ #define WebKitXRPermissionRequest_h
+ 
++#if ENABLE(WEBXR)
++
+ #include <glib-object.h>
+ #include <@API_INCLUDE_PREFIX@/WebKitDefines.h>
+ #include <@API_INCLUDE_PREFIX@/WebKitSecurityOrigin.h>
+@@ -45,9 +47,6 @@
+ 
+ /**
+  * WebKitXRSessionMode:
+- * @WEBKIT_XR_SESSION_MODE_INLINE: inline session mode.
+- * @WEBKIT_XR_SESSION_MODE_IMMERSIVE_VR: immersive-vr session mode.
+- * @WEBKIT_XR_SESSION_MODE_IMMERSIVE_AR: immersive-ar session mode.
+  *
+  * Enum values representing the XR session mode.
+  *
+@@ -118,3 +117,4 @@
+ G_END_DECLS
+ 
+ #endif
++#endif
+--- webkitgtk-2.52.0/Tools/MiniBrowser/gtk/BrowserTab.c-	2026-01-23 08:35:26.955072000 +0000
++++ webkitgtk-2.52.0/Tools/MiniBrowser/gtk/BrowserTab.c	2026-03-23 12:56:26.441484826 +0000
+@@ -299,8 +299,10 @@
+             g_hash_table_add(mediaKeySystemPermissionGrantedOrigins, g_strdup(requestData->origin));
+         if (WEBKIT_IS_CLIPBOARD_PERMISSION_REQUEST(requestData->request))
+             g_hash_table_add(clipboardPermissionGrantedOrigins, g_strdup(requestData->origin));
++#ifdef ENABLE_WK_WEB_EXTENSIONS
+         if (WEBKIT_IS_XR_PERMISSION_REQUEST(requestData->request))
+             g_hash_table_add(xrPermissionGrantedOrigins, g_strdup(requestData->origin));
++#endif // ENABLE_WK_WEB_EXTENSIONS
+ 
+         webkit_permission_request_allow(requestData->request);
+         break;
+@@ -311,8 +313,10 @@
+             g_hash_table_remove(mediaKeySystemPermissionGrantedOrigins, requestData->origin);
+         if (WEBKIT_IS_CLIPBOARD_PERMISSION_REQUEST(requestData->request))
+             g_hash_table_remove(clipboardPermissionGrantedOrigins, requestData->origin);
++#ifdef ENABLE_WK_WEB_EXTENSIONS
+         if (WEBKIT_IS_XR_PERMISSION_REQUEST(requestData->request))
+             g_hash_table_remove(xrPermissionGrantedOrigins, requestData->origin);
++#endif // ENABLE_WK_WEB_EXTENSIONS
+ 
+         webkit_permission_request_deny(requestData->request);
+         break;
+@@ -326,6 +330,7 @@
+     g_clear_pointer(&requestData, permissionRequestDataFree);
+ }
+ 
++#ifdef ENABLE_WK_WEB_EXTENSIONS
+ static const gchar *webKitXRSessionModeToString(WebKitXRSessionMode mode)
+ {
+     switch (mode) {
+@@ -360,6 +365,7 @@
+     g_string_free(str, FALSE);
+     return result;
+ }
++#endif // ENABLE_WK_WEB_EXTENSIONS
+ 
+ static gboolean decidePermissionRequest(WebKitWebView *webView, WebKitPermissionRequest *request, BrowserTab *tab)
+ {
+@@ -438,6 +444,7 @@
+         title = "Clipboard access request";
+         text = g_strdup_printf("Do you want to allow \"%s\" to read the contents of the clipboard?", origin);
+         g_free(origin);
++#ifdef ENABLE_WK_WEB_EXTENSIONS
+     } else if (WEBKIT_IS_XR_PERMISSION_REQUEST(request)) {
+         title = "XR session request";
+         WebKitXRPermissionRequest *xrRequest = WEBKIT_XR_PERMISSION_REQUEST(request);
+@@ -458,6 +465,7 @@
+             originStr, webKitXRSessionModeToString(mode), grantedFeatures, consentRequiredFeatures, consentOptionalFeatures, requiredFeaturesRequested, optionalFeaturesRequested);
+         /* Needs UI to select optional features to grant */
+         webkit_xr_permission_request_set_granted_optional_features(xrRequest, webkit_xr_permission_request_get_consent_optional_features(xrRequest));
++#endif // ENABLE_WK_WEB_EXTENSIONS
+     } else {
+         g_print("%s request not handled\n", G_OBJECT_TYPE_NAME(request));
+         return FALSE;

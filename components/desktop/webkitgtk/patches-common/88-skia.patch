@@ -45,6 +45,16 @@
          completeSize = malloc_usable_size(addr);
          SkASSERT(completeSize >= size);
      #elif defined(SK_BUILD_FOR_WIN)
+--- webkitgtk-2.52.0/Source/ThirdParty/skia/CMakeLists.txt~	2026-01-23 08:35:24.201422200 +0000
++++ webkitgtk-2.52.0/Source/ThirdParty/skia/CMakeLists.txt	2026-03-23 12:48:56.255405788 +0000
+@@ -189,6 +189,7 @@
+     src/core/SkPath.cpp
+     src/core/SkPathBuilder.cpp
+     src/core/SkPathData.cpp
++    src/core/SkPathDump.cpp
+     src/core/SkPathEffect.cpp
+     src/core/SkPathIter.cpp
+     src/core/SkPathMeasure.cpp
 --- webkit/Source/cmake/OptionsGTK.cmake.~1~	2024-07-24 18:47:18.000000000 +0000
 +++ webkit/Source/cmake/OptionsGTK.cmake	2024-07-24 19:05:15.819249087 +0000
 @@ -135,7 +135,7 @@

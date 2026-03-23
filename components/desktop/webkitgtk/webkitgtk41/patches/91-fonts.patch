@@ -17,7 +17,7 @@ index 1821d55a9d32..044ddc0c3e95 100644
 +#if PLATFORM(GTK)
 +    auto address = Display::singleton().accessibilityBusAddress();
 +    if (!address.isEmpty()) {
-+        m_accessibilityBusAddress = WTFMove(address);
++        m_accessibilityBusAddress = WTF::move(address);
 +        return m_accessibilityBusAddress.value();
 +    }
 +#endif

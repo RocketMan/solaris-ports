@@ -1,0 +1,125 @@
+--- webkitgtk-2.52.0/Source/WebKit/WebProcess/WebPage/glib/WebPageGLib.cpp-	2026-01-23 08:35:26.783444200 +0000
++++ webkitgtk-2.52.0/Source/WebKit/WebProcess/WebPage/glib/WebPageGLib.cpp	2026-03-23 12:39:41.198370485 +0000
+@@ -26,6 +26,39 @@
+ #include "config.h"
+ #include "WebPage.h"
+ 
++// X11/X.h defines these
++#ifdef Above
++#undef Above
++#endif
++#ifdef Below
++#undef Below
++#endif
++#ifdef Always
++#undef Always
++#endif
++#ifdef None
++#undef None
++#endif
++#ifdef FocusIn
++#undef FocusIn
++#endif
++#ifdef FocusOut
++#undef FocusOut
++#endif
++#ifdef Status
++#undef Status
++#endif
++#ifdef True
++#undef True
++#endif
++#ifdef False
++#undef False
++#endif
++#ifdef Success
++#undef Success
++#endif
++
++
+ #include "DrawingAreaCoordinatedGraphics.h"
+ #include "EditorState.h"
+ #include "InputMethodState.h"
+--- webkitgtk-2.52.0/Source/WebCore/platform/graphics/skia/SkiaPaintingEngine.cpp-	2026-01-23 08:35:25.883456700 +0000
++++ webkitgtk-2.52.0/Source/WebCore/platform/graphics/skia/SkiaPaintingEngine.cpp	2026-03-23 18:28:00.629456312 +0000
+@@ -26,6 +26,38 @@
+ #include "config.h"
+ #include "SkiaPaintingEngine.h"
+ 
++// X11/X.h defines these
++#ifdef Above
++#undef Above
++#endif
++#ifdef Below
++#undef Below
++#endif
++#ifdef Always
++#undef Always
++#endif
++#ifdef None
++#undef None
++#endif
++#ifdef FocusIn
++#undef FocusIn
++#endif
++#ifdef FocusOut
++#undef FocusOut
++#endif
++#ifdef Status
++#undef Status
++#endif
++#ifdef True
++#undef True
++#endif
++#ifdef False
++#undef False
++#endif
++#ifdef Success
++#undef Success
++#endif
++
+ #if USE(COORDINATED_GRAPHICS) && USE(SKIA)
+ #include "BitmapTexturePool.h"
+ #include "CoordinatedBackingStoreProxy.h"
+--- webkitgtk-2.52.0/Source/WebCore/platform/graphics/skia/ShareableBitmapSkia.cpp-	2026-03-05 12:51:00.802652100 +0000
++++ webkitgtk-2.52.0/Source/WebCore/platform/graphics/skia/ShareableBitmapSkia.cpp	2026-03-23 18:30:40.179920194 +0000
+@@ -24,6 +24,39 @@
+  */
+ 
+ #include "config.h"
++
++// X11/X.h defines these
++#ifdef Above
++#undef Above
++#endif
++#ifdef Below
++#undef Below
++#endif
++#ifdef Always
++#undef Always
++#endif
++#ifdef None
++#undef None
++#endif
++#ifdef FocusIn
++#undef FocusIn
++#endif
++#ifdef FocusOut
++#undef FocusOut
++#endif
++#ifdef Status
++#undef Status
++#endif
++#ifdef True
++#undef True
++#endif
++#ifdef False
++#undef False
++#endif
++#ifdef Success
++#undef Success
++#endif
++
+ #include "ShareableBitmap.h"
+ 
+ #include "BitmapImage.h"

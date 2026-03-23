@@ -24,10 +24,10 @@ https://bugs.webkit.org/show_bug.cgi?id=176341
      || defined(unix)        \
      || defined(__unix)      \
      || defined(__unix__)
---- a/Source/WTF/wtf/PlatformHave.h	2025-02-18 16:11:00.000000000 +0000
-+++ b/Source/WTF/wtf/PlatformHave.h	2025-02-18 16:37:17.917018342 +0000
-@@ -237,16 +237,16 @@
- #define HAVE_HOSTED_CORE_ANIMATION 1
+--- webkitgtk-2.52.0/Source/WTF/wtf/PlatformHave.h.~1~	2026-01-23 08:35:24.927470200 +0000
++++ webkitgtk-2.52.0/Source/WTF/wtf/PlatformHave.h	2026-03-20 12:14:35.793631500 +0000
+@@ -240,16 +240,16 @@
+ #define HAVE_MACH_MEMORY_ENTRY 1
  #endif
  
 -#if OS(DARWIN) || OS(FUCHSIA) || ((OS(FREEBSD) || OS(HAIKU) || OS(NETBSD) || OS(OPENBSD) || OS(LINUX) || OS(HURD) || OS(QNX)) && (CPU(X86_64) || CPU(ARM) || CPU(ARM64) || CPU(RISCV64)))
@@ -46,12 +46,12 @@ https://bugs.webkit.org/show_bug.cgi?id=176341
  #define HAVE_DLADDR 1
  #endif
  
-@@ -402,7 +402,7 @@
+@@ -416,7 +416,7 @@
  #define HAVE_URL_FORMATTING 1
  #endif
  
--#if !OS(WINDOWS)
-+#if !OS(WINDOWS) && !OS(SOLARIS)
+-#if !OS(WINDOWS) && !OS(QNX)
++#if !OS(WINDOWS) && !OS(QNX) && !OS(SOLARIS)
  #define HAVE_STACK_BOUNDS_FOR_NEW_THREAD 1
  #endif
  
@@ -229,12 +229,12 @@ https://bugs.webkit.org/show_bug.cgi?id=176341
  #else
  #include <netinet/in.h>
  #endif
---- a/Source/WebCore/page/NavigatorBase.cpp	2019-08-28 12:46:31.000000000 +0000
-+++ b/Source/WebCore/page/NavigatorBase.cpp	2019-09-10 15:24:15.399520597 +0000
-@@ -98,6 +98,18 @@
-     return "MacIntel"_s;
- #elif OS(WINDOWS)
+--- webkitgtk-2.52.0/Source/WebCore/page/NavigatorBase.cpp.~1~	2026-03-20 12:11:55.752162647 +0000
++++ webkitgtk-2.52.0/Source/WebCore/page/NavigatorBase.cpp	2026-03-20 12:13:02.167783816 +0000
+@@ -110,6 +110,18 @@
      return "Win32"_s;
+ #elif OS(HAIKU)
+     return "Haiku"_s;
 +#elif OS(SOLARIS)
 +    // If the user agent is being masqueraded, then change the platform
 +    // also, as some sites rely on this (e.g., dslreports speed test)
