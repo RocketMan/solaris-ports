@@ -1,0 +1,11 @@
+--- openvpn-2.7.1/src/openvpn/mroute.h-	2026-03-30 17:49:56.000000000 +0000
++++ openvpn-2.7.1/src/openvpn/mroute.h	2026-04-07 16:33:10.374647010 +0000
+@@ -30,6 +30,8 @@
+ 
+ #include <stddef.h>
+ 
++#define static_assert(expr, cond) _Static_assert(expr, cond)
++
+ #define IP_MCAST_SUBNET_MASK ((in_addr_t)240 << 24)
+ #define IP_MCAST_NETWORK     ((in_addr_t)224 << 24)
+ 
