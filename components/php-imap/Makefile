@@ -20,7 +20,7 @@
 #
 
 #
-# Copyright (c) 2024 Jim Mason <jmason at ibinx dot com>.  All rights reserved.
+# Copyright (c) 2024-2026 Jim Mason <jmason at ibinx dot com>.  All rights reserved.
 #
 
 BUILD_BITS=64
@@ -38,7 +38,7 @@ COMPONENT_ARCHIVE_HASH=	\
 BUILD_STYLE=phpize
 
 # php-imap is supported on PHP 8.2 and later
-PHP_VERSIONS := $(filter 8.2 8.3 8.4,$(PHP_VERSIONS))
+PHP_VERSIONS := $(filter 8.2 8.3 8.4 8.5,$(PHP_VERSIONS))
 
 include $(WS_MAKE_RULES)/common.mk
 

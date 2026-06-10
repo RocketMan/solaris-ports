@@ -33,6 +33,7 @@ $(BUILD_DIR)/%-7.4/.configured:	PHP_VERSION=7.4
 $(BUILD_DIR)/%-8.2/.configured:	PHP_VERSION=8.2
 $(BUILD_DIR)/%-8.3/.configured:	PHP_VERSION=8.3
 $(BUILD_DIR)/%-8.4/.configured:	PHP_VERSION=8.4
+$(BUILD_DIR)/%-8.5/.configured:	PHP_VERSION=8.5
 
 PHP_BINDIR = /usr/php/$(PHP_VERSION)/bin
 
@@ -59,3 +60,4 @@ REQUIRED_PACKAGES += web/php-74
 REQUIRED_PACKAGES += web/php-82
 REQUIRED_PACKAGES += web/php-83
 REQUIRED_PACKAGES += web/php-84
+REQUIRED_PACKAGES += web/php-85
