@@ -1,0 +1,18 @@
+Any user-supplied -L paths need to preceed the toolchain library paths.
+
+
+--- llvm-project-22.1.7.src/clang/lib/Driver/ToolChains/Solaris.cpp.~6~	2026-06-03 19:02:03.098407000 +0000
++++ llvm-project-22.1.7.src/clang/lib/Driver/ToolChains/Solaris.cpp	2026-06-13 23:56:35.677085742 +0000
+@@ -204,10 +204,10 @@
+     ToolChain.addFastMathRuntimeIfAvailable(Args, CmdArgs);
+   }
+ 
+-  ToolChain.AddFilePathLibArgs(Args, CmdArgs);
+-
+   Args.addAllArgs(CmdArgs, {options::OPT_L, options::OPT_R_linker, options::OPT_T_Group});
+ 
++  ToolChain.AddFilePathLibArgs(Args, CmdArgs);
++
+   bool NeedsSanitizerDeps = addSanitizerRuntimes(ToolChain, Args, CmdArgs);
+   AddLinkerInputs(ToolChain, Inputs, Args, CmdArgs, JA);
+ 
