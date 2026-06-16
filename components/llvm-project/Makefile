@@ -34,8 +34,8 @@ include ../../make-rules/shared-macros.mk
 GCC_ROOT=/usr/gcc/13
 
 # set to `llvmorg` to use github tarball or `llvm-project` for xz asset
-COMPONENT_NAME=		llvm-project
-COMPONENT_VERSION=	22.1.7
+COMPONENT_NAME=		llvmorg
+COMPONENT_VERSION=	22.1.8
 #COMPONENT_VERSION=	22.1.0-rc3
 #IPS_COMPONENT_VERSION=	22.0.3
 COMPONENT_REVISION=	1
@@ -55,7 +55,7 @@ COMPONENT_ARCHIVE_URL=	https://github.com/llvm/llvm-project/archive/refs/tags/$(
 endif
 
 COMPONENT_ARCHIVE_HASH=	\
-    sha256:5cc4a3f12bba50b6bdfb4b61bdc852117a0ff2517807c3902fc13267fb93562e
+    sha256:ad18b70e287954c3d62bc7e0b86e7b7af2adf87bcfce21c15fe717f101d7aace
 COMPONENT_SIG_URL=	$(COMPONENT_ARCHIVE_URL).sig
 COMPONENT_ANITYA_ID=	1830
 
