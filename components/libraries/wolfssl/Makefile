@@ -28,6 +28,7 @@ include ../../../make-rules/shared-macros.mk
 
 COMPONENT_NAME=		wolfssl
 COMPONENT_VERSION=	5.9.1
+COMPONENT_REVISION=	1
 COMPONENT_PROJECT_URL=	https://www.wolfssl.com/
 COMPONENT_SRC=		$(COMPONENT_NAME)-$(COMPONENT_VERSION)-stable
 COMPONENT_ARCHIVE=	v$(COMPONENT_VERSION)-stable.tar.gz
@@ -37,11 +38,11 @@ COMPONENT_ARCHIVE_HASH=	\
 
 PATH=$(GNUBIN):$(USRBINDIR)
 
-COMPONENT_PREP_ACTION = ( \
+COMPONENT_PREP_ACTION += ( \
 	cd $(@D) ; \
 	if [ ! -f ./configure ]; then \
 		NOCONFIGURE=1 ./autogen.sh ; \
-	fi )
+	fi ) ;
 
 CONFIGURE_OPTIONS += --enable-haproxy
 CONFIGURE_OPTIONS += --enable-quic
@@ -49,6 +50,7 @@ CONFIGURE_OPTIONS += --enable-alpn
 CONFIGURE_OPTIONS += --enable-tls13
 CONFIGURE_OPTIONS += --enable-all-crypto
 CONFIGURE_OPTIONS += --enable-opensslall
+CONFIGURE_OPTIONS += --enable-opensslextra
 CONFIGURE_OPTIONS += --enable-curl
 
 include $(WS_MAKE_RULES)/common.mk
