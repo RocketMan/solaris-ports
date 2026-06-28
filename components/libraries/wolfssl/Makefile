@@ -28,7 +28,7 @@ include ../../../make-rules/shared-macros.mk
 
 COMPONENT_NAME=		wolfssl
 COMPONENT_VERSION=	5.9.2
-COMPONENT_REVISION=	0
+COMPONENT_REVISION=	1
 COMPONENT_PROJECT_URL=	https://www.wolfssl.com/
 COMPONENT_SRC=		$(COMPONENT_NAME)-$(COMPONENT_VERSION)-stable
 COMPONENT_ARCHIVE=	v$(COMPONENT_VERSION)-stable.tar.gz
@@ -53,14 +53,25 @@ CONFIGURE_OPTIONS += --enable-all-crypto
 CONFIGURE_OPTIONS += --enable-opensslall
 CONFIGURE_OPTIONS += --enable-opensslextra
 CONFIGURE_OPTIONS += --enable-curl
-CONFIGURE_OPTIONS += --docdir=$(USRSHAREDOCDIR)/$(SONAME)
+CONFIGURE_OPTIONS += --docdir=$(USRSHAREDOCDIR)/libwolfssl
 
-PKG_VARS += SONAME
+# Unset SHELLOPTS to avoid 'unbound variable' errors during the tests
+unexport SHELLOPTS
+
+# OpenSSL is needed for crl-gen-openssl.test
+OPENSSL = /usr/openssl/3/bin/openssl
+COMPONENT_TEST_ENV += OPENSSL=$(OPENSSL)
+
+PKG_VARS += SOVER
 
 include $(WS_MAKE_RULES)/common.mk
 
 LDFLAGS += -lsocket -lnsl
 
+# Major version number of the .so can change on ANY release.
+#
+# Follow the Debian model of suffixing the major version number of the .so
+# to the runtime package name, so we can install multiple runtime versions
+# simultaneously, and thus avoid breaking dependencies on older versions.
 SOVER = $(eval SOVER := $$(shell $(GSED) -n 's/^WOLFSSL_LIBRARY_VERSION_FIRST=\([0-9]\+\)/\1/p' $(SOURCE_DIR)/configure.ac))$(SOVER)
-SONAME = libwolfssl$(SOVER)
 

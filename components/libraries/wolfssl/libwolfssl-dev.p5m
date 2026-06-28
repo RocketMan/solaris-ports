@@ -194,19 +194,19 @@ file path=usr/lib/$(MACH64)/cmake/wolfssl/wolfssl-targets.cmake
 file path=usr/lib/$(MACH64)/libwolfssl.la
 link path=usr/lib/$(MACH64)/libwolfssl.so target=libwolfssl.so.45.0.0
 file path=usr/lib/$(MACH64)/pkgconfig/wolfssl.pc
-file path=usr/share/doc/libwolfssl45/QUIC.md
-file path=usr/share/doc/libwolfssl45/README.txt
-file path=usr/share/doc/libwolfssl45/dilithium-to-mldsa-migration.md
-file path=usr/share/doc/libwolfssl45/example/client.c
-file path=usr/share/doc/libwolfssl45/example/echoclient.c
-file path=usr/share/doc/libwolfssl45/example/echoserver.c
-file path=usr/share/doc/libwolfssl45/example/ocsp_responder.c
-file path=usr/share/doc/libwolfssl45/example/sctp-client-dtls.c
-file path=usr/share/doc/libwolfssl45/example/sctp-client.c
-file path=usr/share/doc/libwolfssl45/example/sctp-server-dtls.c
-file path=usr/share/doc/libwolfssl45/example/sctp-server.c
-file path=usr/share/doc/libwolfssl45/example/server.c
-file path=usr/share/doc/libwolfssl45/example/tls_bench.c
-file path=usr/share/doc/libwolfssl45/taoCert.txt
+file path=usr/share/doc/libwolfssl/QUIC.md
+file path=usr/share/doc/libwolfssl/README.txt
+file path=usr/share/doc/libwolfssl/dilithium-to-mldsa-migration.md
+file path=usr/share/doc/libwolfssl/example/client.c
+file path=usr/share/doc/libwolfssl/example/echoclient.c
+file path=usr/share/doc/libwolfssl/example/echoserver.c
+file path=usr/share/doc/libwolfssl/example/ocsp_responder.c
+file path=usr/share/doc/libwolfssl/example/sctp-client-dtls.c
+file path=usr/share/doc/libwolfssl/example/sctp-client.c
+file path=usr/share/doc/libwolfssl/example/sctp-server-dtls.c
+file path=usr/share/doc/libwolfssl/example/sctp-server.c
+file path=usr/share/doc/libwolfssl/example/server.c
+file path=usr/share/doc/libwolfssl/example/tls_bench.c
+file path=usr/share/doc/libwolfssl/taoCert.txt
 license LICENSING license=GPLv3
-depend type=require fmri=library/security/$(SONAME)
+depend type=require fmri=library/security/libwolfssl$(SOVER)
