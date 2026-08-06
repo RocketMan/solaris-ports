@@ -38,9 +38,9 @@ USERLAND_ARCHIVES = ../llvm-project/
 
 # set to `llvmorg` to use github tarball or `llvm-project` for xz asset
 COMPONENT_NAME=		llvmorg
-COMPONENT_VERSION=	22.1.8
-#COMPONENT_VERSION=	22.1.0-rc3
-#IPS_COMPONENT_VERSION=	22.0.3
+#COMPONENT_VERSION=	22.1.8
+COMPONENT_VERSION=	23.1.0-rc2
+IPS_COMPONENT_VERSION=	23.0.2
 COMPONENT_REVISION=	0
 COMPONENT_PROJECT_URL=	https://llvm.org/
 COMPONENT_BUGDB=	utility/llvm
@@ -57,8 +57,8 @@ COMPONENT_ARCHIVE=	$(COMPONENT_NAME)-$(COMPONENT_VERSION).tar.gz
 COMPONENT_ARCHIVE_URL=	https://github.com/llvm/llvm-project/archive/refs/tags/$(COMPONENT_ARCHIVE)
 endif
 
-COMPONENT_ARCHIVE_HASH=	\
-    sha256:ad18b70e287954c3d62bc7e0b86e7b7af2adf87bcfce21c15fe717f101d7aace
+#COMPONENT_ARCHIVE_HASH=	\
+#    sha256:ad18b70e287954c3d62bc7e0b86e7b7af2adf87bcfce21c15fe717f101d7aace
 COMPONENT_SIG_URL=	$(COMPONENT_ARCHIVE_URL).sig
 COMPONENT_ANITYA_ID=	1830
 
@@ -198,7 +198,7 @@ CXXFLAGS += $(GFLAG) -pthread -fno-strict-aliasing
 CXXFLAGS += -fexceptions -frtti -fstack-protector-all
 CXXFLAGS += -Wall -Wno-cast-align -Wno-long-long -Woverflow
 CXXFLAGS += -Wstack-protector -fkeep-static-consts
-CXXFLAGS += -std=c++11 -fdata-sections -ffunction-sections
+CXXFLAGS += -std=c++20 -fdata-sections -ffunction-sections
 CXXFLAGS += -Wno-gnu-include-next -Wno-unused-command-line-argument
 CXXFLAGS += -Wno-invalid-noreturn -Wno-unused-variable -Wno-format-nonliteral
 CXXFLAGS += -Wl,-z -Wl,relax=common

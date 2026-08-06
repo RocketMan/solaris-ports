@@ -1003,21 +1003,36 @@ diff -Naur llvm-project-22.1.0-rc1.src.orig/libcxx/include/__locale llvm-project
  #  elif _LIBCPP_LIBC_NEWLIB
    // Same type as Newlib's _ctype_ array in newlib/libc/include/ctype.h.
    typedef char mask;
---- llvm-project-22.1.0-rc1.src/libcxx/include/__locale_dir/locale_base_api.h.~1~	2026-01-18 12:34:34.832180100 +0000
-+++ llvm-project-22.1.0-rc1.src/libcxx/include/__locale_dir/locale_base_api.h	2026-01-18 12:48:39.079536490 +0000
-@@ -132,6 +132,8 @@
- #      include <__locale_dir/locale_base_api/ibm.h>
- #    elif defined(__OpenBSD__)
- #      include <__locale_dir/locale_base_api/openbsd.h>
-+#    elif defined(__sun__)
+--- llvm-project-llvmorg-23.1.0-rc2/libcxx/include/__locale_dir/locale_base_api.h.~1~	2026-07-28 13:11:17.000000000 +0000
++++ llvm-project-llvmorg-23.1.0-rc2/libcxx/include/__locale_dir/locale_base_api.h	2026-07-28 18:39:13.794829231 +0000
+@@ -134,9 +134,14 @@
+ //       (by providing global non-reserved names) and the new API. As we move individual platforms
+ //       towards the new way of defining the locale base API, this should disappear since each platform
+ //       will define those directly.
++#    if defined(__sun__)
 +#      include <__locale_dir/locale_base_api/solaris.h>
- #    endif
++#    else
++
+ #    include <__locale_dir/locale_base_api/ibm.h>
  
  #    include <__locale_dir/locale_base_api/bsd_locale_fallbacks.h>
++#    endif
+ 
+ #    include <__cstddef/size_t.h>
+ #    include <__utility/forward.h>
+@@ -273,7 +278,7 @@
+ #      endif // _LIBCPP_HAS_WIDE_CHARACTERS
+ 
+ inline _LIBCPP_HIDE_FROM_ABI const char* __get_locale_encoding(__locale_t __loc) {
+-  return ::nl_langinfo_l(CODESET, __loc);
++  return nl_langinfo_l(CODESET, __loc);
+ }
+ 
+ #    endif // _LIBCPP_BUILDING_LIBRARY
 diff -Naur llvm-project-19.1.0.src.orig/libcxx/include/__locale_dir/locale_base_api/solaris.h llvm-project-19.1.0.src/libcxx/include/__locale_dir/locale_base_api/solaris.h
 --- llvm-project-19.1.0.src.orig/libcxx/include/__locale_dir/locale_base_api/solaris.h	2024-09-24 11:57:25.497634653 +0000
 +++ llvm-project-19.1.0.src/libcxx/include/__locale_dir/locale_base_api/solaris.h	2024-09-24 12:00:13.554949235 +0000
-@@ -0,0 +1,366 @@
+@@ -0,0 +1,394 @@
 +//===----------------------------------------------------------------------===//
 +//
 +// Part of the LLVM Project, under the Apache License v2.0 with LLVM Exceptions.
@@ -1036,6 +1051,7 @@ diff -Naur llvm-project-19.1.0.src.orig/libcxx/include/__locale_dir/locale_base_
 +#include <string.h>
 +#include <stdlib.h>
 +#include <stdarg.h>
++#include <langinfo.h>
 +#include <__support/solaris/locale_mgmt_solaris.h>
 +#include <cstdlib>
 +#include <cwchar>
@@ -1051,6 +1067,24 @@ diff -Naur llvm-project-19.1.0.src.orig/libcxx/include/__locale_dir/locale_base_
 +#define FIX_LOCALE(__loc) xlocale::__setAndRestore __newLoc(__loc)
 +
 +#define MB_CUR_MAX_L(__loc) MB_CUR_MAX
++#define __libcpp_mb_cur_max_l(loc) MB_CUR_MAX_L(loc)
++#define __libcpp_btowc_l(ch, loc) btowc_l(ch, loc)
++#define __libcpp_wctob_l(wch, loc) wctob_l(wch, loc)
++#define __libcpp_wcsnrtombs_l(dst, src, nwc, len, ps, loc) wcsnrtombs_l(dst, src, nwc, len, ps, loc)
++#define __libcpp_wcrtomb_l(src, wc, ps, loc) wcrtomb_l(src, wc, ps, loc)
++#define __libcpp_mbsnrtowcs_l(dst, src, nms, len, ps, loc) mbsnrtowcs_l(dst, src, nms, len, ps, loc)
++#define __libcpp_mbrtowc_l(pwc, s, n, ps, l) mbrtowc_l(pwc, s, n, ps, l)
++#define __libcpp_mbtowc_l(pwc, pmb, max, l) mbtowc_l(pwc, pmb, max, l)
++#define __libcpp_mbrlen_l(s, n, ps, l) mbrlen_l(s, n, ps, l)
++#define __libcpp_localeconv_l(l) localeconv_l(l)
++#define __libcpp_mbsrtowcs_l(dest, src, len, ps, l) mbsrtowcs_l(dest, src, len, ps, l)
++#define __libcpp_snprintf_l(...) snprintf_l(__VA_ARGS__)
++#define __libcpp_asprintf_l(...) asprintf_l(__VA_ARGS__)
++#define __libcpp_sscanf_l(...) sscanf_l(__VA_ARGS__)
++
++#ifdef isblank
++#undef isblank
++#endif
 +
 +inline _LIBCPP_HIDE_FROM_ABI locale_t
 +newlocale(int category_mask, const char* locale, locale_t base) {
@@ -1066,6 +1100,8 @@ diff -Naur llvm-project-19.1.0.src.orig/libcxx/include/__locale_dir/locale_base_
 +uselocale(locale_t newloc) {
 +  return uselocale_internal(newloc);
 +}
++
++_LIBCPP_BEGIN_NAMESPACE_STD
 +
 +inline _LIBCPP_HIDE_FROM_ABI int
 +mbtowc_l(wchar_t *pwc, const char *src, size_t n, locale_t __loc) {
@@ -1365,6 +1401,11 @@ diff -Naur llvm-project-19.1.0.src.orig/libcxx/include/__locale_dir/locale_base_
 +  return ::strftime(__s, __max, __format, __tm);
 +}
 +
++inline _LIBCPP_HIDE_FROM_ABI char* nl_langinfo_l(nl_item __c, locale_t __loc) {
++  FIX_LOCALE(__loc);
++  return ::nl_langinfo(__c);
++}
++
 +#ifndef _LIBCPP_HAS_NO_WIDE_CHARACTERS
 +inline _LIBCPP_HIDE_FROM_ABI int wcscoll_l(const wchar_t* __ws1, const wchar_t* __ws2, locale_t __loc) {
 +  FIX_LOCALE(__loc);
@@ -1376,6 +1417,8 @@ diff -Naur llvm-project-19.1.0.src.orig/libcxx/include/__locale_dir/locale_base_
 +  return ::wcsxfrm(__dest, __src, __n);
 +}
 +#endif // _LIBCPP_HAS_NO_WIDE_CHARACTERS
++
++_LIBCPP_END_NAMESPACE_STD
 +
 +#pragma pop_macro("FIX_LOCALE")
 +
@@ -1754,17 +1797,17 @@ diff -Naur llvm-project-18.1.8.src.orig/libcxx/include/__support/solaris/locale_
 +
 +#endif // _LIBCPP___SUPPORT_LOCALE_MGMT_SOLARIS_H
 diff -Naur llvm-project-20.1.0-rc1.src.orig/libcxx/include/CMakeLists.txt llvm-project-20.1.0-rc1.src/libcxx/include/CMakeLists.txt
---- llvm-project-llvmorg-21.1.0-rc1/libcxx/include/CMakeLists.txt.~1~	2025-07-17 20:02:34.000000000 +0000
-+++ llvm-project-llvmorg-21.1.0-rc1/libcxx/include/CMakeLists.txt	2025-07-18 12:27:15.850557029 +0000
-@@ -519,6 +519,7 @@
+--- llvm-project-llvmorg-23.1.0-rc2/libcxx/include/CMakeLists.txt.~1~	2026-07-28 13:11:17.000000000 +0000
++++ llvm-project-llvmorg-23.1.0-rc2/libcxx/include/CMakeLists.txt	2026-07-28 16:21:29.007352149 +0000
+@@ -535,6 +535,7 @@
+   __locale_dir/locale_base_api.h
+   __locale_dir/locale_base_api/bsd_locale_fallbacks.h
    __locale_dir/locale_base_api/ibm.h
-   __locale_dir/locale_base_api/musl.h
-   __locale_dir/locale_base_api/openbsd.h
 +  __locale_dir/locale_base_api/solaris.h
    __locale_dir/messages.h
    __locale_dir/money.h
    __locale_dir/num.h
-@@ -552,6 +553,7 @@
+@@ -576,6 +577,7 @@
    __math/remainder.h
    __math/roots.h
    __math/rounding_functions.h
@@ -1772,15 +1815,15 @@ diff -Naur llvm-project-20.1.0-rc1.src.orig/libcxx/include/CMakeLists.txt llvm-p
    __math/special_functions.h
    __math/traits.h
    __math/trigonometric_functions.h
-@@ -753,6 +755,7 @@
+@@ -785,6 +787,7 @@
    __support/ibm/gettod_zos.h
    __support/ibm/locale_mgmt_zos.h
    __support/ibm/nanosleep.h
 +  __support/solaris/locale_mgmt_solaris.h
-   __support/xlocale/__nop_locale_mgmt.h
    __support/xlocale/__posix_l_fallback.h
-   __support/xlocale/__strtonum_fallback.h
-@@ -1301,6 +1304,7 @@
+   __system_error/errc.h
+   __system_error/error_category.h
+@@ -1323,6 +1326,7 @@
    __cxx03/__locale_dir/locale_base_api/musl.h
    __cxx03/__locale_dir/locale_base_api/newlib.h
    __cxx03/__locale_dir/locale_base_api/openbsd.h
@@ -1788,7 +1831,7 @@ diff -Naur llvm-project-20.1.0-rc1.src.orig/libcxx/include/CMakeLists.txt llvm-p
    __cxx03/__locale_dir/locale_base_api/win32.h
    __cxx03/__math/abs.h
    __cxx03/__math/copysign.h
-@@ -1319,6 +1323,7 @@
+@@ -1341,6 +1345,7 @@
    __cxx03/__math/remainder.h
    __cxx03/__math/roots.h
    __cxx03/__math/rounding_functions.h
@@ -2390,3 +2433,16 @@ diff -Naur llvm-project-20.1.0-rc1.src.orig/libcxxabi/src/demangle/ItaniumDemang
  struct S {
    int* calls;
    friend constexpr void swap(S& a, S& b) {
+--- llvm-project-llvmorg-23.1.0-rc2/libc/src/__support/wctype_utils.h~	2026-07-28 13:11:17.000000000 +0000
++++ llvm-project-llvmorg-23.1.0-rc2/libc/src/__support/wctype_utils.h	2026-08-05 18:48:53.943865462 +0000
+@@ -25,6 +25,10 @@
+ #include "src/__support/wctype/wctype_conversion_utils.h"
+ #endif
+ 
++#ifdef isblank
++#undef isblank
++#endif
++
+ namespace LIBC_NAMESPACE_DECL {
+ namespace internal {
+ 
