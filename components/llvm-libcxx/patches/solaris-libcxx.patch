@@ -985,9 +985,9 @@ diff -Naur llvm-project-22.1.0-rc1.src.orig/libcxx/include/__locale llvm-project
  }
  
  #    endif // _LIBCPP_BUILDING_LIBRARY
---- /dev/null	2026-08-07 15:58:36.000000000 +0000
-+++ llvm-project-llvmorg-23.1.0-rc2/libcxx/include/__locale_dir/support/solaris.h	2026-08-07 15:57:59.467484472 +0000
-@@ -0,0 +1,408 @@
+--- /dev/null	2026-08-07 20:09:21.000000000 +0000
++++ llvm-project-llvmorg-23.1.0-rc2/libcxx/include/__locale_dir/support/solaris.h	2026-08-07 20:07:52.243212608 +0000
+@@ -0,0 +1,410 @@
 +//===----------------------------------------------------------------------===//
 +//
 +// Part of the LLVM Project, under the Apache License v2.0 with LLVM Exceptions.
@@ -1085,6 +1085,7 @@ diff -Naur llvm-project-22.1.0-rc1.src.orig/libcxx/include/__locale llvm-project
 +  return __mb_cur_max();
 +}
 +
++#  if _LIBCPP_HAS_WIDE_CHARACTERS
 +inline _LIBCPP_HIDE_FROM_ABI int
 +__mbtowc(wchar_t *pwc, const char *src, size_t n, locale_t __loc) {
 +  FIX_LOCALE(__loc);
@@ -1133,6 +1134,19 @@ diff -Naur llvm-project-22.1.0-rc1.src.orig/libcxx/include/__locale llvm-project
 +  return ::mbrtowc(pwc, s, len, st);
 +}
 +
++inline _LIBCPP_HIDE_FROM_ABI size_t
++__wcsnrtombs(char* dst, const wchar_t **wcs, size_t wn, size_t n, mbstate_t* st, locale_t __loc) {
++  FIX_LOCALE(__loc);
++  return ::wcsnrtombs(dst, wcs, wn, n, st);
++}
++
++inline _LIBCPP_HIDE_FROM_ABI size_t
++__mbsnrtowcs(wchar_t *wcs, const char **src, size_t n, size_t wn, mbstate_t* st, locale_t __loc) {
++  FIX_LOCALE(__loc);
++  return ::mbsnrtowcs(wcs, src, n, wn, st);
++}
++#  endif // _LIBCPP_HAS_WIDE_CHARACTERS
++
 +// The following are not POSIX routines.  These are quick-and-dirty hacks
 +// to make things pretend to work
 +inline _LIBCPP_HIDE_FROM_ABI long long __strtoll(const char* __nptr, char** __endptr, int __base, locale_t __loc) {
@@ -1171,14 +1185,20 @@ diff -Naur llvm-project-22.1.0-rc1.src.orig/libcxx/include/__locale llvm-project
 +  return ::strtoul(__nptr, __endptr, __base);
 +}
 +
-+inline _LIBCPP_HIDE_FROM_ABI size_t __wcsnrtombs(char* dst, const wchar_t **wcs, size_t wn, size_t n, mbstate_t* st, locale_t __loc) {
++inline _LIBCPP_HIDE_FROM_ABI int __strcoll(const char* __s1, const char* __s2, locale_t __loc) {
 +  FIX_LOCALE(__loc);
-+  return ::wcsnrtombs(dst, wcs, wn, n, st);
++  return ::strcoll(__s1, __s2);
 +}
 +
-+inline _LIBCPP_HIDE_FROM_ABI size_t __mbsnrtowcs(wchar_t *wcs, const char **src, size_t n, size_t wn, mbstate_t* st, locale_t __loc) {
++inline _LIBCPP_HIDE_FROM_ABI size_t __strxfrm(char* __dest, const char* __src, size_t __n, locale_t __loc) {
 +  FIX_LOCALE(__loc);
-+  return ::mbsnrtowcs(wcs, src, n, wn, st);
++  return ::strxfrm(__dest, __src, __n);
++}
++
++inline _LIBCPP_HIDE_FROM_ABI size_t
++__strftime(char* __s, size_t __max, const char* __format, const struct tm* __tm, locale_t __loc) {
++  FIX_LOCALE(__loc);
++  return ::strftime(__s, __max, __format, __tm);
 +}
 +
 +// suppress 'warning: format string is not a string literal'
@@ -1290,7 +1310,7 @@ diff -Naur llvm-project-22.1.0-rc1.src.orig/libcxx/include/__locale llvm-project
 +  return ::tolower(__c);
 +}
 +
-+#ifdef _LIBCPP_HAS_WIDE_CHARACTERS
++#  ifdef _LIBCPP_HAS_WIDE_CHARACTERS
 +inline _LIBCPP_HIDE_FROM_ABI int __iswalnum(wint_t __c, locale_t __loc) {
 +  FIX_LOCALE(__loc);
 +  return ::iswalnum(__c);
@@ -1360,25 +1380,7 @@ diff -Naur llvm-project-22.1.0-rc1.src.orig/libcxx/include/__locale llvm-project
 +  FIX_LOCALE(__loc);
 +  return ::towlower(__c);
 +}
-+#endif // _LIBCPP_HAS_WIDE_CHARACTERS
 +
-+inline _LIBCPP_HIDE_FROM_ABI int __strcoll(const char* __s1, const char* __s2, locale_t __loc) {
-+  FIX_LOCALE(__loc);
-+  return ::strcoll(__s1, __s2);
-+}
-+
-+inline _LIBCPP_HIDE_FROM_ABI size_t __strxfrm(char* __dest, const char* __src, size_t __n, locale_t __loc) {
-+  FIX_LOCALE(__loc);
-+  return ::strxfrm(__dest, __src, __n);
-+}
-+
-+inline _LIBCPP_HIDE_FROM_ABI size_t
-+__strftime(char* __s, size_t __max, const char* __format, const struct tm* __tm, locale_t __loc) {
-+  FIX_LOCALE(__loc);
-+  return ::strftime(__s, __max, __format, __tm);
-+}
-+
-+#ifdef _LIBCPP_HAS_WIDE_CHARACTERS
 +inline _LIBCPP_HIDE_FROM_ABI int __wcscoll(const wchar_t* __ws1, const wchar_t* __ws2, locale_t __loc) {
 +  FIX_LOCALE(__loc);
 +  return ::wcscoll(__ws1, __ws2);
@@ -1388,7 +1390,7 @@ diff -Naur llvm-project-22.1.0-rc1.src.orig/libcxx/include/__locale llvm-project
 +  FIX_LOCALE(__loc);
 +  return ::wcsxfrm(__dest, __src, __n);
 +}
-+#endif // _LIBCPP_HAS_WIDE_CHARACTERS
++#  endif // _LIBCPP_HAS_WIDE_CHARACTERS
 +
 +#pragma pop_macro("FIX_LOCALE")
 +
