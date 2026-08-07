@@ -87,25 +87,6 @@ diff -Naur llvm-project-22.1.0-rc1.src.orig/libcxx/include/__config llvm-project
          defined(__MVS__) ||                                                                                            \
          defined(_AIX) ||                                                                                               \
          defined(__EMSCRIPTEN__)
-@@ -1045,6 +1055,18 @@
- #    define _LIBCPP_DIAGNOSE_NULLPTR
- #  endif
- 
-+
-+#if !defined(__CLANG_MAX_ALIGN_T_DEFINED) && defined(__sun)
-+// from /usr/lib/<arch>/clang/18/include/stddef.h
-+typedef struct {
-+  long long __clang_max_align_nonce1
-+      __attribute__((__aligned__(__alignof__(long long))));
-+  long double __clang_max_align_nonce2
-+      __attribute__((__aligned__(__alignof__(long double))));
-+} max_align_t;
-+#define __CLANG_MAX_ALIGN_T_DEFINED
-+#endif
-+
- #endif // __cplusplus
- 
- #endif // _LIBCPP___CONFIG
 diff -Naur llvm-project-22.1.0-rc1.src.orig/libcxx/include/__cxx03/__config llvm-project-18.1.8.src/libcxx/include/__cxx03/__config
 --- llvm-project-22.1.0-rc1.src/libcxx/include/__cxx03/__config.~1~	2026-01-16 09:12:04.000000000 +0000
 +++ llvm-project-22.1.0-rc1.src/libcxx/include/__cxx03/__config	2026-01-18 12:34:34.218487338 +0000
@@ -160,25 +141,6 @@ diff -Naur llvm-project-22.1.0-rc1.src.orig/libcxx/include/__cxx03/__config llvm
          defined(__MVS__) ||                                                                                            \
          defined(_AIX) ||                                                                                               \
          defined(__EMSCRIPTEN__)
-@@ -1076,6 +1086,18 @@
- #    define _LIBCPP_HAS_EXPLICIT_THIS_PARAMETER
- #  endif
- 
-+
-+#if !defined(__CLANG_MAX_ALIGN_T_DEFINED) && defined(__sun)
-+// from /usr/lib/<arch>/clang/18/include/stddef.h
-+typedef struct {
-+  long long __clang_max_align_nonce1
-+      __attribute__((__aligned__(__alignof__(long long))));
-+  long double __clang_max_align_nonce2
-+      __attribute__((__aligned__(__alignof__(long double))));
-+} max_align_t;
-+#define __CLANG_MAX_ALIGN_T_DEFINED
-+#endif
-+
- #endif // __cplusplus
- 
- #endif // _LIBCPP___CXX03___CONFIG
 diff -Naur llvm-project-22.1.0-rc1.src.orig/libcxx/include/__cxx03/__locale llvm-project-20.1.0-rc1.src/libcxx/include/_cxx03/__locale
 --- llvm-project-22.1.0-rc1.src/libcxx/include/__cxx03/__locale.~1~	2026-01-16 09:12:04.000000000 +0000
 +++ llvm-project-22.1.0-rc1.src/libcxx/include/__cxx03/__locale	2026-01-18 12:46:03.731477818 +0000
@@ -1004,23 +966,17 @@ diff -Naur llvm-project-22.1.0-rc1.src.orig/libcxx/include/__locale llvm-project
    // Same type as Newlib's _ctype_ array in newlib/libc/include/ctype.h.
    typedef char mask;
 --- llvm-project-llvmorg-23.1.0-rc2/libcxx/include/__locale_dir/locale_base_api.h.~1~	2026-07-28 13:11:17.000000000 +0000
-+++ llvm-project-llvmorg-23.1.0-rc2/libcxx/include/__locale_dir/locale_base_api.h	2026-07-28 18:39:13.794829231 +0000
-@@ -134,9 +134,14 @@
- //       (by providing global non-reserved names) and the new API. As we move individual platforms
- //       towards the new way of defining the locale base API, this should disappear since each platform
- //       will define those directly.
-+#    if defined(__sun__)
-+#      include <__locale_dir/locale_base_api/solaris.h>
-+#    else
-+
- #    include <__locale_dir/locale_base_api/ibm.h>
++++ llvm-project-llvmorg-23.1.0-rc2/libcxx/include/__locale_dir/locale_base_api.h	2026-08-06 18:54:13.436942956 +0000
+@@ -128,6 +128,8 @@
+ #    include <__locale_dir/support/newlib.h>
+ #  elif defined(_AIX)
+ #    include <__locale_dir/support/aix.h>
++#  elif defined(__sun__)
++#    include <__locale_dir/support/solaris.h>
+ #  else
  
- #    include <__locale_dir/locale_base_api/bsd_locale_fallbacks.h>
-+#    endif
- 
- #    include <__cstddef/size_t.h>
- #    include <__utility/forward.h>
-@@ -273,7 +278,7 @@
+ // TODO: This is a temporary definition to bridge between the old way we defined the locale base API
+@@ -273,7 +275,7 @@
  #      endif // _LIBCPP_HAS_WIDE_CHARACTERS
  
  inline _LIBCPP_HIDE_FROM_ABI const char* __get_locale_encoding(__locale_t __loc) {
@@ -1029,10 +985,9 @@ diff -Naur llvm-project-22.1.0-rc1.src.orig/libcxx/include/__locale llvm-project
  }
  
  #    endif // _LIBCPP_BUILDING_LIBRARY
-diff -Naur llvm-project-19.1.0.src.orig/libcxx/include/__locale_dir/locale_base_api/solaris.h llvm-project-19.1.0.src/libcxx/include/__locale_dir/locale_base_api/solaris.h
---- llvm-project-19.1.0.src.orig/libcxx/include/__locale_dir/locale_base_api/solaris.h	2024-09-24 11:57:25.497634653 +0000
-+++ llvm-project-19.1.0.src/libcxx/include/__locale_dir/locale_base_api/solaris.h	2024-09-24 12:00:13.554949235 +0000
-@@ -0,0 +1,394 @@
+--- /dev/null	2026-08-07 15:58:36.000000000 +0000
++++ llvm-project-llvmorg-23.1.0-rc2/libcxx/include/__locale_dir/support/solaris.h	2026-08-07 15:57:59.467484472 +0000
+@@ -0,0 +1,408 @@
 +//===----------------------------------------------------------------------===//
 +//
 +// Part of the LLVM Project, under the Apache License v2.0 with LLVM Exceptions.
@@ -1041,160 +996,187 @@ diff -Naur llvm-project-19.1.0.src.orig/libcxx/include/__locale_dir/locale_base_
 +//
 +//===----------------------------------------------------------------------===//
 +
-+////////////////////////////////////////////////////////////////////////////////
-+// Minimal xlocale implementation for Solaris.  This implements the subset of
-+// the xlocale APIs that libc++ depends on.
-+////////////////////////////////////////////////////////////////////////////////
-+#ifndef __XLOCALE_H_INCLUDED
-+#define __XLOCALE_H_INCLUDED
++#ifndef _LIBCPP___LOCALE_DIR_SUPPORT_SOLARIS_H
++#define _LIBCPP___LOCALE_DIR_SUPPORT_SOLARIS_H
 +
++#include <__config>
 +#include <string.h>
 +#include <stdlib.h>
 +#include <stdarg.h>
 +#include <langinfo.h>
 +#include <__support/solaris/locale_mgmt_solaris.h>
 +#include <cstdlib>
-+#include <cwchar>
++#if _LIBCPP_HAS_WIDE_CHARACTERS
++#  include <cwchar>
++#endif
++
++#if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
++#  pragma GCC system_header
++#endif
 +
 +#ifdef __cplusplus
 +extern "C" {
 +#endif
-+
++  
 +size_t wcsnrtombs(char* dst, const wchar_t **wcs, size_t wn, size_t n, mbstate_t* st);
 +size_t mbsnrtowcs(wchar_t *wcs, const char **src, size_t n, size_t wn, mbstate_t* st);
++
++#ifdef __cplusplus
++}
++#endif
++
++_LIBCPP_BEGIN_NAMESPACE_STD
++namespace __locale {
 +
 +#pragma push_macro("FIX_LOCALE")
 +#define FIX_LOCALE(__loc) xlocale::__setAndRestore __newLoc(__loc)
 +
-+#define MB_CUR_MAX_L(__loc) MB_CUR_MAX
-+#define __libcpp_mb_cur_max_l(loc) MB_CUR_MAX_L(loc)
-+#define __libcpp_btowc_l(ch, loc) btowc_l(ch, loc)
-+#define __libcpp_wctob_l(wch, loc) wctob_l(wch, loc)
-+#define __libcpp_wcsnrtombs_l(dst, src, nwc, len, ps, loc) wcsnrtombs_l(dst, src, nwc, len, ps, loc)
-+#define __libcpp_wcrtomb_l(src, wc, ps, loc) wcrtomb_l(src, wc, ps, loc)
-+#define __libcpp_mbsnrtowcs_l(dst, src, nms, len, ps, loc) mbsnrtowcs_l(dst, src, nms, len, ps, loc)
-+#define __libcpp_mbrtowc_l(pwc, s, n, ps, l) mbrtowc_l(pwc, s, n, ps, l)
-+#define __libcpp_mbtowc_l(pwc, pmb, max, l) mbtowc_l(pwc, pmb, max, l)
-+#define __libcpp_mbrlen_l(s, n, ps, l) mbrlen_l(s, n, ps, l)
-+#define __libcpp_localeconv_l(l) localeconv_l(l)
-+#define __libcpp_mbsrtowcs_l(dest, src, len, ps, l) mbsrtowcs_l(dest, src, len, ps, l)
-+#define __libcpp_snprintf_l(...) snprintf_l(__VA_ARGS__)
-+#define __libcpp_asprintf_l(...) asprintf_l(__VA_ARGS__)
-+#define __libcpp_sscanf_l(...) sscanf_l(__VA_ARGS__)
++//
++// Locale management
++//
++#define _LIBCPP_COLLATE_MASK LC_COLLATE_MASK
++#define _LIBCPP_CTYPE_MASK LC_CTYPE_MASK
++#define _LIBCPP_MONETARY_MASK LC_MONETARY_MASK
++#define _LIBCPP_NUMERIC_MASK LC_NUMERIC_MASK
++#define _LIBCPP_TIME_MASK LC_TIME_MASK
++#define _LIBCPP_MESSAGES_MASK LC_MESSAGES_MASK
++#define _LIBCPP_ALL_MASK LC_ALL_MASK
++#define _LIBCPP_LC_ALL LC_ALL
 +
 +#ifdef isblank
 +#undef isblank
 +#endif
 +
-+inline _LIBCPP_HIDE_FROM_ABI locale_t
-+newlocale(int category_mask, const char* locale, locale_t base) {
-+  return newlocale_internal(category_mask, locale, base);
++using __locale_t _LIBCPP_NODEBUG = ::locale_t;
++
++#if defined(_LIBCPP_BUILDING_LIBRARY)
++using __lconv_t _LIBCPP_NODEBUG = std::lconv;
++
++inline _LIBCPP_HIDE_FROM_ABI __locale_t __newlocale(int __category_mask, const char* __locale, __locale_t __base) {
++  return newlocale_internal(__category_mask, __locale, __base);
 +}
 +
-+inline _LIBCPP_HIDE_FROM_ABI void
-+freelocale(locale_t locobj) {
-+  freelocale_internal(locobj);
++inline _LIBCPP_HIDE_FROM_ABI void __freelocale(__locale_t __loc) { freelocale_internal(__loc); }
++
++inline _LIBCPP_HIDE_FROM_ABI char* __setlocale(int __category, char const* __locale) {
++  return ::setlocale(__category, __locale);
 +}
 +
-+inline _LIBCPP_HIDE_FROM_ABI locale_t
-+uselocale(locale_t newloc) {
-+  return uselocale_internal(newloc);
++inline _LIBCPP_HIDE_FROM_ABI __lconv_t* __localeconv(__locale_t& __loc) {
++  FIX_LOCALE(__loc);
++  return std::localeconv();
 +}
 +
-+_LIBCPP_BEGIN_NAMESPACE_STD
++inline _LIBCPP_HIDE_FROM_ABI char* nl_langinfo_l(nl_item __c, locale_t __loc) {
++  FIX_LOCALE(__loc);
++  return ::nl_langinfo(__c);
++}
++
++inline _LIBCPP_HIDE_FROM_ABI const char* __get_locale_encoding(__locale_t __loc) {
++  return nl_langinfo_l(CODESET, __loc);
++}
++#endif // _LIBCPP_BUILDING_LIBRARY
++
++
++inline _LIBCPP_HIDE_FROM_ABI decltype(MB_CUR_MAX) __mb_cur_max() { return MB_CUR_MAX; }
++
++inline _LIBCPP_HIDE_FROM_ABI decltype(__mb_cur_max()) __mb_len_max(__locale_t __loc) {
++  FIX_LOCALE(__loc);
++  return __mb_cur_max();
++}
 +
 +inline _LIBCPP_HIDE_FROM_ABI int
-+mbtowc_l(wchar_t *pwc, const char *src, size_t n, locale_t __loc) {
++__mbtowc(wchar_t *pwc, const char *src, size_t n, locale_t __loc) {
 +  FIX_LOCALE(__loc);
 +  return ::mbtowc(pwc, src, n);
 +}
 +  
 +inline _LIBCPP_HIDE_FROM_ABI size_t
-+wcrtomb_l(char *__nptr, wchar_t __endptr, mbstate_t *__base, locale_t __loc) {
++__wcrtomb(char *__nptr, wchar_t __endptr, mbstate_t *__base, locale_t __loc) {
 +  FIX_LOCALE(__loc);
 +  return ::wcrtomb(__nptr, __endptr, __base);
 +}
 +  
 +inline _LIBCPP_HIDE_FROM_ABI int
-+iswctype_l(wint_t __nptr, wctype_t __endptr, locale_t __loc) {
++__iswctype(wint_t __nptr, wctype_t __endptr, locale_t __loc) {
 +  FIX_LOCALE(__loc);
 +  return ::iswctype(__nptr, __endptr);
 +}
 +  
 +inline _LIBCPP_HIDE_FROM_ABI wint_t
-+btowc_l(int c, locale_t __loc) {
++__btowc(int c, locale_t __loc) {
 +  FIX_LOCALE(__loc);
 +  return ::btowc(c);
 +}
 +  
 +inline _LIBCPP_HIDE_FROM_ABI int
-+wctob_l(wint_t c, locale_t __loc) {
++__wctob(wint_t c, locale_t __loc) {
 +  FIX_LOCALE(__loc);
 +  return ::wctob(c);
 +}
 +
 +inline _LIBCPP_HIDE_FROM_ABI size_t
-+mbrlen_l(const char *s, size_t n, mbstate_t *ps, locale_t __loc) {
++__mbrlen(const char *s, size_t n, mbstate_t *ps, locale_t __loc) {
 +  FIX_LOCALE(__loc);
 +  return ::mbrlen(s, n, ps);
 +}
 +
 +inline _LIBCPP_HIDE_FROM_ABI size_t
-+mbsrtowcs_l(wchar_t *dst, const char **src, size_t len, mbstate_t* st, locale_t __loc) {
++__mbsrtowcs(wchar_t *dst, const char **src, size_t len, mbstate_t* st, locale_t __loc) {
 +  FIX_LOCALE(__loc);
 +  return ::mbsrtowcs(dst, src, len, st);
 +}
 +
 +inline _LIBCPP_HIDE_FROM_ABI size_t
-+mbrtowc_l(wchar_t *pwc, const char *s, size_t len, mbstate_t* st, locale_t __loc) {
++__mbrtowc(wchar_t *pwc, const char *s, size_t len, mbstate_t* st, locale_t __loc) {
 +  FIX_LOCALE(__loc);
 +  return ::mbrtowc(pwc, s, len, st);
 +}
 +
 +// The following are not POSIX routines.  These are quick-and-dirty hacks
 +// to make things pretend to work
-+inline _LIBCPP_HIDE_FROM_ABI long long strtoll_l(const char* __nptr, char** __endptr, int __base, locale_t __loc) {
++inline _LIBCPP_HIDE_FROM_ABI long long __strtoll(const char* __nptr, char** __endptr, int __base, locale_t __loc) {
 +  FIX_LOCALE(__loc);
 +  return ::strtoll(__nptr, __endptr, __base);
 +}
 +
-+inline _LIBCPP_HIDE_FROM_ABI long strtol_l(const char* __nptr, char** __endptr, int __base, locale_t __loc) {
++inline _LIBCPP_HIDE_FROM_ABI long __strtol(const char* __nptr, char** __endptr, int __base, locale_t __loc) {
 +  FIX_LOCALE(__loc);
 +  return ::strtol(__nptr, __endptr, __base);
 +}
 +
-+inline _LIBCPP_HIDE_FROM_ABI double strtod_l(const char* __nptr, char** __endptr, locale_t __loc) {
++inline _LIBCPP_HIDE_FROM_ABI double __strtod(const char* __nptr, char** __endptr, locale_t __loc) {
 +  FIX_LOCALE(__loc);
 +  return ::strtod(__nptr, __endptr);
 +}
 +
-+inline _LIBCPP_HIDE_FROM_ABI float strtof_l(const char* __nptr, char** __endptr, locale_t __loc) {
++inline _LIBCPP_HIDE_FROM_ABI float __strtof(const char* __nptr, char** __endptr, locale_t __loc) {
 +  FIX_LOCALE(__loc);
 +  return ::strtof(__nptr, __endptr);
 +}
 +
-+inline _LIBCPP_HIDE_FROM_ABI long double strtold_l(const char* __nptr, char** __endptr, locale_t __loc) {
++inline _LIBCPP_HIDE_FROM_ABI long double __strtold(const char* __nptr, char** __endptr, locale_t __loc) {
 +  FIX_LOCALE(__loc);
 +  return ::strtold(__nptr, __endptr);
 +}
 +
 +inline _LIBCPP_HIDE_FROM_ABI unsigned long long
-+strtoull_l(const char* __nptr, char** __endptr, int __base, locale_t __loc) {
++__strtoull(const char* __nptr, char** __endptr, int __base, locale_t __loc) {
 +  FIX_LOCALE(__loc);
 +  return ::strtoull(__nptr, __endptr, __base);
 +}
 +
-+inline _LIBCPP_HIDE_FROM_ABI unsigned long strtoul_l(const char* __nptr, char** __endptr, int __base, locale_t __loc) {
++inline _LIBCPP_HIDE_FROM_ABI unsigned long __strtoul(const char* __nptr, char** __endptr, int __base, locale_t __loc) {
 +  FIX_LOCALE(__loc);
 +  return ::strtoul(__nptr, __endptr, __base);
 +}
 +
-+inline _LIBCPP_HIDE_FROM_ABI size_t wcsnrtombs_l(char* dst, const wchar_t **wcs, size_t wn, size_t n, mbstate_t* st, locale_t __loc) {
++inline _LIBCPP_HIDE_FROM_ABI size_t __wcsnrtombs(char* dst, const wchar_t **wcs, size_t wn, size_t n, mbstate_t* st, locale_t __loc) {
 +  FIX_LOCALE(__loc);
 +  return ::wcsnrtombs(dst, wcs, wn, n, st);
 +}
 +
-+inline _LIBCPP_HIDE_FROM_ABI size_t mbsnrtowcs_l(wchar_t *wcs, const char **src, size_t n, size_t wn, mbstate_t* st, locale_t __loc) {
++inline _LIBCPP_HIDE_FROM_ABI size_t __mbsnrtowcs(wchar_t *wcs, const char **src, size_t n, size_t wn, mbstate_t* st, locale_t __loc) {
 +  FIX_LOCALE(__loc);
 +  return ::mbsnrtowcs(wcs, src, n, wn, st);
 +}
@@ -1203,20 +1185,20 @@ diff -Naur llvm-project-19.1.0.src.orig/libcxx/include/__locale_dir/locale_base_
 +#pragma GCC diagnostic push
 +#pragma GCC diagnostic ignored "-Wformat-nonliteral"
 +  
-+inline _LIBCPP_HIDE_FROM_ABI int vsnprintf_l(char* __s, size_t __n, locale_t __loc, const char* __format, va_list __va) {
++inline _LIBCPP_HIDE_FROM_ABI int __vsnprintf(char* __s, size_t __n, locale_t __loc, const char* __format, va_list __va) {
 +  FIX_LOCALE(__loc);
 +  return vsnprintf(__s, __n, __format, __va);
 +}
 +
-+inline _LIBCPP_HIDE_FROM_ABI int snprintf_l(char *__s, size_t __n, locale_t __loc, const char *__format, ...) {
++inline _LIBCPP_HIDE_FROM_ABI int __snprintf(char *__s, size_t __n, locale_t __loc, const char *__format, ...) {
 +  va_list __va;
 +  va_start(__va, __format);
-+  int __res = vsnprintf_l(__s, __n , __loc, __format, __va);
++  int __res = __vsnprintf(__s, __n , __loc, __format, __va);
 +  va_end(__va);
 +  return __res;
 +}
 +
-+inline _LIBCPP_HIDE_FROM_ABI int asprintf_l(char **__s, locale_t __loc, const char *__format, ...) {
++inline _LIBCPP_HIDE_FROM_ABI int __asprintf(char **__s, locale_t __loc, const char *__format, ...) {
 +  FIX_LOCALE(__loc);
 +  va_list __va;
 +  va_start(__va, __format);
@@ -1226,7 +1208,7 @@ diff -Naur llvm-project-19.1.0.src.orig/libcxx/include/__locale_dir/locale_base_
 +  return __res;
 +}
 +
-+inline _LIBCPP_HIDE_FROM_ABI int sscanf_l(const char *__s, locale_t __loc, const char *__format, ...) {
++inline _LIBCPP_HIDE_FROM_ABI int __sscanf(const char *__s, locale_t __loc, const char *__format, ...) {
 +  FIX_LOCALE(__loc);
 +  va_list __va;
 +  va_start(__va, __format);
@@ -1238,193 +1220,180 @@ diff -Naur llvm-project-19.1.0.src.orig/libcxx/include/__locale_dir/locale_base_
 +
 +#pragma GCC diagnostic pop
 +
-+inline _LIBCPP_HIDE_FROM_ABI struct lconv *localeconv_l(locale_t __loc) {
-+  FIX_LOCALE(__loc);
-+  return localeconv();
-+}
-+
-+inline _LIBCPP_HIDE_FROM_ABI int isalnum_l(int __c, locale_t __loc) {
++inline _LIBCPP_HIDE_FROM_ABI int __isalnum(int __c, locale_t __loc) {
 +  FIX_LOCALE(__loc);
 +  return ::isalnum(__c);
 +}
 +
-+inline _LIBCPP_HIDE_FROM_ABI int isalpha_l(int __c, locale_t __loc) {
++inline _LIBCPP_HIDE_FROM_ABI int __isalpha(int __c, locale_t __loc) {
 +  FIX_LOCALE(__loc);
 +  return ::isalpha(__c);
 +}
 +
-+inline _LIBCPP_HIDE_FROM_ABI int isblank_l(int __c, locale_t __loc) {
++inline _LIBCPP_HIDE_FROM_ABI int __isblank(int __c, locale_t __loc) {
 +  FIX_LOCALE(__loc);
 +  return ::isblank(__c);
 +}
 +
-+inline _LIBCPP_HIDE_FROM_ABI int iscntrl_l(int __c, locale_t __loc) {
++inline _LIBCPP_HIDE_FROM_ABI int __iscntrl(int __c, locale_t __loc) {
 +  FIX_LOCALE(__loc);
 +  return ::iscntrl(__c);
 +}
 +
-+inline _LIBCPP_HIDE_FROM_ABI int isdigit_l(int __c, locale_t __loc) {
++inline _LIBCPP_HIDE_FROM_ABI int __isdigit(int __c, locale_t __loc) {
 +  FIX_LOCALE(__loc);
 +  return ::isdigit(__c);
 +}
 +
-+inline _LIBCPP_HIDE_FROM_ABI int isgraph_l(int __c, locale_t __loc) {
++inline _LIBCPP_HIDE_FROM_ABI int __isgraph(int __c, locale_t __loc) {
 +  FIX_LOCALE(__loc);
 +  return ::isgraph(__c);
 +}
 +
-+inline _LIBCPP_HIDE_FROM_ABI int islower_l(int __c, locale_t __loc) {
++inline _LIBCPP_HIDE_FROM_ABI int __islower(int __c, locale_t __loc) {
 +  FIX_LOCALE(__loc);
 +  return ::islower(__c);
 +}
 +
-+inline _LIBCPP_HIDE_FROM_ABI int isprint_l(int __c, locale_t __loc) {
++inline _LIBCPP_HIDE_FROM_ABI int __isprint(int __c, locale_t __loc) {
 +  FIX_LOCALE(__loc);
 +  return ::isprint(__c);
 +}
 +
-+inline _LIBCPP_HIDE_FROM_ABI int ispunct_l(int __c, locale_t __loc) {
++inline _LIBCPP_HIDE_FROM_ABI int __ispunct(int __c, locale_t __loc) {
 +  FIX_LOCALE(__loc);
 +  return ::ispunct(__c);
 +}
 +
-+inline _LIBCPP_HIDE_FROM_ABI int isspace_l(int __c, locale_t __loc) {
++inline _LIBCPP_HIDE_FROM_ABI int __isspace(int __c, locale_t __loc) {
 +  FIX_LOCALE(__loc);
 +  return ::isspace(__c);
 +}
 +
-+inline _LIBCPP_HIDE_FROM_ABI int isupper_l(int __c, locale_t __loc) {
++inline _LIBCPP_HIDE_FROM_ABI int __isupper(int __c, locale_t __loc) {
 +  FIX_LOCALE(__loc);
 +  return ::isupper(__c);
 +}
 +
-+inline _LIBCPP_HIDE_FROM_ABI int isxdigit_l(int __c, locale_t __loc) {
++inline _LIBCPP_HIDE_FROM_ABI int __isxdigit(int __c, locale_t __loc) {
 +  FIX_LOCALE(__loc);
 +  return ::isxdigit(__c);
 +}
 +
-+inline _LIBCPP_HIDE_FROM_ABI int toupper_l(int __c, locale_t __loc) {
++inline _LIBCPP_HIDE_FROM_ABI int __toupper(int __c, locale_t __loc) {
 +  FIX_LOCALE(__loc);
 +  return ::toupper(__c);
 +}
 +
-+inline _LIBCPP_HIDE_FROM_ABI int tolower_l(int __c, locale_t __loc) {
++inline _LIBCPP_HIDE_FROM_ABI int __tolower(int __c, locale_t __loc) {
 +  FIX_LOCALE(__loc);
 +  return ::tolower(__c);
 +}
 +
-+#ifndef _LIBCPP_HAS_NO_WIDE_CHARACTERS
-+inline _LIBCPP_HIDE_FROM_ABI int iswalnum_l(wint_t __c, locale_t __loc) {
++#ifdef _LIBCPP_HAS_WIDE_CHARACTERS
++inline _LIBCPP_HIDE_FROM_ABI int __iswalnum(wint_t __c, locale_t __loc) {
 +  FIX_LOCALE(__loc);
 +  return ::iswalnum(__c);
 +}
 +
-+inline _LIBCPP_HIDE_FROM_ABI int iswalpha_l(wint_t __c, locale_t __loc) {
++inline _LIBCPP_HIDE_FROM_ABI int __iswalpha(wint_t __c, locale_t __loc) {
 +  FIX_LOCALE(__loc);
 +  return ::iswalpha(__c);
 +}
 +
-+inline _LIBCPP_HIDE_FROM_ABI int iswblank_l(wint_t __c, locale_t __loc) {
++inline _LIBCPP_HIDE_FROM_ABI int __iswblank(wint_t __c, locale_t __loc) {
 +  FIX_LOCALE(__loc);
 +  return ::iswblank(__c);
 +}
 +
-+inline _LIBCPP_HIDE_FROM_ABI int iswcntrl_l(wint_t __c, locale_t __loc) {
++inline _LIBCPP_HIDE_FROM_ABI int __iswcntrl(wint_t __c, locale_t __loc) {
 +  FIX_LOCALE(__loc);
 +  return ::iswcntrl(__c);
 +}
 +
-+inline _LIBCPP_HIDE_FROM_ABI int iswdigit_l(wint_t __c, locale_t __loc) {
++inline _LIBCPP_HIDE_FROM_ABI int __iswdigit(wint_t __c, locale_t __loc) {
 +  FIX_LOCALE(__loc);
 +  return ::iswdigit(__c);
 +}
 +
-+inline _LIBCPP_HIDE_FROM_ABI int iswgraph_l(wint_t __c, locale_t __loc) {
++inline _LIBCPP_HIDE_FROM_ABI int __iswgraph(wint_t __c, locale_t __loc) {
 +  FIX_LOCALE(__loc);
 +  return ::iswgraph(__c);
 +}
 +
-+inline _LIBCPP_HIDE_FROM_ABI int iswlower_l(wint_t __c, locale_t __loc) {
++inline _LIBCPP_HIDE_FROM_ABI int __iswlower(wint_t __c, locale_t __loc) {
 +  FIX_LOCALE(__loc);
 +  return ::iswlower(__c);
 +}
 +
-+inline _LIBCPP_HIDE_FROM_ABI int iswprint_l(wint_t __c, locale_t __loc) {
++inline _LIBCPP_HIDE_FROM_ABI int __iswprint(wint_t __c, locale_t __loc) {
 +  FIX_LOCALE(__loc);
 +  return ::iswprint(__c);
 +}
 +
-+inline _LIBCPP_HIDE_FROM_ABI int iswpunct_l(wint_t __c, locale_t __loc) {
++inline _LIBCPP_HIDE_FROM_ABI int __iswpunct(wint_t __c, locale_t __loc) {
 +  FIX_LOCALE(__loc);
 +  return ::iswpunct(__c);
 +}
 +
-+inline _LIBCPP_HIDE_FROM_ABI int iswspace_l(wint_t __c, locale_t __loc) {
++inline _LIBCPP_HIDE_FROM_ABI int __iswspace(wint_t __c, locale_t __loc) {
 +  FIX_LOCALE(__loc);
 +  return ::iswspace(__c);
 +}
 +
-+inline _LIBCPP_HIDE_FROM_ABI int iswupper_l(wint_t __c, locale_t __loc) {
++inline _LIBCPP_HIDE_FROM_ABI int __iswupper(wint_t __c, locale_t __loc) {
 +  FIX_LOCALE(__loc);
 +  return ::iswupper(__c);
 +}
 +
-+inline _LIBCPP_HIDE_FROM_ABI int iswxdigit_l(wint_t __c, locale_t __loc) {
++inline _LIBCPP_HIDE_FROM_ABI int __iswxdigit(wint_t __c, locale_t __loc) {
 +  FIX_LOCALE(__loc);
 +  return ::iswxdigit(__c);
 +}
 +
-+inline _LIBCPP_HIDE_FROM_ABI wint_t towupper_l(wint_t __c, locale_t __loc) {
++inline _LIBCPP_HIDE_FROM_ABI wint_t __towupper(wint_t __c, locale_t __loc) {
 +  FIX_LOCALE(__loc);
 +  return ::towupper(__c);
 +}
 +
-+inline _LIBCPP_HIDE_FROM_ABI wint_t towlower_l(wint_t __c, locale_t __loc) {
++inline _LIBCPP_HIDE_FROM_ABI wint_t __towlower(wint_t __c, locale_t __loc) {
 +  FIX_LOCALE(__loc);
 +  return ::towlower(__c);
 +}
-+#endif // _LIBCPP_HAS_NO_WIDE_CHARACTERS
++#endif // _LIBCPP_HAS_WIDE_CHARACTERS
 +
-+inline _LIBCPP_HIDE_FROM_ABI int strcoll_l(const char* __s1, const char* __s2, locale_t __loc) {
++inline _LIBCPP_HIDE_FROM_ABI int __strcoll(const char* __s1, const char* __s2, locale_t __loc) {
 +  FIX_LOCALE(__loc);
 +  return ::strcoll(__s1, __s2);
 +}
 +
-+inline _LIBCPP_HIDE_FROM_ABI size_t strxfrm_l(char* __dest, const char* __src, size_t __n, locale_t __loc) {
++inline _LIBCPP_HIDE_FROM_ABI size_t __strxfrm(char* __dest, const char* __src, size_t __n, locale_t __loc) {
 +  FIX_LOCALE(__loc);
 +  return ::strxfrm(__dest, __src, __n);
 +}
 +
 +inline _LIBCPP_HIDE_FROM_ABI size_t
-+strftime_l(char* __s, size_t __max, const char* __format, const struct tm* __tm, locale_t __loc) {
++__strftime(char* __s, size_t __max, const char* __format, const struct tm* __tm, locale_t __loc) {
 +  FIX_LOCALE(__loc);
 +  return ::strftime(__s, __max, __format, __tm);
 +}
 +
-+inline _LIBCPP_HIDE_FROM_ABI char* nl_langinfo_l(nl_item __c, locale_t __loc) {
-+  FIX_LOCALE(__loc);
-+  return ::nl_langinfo(__c);
-+}
-+
-+#ifndef _LIBCPP_HAS_NO_WIDE_CHARACTERS
-+inline _LIBCPP_HIDE_FROM_ABI int wcscoll_l(const wchar_t* __ws1, const wchar_t* __ws2, locale_t __loc) {
++#ifdef _LIBCPP_HAS_WIDE_CHARACTERS
++inline _LIBCPP_HIDE_FROM_ABI int __wcscoll(const wchar_t* __ws1, const wchar_t* __ws2, locale_t __loc) {
 +  FIX_LOCALE(__loc);
 +  return ::wcscoll(__ws1, __ws2);
 +}
 +
-+inline _LIBCPP_HIDE_FROM_ABI size_t wcsxfrm_l(wchar_t* __dest, const wchar_t* __src, size_t __n, locale_t __loc) {
++inline _LIBCPP_HIDE_FROM_ABI size_t __wcsxfrm(wchar_t* __dest, const wchar_t* __src, size_t __n, locale_t __loc) {
 +  FIX_LOCALE(__loc);
 +  return ::wcsxfrm(__dest, __src, __n);
 +}
-+#endif // _LIBCPP_HAS_NO_WIDE_CHARACTERS
-+
-+_LIBCPP_END_NAMESPACE_STD
++#endif // _LIBCPP_HAS_WIDE_CHARACTERS
 +
 +#pragma pop_macro("FIX_LOCALE")
 +
-+#ifdef __cplusplus
-+}
-+#endif
++} // namespace __locale
++_LIBCPP_END_NAMESPACE_STD
 +
 +#endif
 --- llvm-project-llvmorg-21.1.0-rc1/libcxx/include/__math/abs.h.~1~	2025-07-17 20:02:34.000000000 +0000
@@ -1796,17 +1765,16 @@ diff -Naur llvm-project-18.1.8.src.orig/libcxx/include/__support/solaris/locale_
 +#endif // defined(__sun)
 +
 +#endif // _LIBCPP___SUPPORT_LOCALE_MGMT_SOLARIS_H
-diff -Naur llvm-project-20.1.0-rc1.src.orig/libcxx/include/CMakeLists.txt llvm-project-20.1.0-rc1.src/libcxx/include/CMakeLists.txt
 --- llvm-project-llvmorg-23.1.0-rc2/libcxx/include/CMakeLists.txt.~1~	2026-07-28 13:11:17.000000000 +0000
-+++ llvm-project-llvmorg-23.1.0-rc2/libcxx/include/CMakeLists.txt	2026-07-28 16:21:29.007352149 +0000
-@@ -535,6 +535,7 @@
-   __locale_dir/locale_base_api.h
-   __locale_dir/locale_base_api/bsd_locale_fallbacks.h
-   __locale_dir/locale_base_api/ibm.h
-+  __locale_dir/locale_base_api/solaris.h
-   __locale_dir/messages.h
-   __locale_dir/money.h
-   __locale_dir/num.h
++++ llvm-project-llvmorg-23.1.0-rc2/libcxx/include/CMakeLists.txt	2026-08-07 15:32:34.074155557 +0000
+@@ -554,6 +554,7 @@
+   __locale_dir/support/no_locale/formatting.h
+   __locale_dir/support/no_locale/strtonum.h
+   __locale_dir/support/openbsd.h
++  __locale_dir/support/solaris.h
+   __locale_dir/support/windows.h
+   __locale_dir/time.h
+   __locale_dir/wbuffer_convert.h
 @@ -576,6 +577,7 @@
    __math/remainder.h
    __math/roots.h
@@ -1839,6 +1807,16 @@ diff -Naur llvm-project-20.1.0-rc1.src.orig/libcxx/include/CMakeLists.txt llvm-p
    __cxx03/__math/traits.h
    __cxx03/__math/trigonometric_functions.h
    __cxx03/__mbstate_t.h
+--- llvm-project-llvmorg-23.1.0-rc2/libcxx/include/module.modulemap.in~	2026-07-28 13:11:17.000000000 +0000
++++ llvm-project-llvmorg-23.1.0-rc2/libcxx/include/module.modulemap.in	2026-08-07 15:33:05.807731087 +0000
+@@ -1617,6 +1617,7 @@
+       textual header "__locale_dir/support/no_locale/characters.h"
+       textual header "__locale_dir/support/no_locale/strtonum.h"
+       textual header "__locale_dir/support/openbsd.h"
++      textual header "__locale_dir/support/solaris.h"
+       textual header "__locale_dir/support/windows.h"
+     }
+ 
 diff -Naur llvm-project-20.1.0-rc1.src.orig/libcxx/include/math.h llvm-project-20.1.0-rc1.src/libcxx/include/math.h
 --- llvm-project-llvmorg-21.1.0-rc1/libcxx/include/math.h.~1~	2025-07-17 20:02:34.000000000 +0000
 +++ llvm-project-llvmorg-21.1.0-rc1/libcxx/include/math.h	2025-07-20 15:40:52.024181165 +0000
@@ -2089,7 +2067,7 @@ diff -Naur llvm-project-19.1.5.src.orig/libcxx/src/support/solaris/mbsnrtowcs.cp
 +//===--------------------------------------------------------------------===//
 +
 +#include <cwchar>
-+#include <__locale_dir/locale_base_api/solaris.h>
++#include <__locale_dir/support/solaris.h>
 +
 +#ifdef __cplusplus
 +extern "C" {
@@ -2172,7 +2150,7 @@ diff -Naur llvm-project-19.1.5.src.orig/libcxx/src/support/solaris/wcsnrtombs.cp
 +#include <cwchar>
 +#include <climits>
 +#include <string.h>
-+#include <__locale_dir/locale_base_api/solaris.h>
++#include <__locale_dir/support/solaris.h>
 +
 +#ifdef __cplusplus
 +extern "C" {
