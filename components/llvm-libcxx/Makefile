@@ -39,9 +39,9 @@ USERLAND_ARCHIVES = ../llvm-project/
 # set to `llvmorg` to use github tarball or `llvm-project` for xz asset
 COMPONENT_NAME=		llvmorg
 #COMPONENT_VERSION=	22.1.8
-COMPONENT_VERSION=	23.1.0-rc2
-IPS_COMPONENT_VERSION=	23.0.2
-COMPONENT_REVISION=	1
+COMPONENT_VERSION=	23.1.0-rc3
+IPS_COMPONENT_VERSION=	23.0.3
+COMPONENT_REVISION=	0
 COMPONENT_PROJECT_URL=	https://llvm.org/
 COMPONENT_BUGDB=	utility/llvm
 
