@@ -2,13 +2,11 @@ $NetBSD: patch-lib_Basic_Targets_OSTargets.h,v 1.4 2019/10/19 13:54:29 adam Exp 
 
 Sync SunOS default defines with a working reality.
 
---- llvm-project-llvmorg-20.1.6/clang/lib/Basic/Targets/OSTargets.h.~1~	2025-05-28 20:14:44.194289254 +0000
-+++ llvm-project-llvmorg-20.1.6/clang/lib/Basic/Targets/OSTargets.h	2025-05-28 20:21:51.673578938 +0000
-@@ -618,15 +618,15 @@
-     DefineStd(Builder, "unix", Opts);
+--- llvm-project-llvmorg-23.1.0-rc2/clang/lib/Basic/Targets/OSTargets.h.~1~	2026-07-28 15:40:49.718193908 +0000
++++ llvm-project-llvmorg-23.1.0-rc2/clang/lib/Basic/Targets/OSTargets.h	2026-07-28 15:42:44.718748577 +0000
+@@ -678,13 +678,14 @@
      Builder.defineMacro("__svr4__");
      Builder.defineMacro("__SVR4");
--    Builder.defineMacro("_XOPEN_SOURCE", "600");
      if (Opts.CPlusPlus) {
 -      Builder.defineMacro("__C99FEATURES__");
 +      Builder.defineMacro("__STDC_VERSION__", "199901L");

@@ -46,12 +46,12 @@ set name=org.opensolaris.consolidation value=$(CONSOLIDATION)
 file path=usr/bin/FileCheck
 file path=usr/bin/UnicodeNameMappingGenerator
 link path=usr/bin/amdgpu-arch target=offload-arch
-file path=usr/bin/bugpoint
 file path=usr/bin/count
 file path=usr/bin/dsymutil
 file path=usr/bin/llc
 file path=usr/bin/lli
 file path=usr/bin/lli-child-target
+file path=usr/bin/llubi
 file path=usr/bin/llvm-PerfectShuffle
 link path=usr/bin/llvm-addr2line target=llvm-symbolizer
 file path=usr/bin/llvm-ar
@@ -81,6 +81,8 @@ file path=usr/bin/llvm-dwarfutil
 file path=usr/bin/llvm-dwp
 file path=usr/bin/llvm-exegesis
 file path=usr/bin/llvm-extract
+link path=usr/bin/llvm-extract-bundle-entry target=llvm-objcopy
+file path=usr/bin/llvm-gpu-loader
 file path=usr/bin/llvm-gsymutil
 file path=usr/bin/llvm-ifs
 link path=usr/bin/llvm-install-name-tool target=llvm-objcopy
