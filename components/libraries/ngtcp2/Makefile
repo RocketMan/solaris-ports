@@ -21,6 +21,7 @@ GCC_ROOT=/usr/gcc/10
 
 COMPONENT_NAME=		ngtcp2
 COMPONENT_VERSION=	1.23.0
+COMPONENT_REVISION=	1
 COMPONENT_PROJECT_URL=	https://ngtcp2.org/
 COMPONENT_SRC=		$(COMPONENT_NAME)-$(COMPONENT_VERSION)
 COMPONENT_ARCHIVE=	$(COMPONENT_SRC).tar.xz
@@ -51,5 +52,5 @@ REQUIRED_PACKAGES += library/nghttp3
 
 # Auto-generated dependencies
 REQUIRED_PACKAGES += library/security/openssl-3
-REQUIRED_PACKAGES += library/security/wolfssl
+REQUIRED_PACKAGES += library/security/libwolfssl45
 REQUIRED_PACKAGES += system/library
