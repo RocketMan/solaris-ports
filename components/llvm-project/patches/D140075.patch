@@ -1,0 +1,126 @@
+Firefox build errors: expected `u64`, found `usize`
+
+See https://bugzilla.mozilla.org/show_bug.cgi?id=1795899
+
+Not a problem on 11.3 with previous versions of clang; newly appears in 23.1.0.
+
+
+--- llvm-project-23.1.0.src/clang/include/clang-c/Index.h~	2026-08-25 20:15:21.000000000 +0000
++++ llvm-project-23.1.0.src/clang/include/clang-c/Index.h	2026-09-01 19:55:35.903599708 +0000
+@@ -3045,7 +3045,9 @@
+   CXType_HLSLAttributedResource = 180,
+   CXType_HLSLInlineSpirv = 181,
+ 
+-  CXType_PredefinedSugar = 182
++  CXType_PredefinedSugar = 182,
++
++  CXType_Using = 183
+ };
+ 
+ /**
+--- llvm-project-23.1.0.src/clang/lib/Sema/SemaCodeComplete.cpp~	2026-08-25 20:15:21.000000000 +0000
++++ llvm-project-23.1.0.src/clang/lib/Sema/SemaCodeComplete.cpp	2026-09-01 19:57:07.936228005 +0000
+@@ -4502,6 +4502,7 @@
+     return CXCursor_TranslationUnit;
+ 
+   case Decl::Using:
++  case Decl::UsingShadow:
+   case Decl::UnresolvedUsingValue:
+   case Decl::UnresolvedUsingTypename:
+     return CXCursor_UsingDeclaration;
+--- llvm-project-23.1.0.src/clang/tools/libclang/CXCursor.cpp~	2026-08-25 20:15:21.000000000 +0000
++++ llvm-project-23.1.0.src/clang/tools/libclang/CXCursor.cpp	2026-09-01 19:59:22.841241175 +0000
+@@ -1360,6 +1360,10 @@
+     return MakeCursorTypeRef(Tag->getDecl(), Loc, TU);
+   if (const TemplateTypeParmType *TemplP = Ty->getAs<TemplateTypeParmType>())
+     return MakeCursorTypeRef(TemplP->getDecl(), Loc, TU);
++  if (const UsingType *Using = Ty->getAs<UsingType>())
++    if (const UsingShadowDecl *Shadow = Using->getDecl())
++      if (const auto *TD = dyn_cast_or_null<TypeDecl>(Shadow->getTargetDecl()))
++        return MakeCursorTypeRef(TD, Loc, TU);
+ 
+   return cursor;
+ }
+--- llvm-project-23.1.0.src/clang/tools/libclang/CXType.cpp~	2026-08-25 20:15:21.000000000 +0000
++++ llvm-project-23.1.0.src/clang/tools/libclang/CXType.cpp	2026-09-01 20:03:12.543565742 +0000
+@@ -104,6 +104,7 @@
+     TKCASE(Record);
+     TKCASE(Enum);
+     TKCASE(Typedef);
++    TKCASE(Using);
+     TKCASE(ObjCInterface);
+     TKCASE(ObjCObject);
+     TKCASE(ObjCObjectPointer);
+@@ -208,6 +209,26 @@
+   return std::nullopt;
+ }
+ 
++static CXType getDeclType(const Decl* D, CXTranslationUnit TU, ASTContext &Context) {
++    if (!D)
++      return MakeCXType(QualType(), TU);
++    if (const TypeDecl *TD = dyn_cast<TypeDecl>(D))
++      return MakeCXType(Context.getTypeDeclType(TD), TU);
++    if (const ObjCInterfaceDecl *ID = dyn_cast<ObjCInterfaceDecl>(D))
++      return MakeCXType(Context.getObjCInterfaceType(ID), TU);
++    if (const DeclaratorDecl *DD = dyn_cast<DeclaratorDecl>(D))
++      return MakeCXType(DD->getType(), TU);
++    if (const ValueDecl *VD = dyn_cast<ValueDecl>(D))
++      return MakeCXType(VD->getType(), TU);
++    if (const ObjCPropertyDecl *PD = dyn_cast<ObjCPropertyDecl>(D))
++      return MakeCXType(PD->getType(), TU);
++    if (const FunctionTemplateDecl *FTD = dyn_cast<FunctionTemplateDecl>(D))
++      return MakeCXType(FTD->getTemplatedDecl()->getType(), TU);
++    if (const auto *UD = dyn_cast<UsingShadowDecl>(D))
++      return getDeclType(UD->getTargetDecl(), TU, Context);
++    return MakeCXType(QualType(), TU);
++}
++
+ static std::optional<QualType>
+ FindTemplateArgumentTypeAt(ArrayRef<TemplateArgument> TA, unsigned index) {
+   unsigned current = 0;
+@@ -243,25 +264,8 @@
+     return MakeCXType(T, TU);
+   }
+ 
+-  if (clang_isDeclaration(C.kind)) {
+-    const Decl *D = cxcursor::getCursorDecl(C);
+-    if (!D)
+-      return MakeCXType(QualType(), TU);
+-
+-    if (const TypeDecl *TD = dyn_cast<TypeDecl>(D))
+-      return getTypeDeclType(Context, TU, TD);
+-    if (const ObjCInterfaceDecl *ID = dyn_cast<ObjCInterfaceDecl>(D))
+-      return MakeCXType(Context.getObjCInterfaceType(ID), TU);
+-    if (const DeclaratorDecl *DD = dyn_cast<DeclaratorDecl>(D))
+-      return MakeCXType(DD->getType(), TU);
+-    if (const ValueDecl *VD = dyn_cast<ValueDecl>(D))
+-      return MakeCXType(VD->getType(), TU);
+-    if (const ObjCPropertyDecl *PD = dyn_cast<ObjCPropertyDecl>(D))
+-      return MakeCXType(PD->getType(), TU);
+-    if (const FunctionTemplateDecl *FTD = dyn_cast<FunctionTemplateDecl>(D))
+-      return MakeCXType(FTD->getTemplatedDecl()->getType(), TU);
+-    return MakeCXType(QualType(), TU);
+-  }
++  if (clang_isDeclaration(C.kind))
++    return getDeclType(cxcursor::getCursorDecl(C), TU, Context);
+ 
+   if (clang_isReference(C.kind)) {
+     switch (C.kind) {
+@@ -539,6 +543,9 @@
+   case Type::Typedef:
+     D = cast<TypedefType>(TP)->getDecl();
+     break;
++  case Type::Using:
++    D = cast<UsingType>(TP)->getDecl();
++    break;
+   case Type::ObjCObject:
+     D = cast<ObjCObjectType>(TP)->getInterface();
+     break;
+@@ -632,6 +639,7 @@
+     TKIND(Record);
+     TKIND(Enum);
+     TKIND(Typedef);
++    TKIND(Using);
+     TKIND(ObjCInterface);
+     TKIND(ObjCObject);
+     TKIND(ObjCObjectPointer);
