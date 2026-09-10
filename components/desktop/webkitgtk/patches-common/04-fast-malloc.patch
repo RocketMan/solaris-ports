@@ -1,0 +1,13 @@
+--- webkitgtk-2.52.6/Source/WTF/wtf/FastMalloc.cpp~	2026-02-23 14:40:54.527305600 +0000
++++ webkitgtk-2.52.6/Source/WTF/wtf/FastMalloc.cpp	2026-09-05 11:13:10.572218050 +0000
+@@ -61,6 +61,10 @@
+ 
+ #endif
+ 
++#if OS(SOLARIS)
++#define aligned_alloc(a, b) memalign(a, b)
++#endif
++
+ namespace WTF {
+ 
+ #if !defined(NDEBUG)

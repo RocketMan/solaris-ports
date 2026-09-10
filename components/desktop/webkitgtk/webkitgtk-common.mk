@@ -102,6 +102,7 @@ CXXFLAGS += -Wno-preferred-type-bitfield-enum-conversion
 CXXFLAGS += -Wno-sign-compare
 CXXFLAGS += -Wno-unnecessary-virtual-specifier
 CXXFLAGS += -Wno-unused-lambda-capture
+CXXFLAGS += -Wno-unused-template
 $(WANT_LIBCXX)CXXFLAGS += -stdlib=libc++
 endif
 
