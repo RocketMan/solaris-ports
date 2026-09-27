@@ -20,12 +20,12 @@ include ../../../make-rules/shared-macros.mk
 GCC_ROOT=/usr/gcc/10
 
 COMPONENT_NAME=		ngtcp2
-COMPONENT_VERSION=	1.23.0
-COMPONENT_REVISION=	1
+COMPONENT_VERSION=	1.25.0
+COMPONENT_REVISION=	0
 COMPONENT_PROJECT_URL=	https://ngtcp2.org/
 COMPONENT_SRC=		$(COMPONENT_NAME)-$(COMPONENT_VERSION)
 COMPONENT_ARCHIVE=	$(COMPONENT_SRC).tar.xz
-COMPONENT_ARCHIVE_HASH= sha256:59d5b4211e96970f2d3d5e6876f73dce03414800ba04aa56835b132fce8de730
+COMPONENT_ARCHIVE_HASH= sha256:2a34d2484ba17847a5d11965704e9dd0fac4c6d8efc75ffe1ec7de66d8c6b6fb
 COMPONENT_ARCHIVE_URL=	https://github.com/ngtcp2/ngtcp2/releases/download/v$(COMPONENT_VERSION)/$(COMPONENT_ARCHIVE)
 
 include $(WS_MAKE_RULES)/common.mk
@@ -52,5 +52,5 @@ REQUIRED_PACKAGES += library/nghttp3
 
 # Auto-generated dependencies
 REQUIRED_PACKAGES += library/security/openssl-3
-REQUIRED_PACKAGES += library/security/libwolfssl45
+REQUIRED_PACKAGES += library/security/libwolfssl46
 REQUIRED_PACKAGES += system/library
